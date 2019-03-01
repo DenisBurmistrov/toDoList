@@ -8,7 +8,7 @@ public class Task {
     private String name;
     private String description;
     private Integer priority;
-    private long counter = 1;
+    private static long counter = 1;
 
     public Task() {
         id = counter++;
@@ -37,6 +37,10 @@ public class Task {
         else {
             System.out.println("Некорректное значение приоритета (Диапазон от 0 до 5)");
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

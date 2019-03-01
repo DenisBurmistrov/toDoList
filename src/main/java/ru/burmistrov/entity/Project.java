@@ -11,7 +11,7 @@ public class Project {
     private Date createdAt;
     private Long id;
     private HashMap<Long, Task> tasks = new HashMap<>();
-    private long counter = 1;
+    private static long counter = 1;
 
     public Project() {
         createdAt = new Date();
@@ -32,7 +32,7 @@ public class Project {
     }
 
     public void addTask(Task task) {
-        tasks.put(incrementCounter(), task);
+        tasks.put(task.getId(), task);
     }
 
     public Long incrementCounter() {

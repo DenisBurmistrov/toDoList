@@ -94,7 +94,7 @@ public class MapOfProjects {
         }
     }
 
-    public void addTaskToProject(Long idProject) {
+    public void addTaskToProject(Long projectId) {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         Task task = new Task();
         System.out.println("Введите имя: ");
@@ -104,18 +104,68 @@ public class MapOfProjects {
             task.setDescription(bufferedReader.readLine());
             System.out.println("Введите приоритет от 0 до 5: ");
             task.setPriority(Integer.parseInt(bufferedReader.readLine()));
-            projects.get(idProject).addTask(task);
+            projects.get(projectId).addTask(task);
         } catch (IOException e) {
             System.out.println("Некорректное значение приоритета");
         }
 
-        System.out.println("Задача добавлена в проект \"" + projects.get(idProject).getName() +"\"");
+        System.out.println("Задача добавлена в проект \"" + projects.get(projectId).getName() +"\"");
     }
 
-    public void printTasksOfProject(Long idProject) {
-        if(projects.containsKey(idProject)) {
-            System.out.println("Список задачь проекта " + projects.get(idProject).getName() + ":");
-            projects.get(idProject).getTasks().forEach((k, v) -> System.out.println(v));
+    public void deleteTaskFromProject(Long projectId) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        printTasksOfProject(projectId);
+        System.out.println("Введите ID задачи");
+        try {
+            Long id = Long.valueOf(reader.readLine());
+            projects.get(projectId).getTasks().entrySet().removeIf((e -> e.getKey().equals(id)));
+            printTasksOfProject(projectId);
+        } catch (IOException e) {
+            System.out.println("Некорректное значение id");
+        }
+    }
+
+    public void updateTaskFromProject(Long projectId) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        printTasksOfProject(projectId);
+        if(projects.get(projectId).getTasks().size() > 0) {
+            System.out.println("Введите ID задачи:");
+            try {
+                Long id = Long.valueOf(reader.readLine());
+                Iterator it = projects.get(projectId).getTasks().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    if (pair.getKey() == id) {
+                        Task task = new Task();
+                        task.setId(id);
+                        System.out.println("Введите новое имя: ");
+                        task.setName(reader.readLine());
+                        System.out.println("Введите новое описание: ");
+                        task.setDescription(reader.readLine());
+                        System.out.println("Введите новый приоритет(от 0 до 5): ");
+                        try {
+                            task.setPriority(Integer.parseInt(reader.readLine()));
+                        } catch (IOException e) {
+                            System.out.println("Неккоректное значение приоритета");
+                        }
+                        projects.get(projectId).getTasks().put(id, task);
+                        printTasksOfProject(projectId);
+                    }
+                }
+                printTasksOfProject(projectId);
+            } catch (IOException e) {
+                System.out.println("Некорректное значение id");
+            }
+        }
+        else {
+            System.out.println("У проекта нет задач");
+        }
+    }
+
+    public void printTasksOfProject(Long projectId) {
+        if(projects.containsKey(projectId)) {
+            System.out.println("Список задачь проекта " + projects.get(projectId).getName() + ":");
+            projects.get(projectId).getTasks().forEach((k, v) -> System.out.println(v));
         }
     }
 

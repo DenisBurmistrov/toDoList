@@ -18,6 +18,8 @@ public class Main {
     private static final String COMMAND_UPDATE_NAME_BY_ID = "-updateNameById";
     private static final String COMMAND_ADD_TASK_TO_PROJECT = "-addTaskToProject";
     private static final String COMMAND_PRINT_TASK_OF_PROJECT = "-printTasksOfProject";
+    private static final String COMMAND_DELETE_TASK_FROM_PROJECT = "-deleteTaskFromProject";
+    private static final String COMMAND_UPDATE_TASK_FROM_PROJECT = "-updateTaskFromProject";
 
 
     public static void main(String[] args) throws IOException {
@@ -44,7 +46,9 @@ public class Main {
                         "|| Удалить все проекты " + COMMAND_DELETE_ALL + " " +
                         "|| Изменить имя по id проекта " + COMMAND_UPDATE_NAME_BY_ID + " projectId newName " +
                         "\n|| Добавить задачу к проекту " + COMMAND_ADD_TASK_TO_PROJECT + " projectId " +
-                        "|| Вывести все задичи проекта " + COMMAND_PRINT_TASK_OF_PROJECT + "projectId ||");
+                        "|| Вывести все задичи проекта " + COMMAND_PRINT_TASK_OF_PROJECT + " projectId " +
+                        "|| Удалить задачу из проекта " + COMMAND_DELETE_TASK_FROM_PROJECT + " projectId " +
+                        "|| Обновить задачу в проекте " + COMMAND_UPDATE_TASK_FROM_PROJECT + " projectId ||");
 
 
                 while (true) {
@@ -53,7 +57,7 @@ public class Main {
                     String[] secondArrayOfInput = splitString(secondInput);
 
                     if (COMMAND_DELETE.equals(secondArrayOfInput[0])) {
-                        if(secondArrayOfInput.length > 1)
+                        if(secondArrayOfInput.length == 2)
                         try {
                             mapOfProjects.deleteProjectById(Long.valueOf(secondArrayOfInput[1]));
                         }
@@ -95,8 +99,13 @@ public class Main {
                     }
                     else if (COMMAND_ADD_TASK_TO_PROJECT.equals(secondArrayOfInput[0])) {
                         try {
-                            Long id = Long.valueOf(secondArrayOfInput[1]);
-                            mapOfProjects.addTaskToProject(id);
+                            if(secondArrayOfInput.length == 2) {
+                                Long id = Long.valueOf(secondArrayOfInput[1]);
+                                mapOfProjects.addTaskToProject(id);
+                            }
+                            else {
+                                System.out.println("Некорректное значение id");
+                            }
                         }
                         catch (NumberFormatException e) {
                             System.out.println("Некорректное значение id");
@@ -104,11 +113,40 @@ public class Main {
                     }
                     else if (COMMAND_PRINT_TASK_OF_PROJECT.equals(secondArrayOfInput[0])) {
                         try {
-                            Long id = Long.valueOf(secondArrayOfInput[1]);
-                            mapOfProjects.printTasksOfProject(id);
+                            if (secondArrayOfInput.length == 2) {
+                                Long id = Long.valueOf(secondArrayOfInput[1]);
+                                mapOfProjects.printTasksOfProject(id);
+                            }
+                            else {
+                                System.out.println("Некорректное значение id");
+                            }
                         }
                         catch (NumberFormatException e) {
                             System.out.println("Некорректное значение id");
+                        }
+                    }
+                    else if (COMMAND_DELETE_TASK_FROM_PROJECT.equals(secondArrayOfInput[0])) {
+                        try {
+                            if (secondArrayOfInput.length == 2) {
+                                Long id = Long.valueOf(secondArrayOfInput[1]);
+                                mapOfProjects.deleteTaskFromProject(id);
+                            } else {
+                                System.out.println("Некорректное значение id");
+                            }
+                        }
+                        catch (NumberFormatException e) {
+                            System.out.println("Некорректное значение id");
+                        }
+                    }
+                    else if (COMMAND_UPDATE_TASK_FROM_PROJECT.equals(secondArrayOfInput[0])) {
+                        try {
+                            if (secondArrayOfInput.length > 1) {
+                                Long id = Long.valueOf(secondArrayOfInput[1]);
+                                mapOfProjects.updateTaskFromProject(id);
+                            }
+                        }
+                        catch (NumberFormatException e) {
+                            System.out.println("Неккоректное значение id");
                         }
                     }
                     else {
