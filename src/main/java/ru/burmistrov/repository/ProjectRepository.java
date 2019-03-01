@@ -13,40 +13,41 @@ public class ProjectRepository implements IProjectRepository {
 
 
     @Override
-    public void addProject(String name, String description) {
+    public String addProject(String name, String description) {
         Project project = new Project();
         project.setId(incrementCounter());
         project.setName(name);
         project.setDescription(description);
 
         if (projects.containsValue(project)) {
-            System.out.println("Такой проект уже существует");
+           return "Проект с таким именем уже существует";
         } else {
-            projects.put(incrementCounter(), project);
-            printProjects();
+            projects.put(project.getId(), project);
+            return "Добавление произведено";
         }
-
     }
 
     @Override
-    public void deleteProjectById(Long projectId){
+    public String deleteProjectById(Long projectId){
 
             projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId));
-            printProjects();
+            return "";
         }
 
 
 
-    @Override
-    public void printProjects() {
+    /*@Override
+    public String printProjects() {
         System.out.println("Список проектов:");
         projects.forEach((k, v) -> System.out.println(v));
-    }
+        return "";
+    }*/
 
 
     @Override
-    public void clearAll() {
+    public String clearAll() {
         projects.clear();
+        return "Все проекты удалены";
     }
 
 

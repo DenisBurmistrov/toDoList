@@ -2,31 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e16b4b2-896e-4ef7-acac-f8bed5f3eb73" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/AbstractCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/MapOfProjects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/burmistrov/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/burmistrov/entity/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/burmistrov/entity/Project.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/burmistrov/entity/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ru/burmistrov/entity/Task.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ru/burmistrov/repository/MapOfProjects.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,55 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="13" column="55" lean-forward="true" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1686#1687#0" expanded="true" />
-                <element signature="e#1718#1719#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+            <state relative-caret-position="765">
+              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,28 +44,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+            <state relative-caret-position="136">
+              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+            <state relative-caret-position="510">
+              <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -131,10 +74,63 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="714">
+              <caret line="42" column="46" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="461">
+              <caret line="40" column="24" lean-forward="true" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="36" column="42" lean-forward="true" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#282#283#0" expanded="true" />
+                <element signature="e#318#319#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -161,6 +157,11 @@
       <find>COMMAND_DELETE</find>
       <find>projectListCommand</find>
       <find>PrintListCommand</find>
+      <find>pr</find>
+      <find>printTask</find>
+      <find>TaskRemoveCommand</find>
+      <find>deleteProjectById</find>
+      <find>printTasksOfProject</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -185,25 +186,25 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repositoryI/IProjectRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repositoryI/ITaskRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/TaskRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/App.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java" />
       </list>
     </option>
   </component>
@@ -333,7 +334,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551446118361" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551456513515" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -397,14 +398,21 @@
       <option name="project" value="LOCAL" />
       <updated>1551425350459</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added MVC architecture">
+      <created>1551449456202</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1551449456202</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18017058" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18017058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -413,14 +421,14 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30985916" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30985916" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -431,39 +439,12 @@
       <window_info anchor="right" id="Maven" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25" />
-      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.3298731" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.3298731" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="Palette" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Maven" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added program" />
     <MESSAGE value="Added new methods, fix errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added new methods, fix errors" />
+    <MESSAGE value="Added MVC architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added MVC architecture" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/Commands.java" />
@@ -494,6 +475,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-43">
+          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#839#840#0" expanded="true" />
+            <element signature="e#884#885#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#381#382#0" expanded="true" />
+            <element signature="e#406#407#0" expanded="true" />
+            <element signature="e#1686#1687#0" expanded="true" />
+            <element signature="e#1718#1719#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -501,73 +508,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="30" column="9" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="30" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1921">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/Bootstrap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1779">
-          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+        <state relative-caret-position="-332">
+          <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="30" column="75" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -576,29 +530,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectClearCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
+        <state relative-caret-position="289">
+          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectCreateCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="28" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectRemoveCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        <state relative-caret-position="527">
+          <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskClearCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+        <state relative-caret-position="493">
+          <caret line="33" column="58" selection-start-line="33" selection-start-column="58" selection-end-line="33" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -607,22 +560,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskCreateCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        <state relative-caret-position="527">
+          <caret line="35" column="51" lean-forward="true" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskRemoveCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+        <state relative-caret-position="476">
+          <caret line="32" column="78" selection-start-line="32" selection-start-column="78" selection-end-line="32" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -633,31 +595,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/PrintListCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/IProjectRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        <state relative-caret-position="136">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Project.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/TaskService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="13" column="55" lean-forward="true" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="55" />
+        <state relative-caret-position="461">
+          <caret line="40" column="24" lean-forward="true" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/entity/Task.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/api/repository/ITaskRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+        <state relative-caret-position="255">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1686#1687#0" expanded="true" />
-            <element signature="e#1718#1719#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/project/ProjectListCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/command/task/TaskListCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="36" column="42" lean-forward="true" selection-start-line="36" selection-start-column="42" selection-end-line="36" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#282#283#0" expanded="true" />
+            <element signature="e#318#319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/TaskRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="46" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/service/ProjectService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="9" lean-forward="true" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/repository/ProjectRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

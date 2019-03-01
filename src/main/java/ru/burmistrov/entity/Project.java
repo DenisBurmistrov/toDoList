@@ -17,13 +17,6 @@ public class Project {
         createdAt = new Date();
     }
 
-    public Project (Project project) {
-        this.name = project.getName();
-        this.description = project.getDescription();
-        this.id = project.getId();
-        this.createdAt = project.getCreatedAt();
-    }
-
     public Project(String name, String description, Long id) {
         this.name = name;
         this.description = description;

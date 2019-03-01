@@ -1,14 +1,18 @@
 package ru.burmistrov.api.repository;
 
+import ru.burmistrov.entity.Task;
+
+import java.util.Map;
+
 public interface ITaskRepository {
 
-    void addTaskToProject(Long projectId, String name, String description, Integer priority);
+    String addTaskToProject(Long projectId, String name, String description, Integer priority);
 
-    void deleteTaskFromProject(Long projectId, Long taskId);
+    String deleteTaskFromProject(Long projectId, Long taskId);
 
-    void printTasksOfProject(Long projectId);
+    Map<Long, Task> printTasksOfProject(Long projectId);
 
-    void clearAllTasks();
+    String clearAllTasks(Long taskId);
 
     // void updateTaskFromProject();
 }

@@ -19,7 +19,7 @@ public class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        projectService.clearAll();
+        System.out.println(projectService.clearAll());
 
     }
 }

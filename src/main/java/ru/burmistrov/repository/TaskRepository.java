@@ -5,9 +5,6 @@ import ru.burmistrov.api.repository.ITaskRepository;
 import ru.burmistrov.entity.Project;
 import ru.burmistrov.entity.Task;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 public class TaskRepository implements ITaskRepository {
@@ -15,59 +12,51 @@ public class TaskRepository implements ITaskRepository {
     private Map<Long, Project> projects = Bootstrap.projects;
 
     @Override
-    public void addTaskToProject(Long projectId, String name, String description, Integer priority) {
+    public String addTaskToProject(Long projectId, String name, String description, Integer priority) {
         if (projects.containsKey(projectId)) {
             Task task = new Task();
             task.setName(name);
             task.setDescription(description);
             task.setPriority(priority);
             projects.get(projectId).addTask(task);
-            System.out.println("Задача добавлена в проект \"" + projects.get(projectId).getName() + "\"");
+            return "Задача добавлена в проект \"" + projects.get(projectId).getName() + "\"";
         } else {
-            System.out.println("Нет проекта с введенным ID");
+            return "Нет проекта с введенным ID";
         }
     }
 
     @Override
-    public void deleteTaskFromProject(Long projectId, Long taskId) {
+    public String deleteTaskFromProject(Long projectId, Long taskId) {
 
         if (projects.containsKey(projectId)) {
-            printTasksOfProject(projectId);
             projects.get(projectId).getTasks().entrySet().removeIf((e -> e.getKey().equals(taskId)));
-            printTasksOfProject(projectId);
+            return "";
         } else {
-            System.out.println("Нет проекта с введённым ID");
+            return "Нет проекта с введённым ID";
         }
     }
 
 
     @Override
-    public void printTasksOfProject(Long projectId) {
+    public Map<Long, Task> printTasksOfProject(Long projectId) {
 
         if (projects.containsKey(projectId)) {
-            System.out.println("Список задачь проекта " + projects.get(projectId).getName() + ":");
-            projects.get(projectId).getTasks().forEach((k, v) -> System.out.println(v));
+            return projects.get(projectId).getTasks();
         } else {
-            System.out.println("Нет проекта с введенным ID");
+           return  null;
 
         }
     }
 
     @Override
-    public void clearAllTasks() {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Введите ID проекта:");
-        try {
-            Long id = Long.valueOf(bufferedReader.readLine());
-            if (projects.containsKey(id)) {
-                projects.get(id).getTasks().clear();
-            } else {
-                System.out.println("Нет проекта с введенным ID");
-            }
-        } catch (IOException e) {
-            System.out.println("Некорректное значение ID");
-        }
+    public String clearAllTasks(Long projectId) {
 
+            if (projects.containsKey(projectId)) {
+                projects.get(projectId).getTasks().clear();
+                return "Очистка произведена";
+            } else {
+                return "Нет проекта с введенным ID";
+            }
     }
 
     /* @Override

@@ -43,7 +43,7 @@ public class Bootstrap {
         commands.put(projectRemoveCommand.command(), projectRemoveCommand);
         commands.put(projectClearCommand.command(), projectClearCommand);
         commands.put(taskCreateCommand.command(), taskCreateCommand);
-        commands.put(taskListCommand.command(), taskCreateCommand);
+        commands.put(taskListCommand.command(), taskListCommand);
         commands.put(taskRemoveCommand.command(), taskRemoveCommand);
         commands.put(taskClearCommand.command(), taskClearCommand);
 
@@ -75,7 +75,7 @@ public class Bootstrap {
 
     private static void execute(String command) {
         if (command == null || command.isEmpty()) {
-            System.out.println("Введите команду");
+            System.out.println("Команда введена некорректно");
             return;
         }
         AbstractCommand abstractCommand = commands.get(command);

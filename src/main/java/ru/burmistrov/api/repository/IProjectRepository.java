@@ -2,13 +2,13 @@ package ru.burmistrov.api.repository;
 
 public interface IProjectRepository {
 
-    void addProject(String name, String description);
+    String addProject(String name, String description);
 
-    void deleteProjectById(Long projectId);
+    String deleteProjectById(Long projectId);
 
-    void printProjects();
+    //String printProjects();
 
-    void clearAll();
+    String clearAll();
 
    // void updateProjectNameById(Long id, String name);
 

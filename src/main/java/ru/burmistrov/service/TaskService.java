@@ -1,77 +1,78 @@
 package ru.burmistrov.service;
 
+import ru.burmistrov.entity.Task;
 import ru.burmistrov.repository.TaskRepository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 public class TaskService {
 
     private TaskRepository taskRepository;
 
-    public void addTaskToProject() {
+    public String addTaskToProject(String projectId, String name, String description, String priority) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Введите ID проекта:");
         try {
-            Long id = Long.valueOf(bufferedReader.readLine());
-            System.out.println("Введите имя: ");
-            String name = bufferedReader.readLine();
-            System.out.println("Введите описание: ");
-            String description = bufferedReader.readLine();
-            System.out.println("Введите приоритет от 0 до 5: ");
-            Integer priority = Integer.parseInt(bufferedReader.readLine());
-            taskRepository.addTaskToProject(id, name, description, priority);
-        } catch (IOException e) {
+            Long id = Long.valueOf(projectId);
+            Integer priorityInt = Integer.parseInt(priority);
+            return taskRepository.addTaskToProject(id, name, description, priorityInt);
+        }
+        catch (NumberFormatException e) {
+            return  "Некорректные введенные данные";
+        }
+
+
+    }
+
+    public Map<Long, Task> printTasksOfProject(String projectId) {
+        if (taskRepository == null) {
+            taskRepository = new TaskRepository();
+        }
+        try {
+            Long id = Long.valueOf(projectId);
+            return taskRepository.printTasksOfProject(id);
+        }
+        catch (NumberFormatException e) {
             System.out.println("Некорректные введенные данные");
+            return null;
         }
 
 
     }
 
-    public void printTasksOfProject() {
+    public String clearAllTasks(String projectId) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Введите ID проекта");
         try {
-            Long id = Long.valueOf(bufferedReader.readLine());
-            taskRepository.printTasksOfProject(id);
-        } catch (IOException e) {
-            System.out.println("Некорректное значение ID");
+            Long id = Long.valueOf(projectId);
+            return taskRepository.clearAllTasks(id);
         }
-
+        catch (NumberFormatException e) {
+            return "Введен некорректный ID";
+        }
 
     }
 
-    public void clearAllTasks() {
+    public String deleteTaskFromProject(String projectId, String taskId) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
-        taskRepository.clearAllTasks();
-
-    }
-
-    public void deleteTaskFromProject() {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             System.out.println("Введите ID проекта");
-            Long projectId = Long.valueOf(reader.readLine());
+            Long projectIdLong = Long.valueOf(projectId);
             System.out.println("Введите ID задачи");
-            Long id = Long.valueOf(reader.readLine());
-            taskRepository.deleteTaskFromProject(projectId, id);
+            Long taskIdLong = Long.valueOf(taskId);
+            return taskRepository.deleteTaskFromProject(projectIdLong, taskIdLong);
 
-        } catch (IOException e) {
-            System.out.println("Некорректные данные");
+        }
+        catch (NumberFormatException e) {
+            return "Некорректные введенные данные";
         }
 
 
