@@ -1,5 +1,6 @@
 package ru.burmistrov.entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Task {
@@ -8,6 +9,8 @@ public class Task {
     private String name;
     private String description;
     private Integer priority;
+    private Date createdAt;
+    private Date shouldEndAt;
     private static long counter = 1;
 
     public Task() {
@@ -73,5 +76,17 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getShouldEndAt() {
+        return shouldEndAt;
+    }
+
+    public void setShouldEndAt(Date shouldEndAt) {
+        this.shouldEndAt = shouldEndAt;
     }
 }

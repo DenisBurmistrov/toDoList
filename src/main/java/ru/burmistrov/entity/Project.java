@@ -9,9 +9,9 @@ public class Project {
     private String name;
     private String description;
     private Date createdAt;
+    private Date shouldEndAt;
     private Long id;
     private HashMap<Long, Task> tasks = new HashMap<>();
-    private static long counter = 1;
 
     public Project() {
         createdAt = new Date();
@@ -35,9 +35,6 @@ public class Project {
         tasks.put(task.getId(), task);
     }
 
-    public Long incrementCounter() {
-        return counter++;
-    }
 
     public String getName() {
         return name;
@@ -90,5 +87,11 @@ public class Project {
         return "ID: " + id +"; Название: " + name + "; Описание: " + description + "; Дата создания: " + createdAt;
     }
 
+    public Date getShouldEndAt() {
+        return shouldEndAt;
+    }
 
+    public void setShouldEndAt(Date shouldEndAt) {
+        this.shouldEndAt = shouldEndAt;
+    }
 }
