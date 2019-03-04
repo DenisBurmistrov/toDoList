@@ -32,16 +32,14 @@ public class TaskUpdateCommand extends AbstractCommand {
         try {
             System.out.println("Введите ID проекта:");
             String projectId = reader.readLine();
-            taskService.printTasksOfProject(projectId);
             if(projectService.checkContainsProject(projectId)) {
                 if (projectService.checkHavingTasks(projectId)) {
                     System.out.println("Введите ID задачи:");
-
                     String taskId = reader.readLine();
                     Iterator it = projectService.getProjectTasks(taskId).entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey() == taskId) {
+                        if (pair.getKey() == Long.valueOf(taskId)) {
 
                             while (true) {
                                 System.out.println("Введите новое имя: ");
@@ -51,8 +49,8 @@ public class TaskUpdateCommand extends AbstractCommand {
                                     String description = reader.readLine();
                                     System.out.println("Введите новый приоритет(от 0 до 5): ");
                                     String priority = reader.readLine();
-                                    taskService.addTaskToProject(projectId, name, description, priority);
-                                    taskService.printTasksOfProject(projectId);
+                                    taskService.addTaskToProject(projectId, name, description, priority, taskId);
+                                    System.out.println("Задача обновлена");
                                     break;
                                 }
                             }

@@ -6,10 +6,7 @@ import ru.burmistrov.tm.command.project.ProjectClearCommand;
 import ru.burmistrov.tm.command.project.ProjectCreateCommand;
 import ru.burmistrov.tm.command.project.ProjectListCommand;
 import ru.burmistrov.tm.command.project.ProjectRemoveCommand;
-import ru.burmistrov.tm.command.task.TaskClearCommand;
-import ru.burmistrov.tm.command.task.TaskCreateCommand;
-import ru.burmistrov.tm.command.task.TaskListCommand;
-import ru.burmistrov.tm.command.task.TaskRemoveCommand;
+import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
@@ -37,6 +34,7 @@ public class Bootstrap {
         TaskCreateCommand taskCreateCommand = new TaskCreateCommand();
         TaskClearCommand taskClearCommand = new TaskClearCommand();
         TaskRemoveCommand taskRemoveCommand = new TaskRemoveCommand();
+        TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand();
         commands.put(printListCommand.command(), printListCommand);
         commands.put(projectListCommand.command(), projectListCommand);
         commands.put(projectCreateCommand.command(), projectCreateCommand);
@@ -46,6 +44,7 @@ public class Bootstrap {
         commands.put(taskListCommand.command(), taskListCommand);
         commands.put(taskRemoveCommand.command(), taskRemoveCommand);
         commands.put(taskClearCommand.command(), taskClearCommand);
+        commands.put(taskUpdateCommand.command(), taskUpdateCommand);
 
         Project project1 = new Project("Первый проект", "Первое описание", projectRepository.incrementCounter());
         Project project2 = new Project("Второй проект", "Второе описание", projectRepository.incrementCounter());

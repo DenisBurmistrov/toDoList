@@ -9,6 +9,22 @@ public class TaskService {
 
     private TaskRepository taskRepository;
 
+    public String addTaskToProject(String projectId, String name, String description, String priority, String taskId) {
+        if (taskRepository == null) {
+            taskRepository = new TaskRepository();
+        }
+        try {
+            Long id = Long.valueOf(projectId);
+            Integer priorityInt = Integer.parseInt(priority);
+            Long idTask = Long.valueOf(taskId);
+            return taskRepository.addTaskToProjectWithTaskId(id, name, description, priorityInt, idTask);
+        }
+        catch (NumberFormatException e) {
+            return  "Некорректные введенные данные";
+        }
+
+    }
+
     public String addTaskToProject(String projectId, String name, String description, String priority) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
@@ -17,12 +33,9 @@ public class TaskService {
             Long id = Long.valueOf(projectId);
             Integer priorityInt = Integer.parseInt(priority);
             return taskRepository.addTaskToProject(id, name, description, priorityInt);
+        } catch (NumberFormatException e) {
+            return "Некорректные введенные данные";
         }
-        catch (NumberFormatException e) {
-            return  "Некорректные введенные данные";
-        }
-
-
     }
 
     public Map<Long, Task> printTasksOfProject(String projectId) {

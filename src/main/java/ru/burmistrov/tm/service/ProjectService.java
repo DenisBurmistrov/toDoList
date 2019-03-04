@@ -48,6 +48,9 @@ public class ProjectService {
     }
 
     public boolean checkContainsProject(String projectId) {
+        if (projectRepository == null) {
+            projectRepository = new ProjectRepository();
+        }
         try {
             Long projectIdLong = Long.valueOf(projectId);
             return projectRepository.checkContainsProject(projectIdLong);
@@ -58,6 +61,9 @@ public class ProjectService {
     }
 
     public boolean checkHavingTasks(String projectId) {
+        if (projectRepository == null) {
+            projectRepository = new ProjectRepository();
+        }
         try {
             Long projectIdLong = Long.valueOf(projectId);
             if (projectRepository.checkContainsProject(projectIdLong)) {

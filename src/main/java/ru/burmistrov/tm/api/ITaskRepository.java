@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface ITaskRepository {
 
+    String addTaskToProjectWithTaskId(Long projectId, String name, String description, Integer priority, Long taskId);
+
     String addTaskToProject(Long projectId, String name, String description, Integer priority);
 
     String deleteTaskFromProject(Long projectId, Long taskId);

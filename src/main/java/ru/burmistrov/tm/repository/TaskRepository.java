@@ -12,12 +12,32 @@ public class TaskRepository implements ITaskRepository {
     private Map<Long, Project> projects = Bootstrap.projects;
 
     @Override
-    public String addTaskToProject(Long projectId, String name, String description, Integer priority) {
+    public String addTaskToProjectWithTaskId(Long projectId, String name, String description, Integer priority, Long taskId) {
 
+        if (projects.containsKey(projectId)) {
+            Task task = new Task();
+            task.setId(taskId);
+            task.setName(name);
+            task.setDescription(description);
+
+            boolean isSetPriority = task.setPriority(priority);
+            if (isSetPriority) {
+                projects.get(projectId).addTask(task);
+                return "Задача обновлена в проекте \"" + projects.get(projectId).getName() + "\"";
+            }
+            else return "";
+        } else {
+            return "Нет проекта с введенным ID";
+        }
+    }
+
+    @Override
+    public String addTaskToProject(Long projectId, String name, String description, Integer priority) {
         if (projects.containsKey(projectId)) {
             Task task = new Task();
             task.setName(name);
             task.setDescription(description);
+
             boolean isSetPriority = task.setPriority(priority);
             if (isSetPriority) {
                 projects.get(projectId).addTask(task);
