@@ -9,6 +9,10 @@ public class ProjectService {
 
     private ProjectRepository projectRepository;
 
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
     public String deleteProjectById(String projectId){
         if (projectRepository == null) {
             projectRepository = new ProjectRepository();

@@ -9,6 +9,10 @@ public class TaskService {
 
     private TaskRepository taskRepository;
 
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     public String addTaskToProject(String projectId, String name, String description, String priority, String taskId) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();

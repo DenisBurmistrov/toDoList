@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.service.TaskService;
@@ -11,8 +12,10 @@ import java.util.Map;
 
 public class TaskListCommand extends AbstractCommand {
 
-    private TaskService taskService = new TaskService();
-    private Map<Long, Task> map;
+
+    public TaskListCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -30,7 +33,7 @@ public class TaskListCommand extends AbstractCommand {
         System.out.println("Введите ID проекта:");
         try {
             String id = bufferedReader.readLine();
-            Map<Long, Task> tasks = taskService.printTasksOfProject(id);
+            Map<Long, Task> tasks = super.getBootstrap().getTaskService().printTasksOfProject(id);
             if(tasks == null) {
                 System.out.println("Нет проекта с веденный ID");
             }

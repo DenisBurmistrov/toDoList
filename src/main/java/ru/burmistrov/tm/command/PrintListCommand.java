@@ -4,6 +4,11 @@ import ru.burmistrov.tm.Bootstrap;
 
 public class PrintListCommand extends AbstractCommand {
 
+
+    public PrintListCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
+
     @Override
     public String command() {
         return "-help";
@@ -17,7 +22,7 @@ public class PrintListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список команд:");
-        Bootstrap.commands.forEach((k, v) -> System.out.println(k + " : " + v.description()));
+        super.getBootstrap().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.description()));
         System.out.println("-exit : Exit from program");
     }
 }

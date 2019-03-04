@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.TaskService;
 
@@ -9,7 +10,9 @@ import java.io.InputStreamReader;
 
 public class TaskClearCommand extends AbstractCommand {
 
-    private TaskService taskService = new TaskService();
+    public TaskClearCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -28,7 +31,7 @@ public class TaskClearCommand extends AbstractCommand {
 
            System.out.println("Введите ID проекта:");
            String id = bufferedReader.readLine();
-           System.out.println(taskService.clearAllTasks(id));
+           System.out.println(super.getBootstrap().getTaskService().clearAllTasks(id));
        }
        catch (IOException e) {
            System.out.println("Некорректно введенны данные");

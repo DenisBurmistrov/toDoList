@@ -9,9 +9,10 @@ import java.util.Map;
 
 public class ProjectListCommand extends AbstractCommand {
 
-    Map<Long, Project> projects = Bootstrap.projects;
 
-    private ProjectService projectService = new ProjectService();
+    public ProjectListCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -26,6 +27,6 @@ public class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        projects.forEach((k, v) -> System.out.println(v));
+        super.getBootstrap().getProjects().forEach((k, v) -> System.out.println(v));
     }
 }

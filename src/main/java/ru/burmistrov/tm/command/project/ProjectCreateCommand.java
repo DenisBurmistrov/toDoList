@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.ProjectService;
 
@@ -9,7 +10,10 @@ import java.io.InputStreamReader;
 
 public class ProjectCreateCommand extends AbstractCommand {
 
-    private ProjectService projectService = new ProjectService();
+
+    public ProjectCreateCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -33,7 +37,7 @@ public class ProjectCreateCommand extends AbstractCommand {
                 } else {
                     System.out.println("Введите описание:");
                     String description = bufferedReader.readLine();
-                    System.out.println(projectService.addProject(name, description));
+                    System.out.println(super.getBootstrap().getProjectService().addProject(name, description));
                     break;
                 }
             }

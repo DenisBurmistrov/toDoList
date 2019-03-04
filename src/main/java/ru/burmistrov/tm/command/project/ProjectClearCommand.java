@@ -1,11 +1,15 @@
 package ru.burmistrov.tm.command.project;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.ProjectService;
 
 public class ProjectClearCommand extends AbstractCommand {
 
-    private ProjectService projectService = new ProjectService();
+
+    public ProjectClearCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -19,7 +23,7 @@ public class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        System.out.println(projectService.clearAll());
+        System.out.println(super.getBootstrap().getProjectService().clearAll());
 
     }
 }

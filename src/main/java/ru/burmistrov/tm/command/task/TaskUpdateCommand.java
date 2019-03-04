@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.ProjectService;
 import ru.burmistrov.tm.service.TaskService;
@@ -12,8 +13,10 @@ import java.util.Map;
 
 public class TaskUpdateCommand extends AbstractCommand {
 
-    private TaskService taskService = new TaskService();
-    private ProjectService projectService = new ProjectService();
+
+    public TaskUpdateCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -32,11 +35,11 @@ public class TaskUpdateCommand extends AbstractCommand {
         try {
             System.out.println("Введите ID проекта:");
             String projectId = reader.readLine();
-            if(projectService.checkContainsProject(projectId)) {
-                if (projectService.checkHavingTasks(projectId)) {
+            if(super.getBootstrap().getProjectService().checkContainsProject(projectId)) {
+                if (super.getBootstrap().getProjectService().checkHavingTasks(projectId)) {
                     System.out.println("Введите ID задачи:");
                     String taskId = reader.readLine();
-                    Iterator it = projectService.getProjectTasks(taskId).entrySet().iterator();
+                    Iterator it = super.getBootstrap().getProjectService().getProjectTasks(taskId).entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
                         if (pair.getKey() == Long.valueOf(taskId)) {
@@ -49,7 +52,7 @@ public class TaskUpdateCommand extends AbstractCommand {
                                     String description = reader.readLine();
                                     System.out.println("Введите новый приоритет(от 0 до 5): ");
                                     String priority = reader.readLine();
-                                    taskService.addTaskToProject(projectId, name, description, priority, taskId);
+                                    super.getBootstrap().getTaskService().addTaskToProject(projectId, name, description, priority, taskId);
                                     System.out.println("Задача обновлена");
                                     break;
                                 }

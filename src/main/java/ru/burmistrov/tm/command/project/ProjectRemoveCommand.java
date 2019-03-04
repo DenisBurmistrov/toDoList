@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.ProjectService;
 
@@ -9,7 +10,9 @@ import java.io.InputStreamReader;
 
 public class ProjectRemoveCommand extends AbstractCommand {
 
-    private ProjectService projectService = new ProjectService();
+    public ProjectRemoveCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -28,7 +31,7 @@ public class ProjectRemoveCommand extends AbstractCommand {
         System.out.println("Введите ID проекта: ");
         try {
             String projectId = bufferedReader.readLine();
-            System.out.println(projectService.deleteProjectById(projectId));
+            System.out.println(super.getBootstrap().getProjectService().deleteProjectById(projectId));
         } catch (IOException e) {
             System.out.println("Некорректные данные");
         }

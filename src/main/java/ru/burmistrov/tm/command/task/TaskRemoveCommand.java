@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.TaskService;
 
@@ -9,7 +10,10 @@ import java.io.InputStreamReader;
 
 public class TaskRemoveCommand extends AbstractCommand {
 
-    private TaskService taskService = new TaskService();
+
+    public TaskRemoveCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -30,7 +34,7 @@ public class TaskRemoveCommand extends AbstractCommand {
             String projectId = reader.readLine();
             System.out.println("Введите ID задачи");
             String id = reader.readLine();
-            System.out.println(taskService.deleteTaskFromProject(projectId, id));
+            System.out.println(super.getBootstrap().getTaskService().deleteTaskFromProject(projectId, id));
 
 
         } catch (IOException e) {

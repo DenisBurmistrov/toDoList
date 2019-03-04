@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.service.TaskService;
 
@@ -9,7 +10,10 @@ import java.io.InputStreamReader;
 
 public class TaskCreateCommand extends AbstractCommand {
 
-    private TaskService taskService = new TaskService();
+
+    public TaskCreateCommand(Bootstrap bootstrap) {
+        super(bootstrap);
+    }
 
     @Override
     public String command() {
@@ -33,7 +37,7 @@ public class TaskCreateCommand extends AbstractCommand {
             String description = bufferedReader.readLine();
             System.out.println("Введите приоритет для задачи от 0 до 5: ");
             String priority = bufferedReader.readLine();
-            System.out.println(taskService.addTaskToProject(id, name, description, priority));
+            System.out.println(super.getBootstrap().getTaskService().addTaskToProject(id, name, description, priority));
         }
         catch (IOException e) {
             System.out.println("Некорректные данные");

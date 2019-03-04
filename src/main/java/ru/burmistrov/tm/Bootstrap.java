@@ -10,31 +10,54 @@ import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
+import ru.burmistrov.tm.service.ProjectService;
+import ru.burmistrov.tm.service.TaskService;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bootstrap {
 
+    private static Bootstrap bootstrap;
+
     public static Map<String, AbstractCommand> commands = new LinkedHashMap<>();
-    public static Map<Long, Project> projects = new LinkedHashMap<>();
-    public static ProjectRepository projectRepository = new ProjectRepository();
-    public static TaskRepository taskRepository = new TaskRepository();
+    public static  Map<Long, Project> projects = new LinkedHashMap<>();
+    public static  ProjectRepository projectRepository = new ProjectRepository();
+    public static  TaskRepository taskRepository = new TaskRepository();
+    public static  ProjectService projectService = new ProjectService(projectRepository);
+    public static  TaskService taskService = new TaskService(taskRepository);
+
+    public static Bootstrap getInstance() {
+        if (bootstrap == null) {
+            return bootstrap = new Bootstrap();
+        } else {
+            return bootstrap;
+        }
+    }
+
+
+    private Bootstrap() {
+    }
 
     public static void init() {
 
-        PrintListCommand printListCommand = new PrintListCommand();
-        ProjectListCommand projectListCommand = new ProjectListCommand();
-        ProjectCreateCommand projectCreateCommand = new ProjectCreateCommand();
-        ProjectRemoveCommand projectRemoveCommand = new ProjectRemoveCommand();
-        ProjectClearCommand projectClearCommand = new ProjectClearCommand();
-        TaskListCommand taskListCommand = new TaskListCommand();
-        TaskCreateCommand taskCreateCommand = new TaskCreateCommand();
-        TaskClearCommand taskClearCommand = new TaskClearCommand();
-        TaskRemoveCommand taskRemoveCommand = new TaskRemoveCommand();
-        TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand();
+        Bootstrap bootstrap = getInstance();
+        System.out.println(bootstrap);
+        PrintListCommand printListCommand = new PrintListCommand(bootstrap);
+        ProjectListCommand projectListCommand = new ProjectListCommand(bootstrap);
+        ProjectCreateCommand projectCreateCommand = new ProjectCreateCommand(bootstrap);
+        ProjectRemoveCommand projectRemoveCommand = new ProjectRemoveCommand(bootstrap);
+        ProjectClearCommand projectClearCommand = new ProjectClearCommand(bootstrap);
+        TaskListCommand taskListCommand = new TaskListCommand(bootstrap);
+        TaskCreateCommand taskCreateCommand = new TaskCreateCommand(bootstrap);
+        TaskClearCommand taskClearCommand = new TaskClearCommand(bootstrap);
+        TaskRemoveCommand taskRemoveCommand = new TaskRemoveCommand(bootstrap);
+        TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(bootstrap);
         commands.put(printListCommand.command(), printListCommand);
         commands.put(projectListCommand.command(), projectListCommand);
         commands.put(projectCreateCommand.command(), projectCreateCommand);
@@ -101,6 +124,54 @@ public class Bootstrap {
                 System.out.println("Некорректные данные");
             }
         }
+    }
+
+    public Map<String, AbstractCommand> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(Map<String, AbstractCommand> commands) {
+        this.commands = commands;
+    }
+
+    public Map<Long, Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Map<Long, Project> projects) {
+        this.projects = projects;
+    }
+
+    public ProjectRepository getProjectRepository() {
+        return projectRepository;
+    }
+
+    public void setProjectRepository(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
+    public TaskRepository getTaskRepository() {
+        return taskRepository;
+    }
+
+    public void setTaskRepository(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
+    public ProjectService getProjectService() {
+        return projectService;
+    }
+
+    public void setProjectService(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    public TaskService getTaskService() {
+        return taskService;
+    }
+
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
     }
 }
 
