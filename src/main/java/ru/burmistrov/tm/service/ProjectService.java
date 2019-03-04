@@ -13,27 +13,39 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public String deleteProjectById(String projectId){
+    public String remove(String projectId) {
         if (projectRepository == null) {
             projectRepository = new ProjectRepository();
         }
 
         try {
             Long id = Long.valueOf(projectId);
-            return projectRepository.deleteProjectById(id);
-        }
-        catch (NumberFormatException e) {
+            return projectRepository.remove(id);
+        } catch (NumberFormatException e) {
             return "Некорректное значение ID";
         }
 
     }
 
-    public String addProject(String name, String descriprion) {
+    public String merge(String name, String merge) {
         if (projectRepository == null) {
             projectRepository = new ProjectRepository();
         }
-            return projectRepository.addProject(name, descriprion);
+        return projectRepository.merge(name, merge);
 
+    }
+
+    public String persist(String projectId, String name, String description) {
+        if (projectRepository == null) {
+            projectRepository = new ProjectRepository();
+        }
+        try {
+
+            Long projectIdLong = Long.valueOf(projectId);
+            return projectRepository.updateProject(projectIdLong, name, description);
+        } catch (NumberFormatException e) {
+            return "Некорректное значение ID";
+        }
     }
 
    /* public void printProjects() {
@@ -44,14 +56,14 @@ public class ProjectService {
 
     }*/
 
-    public String  clearAll() {
+    public String removeAll() {
         if (projectRepository == null) {
             projectRepository = new ProjectRepository();
         }
-           return projectRepository.clearAll();
+        return projectRepository.removeAll();
     }
 
-    public boolean checkContainsProject(String projectId) {
+   /* public boolean checkContainsProject(String projectId) {
         if (projectRepository == null) {
             projectRepository = new ProjectRepository();
         }
@@ -80,22 +92,16 @@ public class ProjectService {
         catch (NumberFormatException e) {
             return false;
         }
-    }
+    }*/
 
-    public Map<Long, Task> getProjectTasks(String projectId) {
+    public String findAll(String projectId) {
 
         try {
-        Long projectIdLong = Long.valueOf(projectId);
-        if (projectRepository.checkContainsProject(projectIdLong)) {
-            return projectRepository.getProjectTasks(projectIdLong);
+            Long projectIdLong = Long.valueOf(projectId);
+            projectRepository.findAll(projectIdLong);
+            return "";
+        } catch (NumberFormatException e) {
+            return "";
         }
-        else {
-            return null;
-        }
-    }
-        catch (NumberFormatException e) {
-        return null;
-    }
-
     }
 }

@@ -2,7 +2,6 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.TaskService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class TaskRemoveCommand extends AbstractCommand {
             String projectId = reader.readLine();
             System.out.println("Введите ID задачи");
             String id = reader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().deleteTaskFromProject(projectId, id));
+            System.out.println(super.getBootstrap().getTaskService().remove(projectId, id));
 
 
         } catch (IOException e) {

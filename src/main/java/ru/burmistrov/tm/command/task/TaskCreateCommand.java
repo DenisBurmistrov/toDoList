@@ -2,7 +2,6 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.TaskService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,13 +30,13 @@ public class TaskCreateCommand extends AbstractCommand {
         try {
             System.out.println("Введите ID проекта:");
             String id = bufferedReader.readLine();
-            System.out.println("Введите имя для задачи: ");
-            String name = bufferedReader.readLine();
+            System.out.println("Введите имя задачи");
+            String oldName = bufferedReader.readLine();
             System.out.println("Введите описание для задачи: ");
             String description = bufferedReader.readLine();
             System.out.println("Введите приоритет для задачи от 0 до 5: ");
             String priority = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().addTaskToProject(id, name, description, priority));
+            System.out.println(super.getBootstrap().getTaskService().merge(id, oldName, description, priority));
         }
         catch (IOException e) {
             System.out.println("Некорректные данные");

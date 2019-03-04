@@ -2,10 +2,6 @@ package ru.burmistrov.tm.command.project;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.service.ProjectService;
-
-import java.util.Map;
 
 public class ProjectListCommand extends AbstractCommand {
 

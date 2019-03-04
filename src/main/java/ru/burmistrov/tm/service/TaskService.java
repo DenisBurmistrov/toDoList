@@ -13,15 +13,14 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public String addTaskToProject(String projectId, String name, String description, String priority, String taskId) {
+    public String persist(String projectId, String oldName , String newName, String description, String priority) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
         try {
             Long id = Long.valueOf(projectId);
             Integer priorityInt = Integer.parseInt(priority);
-            Long idTask = Long.valueOf(taskId);
-            return taskRepository.addTaskToProjectWithTaskId(id, name, description, priorityInt, idTask);
+            return taskRepository.persist(id, oldName, newName, description, priorityInt);
         }
         catch (NumberFormatException e) {
             return  "Некорректные введенные данные";
@@ -29,26 +28,26 @@ public class TaskService {
 
     }
 
-    public String addTaskToProject(String projectId, String name, String description, String priority) {
+    public String merge(String projectId, String name, String description, String priority) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
         try {
-            Long id = Long.valueOf(projectId);
+            Long projectIdLong = Long.valueOf(projectId);
             Integer priorityInt = Integer.parseInt(priority);
-            return taskRepository.addTaskToProject(id, name, description, priorityInt);
+            return taskRepository.merge(projectIdLong, name, description, priorityInt);
         } catch (NumberFormatException e) {
             return "Некорректные введенные данные";
         }
     }
 
-    public Map<Long, Task> printTasksOfProject(String projectId) {
+    public String findAll(String projectId) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
         try {
             Long id = Long.valueOf(projectId);
-            return taskRepository.printTasksOfProject(id);
+            return taskRepository.findAll(id);
         }
         catch (NumberFormatException e) {
             System.out.println("Некорректные введенные данные");
@@ -58,13 +57,13 @@ public class TaskService {
 
     }
 
-    public String clearAllTasks(String projectId) {
+    public String removeAll(String projectId) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
         try {
             Long id = Long.valueOf(projectId);
-            return taskRepository.clearAllTasks(id);
+            return taskRepository.removeAll(id);
         }
         catch (NumberFormatException e) {
             return "Введен некорректный ID";
@@ -72,7 +71,7 @@ public class TaskService {
 
     }
 
-    public String deleteTaskFromProject(String projectId, String taskId) {
+    public String remove(String projectId, String name) {
         if (taskRepository == null) {
             taskRepository = new TaskRepository();
         }
@@ -80,9 +79,8 @@ public class TaskService {
         try {
             System.out.println("Введите ID проекта");
             Long projectIdLong = Long.valueOf(projectId);
-            System.out.println("Введите ID задачи");
-            Long taskIdLong = Long.valueOf(taskId);
-            return taskRepository.deleteTaskFromProject(projectIdLong, taskIdLong);
+            System.out.println("Введите название задачи");
+            return taskRepository.remove(projectIdLong, name);
 
         }
         catch (NumberFormatException e) {

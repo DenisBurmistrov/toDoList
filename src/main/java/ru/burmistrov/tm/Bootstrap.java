@@ -2,12 +2,10 @@ package ru.burmistrov.tm;
 
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.command.PrintListCommand;
-import ru.burmistrov.tm.command.project.ProjectClearCommand;
-import ru.burmistrov.tm.command.project.ProjectCreateCommand;
-import ru.burmistrov.tm.command.project.ProjectListCommand;
-import ru.burmistrov.tm.command.project.ProjectRemoveCommand;
+import ru.burmistrov.tm.command.project.*;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.service.ProjectService;
@@ -27,6 +25,7 @@ public class Bootstrap {
 
     public static Map<String, AbstractCommand> commands = new LinkedHashMap<>();
     public static  Map<Long, Project> projects = new LinkedHashMap<>();
+    public static Map<Long, Task> tasks = new HashMap<>();
     public static  ProjectRepository projectRepository = new ProjectRepository();
     public static  TaskRepository taskRepository = new TaskRepository();
     public static  ProjectService projectService = new ProjectService(projectRepository);
@@ -54,6 +53,7 @@ public class Bootstrap {
         ProjectRemoveCommand projectRemoveCommand = new ProjectRemoveCommand(bootstrap);
         ProjectClearCommand projectClearCommand = new ProjectClearCommand(bootstrap);
         TaskListCommand taskListCommand = new TaskListCommand(bootstrap);
+        ProjectUpdateCommand projectUpdateCommand = new ProjectUpdateCommand(bootstrap);
         TaskCreateCommand taskCreateCommand = new TaskCreateCommand(bootstrap);
         TaskClearCommand taskClearCommand = new TaskClearCommand(bootstrap);
         TaskRemoveCommand taskRemoveCommand = new TaskRemoveCommand(bootstrap);
@@ -63,6 +63,7 @@ public class Bootstrap {
         commands.put(projectCreateCommand.command(), projectCreateCommand);
         commands.put(projectRemoveCommand.command(), projectRemoveCommand);
         commands.put(projectClearCommand.command(), projectClearCommand);
+        commands.put(projectUpdateCommand.command(), projectUpdateCommand);
         commands.put(taskCreateCommand.command(), taskCreateCommand);
         commands.put(taskListCommand.command(), taskListCommand);
         commands.put(taskRemoveCommand.command(), taskRemoveCommand);

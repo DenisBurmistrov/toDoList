@@ -5,25 +5,44 @@ import ru.burmistrov.tm.api.ITaskRepository;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TaskRepository implements ITaskRepository {
 
-    private Map<Long, Project> projects = Bootstrap.projects;
+    private Map<Long, Task> tasks = Bootstrap.tasks;
 
     @Override
-    public String addTaskToProjectWithTaskId(Long projectId, String name, String description, Integer priority, Long taskId) {
+    public String persist(Long projectId, String oldName ,String newName, String description, Integer priority) {
 
-        if (projects.containsKey(projectId)) {
-            Task task = new Task();
-            task.setId(taskId);
-            task.setName(name);
-            task.setDescription(description);
+        tasks.forEach((key, value) -> {
+            if (oldName.equals(value.getName()) && projectId.equals(value.getProjectId())) {
+                Task task = new Task();
+                task.setId(value.getId());
+                task.setName(newName);
+                task.setDescription(description);
+                task.setPriority(priority);
+                task.setProjectId(projectId);
+                tasks.put(key, task);
+            }
+        });
+        return "";
 
+    }
+
+    @Override
+    public String merge(Long projectId, String name, String description, Integer priority) {
+
+        Task task = new Task();
+        task.setName(name);
+        task.setDescription(description);
+        task.setProjectId(projectId);
+        if (!tasks.containsValue(task)) {
             boolean isSetPriority = task.setPriority(priority);
             if (isSetPriority) {
-                projects.get(projectId).addTask(task);
-                return "Задача обновлена в проекте \"" + projects.get(projectId).getName() + "\"";
+                tasks.put(task.getId(), task);
+                return "Задача добавлена в проект c ID: " + projectId + "";
             }
             else return "";
         } else {
@@ -32,53 +51,39 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public String addTaskToProject(Long projectId, String name, String description, Integer priority) {
-        if (projects.containsKey(projectId)) {
-            Task task = new Task();
-            task.setName(name);
-            task.setDescription(description);
+    public String remove(Long projectId, String name) {
 
-            boolean isSetPriority = task.setPriority(priority);
-            if (isSetPriority) {
-                projects.get(projectId).addTask(task);
-                return "Задача добавлена в проект \"" + projects.get(projectId).getName() + "\"";
+        tasks.entrySet().removeIf((k) ->
+            (k != null && projectId.equals(k.getValue().getProjectId()) && name.equals(k.getValue().getName())));
+        return "";
+    }
+
+
+    @Override
+    public String findAll(Long projectId) {
+        tasks.forEach((k, v) -> {
+            if(v != null && projectId.equals(v.getProjectId())) {
+                System.out.println(v);
             }
-            else return "";
-        } else {
-            return "Нет проекта с введенным ID";
-        }
-    }
-
-    @Override
-    public String deleteTaskFromProject(Long projectId, Long taskId) {
-
-        if (projects.containsKey(projectId)) {
-            projects.get(projectId).getTasks().entrySet().removeIf((e -> e.getKey().equals(taskId)));
-            return "";
-        } else {
-            return "Нет проекта с введённым ID";
-        }
+        });
+        return "";
     }
 
 
+
     @Override
-    public Map<Long, Task> printTasksOfProject(Long projectId) {
-        if (projects.containsKey(projectId)) {
-            return projects.get(projectId).getTasks();
-        } else {
-           return  null;
-        }
+    public String removeAll(Long projectId) {
+        tasks.entrySet().removeIf((v) -> v.getValue().getProjectId().equals(projectId));
+        return "";
     }
 
     @Override
-    public String clearAllTasks(Long projectId) {
+    public String findOne(Long projectId, String name) {
+        Task task;
 
-            if (projects.containsKey(projectId)) {
-                projects.get(projectId).getTasks().clear();
-                return "Очистка произведена";
-            } else {
-                return "Нет проекта с введенным ID";
-            }
+        List list = tasks.entrySet().stream().filter(v -> projectId.equals(v.getValue().getProjectId()) && name.equals(v.getValue().getName())).collect(Collectors.toList());
+        task =  (Task) list.get(0);
+        return task.toString();
     }
      /*@Override
      public String updateTaskFromProject() {

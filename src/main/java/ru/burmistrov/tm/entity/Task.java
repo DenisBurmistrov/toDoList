@@ -12,6 +12,7 @@ public class Task {
     private Date createdAt;
     private Date shouldEndAt;
     private static long counter = 1;
+    private Long projectId;
 
     public Task() {
         id = counter++;
@@ -48,17 +49,19 @@ public class Task {
         this.id = id;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(name, task.name);
+        return id.equals(task.id) &&
+                projectId.equals(task.projectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id, projectId);
     }
 
     @Override
@@ -66,7 +69,8 @@ public class Task {
         return "ID: " + id +
                 "; Название: " + name +
                 "; Описание: " + description +
-                "; Приоритет " + priority;
+                "; Приоритет: " + priority +
+                "; ID проекта: " + projectId;
     }
 
     private void incrementCounter() {
@@ -91,5 +95,13 @@ public class Task {
 
     public void setShouldEndAt(Date shouldEndAt) {
         this.shouldEndAt = shouldEndAt;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

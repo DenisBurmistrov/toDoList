@@ -5,16 +5,19 @@ import ru.burmistrov.tm.api.IProjectRepository;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProjectRepository implements IProjectRepository {
 
     private static long counter = 1;
     private Map<Long, Project> projects = Bootstrap.projects;
+    private Map<Long, Task> tasks = Bootstrap.tasks;
 
 
     @Override
-    public String addProject(String name, String description) {
+    public String merge(String name, String description) {
         Project project = new Project();
         project.setId(incrementCounter());
         project.setName(name);
@@ -29,7 +32,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public String deleteProjectById(Long projectId){
+    public String remove(Long projectId){
 
             projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId));
             return "";
@@ -46,12 +49,13 @@ public class ProjectRepository implements IProjectRepository {
 
 
     @Override
-    public String clearAll() {
+    public String removeAll() {
+        tasks.clear();
         projects.clear();
         return "Все проекты удалены";
     }
 
-    @Override
+    /*@Override
     public boolean checkContainsProject(Long projectId) {
         return projects.containsKey(projectId);
     }
@@ -60,29 +64,35 @@ public class ProjectRepository implements IProjectRepository {
     public boolean checkHavingTasks(Long projectId) {
 
         return projects.get(projectId).getTasks().size() > 0;
-    }
+    }*/
 
     @Override
-    public Map<Long, Task> getProjectTasks(Long projectId) {
-        return projects.get(projectId).getTasks();
+    public String findAll(Long projectId) {
+        tasks.forEach((k, v) -> {
+            if (v != null && projectId.equals(v.getProjectId())){
+                System.out.println();
+            }
+        });
+        return "";
     }
 
 
-
-
-   /* @Override
-    public void updateProjectNameById(Long id, String name) {
+    @Override
+    public String updateProject(Long id, String name, String description) {
         Iterator it = projects.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getKey() == id){
-                Project project = new Project((Project) pair.getValue());
+            if(pair.getValue() == id){
+                Project project = new Project();
+                project.setId(id);
                 project.setName(name);
+                project.setDescription(description);
                 projects.put(id, project);
-                printProjects();
+                return "Обновление проекта произведено";
             }
         }
-    }*/
+        return "Нет проекта с введённый ID";
+    }
 
     public Long incrementCounter(){
         return counter++;

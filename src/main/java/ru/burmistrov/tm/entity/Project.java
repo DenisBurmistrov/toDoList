@@ -12,7 +12,6 @@ public class Project {
     private Date createdAt;
     private Date shouldEndAt;
     private Long id;
-    private HashMap<Long, Task> tasks = new LinkedHashMap<>();
 
     public Project() {
         createdAt = new Date();
@@ -23,10 +22,6 @@ public class Project {
         this.description = description;
         this.id = id;
         this.createdAt = new Date();
-    }
-
-    public void addTask(Task task) {
-        tasks.put(task.getId(), task);
     }
 
 
@@ -58,9 +53,6 @@ public class Project {
         this.id = id;
     }
 
-    public HashMap<Long, Task> getTasks() {
-        return tasks;
-    }
 
 
     @Override
