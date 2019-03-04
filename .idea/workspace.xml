@@ -7,25 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e16b4b2-896e-4ef7-acac-f8bed5f3eb73" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/Bootstrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/Bootstrap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/AbstractCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/AbstractCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/PrintListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/PrintListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectCreateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectRemoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskCreateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskListCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskRemoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskRemoveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskUpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/TaskService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -97,7 +80,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/repository/TaskRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
@@ -105,6 +88,15 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -119,22 +111,6 @@
                 <element signature="e#243#244#0" expanded="true" />
                 <element signature="e#288#289#0" expanded="true" />
                 <element signature="e#318#319#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/project/ProjectRemoveCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#418#419#0" expanded="true" />
-                <element signature="e#450#451#0" expanded="true" />
-                <element signature="e#495#496#0" expanded="true" />
-                <element signature="e#531#532#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -263,7 +239,6 @@
         <option value="$PROJECT_DIR$/.idea/sdf.html" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/api/IProjectRepository.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/AbstractCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/ProjectService.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/service/TaskService.java" />
@@ -279,6 +254,7 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskListCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/task/TaskUpdateCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/burmistrov/tm/command/PrintListCommand.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -416,7 +392,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551702479653" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551702576488" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -520,14 +496,21 @@
       <option name="project" value="LOCAL" />
       <updated>1551694394074</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="refactor bootstrap">
+      <created>1551702532419</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1551702532419</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18176973" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18176973" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -536,7 +519,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30985916" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30985916" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -591,7 +574,8 @@
     <MESSAGE value="Added updateTask" />
     <MESSAGE value="fix errors" />
     <MESSAGE value="added gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="added gitignore" />
+    <MESSAGE value="refactor bootstrap" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor bootstrap" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,13 +681,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -956,6 +933,13 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
         </state>
       </provider>
     </entry>
