@@ -1,7 +1,7 @@
 /out/
-/target/
+target/
 /bin/
 /.idea/
-/.iml
+/.iml/
 *.iml
 /build/
