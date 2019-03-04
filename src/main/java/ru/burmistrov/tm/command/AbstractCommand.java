@@ -1,4 +1,4 @@
-package ru.burmistrov.command;
+package ru.burmistrov.tm.command;
 
 public abstract class AbstractCommand {
 

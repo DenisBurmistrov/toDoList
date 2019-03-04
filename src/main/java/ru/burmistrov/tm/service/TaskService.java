@@ -1,11 +1,8 @@
-package ru.burmistrov.service;
+package ru.burmistrov.tm.service;
 
-import ru.burmistrov.entity.Task;
-import ru.burmistrov.repository.TaskRepository;
+import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.repository.TaskRepository;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 public class TaskService {
@@ -77,4 +74,5 @@ public class TaskService {
 
 
     }
+
 }

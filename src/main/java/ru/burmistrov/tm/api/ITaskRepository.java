@@ -1,6 +1,6 @@
-package ru.burmistrov.api.repository;
+package ru.burmistrov.tm.api;
 
-import ru.burmistrov.entity.Task;
+import ru.burmistrov.tm.entity.Task;
 
 import java.util.Map;
 
@@ -14,5 +14,4 @@ public interface ITaskRepository {
 
     String clearAllTasks(Long taskId);
 
-    // void updateTaskFromProject();
 }

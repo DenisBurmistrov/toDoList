@@ -1,9 +1,9 @@
-package ru.burmistrov.command.project;
+package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.Bootstrap;
-import ru.burmistrov.command.AbstractCommand;
-import ru.burmistrov.entity.Project;
-import ru.burmistrov.service.ProjectService;
+import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Map;
 

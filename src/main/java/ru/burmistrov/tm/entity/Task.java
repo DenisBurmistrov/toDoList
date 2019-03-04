@@ -1,4 +1,4 @@
-package ru.burmistrov.entity;
+package ru.burmistrov.tm.entity;
 
 import java.util.Date;
 import java.util.Objects;
@@ -33,12 +33,14 @@ public class Task {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
-        if (priority >= 0 || priority <= 5) {
+    public boolean setPriority(Integer priority) {
+        if (priority >= 0 && priority <= 5) {
             this.priority = priority;
+            return true;
         }
         else {
             System.out.println("Некорректное значение приоритета (Диапазон от 0 до 5)");
+            return false;
         }
     }
 
@@ -63,7 +65,8 @@ public class Task {
     public String toString() {
         return "ID: " + id +
                 "; Название: " + name +
-                ", Приоритет " + priority;
+                "; Описание: " + description +
+                "; Приоритет " + priority;
     }
 
     private void incrementCounter() {

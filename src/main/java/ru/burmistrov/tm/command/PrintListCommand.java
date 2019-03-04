@@ -1,8 +1,6 @@
-package ru.burmistrov.command;
+package ru.burmistrov.tm.command;
 
-import ru.burmistrov.Bootstrap;
-
-import java.util.Map;
+import ru.burmistrov.tm.Bootstrap;
 
 public class PrintListCommand extends AbstractCommand {
 

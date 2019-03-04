@@ -1,7 +1,8 @@
-package ru.burmistrov.entity;
+package ru.burmistrov.tm.entity;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class Project {
@@ -11,7 +12,7 @@ public class Project {
     private Date createdAt;
     private Date shouldEndAt;
     private Long id;
-    private HashMap<Long, Task> tasks = new HashMap<>();
+    private HashMap<Long, Task> tasks = new LinkedHashMap<>();
 
     public Project() {
         createdAt = new Date();

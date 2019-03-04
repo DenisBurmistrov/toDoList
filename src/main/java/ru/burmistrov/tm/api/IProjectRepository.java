@@ -1,4 +1,8 @@
-package ru.burmistrov.api.repository;
+package ru.burmistrov.tm.api;
+
+import ru.burmistrov.tm.entity.Task;
+
+import java.util.Map;
 
 public interface IProjectRepository {
 
@@ -9,6 +13,13 @@ public interface IProjectRepository {
     //String printProjects();
 
     String clearAll();
+
+    boolean checkContainsProject(Long projectId);
+
+    boolean checkHavingTasks(Long projectId);
+
+    Map<Long, Task> getProjectTasks(Long projectId);
+
 
    // void updateProjectNameById(Long id, String name);
 

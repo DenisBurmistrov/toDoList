@@ -1,8 +1,9 @@
-package ru.burmistrov.repository;
+package ru.burmistrov.tm.repository;
 
-import ru.burmistrov.Bootstrap;
-import ru.burmistrov.api.repository.IProjectRepository;
-import ru.burmistrov.entity.Project;
+import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.IProjectRepository;
+import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Task;
 
 import java.util.Map;
 
@@ -49,6 +50,24 @@ public class ProjectRepository implements IProjectRepository {
         projects.clear();
         return "Все проекты удалены";
     }
+
+    @Override
+    public boolean checkContainsProject(Long projectId) {
+        return projects.containsKey(projectId);
+    }
+
+    @Override
+    public boolean checkHavingTasks(Long projectId) {
+
+        return projects.get(projectId).getTasks().size() > 0;
+    }
+
+    @Override
+    public Map<Long, Task> getProjectTasks(Long projectId) {
+        return projects.get(projectId).getTasks();
+    }
+
+
 
 
    /* @Override

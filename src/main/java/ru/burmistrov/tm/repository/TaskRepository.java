@@ -1,9 +1,9 @@
-package ru.burmistrov.repository;
+package ru.burmistrov.tm.repository;
 
-import ru.burmistrov.Bootstrap;
-import ru.burmistrov.api.repository.ITaskRepository;
-import ru.burmistrov.entity.Project;
-import ru.burmistrov.entity.Task;
+import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.ITaskRepository;
+import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Task;
 
 import java.util.Map;
 
@@ -13,13 +13,17 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public String addTaskToProject(Long projectId, String name, String description, Integer priority) {
+
         if (projects.containsKey(projectId)) {
             Task task = new Task();
             task.setName(name);
             task.setDescription(description);
-            task.setPriority(priority);
-            projects.get(projectId).addTask(task);
-            return "Задача добавлена в проект \"" + projects.get(projectId).getName() + "\"";
+            boolean isSetPriority = task.setPriority(priority);
+            if (isSetPriority) {
+                projects.get(projectId).addTask(task);
+                return "Задача добавлена в проект \"" + projects.get(projectId).getName() + "\"";
+            }
+            else return "";
         } else {
             return "Нет проекта с введенным ID";
         }
@@ -39,12 +43,10 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public Map<Long, Task> printTasksOfProject(Long projectId) {
-
         if (projects.containsKey(projectId)) {
             return projects.get(projectId).getTasks();
         } else {
            return  null;
-
         }
     }
 
@@ -58,9 +60,8 @@ public class TaskRepository implements ITaskRepository {
                 return "Нет проекта с введенным ID";
             }
     }
-
-    /* @Override
-     public void updateTaskFromProject() {
+     /*@Override
+     public String updateTaskFromProject() {
          BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
          try {
              System.out.println("Введите ID проекта:");
@@ -96,7 +97,5 @@ public class TaskRepository implements ITaskRepository {
          } catch (IOException e) {
              System.out.println("Некорректное значение ID");
          }
-
      }*/
-
 }

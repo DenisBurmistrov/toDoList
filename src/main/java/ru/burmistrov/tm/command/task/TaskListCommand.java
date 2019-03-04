@@ -1,14 +1,12 @@
-package ru.burmistrov.command.task;
+package ru.burmistrov.tm.command.task;
 
-import ru.burmistrov.Bootstrap;
-import ru.burmistrov.command.AbstractCommand;
-import ru.burmistrov.entity.Task;
-import ru.burmistrov.service.TaskService;
+import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.service.TaskService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TaskListCommand extends AbstractCommand {
@@ -33,8 +31,13 @@ public class TaskListCommand extends AbstractCommand {
         try {
             String id = bufferedReader.readLine();
             Map<Long, Task> tasks = taskService.printTasksOfProject(id);
-            System.out.println("Список задачь проекта:");
-            tasks.forEach((k, v) -> System.out.println(v));
+            if(tasks == null) {
+                System.out.println("Нет проекта с веденный ID");
+            }
+            else {
+                System.out.println("Список задачь проекта:");
+                tasks.forEach((k, v) -> System.out.println(v));
+            }
         } catch (IOException e) {
             System.out.println("Некорректное значение ID");
         }

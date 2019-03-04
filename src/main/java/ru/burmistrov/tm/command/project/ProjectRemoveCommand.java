@@ -1,7 +1,7 @@
-package ru.burmistrov.command.project;
+package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.command.AbstractCommand;
-import ru.burmistrov.service.ProjectService;
+import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.service.ProjectService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

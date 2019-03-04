@@ -1,4 +1,4 @@
-package ru.burmistrov;
+package ru.burmistrov.tm;
 
 
 public class App {
