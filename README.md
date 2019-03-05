@@ -35,8 +35,8 @@
 
 Команда для запуска
 =============
-` cd target`
-` java -jar ./tm.jar`
+- ` cd target`
+- ` java -jar ./tm.jar`
 
 Разработчик
 =============
