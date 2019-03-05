@@ -2,9 +2,11 @@ package ru.burmistrov.tm.command.project;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.service.ProjectService;
 
 public class ProjectClearCommand extends AbstractCommand {
 
+    private final ProjectService projectService = getBootstrap().getProjectService();
 
     public ProjectClearCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -22,7 +24,11 @@ public class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        super.getBootstrap().getProjectService().removeAll();
+            projectService.removeAll();
+    }
 
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

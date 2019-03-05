@@ -6,22 +6,25 @@ import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ProjectRepository implements IProjectRepository {
 
-    private Map<String, Project> projects = Bootstrap.projects;
-    private Map<String, Task> tasks = Bootstrap.tasks;
+    private final Bootstrap bootstrap = Bootstrap.getInstance();
 
+    private Map<String, Project> projects = bootstrap.getProjects();
+
+    private Map<String, Task> tasks = bootstrap.getTasks();
 
     @Override
     public String persist(String name, String description) {
         Project project = new Project();
         project.setName(name);
         project.setDescription(description);
-
+        project.setUserId(bootstrap.getCurrentUser().getId());
         if (projects.containsValue(project)) {
-           return "Проект с таким именем уже существует";
+            return "Проект с таким именем уже существует";
         } else {
             projects.put(project.getId(), project);
             return "Добавление произведено";
@@ -29,21 +32,24 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void remove(String projectId){
-
-            projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId));
-            tasks.entrySet().removeIf(e -> e.getValue().getProjectId().equals(projectId));
-        }
+    public void remove(String projectId) {
+        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
+        tasks.entrySet().removeIf(e -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
+    }
 
     @Override
     public void removeAll() {
-        tasks.clear();
-        projects.clear();
+        tasks.entrySet().removeIf(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
+        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
     }
 
     @Override
     public Map<String, Project> findAll() {
-        return projects;
+        Map<String, Project> result = new LinkedHashMap<>();
+        projects.entrySet()
+                .stream().filter(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()))
+                .forEach(e -> result.put(e.getKey(), e.getValue()));
+        return result;
     }
 
     @Override
@@ -51,7 +57,7 @@ public class ProjectRepository implements IProjectRepository {
         Iterator it = projects.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            if(pair.getKey().equals(id)){
+            if (pair.getKey().equals(id)) {
                 Project project = new Project();
                 project.setId(id);
                 project.setName(name);
@@ -63,5 +69,12 @@ public class ProjectRepository implements IProjectRepository {
         return "Нет проекта с введённый ID";
     }
 
-
+    @Override
+    public void assignExpert(String projectId, String userId) {
+        projects.forEach((k,v) -> {
+            if(v.getUserId().equals(projectId)){
+                v.setUserId(userId);
+            }
+        });
+    }
 }

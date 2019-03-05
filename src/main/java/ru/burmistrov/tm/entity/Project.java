@@ -4,20 +4,20 @@ import java.util.*;
 
 public class Project {
 
+    private String id = UUID.randomUUID().toString();
+    private String userId;
     private String name;
     private String description;
-    private Date createdAt;
-    private Date shouldEndAt;
-    private String id = UUID.randomUUID().toString();
+    private Date dateBegin = new Date();
+    private Date dateEnd;
 
     public Project() {
-        createdAt = new Date();
     }
 
     public Project(String name, String description) {
         this.name = name;
         this.description = description;
-        this.createdAt = new Date();
+        this.dateBegin = new Date();
     }
 
     public String getName() {
@@ -36,8 +36,8 @@ public class Project {
         this.description = description;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getDateBegin() {
+        return dateBegin;
     }
 
     public String getId() {
@@ -47,7 +47,6 @@ public class Project {
     public void setId(String id) {
         this.id = id;
     }
-
 
 
     @Override
@@ -65,14 +64,22 @@ public class Project {
 
     @Override
     public String toString() {
-        return "ID: " + id +"; Название: " + name + "; Описание: " + description + "; Дата создания: " + createdAt;
+        return "ID: " + id + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + userId;
     }
 
-    public Date getShouldEndAt() {
-        return shouldEndAt;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public void setShouldEndAt(Date shouldEndAt) {
-        this.shouldEndAt = shouldEndAt;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

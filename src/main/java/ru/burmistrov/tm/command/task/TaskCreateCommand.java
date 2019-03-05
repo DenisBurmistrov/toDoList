@@ -2,13 +2,14 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import ru.burmistrov.tm.service.TaskService;
+import java.util.Scanner;
 
 public class TaskCreateCommand extends AbstractCommand {
 
+    private final TaskService taskService = getBootstrap().getTaskService();
+
+    private final Scanner scanner = getBootstrap().getScanner();
 
     public TaskCreateCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -26,22 +27,19 @@ public class TaskCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            System.out.println("Введите ID проекта:");
-            String id = bufferedReader.readLine();
-            System.out.println("Введите имя задачи");
-            String oldName = bufferedReader.readLine();
-            System.out.println("Введите описание для задачи: ");
-            String description = bufferedReader.readLine();
-            System.out.println("Введите приоритет для задачи от 0 до 5: ");
-            String priority = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().persist(id, oldName, description, priority));
-        }
-        catch (IOException e) {
-            System.out.println("Некорректные данные");
-        }
+                System.out.println("Введите ID проекта:");
+                String id = scanner.nextLine();
+                System.out.println("Введите имя задачи");
+                String oldName = scanner.nextLine();
+                System.out.println("Введите описание для задачи: ");
+                String description = scanner.nextLine();
+                System.out.println("Введите приоритет для задачи от 0 до 5: ");
+                String priority = scanner.nextLine();
+                System.out.println(taskService.persist(id, oldName, description, priority));
+    }
 
-
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

@@ -2,13 +2,14 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import ru.burmistrov.tm.service.TaskService;
+import java.util.Scanner;
 
 public class TaskRemoveCommand extends AbstractCommand {
 
+    private final TaskService taskService = getBootstrap().getTaskService();
+
+    private final Scanner scanner = getBootstrap().getScanner();
 
     public TaskRemoveCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -26,21 +27,15 @@ public class TaskRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        try {
             System.out.println("Введите ID проекта");
-            String projectId = reader.readLine();
+            String projectId = scanner.nextLine();
             System.out.println("Введите ID задачи");
-            String taskId = reader.readLine();
-            super.getBootstrap().getTaskService().remove(projectId, taskId);
+            String taskId = scanner.next();
+            taskService.remove(projectId, taskId);
+    }
 
-
-        } catch (IOException e) {
-            System.out.println("Некорректные данные");
-        }
-        catch (NumberFormatException e) {
-            System.out.println("Некорректные введенные данные");
-        }
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

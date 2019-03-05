@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.command;
 
 import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.entity.Role;
 
 public abstract class AbstractCommand {
 
@@ -10,13 +11,16 @@ public abstract class AbstractCommand {
         this.bootstrap = bootstrap;
     }
 
-    abstract public String getName();
+    public abstract String getName();
 
-    abstract public String getDescription();
+    public abstract String getDescription();
 
-    abstract public void execute();
+    public abstract void execute();
 
     public Bootstrap getBootstrap() {
         return bootstrap;
     }
+
+    public abstract boolean isSecure();
+
 }

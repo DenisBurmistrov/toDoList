@@ -2,13 +2,15 @@ package ru.burmistrov.tm.command.project;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.service.ProjectService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class ProjectCreateCommand extends AbstractCommand {
 
+    private final Scanner scanner = getBootstrap().getScanner();
+
+    private final ProjectService projectService = getBootstrap().getProjectService();
 
     public ProjectCreateCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -26,24 +28,18 @@ public class ProjectCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            while (true) {
-                System.out.println("Введите имя:");
-                String name = bufferedReader.readLine();
-                if (name.length() == 0) {
-                    System.out.println("Нельзя использовать пустое имя");
-                } else {
-                    System.out.println("Введите описание:");
-                    String description = bufferedReader.readLine();
-                    System.out.println(super.getBootstrap().getProjectService().persist(name, description));
-                    break;
-                }
+            System.out.println("Введите имя:");
+            String name = scanner.nextLine();
+            if (name.length() == 0) {
+                System.out.println("Нельзя использовать пустое имя");
             }
+            System.out.println("Введите описание:");
+            String description = scanner.nextLine();
+            System.out.println(projectService.persist(name, description));
+    }
 
-
-        } catch (IOException e) {
-            System.out.println("Некорректные данные");
-        }
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

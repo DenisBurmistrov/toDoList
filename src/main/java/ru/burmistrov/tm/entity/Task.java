@@ -7,16 +7,15 @@ import java.util.UUID;
 public class Task {
 
     private String id = UUID.randomUUID().toString();
+    private String projectId;
     private String name;
     private String description;
     private Integer priority;
-    private Date createdAt;
-    private Date shouldEndAt;
-    private String  projectId;
-
+    private Date dateBegin = new Date();
+    private Date dateEnd;
+    private String userId;
 
     public Task() {
-        createdAt = new Date();
     }
 
     public String getId() {
@@ -39,9 +38,7 @@ public class Task {
         if (priority >= 0 && priority <= 5) {
             this.priority = priority;
             return true;
-        }
-        else {
-            System.out.println("Некорректное значение приоритета (Диапазон от 0 до 5)");
+        } else {
             return false;
         }
     }
@@ -82,16 +79,16 @@ public class Task {
         this.description = description;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getDateBegin() {
+        return dateBegin;
     }
 
-    public Date getShouldEndAt() {
-        return shouldEndAt;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public void setShouldEndAt(Date shouldEndAt) {
-        this.shouldEndAt = shouldEndAt;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getProjectId() {
@@ -100,5 +97,13 @@ public class Task {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

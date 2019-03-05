@@ -1,6 +1,5 @@
 package ru.burmistrov.tm.api;
 
-
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.Map;
@@ -13,7 +12,7 @@ public interface ITaskRepository {
 
     void remove(String projectId, String name);
 
-    Map <String, Task> findAll(String projectId);
+    Map<String, Task> findAll(String projectId);
 
     void removeAll(String projectId);
 

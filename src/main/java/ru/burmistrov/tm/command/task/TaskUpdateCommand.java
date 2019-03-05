@@ -2,13 +2,15 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.service.TaskService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class TaskUpdateCommand extends AbstractCommand {
 
+    private final TaskService taskService = getBootstrap().getTaskService();
+
+    private final Scanner scanner = getBootstrap().getScanner();
 
     public TaskUpdateCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -26,26 +28,24 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
             System.out.println("Введите ID проекта:");
-            String projectId = reader.readLine();
+            String projectId = scanner.nextLine();
             System.out.println("Введите имя задачи:");
-            String oldName = reader.readLine();
+            String oldName = scanner.nextLine();
             System.out.println("Введите новое имя:");
-            String newName = reader.readLine();
+            String newName = scanner.nextLine();
             if (newName != null) {
                 System.out.println("Введите новое описание: ");
-                String description = reader.readLine();
+                String description = scanner.nextLine();
                 System.out.println("Введите новый приоритет(от 0 до 5): ");
-                String priority = reader.readLine();
-                System.out.println(super.getBootstrap().getTaskService().merge(projectId, oldName, newName, description, priority));
-            } else {
-                System.out.println("У проекта нет задач");
-            }
-        } catch (IOException e) {
-            System.out.println("Некорректное значение ID");
-        }
+                String priority = scanner.nextLine();
+                System.out.println(taskService.merge(projectId, oldName, newName, description, priority));
+            System.out.println("Некорректное значение нового имени");
+        } else System.out.println("Для использования этой команды нужно авторизоваться");
+    }
+
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

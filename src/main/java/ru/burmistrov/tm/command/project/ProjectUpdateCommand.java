@@ -2,13 +2,15 @@ package ru.burmistrov.tm.command.project;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.service.ProjectService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class ProjectUpdateCommand extends AbstractCommand {
 
+    private final ProjectService projectService = getBootstrap().getProjectService();
+
+    private final Scanner scanner = getBootstrap().getScanner();
 
     public ProjectUpdateCommand(Bootstrap bootstrap) {
         super(bootstrap);
@@ -26,18 +28,17 @@ public class ProjectUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        try {
             System.out.println("Введите ID проекта:");
-            String projectId = bufferedReader.readLine();
+            String projectId = scanner.nextLine();
             System.out.println("Введите новое название проекта:");
-            String name = bufferedReader.readLine();
+            String name = scanner.nextLine();
             System.out.println("Введите новое описание:");
-            String description = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getProjectService().merge(projectId, name, description));
-        } catch (IOException e) {
-            System.out.println("Некорректные параметры");
+            String description = scanner.nextLine();
+            System.out.println(projectService.merge(projectId, name, description));
         }
 
+    @Override
+    public boolean isSecure() {
+        return true;
     }
 }

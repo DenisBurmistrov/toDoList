@@ -7,30 +7,22 @@ import java.util.Map;
 
 public class TaskService {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
-    public String merge(String projectId, String oldName , String newName, String description, String priority) {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
+    public String merge(String projectId, String oldName, String newName, String description, String priority) {
         try {
             Integer priorityInt = Integer.parseInt(priority);
             return taskRepository.merge(projectId, oldName, newName, description, priorityInt);
+        } catch (NumberFormatException e) {
+            return "Некорректно введенный приоритет";
         }
-        catch (NumberFormatException e) {
-            return  "Некорректно введенный приоритет";
-        }
-
     }
 
     public String persist(String projectId, String name, String description, String priority) {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
         try {
             Integer priorityInt = Integer.parseInt(priority);
             return taskRepository.persist(projectId, name, description, priorityInt);
@@ -40,25 +32,14 @@ public class TaskService {
     }
 
     public Map<String, Task> findAll(String projectId) {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
-            return taskRepository.findAll(projectId);
+        return taskRepository.findAll(projectId);
     }
 
     public void removeAll(String projectId) {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
-            taskRepository.removeAll(projectId);
+        taskRepository.removeAll(projectId);
     }
 
     public void remove(String projectId, String taskId) {
-        if (taskRepository == null) {
-            taskRepository = new TaskRepository();
-        }
-            taskRepository.remove(projectId, taskId);
-
+        taskRepository.remove(projectId, taskId);
     }
-
 }

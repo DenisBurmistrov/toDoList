@@ -6,32 +6,34 @@ import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Scanner;
 
-public class ProjectRemoveCommand extends AbstractCommand {
+public class ProjectAssignUser extends AbstractCommand {
 
     private final Scanner scanner = getBootstrap().getScanner();
 
     private final ProjectService projectService = getBootstrap().getProjectService();
 
-    public ProjectRemoveCommand(Bootstrap bootstrap) {
+    public ProjectAssignUser(Bootstrap bootstrap) {
         super(bootstrap);
     }
 
     @Override
     public String getName() {
-        return "-removeProject";
+        return "-assignUser";
     }
 
     @Override
     public String getDescription() {
-        return "Delete project by ID";
+        return "Assign project to user";
     }
 
     @Override
     public void execute() {
-            System.out.println("Введите ID проекта: ");
-            String projectId = scanner.nextLine();
-            projectService.remove(projectId);
-        }
+        System.out.println("Введите ID проекта:");
+        String projectId = scanner.nextLine();
+        System.out.println("Введите ID пользователя");
+        String userId = scanner.nextLine();
+        projectService.assignUser(projectId, userId);
+    }
 
     @Override
     public boolean isSecure() {
