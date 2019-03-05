@@ -1,27 +1,28 @@
 package ru.burmistrov.tm.api;
 
+import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.Map;
 
 public interface IProjectRepository {
 
-    String merge(String name, String description);
+    String persist(String name, String description);
 
-    String remove(Long projectId);
+    void remove(String projectId);
 
     //String printProjects();
 
-    String removeAll();
+    void removeAll();
 
    /* boolean checkContainsProject(Long projectId);
 
     boolean checkHavingTasks(Long projectId);*/
 
-    String findAll(Long projectId);
+    Map<String, Project> findAll();
 
 
-    String updateProject(Long id, String name, String description);
+    String merge(String id, String name, String description);
 
 
 }

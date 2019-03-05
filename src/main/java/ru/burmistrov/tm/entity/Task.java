@@ -2,23 +2,24 @@ package ru.burmistrov.tm.entity;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Task {
 
-    private Long id;
+    private String id = UUID.randomUUID().toString();
     private String name;
     private String description;
     private Integer priority;
     private Date createdAt;
     private Date shouldEndAt;
-    private static long counter = 1;
-    private Long projectId;
+    private String  projectId;
+
 
     public Task() {
-        id = counter++;
+        createdAt = new Date();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -45,7 +46,7 @@ public class Task {
         }
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,10 +74,6 @@ public class Task {
                 "; ID проекта: " + projectId;
     }
 
-    private void incrementCounter() {
-        counter++;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -97,11 +94,11 @@ public class Task {
         this.shouldEndAt = shouldEndAt;
     }
 
-    public Long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 }

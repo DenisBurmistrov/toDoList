@@ -11,18 +11,18 @@ public class ProjectClearCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-clearProjects";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "clear all projects";
     }
 
     @Override
     public void execute() {
-        System.out.println(super.getBootstrap().getProjectService().removeAll());
+        super.getBootstrap().getProjectService().removeAll();
 
     }
 }

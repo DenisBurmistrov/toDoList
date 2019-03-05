@@ -15,12 +15,12 @@ public class TaskUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-updateTask";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Update task by project ID by task ID";
     }
 
@@ -40,7 +40,7 @@ public class TaskUpdateCommand extends AbstractCommand {
                 String description = reader.readLine();
                 System.out.println("Введите новый приоритет(от 0 до 5): ");
                 String priority = reader.readLine();
-                System.out.println(super.getBootstrap().getTaskService().persist(projectId, oldName, newName, description, priority));
+                System.out.println(super.getBootstrap().getTaskService().merge(projectId, oldName, newName, description, priority));
             } else {
                 System.out.println("У проекта нет задач");
             }

@@ -1,17 +1,21 @@
 package ru.burmistrov.tm.api;
 
 
+import ru.burmistrov.tm.entity.Task;
+
+import java.util.Map;
+
 public interface ITaskRepository {
 
-    String persist(Long projectId, String oldName, String newName, String description, Integer priority);
+    String merge(String projectId, String oldName, String newName, String description, Integer priority);
 
-    String merge(Long projectId, String name, String description, Integer priority);
+    String persist(String projectId, String name, String description, Integer priority);
 
-    String remove(Long projectId, String name);
+    void remove(String projectId, String name);
 
-    String findAll(Long projectId);
+    Map <String, Task> findAll(String projectId);
 
-    String removeAll(Long projectId);
+    void removeAll(String projectId);
 
-    String findOne(Long projectId, String name);
+    Task findOne(String projectId, String name);
 }

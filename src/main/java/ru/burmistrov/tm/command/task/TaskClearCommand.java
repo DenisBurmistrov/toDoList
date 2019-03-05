@@ -14,12 +14,12 @@ public class TaskClearCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-clearTasks";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Clear project tasks by ID";
     }
 
@@ -30,7 +30,7 @@ public class TaskClearCommand extends AbstractCommand {
 
            System.out.println("Введите ID проекта:");
            String id = bufferedReader.readLine();
-           System.out.println(super.getBootstrap().getTaskService().removeAll(id));
+           super.getBootstrap().getTaskService().removeAll(id);
        }
        catch (IOException e) {
            System.out.println("Некорректно введенны данные");

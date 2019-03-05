@@ -10,9 +10,9 @@ public abstract class AbstractCommand {
         this.bootstrap = bootstrap;
     }
 
-    abstract public String command();
+    abstract public String getName();
 
-    abstract public String description();
+    abstract public String getDescription();
 
     abstract public void execute();
 

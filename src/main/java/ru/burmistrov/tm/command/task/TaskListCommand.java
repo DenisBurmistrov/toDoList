@@ -17,12 +17,12 @@ public class TaskListCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-printTasks";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Print tasks of project by project ID";
     }
 
@@ -32,7 +32,7 @@ public class TaskListCommand extends AbstractCommand {
         System.out.println("Введите ID проекта:");
         try {
             String id = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().findAll(id));
+            super.getBootstrap().getTaskService().findAll(id).forEach((k, v) -> System.out.println(v));
         } catch (IOException e) {
             System.out.println("Некорректное значение ID");
         }

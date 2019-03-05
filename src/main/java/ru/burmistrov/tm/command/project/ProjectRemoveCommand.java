@@ -14,12 +14,12 @@ public class ProjectRemoveCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
-        return "-deleteById";
+    public String getName() {
+        return "-removeProject";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Delete project by ID";
     }
 
@@ -30,7 +30,7 @@ public class ProjectRemoveCommand extends AbstractCommand {
         System.out.println("Введите ID проекта: ");
         try {
             String projectId = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getProjectService().remove(projectId));
+            super.getBootstrap().getProjectService().remove(projectId);
         } catch (IOException e) {
             System.out.println("Некорректные данные");
         }

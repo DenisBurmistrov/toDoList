@@ -15,7 +15,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,8 +23,8 @@ public class Bootstrap {
     private static Bootstrap bootstrap;
 
     public static Map<String, AbstractCommand> commands = new LinkedHashMap<>();
-    public static  Map<Long, Project> projects = new LinkedHashMap<>();
-    public static Map<Long, Task> tasks = new HashMap<>();
+    public static  Map<String, Project> projects = new LinkedHashMap<>();
+    public static Map<String, Task> tasks = new HashMap<>();
     public static  ProjectRepository projectRepository = new ProjectRepository();
     public static  TaskRepository taskRepository = new TaskRepository();
     public static  ProjectService projectService = new ProjectService(projectRepository);
@@ -58,28 +57,28 @@ public class Bootstrap {
         TaskClearCommand taskClearCommand = new TaskClearCommand(bootstrap);
         TaskRemoveCommand taskRemoveCommand = new TaskRemoveCommand(bootstrap);
         TaskUpdateCommand taskUpdateCommand = new TaskUpdateCommand(bootstrap);
-        commands.put(printListCommand.command(), printListCommand);
-        commands.put(projectListCommand.command(), projectListCommand);
-        commands.put(projectCreateCommand.command(), projectCreateCommand);
-        commands.put(projectRemoveCommand.command(), projectRemoveCommand);
-        commands.put(projectClearCommand.command(), projectClearCommand);
-        commands.put(projectUpdateCommand.command(), projectUpdateCommand);
-        commands.put(taskCreateCommand.command(), taskCreateCommand);
-        commands.put(taskListCommand.command(), taskListCommand);
-        commands.put(taskRemoveCommand.command(), taskRemoveCommand);
-        commands.put(taskClearCommand.command(), taskClearCommand);
-        commands.put(taskUpdateCommand.command(), taskUpdateCommand);
+        commands.put(printListCommand.getName(), printListCommand);
+        commands.put(projectListCommand.getName(), projectListCommand);
+        commands.put(projectCreateCommand.getName(), projectCreateCommand);
+        commands.put(projectRemoveCommand.getName(), projectRemoveCommand);
+        commands.put(projectClearCommand.getName(), projectClearCommand);
+        commands.put(projectUpdateCommand.getName(), projectUpdateCommand);
+        commands.put(taskCreateCommand.getName(), taskCreateCommand);
+        commands.put(taskListCommand.getName(), taskListCommand);
+        commands.put(taskRemoveCommand.getName(), taskRemoveCommand);
+        commands.put(taskClearCommand.getName(), taskClearCommand);
+        commands.put(taskUpdateCommand.getName(), taskUpdateCommand);
 
-        Project project1 = new Project("Первый проект", "Первое описание", projectRepository.incrementCounter());
-        Project project2 = new Project("Второй проект", "Второе описание", projectRepository.incrementCounter());
-        Project project3 = new Project("Третий проект", "Третье описание", projectRepository.incrementCounter());
-        Project project4 = new Project("Четвертый проект", "Четвертое описание", projectRepository.incrementCounter());
-        Project project5 = new Project("Пятый проект", "Пятое описание", projectRepository.incrementCounter());
-        Project project6 = new Project("Шестой проект", "Шестое описание", projectRepository.incrementCounter());
-        Project project7 = new Project("Седьмой проект", "Седьмое описание", projectRepository.incrementCounter());
-        Project project8 = new Project("Восьмой проект", "Восьмое описание", projectRepository.incrementCounter());
-        Project project9 = new Project("Девятый проект", "Девятое описание", projectRepository.incrementCounter());
-        Project project10 = new Project("Десятый проект", "Десятое описание", projectRepository.incrementCounter());
+        Project project1 = new Project("Первый проект", "Первое описание");
+        Project project2 = new Project("Второй проект", "Второе описание");
+        Project project3 = new Project("Третий проект", "Третье описание");
+        Project project4 = new Project("Четвертый проект", "Четвертое описание");
+        Project project5 = new Project("Пятый проект", "Пятое описание");
+        Project project6 = new Project("Шестой проект", "Шестое описание");
+        Project project7 = new Project("Седьмой проект", "Седьмое описание");
+        Project project8 = new Project("Восьмой проект", "Восьмое описание");
+        Project project9 = new Project("Девятый проект", "Девятое описание");
+        Project project10 = new Project("Десятый проект", "Десятое описание");
         projects.put(project1.getId(), project1);
         projects.put(project2.getId(), project2);
         projects.put(project3.getId(), project3);
@@ -135,11 +134,11 @@ public class Bootstrap {
         this.commands = commands;
     }
 
-    public Map<Long, Project> getProjects() {
+    public Map<String, Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Map<Long, Project> projects) {
+    public void setProjects(Map<String, Project> projects) {
         this.projects = projects;
     }
 

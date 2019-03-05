@@ -15,12 +15,12 @@ public class TaskRemoveCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-removeTask";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Remove task by task ID by Project ID";
     }
 
@@ -32,8 +32,8 @@ public class TaskRemoveCommand extends AbstractCommand {
             System.out.println("Введите ID проекта");
             String projectId = reader.readLine();
             System.out.println("Введите ID задачи");
-            String id = reader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().remove(projectId, id));
+            String taskId = reader.readLine();
+            super.getBootstrap().getTaskService().remove(projectId, taskId);
 
 
         } catch (IOException e) {

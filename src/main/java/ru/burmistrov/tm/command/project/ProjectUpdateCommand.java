@@ -15,12 +15,12 @@ public class ProjectUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
-        return "-merge";
+    public String getName() {
+        return "-updateProject";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Update project by Id";
     }
 
@@ -34,7 +34,7 @@ public class ProjectUpdateCommand extends AbstractCommand {
             String name = bufferedReader.readLine();
             System.out.println("Введите новое описание:");
             String description = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getProjectService().persist(projectId, name, description));
+            System.out.println(super.getBootstrap().getProjectService().merge(projectId, name, description));
         } catch (IOException e) {
             System.out.println("Некорректные параметры");
         }

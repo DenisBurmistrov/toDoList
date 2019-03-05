@@ -5,16 +5,17 @@ import ru.burmistrov.tm.api.ITaskRepository;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TaskRepository implements ITaskRepository {
 
-    private Map<Long, Task> tasks = Bootstrap.tasks;
+    private Map<String, Task> tasks = Bootstrap.tasks;
 
     @Override
-    public String persist(Long projectId, String oldName ,String newName, String description, Integer priority) {
+    public String merge(String projectId, String oldName , String newName, String description, Integer priority) {
 
         tasks.forEach((key, value) -> {
             if (oldName.equals(value.getName()) && projectId.equals(value.getProjectId())) {
@@ -32,7 +33,7 @@ public class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public String merge(Long projectId, String name, String description, Integer priority) {
+    public String persist(String projectId, String name, String description, Integer priority) {
 
         Task task = new Task();
         task.setName(name);
@@ -43,47 +44,42 @@ public class TaskRepository implements ITaskRepository {
             if (isSetPriority) {
                 tasks.put(task.getId(), task);
                 return "Задача добавлена в проект c ID: " + projectId + "";
-            }
-            else return "";
+            } else return "";
         } else {
             return "Нет проекта с введенным ID";
         }
     }
 
     @Override
-    public String remove(Long projectId, String name) {
+    public void remove(String projectId, String taskId) {
 
         tasks.entrySet().removeIf((k) ->
-            (k != null && projectId.equals(k.getValue().getProjectId()) && name.equals(k.getValue().getName())));
-        return "";
+            (k != null && projectId.equals(k.getValue().getProjectId()) && taskId.equals(k.getValue().getId())));
     }
 
 
     @Override
-    public String findAll(Long projectId) {
-        tasks.forEach((k, v) -> {
-            if(v != null && projectId.equals(v.getProjectId())) {
-                System.out.println(v);
-            }
-        });
-        return "";
+    public Map<String, Task> findAll(String projectId) {
+        Map <String, Task> result = new LinkedHashMap<>();
+        tasks.entrySet().stream().filter(e -> e.getValue().getProjectId().equals(projectId)).forEach(e -> result.put(e.getKey(), e.getValue()));
+
+        return result;
     }
 
 
 
     @Override
-    public String removeAll(Long projectId) {
+    public void removeAll(String projectId) {
         tasks.entrySet().removeIf((v) -> v.getValue().getProjectId().equals(projectId));
-        return "";
     }
 
     @Override
-    public String findOne(Long projectId, String name) {
+    public Task findOne(String projectId, String name) {
         Task task;
 
         List list = tasks.entrySet().stream().filter(v -> projectId.equals(v.getValue().getProjectId()) && name.equals(v.getValue().getName())).collect(Collectors.toList());
-        task =  (Task) list.get(0);
-        return task.toString();
+        task = (Task) list.get(0);
+        return task;
     }
      /*@Override
      public String updateTaskFromProject() {

@@ -11,18 +11,18 @@ public class ProjectListCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-print";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Print all projects";
     }
 
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        super.getBootstrap().getProjects().forEach((k, v) -> System.out.println(v));
+        super.getBootstrap().getProjectService().findAll().forEach((k, v) -> System.out.println(v));
     }
 }

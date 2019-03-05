@@ -10,19 +10,19 @@ public class PrintListCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-help";
     }
 
     @Override
-    public String description() {
-        return "Print list of command";
+    public String getDescription() {
+        return "Print list of getName";
     }
 
     @Override
     public void execute() {
         System.out.println("Список команд:");
-        super.getBootstrap().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.description()));
+        super.getBootstrap().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.getDescription()));
         System.out.println("-exit : Exit from program");
     }
 }

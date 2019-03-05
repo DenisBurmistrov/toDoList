@@ -15,12 +15,12 @@ public class TaskCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-createTask";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Create task to project by project ID";
     }
 
@@ -36,7 +36,7 @@ public class TaskCreateCommand extends AbstractCommand {
             String description = bufferedReader.readLine();
             System.out.println("Введите приоритет для задачи от 0 до 5: ");
             String priority = bufferedReader.readLine();
-            System.out.println(super.getBootstrap().getTaskService().merge(id, oldName, description, priority));
+            System.out.println(super.getBootstrap().getTaskService().persist(id, oldName, description, priority));
         }
         catch (IOException e) {
             System.out.println("Некорректные данные");

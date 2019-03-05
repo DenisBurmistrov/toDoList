@@ -1,9 +1,6 @@
 package ru.burmistrov.tm.entity;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Project {
 
@@ -11,19 +8,17 @@ public class Project {
     private String description;
     private Date createdAt;
     private Date shouldEndAt;
-    private Long id;
+    private String id = UUID.randomUUID().toString();
 
     public Project() {
         createdAt = new Date();
     }
 
-    public Project(String name, String description, Long id) {
+    public Project(String name, String description) {
         this.name = name;
         this.description = description;
-        this.id = id;
         this.createdAt = new Date();
     }
-
 
     public String getName() {
         return name;
@@ -45,11 +40,11 @@ public class Project {
         return createdAt;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

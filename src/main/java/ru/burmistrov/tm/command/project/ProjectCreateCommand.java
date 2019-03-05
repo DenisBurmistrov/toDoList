@@ -15,12 +15,12 @@ public class ProjectCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public String command() {
+    public String getName() {
         return "-createProject";
     }
 
     @Override
-    public String description() {
+    public String getDescription() {
         return "Create new project";
     }
 
@@ -36,7 +36,7 @@ public class ProjectCreateCommand extends AbstractCommand {
                 } else {
                     System.out.println("Введите описание:");
                     String description = bufferedReader.readLine();
-                    System.out.println(super.getBootstrap().getProjectService().merge(name, description));
+                    System.out.println(super.getBootstrap().getProjectService().persist(name, description));
                     break;
                 }
             }
