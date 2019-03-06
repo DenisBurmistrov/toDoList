@@ -1,5 +1,12 @@
 package ru.burmistrov.tm;
 
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.repository.IProjectRepository;
+import ru.burmistrov.tm.api.repository.ITaskRepository;
+import ru.burmistrov.tm.api.repository.IUserRepository;
+import ru.burmistrov.tm.api.service.IProjectService;
+import ru.burmistrov.tm.api.service.ITaskService;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.command.system.PrintListCommand;
 import ru.burmistrov.tm.command.project.*;
@@ -7,7 +14,6 @@ import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Role;
-import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
@@ -20,25 +26,25 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Bootstrap {
+public final class Bootstrap implements ServiceLocator {
 
     private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
-    private final ProjectRepository projectRepository = new ProjectRepository();
+    private final IProjectRepository projectRepository = new ProjectRepository();
 
-    private final TaskRepository taskRepository = new TaskRepository();
+    private final ITaskRepository taskRepository = new TaskRepository();
 
-    private final UserRepository userRepository = new UserRepository();
+    private final IUserRepository userRepository = new UserRepository();
 
-    private final ProjectService projectService = new ProjectService(projectRepository, taskRepository);
+    private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
-    private final TaskService taskService = new TaskService(taskRepository, projectRepository);
+    private final ITaskService taskService = new TaskService(taskRepository, projectRepository);
 
-    private final UserService userService = new UserService(userRepository);
+    private final IUserService userService = new UserService(userRepository);
 
     private final Scanner scanner = new Scanner(System.in);
 
-    private  User currentUser;
+    private User currentUser;
 
     public void init(Bootstrap bootstrap) {
         bootstrap.initCommands(bootstrap);
@@ -50,7 +56,7 @@ public class Bootstrap {
     private void initProjectAndUser() {
 
         User admin = userService.registrate("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-        User commonUser = userService.registrate("user", "user", "user", "user", "user", "user", Role.COMMON_USER)   ;
+        User commonUser = userService.registrate("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
         Project project1 = projectService.persist(admin, "Первый проект", "Первое описание");
         Project project2 = projectService.persist(admin, "Второй проект", "Второе описание");
         Project project3 = projectService.persist(commonUser, "Третий проект", "Третье описание");
@@ -66,25 +72,25 @@ public class Bootstrap {
         commands.put(abstractCommand.getName(), abstractCommand);
     }
 
-    private void initCommands(Bootstrap bootstrap) {
-        registerCommand(new PrintListCommand(bootstrap));
-        registerCommand(new ProjectListCommand(bootstrap));
-        registerCommand(new ProjectCreateCommand(bootstrap));
-        registerCommand(new ProjectRemoveCommand(bootstrap));
-        registerCommand(new ProjectClearCommand(bootstrap));
-        registerCommand(new TaskListCommand(bootstrap));
-        registerCommand(new ProjectUpdateCommand(bootstrap));
-        registerCommand(new TaskCreateCommand(bootstrap));
-        registerCommand(new TaskClearCommand(bootstrap));
-        registerCommand(new TaskRemoveCommand(bootstrap));
-        registerCommand(new TaskUpdateCommand(bootstrap));
-        registerCommand(new ProjectAssignUser(bootstrap));
-        registerCommand(new UserLogInCommand(bootstrap));
-        registerCommand(new UserLogOutCommand(bootstrap));
-        registerCommand(new UserRegistrateCommand(bootstrap));
-        registerCommand(new UserShowCurrentUser(bootstrap));
-        registerCommand(new UserUpdateCurrentUser(bootstrap));
-        registerCommand(new UserUpdatePasswordCommand(bootstrap));
+    private void initCommands(ServiceLocator serviceLocator) {
+        registerCommand(new PrintListCommand(serviceLocator));
+        registerCommand(new ProjectListCommand(serviceLocator));
+        registerCommand(new ProjectCreateCommand(serviceLocator));
+        registerCommand(new ProjectRemoveCommand(serviceLocator));
+        registerCommand(new ProjectClearCommand(serviceLocator));
+        registerCommand(new TaskListCommand(serviceLocator));
+        registerCommand(new ProjectUpdateCommand(serviceLocator));
+        registerCommand(new TaskCreateCommand(serviceLocator));
+        registerCommand(new TaskClearCommand(serviceLocator));
+        registerCommand(new TaskRemoveCommand(serviceLocator));
+        registerCommand(new TaskUpdateCommand(serviceLocator));
+        registerCommand(new ProjectAssignUser(serviceLocator));
+        registerCommand(new UserLogInCommand(serviceLocator));
+        registerCommand(new UserLogOutCommand(serviceLocator));
+        registerCommand(new UserRegistrateCommand(serviceLocator));
+        registerCommand(new UserShowCurrentUser(serviceLocator));
+        registerCommand(new UserUpdateCurrentUser(serviceLocator));
+        registerCommand(new UserUpdatePasswordCommand(serviceLocator));
     }
 
     private void execute(String command) {
@@ -115,19 +121,19 @@ public class Bootstrap {
         return commands;
     }
 
-    public ProjectRepository getProjectRepository() {
+    public IProjectRepository getProjectRepository() {
         return projectRepository;
     }
 
-    public TaskRepository getTaskRepository() {
+    public ITaskRepository getTaskRepository() {
         return taskRepository;
     }
 
-    public ProjectService getProjectService() {
+    public IProjectService getProjectService() {
         return projectService;
     }
 
-    public TaskService getTaskService() {
+    public ITaskService getTaskService() {
         return taskService;
     }
 
@@ -143,12 +149,11 @@ public class Bootstrap {
         this.currentUser = currentUser;
     }
 
-    public UserService getUserService() {
+    public IUserService getUserService() {
         return userService;
     }
 
     private boolean isAuth() {
-
         return currentUser != null;
     }
 }

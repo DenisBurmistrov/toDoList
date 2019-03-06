@@ -1,19 +1,18 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.List;
-import java.util.Map;
 
-public class ProjectListCommand extends AbstractCommand {
+public final class ProjectListCommand extends AbstractCommand {
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectListCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectListCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        List<Project> projects = projectService.findAll(getBootstrap().getCurrentUser());
+        List<Project> projects = projectService.findAll(getServiceLocator().getCurrentUser());
         if (projects == null) {
             System.out.println("У пользователя нет проектов");
         } else {

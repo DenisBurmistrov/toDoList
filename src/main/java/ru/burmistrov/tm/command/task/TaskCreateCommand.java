@@ -1,18 +1,18 @@
 package ru.burmistrov.tm.command.task;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.TaskService;
 import java.util.Scanner;
 
-public class TaskCreateCommand extends AbstractCommand {
+public final class TaskCreateCommand extends AbstractCommand {
 
-    private final TaskService taskService = getBootstrap().getTaskService();
+    private final ITaskService taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskCreateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public TaskCreateCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class TaskCreateCommand extends AbstractCommand {
                 String oldName = scanner.nextLine();
                 System.out.println("Введите описание для задачи: ");
                 String description = scanner.nextLine();
-                taskService.persist(getBootstrap().getCurrentUser(), id, oldName, description);
+                taskService.persist(getServiceLocator().getCurrentUser(), id, oldName, description);
     }
 
     @Override

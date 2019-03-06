@@ -1,19 +1,19 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Scanner;
 
-public class ProjectUpdateCommand extends AbstractCommand {
+public final class ProjectUpdateCommand extends AbstractCommand {
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public ProjectUpdateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectUpdateCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProjectUpdateCommand extends AbstractCommand {
             String name = scanner.nextLine();
             System.out.println("Введите новое описание:");
             String description = scanner.nextLine();
-            projectService.merge(getBootstrap().getCurrentUser(), projectId, name, description);
+            projectService.merge(getServiceLocator().getCurrentUser(), projectId, name, description);
         }
 
     @Override

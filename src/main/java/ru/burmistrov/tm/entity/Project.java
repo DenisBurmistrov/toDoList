@@ -2,7 +2,7 @@ package ru.burmistrov.tm.entity;
 
 import java.util.*;
 
-public class Project {
+public final class Project {
 
     private String id = UUID.randomUUID().toString();
     private String userId;

@@ -1,15 +1,12 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.UserService;
 
-public class UserShowCurrentUser extends AbstractCommand {
+public final class UserShowCurrentUser extends AbstractCommand {
 
-    private final UserService userService = getBootstrap().getUserService();
-
-    public UserShowCurrentUser(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserShowCurrentUser(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -24,7 +21,7 @@ public class UserShowCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
-        System.out.println(getBootstrap().getCurrentUser().toString());
+        System.out.println(getServiceLocator().getCurrentUser().toString());
     }
 
     @Override

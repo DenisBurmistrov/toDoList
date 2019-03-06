@@ -1,15 +1,12 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.UserService;
 
-public class UserLogOutCommand extends AbstractCommand {
+public final class UserLogOutCommand extends AbstractCommand {
 
-    private final UserService userService = getBootstrap().getUserService();
-
-    public UserLogOutCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserLogOutCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -24,7 +21,7 @@ public class UserLogOutCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getBootstrap().setCurrentUser(null);
+        getServiceLocator().setCurrentUser(null);
     }
 
     @Override

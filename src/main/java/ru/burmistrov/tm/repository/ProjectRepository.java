@@ -6,9 +6,9 @@ import ru.burmistrov.tm.entity.User;
 
 import java.util.*;
 
-public class ProjectRepository implements IProjectRepository {
+public final class ProjectRepository implements IProjectRepository {
 
-    private Map<String, Project> projects = new LinkedHashMap<>();
+    private final Map<String, Project> projects = new LinkedHashMap<>();
 
     @Override
     public Project persist(User currentUser, String name, String description) {

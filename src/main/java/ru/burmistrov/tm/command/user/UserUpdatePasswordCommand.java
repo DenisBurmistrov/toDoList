@@ -1,19 +1,19 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
 
-public class UserUpdatePasswordCommand extends AbstractCommand {
+public final class UserUpdatePasswordCommand extends AbstractCommand {
 
-    private final UserService userService = getBootstrap().getUserService();
+    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public UserUpdatePasswordCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserUpdatePasswordCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserUpdatePasswordCommand extends AbstractCommand {
             String login = scanner.nextLine();
             System.out.println("Введите новый пароль");
             String newPassword = scanner.nextLine();
-            userService.updatePassword(getBootstrap().getCurrentUser(), login, newPassword);
+            userService.updatePassword(getServiceLocator().getCurrentUser(), login, newPassword);
         }
     }
 

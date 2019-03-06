@@ -1,19 +1,20 @@
 package ru.burmistrov.tm.command.project;
 
 import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Scanner;
 
-public class ProjectAssignUser extends AbstractCommand {
+public final class ProjectAssignUser extends AbstractCommand {
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectAssignUser(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectAssignUser(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class ProjectAssignUser extends AbstractCommand {
         String projectId = scanner.nextLine();
         System.out.println("Введите ID пользователя");
         String userId = scanner.nextLine();
-        projectService.assignUser(getBootstrap().getCurrentUser(), projectId, userId);
+        projectService.assignUser(getServiceLocator().getCurrentUser(), projectId, userId);
     }
 
     @Override

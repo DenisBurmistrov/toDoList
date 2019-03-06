@@ -1,19 +1,19 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Scanner;
 
-public class ProjectRemoveCommand extends AbstractCommand {
+public final class ProjectRemoveCommand extends AbstractCommand {
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectRemoveCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectRemoveCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProjectRemoveCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта: ");
             String projectId = scanner.nextLine();
-            projectService.remove(getBootstrap().getCurrentUser(), projectId);
+            projectService.remove(getServiceLocator().getCurrentUser(), projectId);
         }
 
     @Override

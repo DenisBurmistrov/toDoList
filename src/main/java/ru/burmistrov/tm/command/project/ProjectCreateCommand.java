@@ -1,19 +1,19 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.ProjectService;
 
 import java.util.Scanner;
 
-public class ProjectCreateCommand extends AbstractCommand {
+public final class ProjectCreateCommand extends AbstractCommand {
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectCreateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectCreateCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProjectCreateCommand extends AbstractCommand {
             }
             System.out.println("Введите описание:");
             String description = scanner.nextLine();
-            projectService.persist(getBootstrap().getCurrentUser(), name, description);
+            projectService.persist(getServiceLocator().getCurrentUser(), name, description);
     }
 
     @Override

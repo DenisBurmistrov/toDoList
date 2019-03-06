@@ -1,14 +1,13 @@
 package ru.burmistrov.tm.command;
 
-import ru.burmistrov.tm.Bootstrap;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 
 public abstract class AbstractCommand {
 
-    private Bootstrap bootstrap;
+    private ServiceLocator serviceLocator;
 
-    public AbstractCommand(Bootstrap bootstrap) {
-        this.bootstrap = bootstrap;
+    public AbstractCommand(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 
     public abstract String getName();
@@ -17,8 +16,8 @@ public abstract class AbstractCommand {
 
     public abstract void execute();
 
-    public Bootstrap getBootstrap() {
-        return bootstrap;
+    public ServiceLocator getServiceLocator() {
+        return serviceLocator;
     }
 
     public abstract boolean isSecure();

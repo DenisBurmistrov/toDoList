@@ -1,20 +1,20 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.User;
-import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
 
-public class UserLogInCommand extends AbstractCommand {
+public final class UserLogInCommand extends AbstractCommand {
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final UserService userService = getBootstrap().getUserService();
+    private final IUserService userService = getServiceLocator().getUserService();
 
-    public UserLogInCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserLogInCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class UserLogInCommand extends AbstractCommand {
             System.out.println("Неверно введены данные");
         }
         else {
-            getBootstrap().setCurrentUser(user);
+            getServiceLocator().setCurrentUser(user);
         }
 
 

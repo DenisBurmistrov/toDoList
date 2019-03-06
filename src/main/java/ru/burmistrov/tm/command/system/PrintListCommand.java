@@ -1,12 +1,12 @@
 package ru.burmistrov.tm.command.system;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 
-public class PrintListCommand extends AbstractCommand {
+public final class PrintListCommand extends AbstractCommand {
 
-    public PrintListCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public PrintListCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class PrintListCommand extends AbstractCommand {
     @Override
     public void execute() {
             System.out.println("Список команд:");
-            getBootstrap().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.getDescription()));
+            getServiceLocator().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.getDescription()));
             System.out.println("-exit : Exit from program");
     }
 

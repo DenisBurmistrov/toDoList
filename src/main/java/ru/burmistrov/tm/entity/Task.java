@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Task {
+public final class Task {
 
     private String id = UUID.randomUUID().toString();
     private String projectId;

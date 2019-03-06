@@ -1,19 +1,20 @@
 package ru.burmistrov.tm.service;
 
+import ru.burmistrov.tm.api.repository.IProjectRepository;
+import ru.burmistrov.tm.api.repository.ITaskRepository;
+import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
-import ru.burmistrov.tm.repository.ProjectRepository;
-import ru.burmistrov.tm.repository.TaskRepository;
 
 import java.util.List;
 
-public class TaskService {
+public final class TaskService implements ITaskService {
 
-    private final TaskRepository taskRepository;
+    private final ITaskRepository taskRepository;
 
-    private final ProjectRepository projectRepository;
+    private final IProjectRepository projectRepository;
 
-    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository) {
+    public TaskService(ITaskRepository taskRepository, IProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
         this.projectRepository = projectRepository;
     }

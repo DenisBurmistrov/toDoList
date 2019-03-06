@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TaskRepository implements ITaskRepository {
+public final class TaskRepository implements ITaskRepository {
 
-    private Map<String, Task> tasks = new LinkedHashMap<>();
+    private final Map<String, Task> tasks = new LinkedHashMap<>();
 
     @Override
     public void merge(User currentUser, String projectId, String oldName, String newName, String description) {
@@ -80,9 +80,5 @@ public class TaskRepository implements ITaskRepository {
         task = (Task) list.get(0);
 
         return task;
-    }
-
-    public Map<String, Task> getTasks() {
-        return tasks;
     }
 }

@@ -1,14 +1,15 @@
 package ru.burmistrov.tm.service;
 
+import ru.burmistrov.tm.api.repository.IUserRepository;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
-import ru.burmistrov.tm.repository.UserRepository;
 
-public class UserService {
+public final class UserService implements IUserService {
 
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

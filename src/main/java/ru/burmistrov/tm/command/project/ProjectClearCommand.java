@@ -1,15 +1,15 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.ProjectService;
 
-public class ProjectClearCommand extends AbstractCommand {
+public final  class ProjectClearCommand extends AbstractCommand {
 
-    private final ProjectService projectService = getBootstrap().getProjectService();
+    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectClearCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public ProjectClearCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-            projectService.removeAll(getBootstrap().getCurrentUser());
+            projectService.removeAll(getServiceLocator().getCurrentUser());
     }
 
     @Override

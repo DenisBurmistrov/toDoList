@@ -1,20 +1,20 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
 
-public class UserUpdateCurrentUser extends AbstractCommand {
+public final class UserUpdateCurrentUser extends AbstractCommand {
 
-    private final UserService userService = getBootstrap().getUserService();
+    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
 
-    public UserUpdateCurrentUser(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserUpdateCurrentUser(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserUpdateCurrentUser extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        userService.updateCurrentUser(getBootstrap().getCurrentUser(), firstName, middleName, lastName, email);
+        userService.updateCurrentUser(getServiceLocator().getCurrentUser(), firstName, middleName, lastName, email);
     }
 
     @Override

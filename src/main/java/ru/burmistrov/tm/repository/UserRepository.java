@@ -8,7 +8,7 @@ import ru.burmistrov.tm.utils.PasswordUtil;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UserRepository implements IUserRepository {
+public final class UserRepository implements IUserRepository {
 
     private final Map<String, User> users = new LinkedHashMap<>();
 
@@ -58,9 +58,5 @@ public class UserRepository implements IUserRepository {
         currentUser.setMiddleName(middleName);
         currentUser.setLastName(lastName);
         currentUser.setEmail(email);
-    }
-
-    public Map<String, User> getUsers() {
-        return users;
     }
 }

@@ -1,18 +1,18 @@
 package ru.burmistrov.tm.command.task;
 
-import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.TaskService;
 import java.util.Scanner;
 
-public class TaskRemoveCommand extends AbstractCommand {
+public final class TaskRemoveCommand extends AbstractCommand {
 
-    private final TaskService taskService = getBootstrap().getTaskService();
+    private final ITaskService taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskRemoveCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public TaskRemoveCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TaskRemoveCommand extends AbstractCommand {
             String projectId = scanner.nextLine();
             System.out.println("Введите ID задачи");
             String taskId = scanner.next();
-            taskService.remove(getBootstrap().getCurrentUser(), projectId, taskId);
+            taskService.remove(getServiceLocator().getCurrentUser(), projectId, taskId);
     }
 
     @Override

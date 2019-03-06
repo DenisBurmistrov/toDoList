@@ -1,19 +1,20 @@
 package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.service.TaskService;
 
 import java.util.Scanner;
 
-public class TaskUpdateCommand extends AbstractCommand {
+public final class TaskUpdateCommand extends AbstractCommand {
 
-    private final TaskService taskService = getBootstrap().getTaskService();
+    private final ITaskService taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskUpdateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public TaskUpdateCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class TaskUpdateCommand extends AbstractCommand {
         String newName = scanner.nextLine();
         System.out.println("Введите новое описание: ");
         String description = scanner.nextLine();
-        taskService.merge(getBootstrap().getCurrentUser(), projectId, oldName, newName, description);
+        taskService.merge(getServiceLocator().getCurrentUser(), projectId, oldName, newName, description);
     }
 
     @Override

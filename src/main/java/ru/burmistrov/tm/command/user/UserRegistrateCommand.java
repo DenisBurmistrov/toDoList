@@ -1,20 +1,21 @@
 package ru.burmistrov.tm.command.user;
 
 import ru.burmistrov.tm.Bootstrap;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.Role;
-import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
 
-public class UserRegistrateCommand extends AbstractCommand {
+public final class UserRegistrateCommand extends AbstractCommand {
 
-    private final UserService userService = getBootstrap().getUserService();
+    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getBootstrap().getScanner();
+    private final Scanner scanner = getServiceLocator().getScanner();
 
-    public UserRegistrateCommand(Bootstrap bootstrap) {
-        super(bootstrap);
+    public UserRegistrateCommand(final ServiceLocator serviceLocator) {
+        super(serviceLocator);
     }
 
     @Override

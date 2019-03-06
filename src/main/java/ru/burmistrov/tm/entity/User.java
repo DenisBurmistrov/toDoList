@@ -4,7 +4,7 @@ import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.UUID;
 
-public class User {
+public final class User {
 
     private String id = UUID.randomUUID().toString();
 
