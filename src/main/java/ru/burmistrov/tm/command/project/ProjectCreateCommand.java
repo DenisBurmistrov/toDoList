@@ -35,7 +35,7 @@ public class ProjectCreateCommand extends AbstractCommand {
             }
             System.out.println("Введите описание:");
             String description = scanner.nextLine();
-            System.out.println(projectService.persist(name, description));
+            projectService.persist(getBootstrap().getCurrentUser(), name, description);
     }
 
     @Override

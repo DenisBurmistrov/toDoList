@@ -32,7 +32,7 @@ public class ProjectAssignUser extends AbstractCommand {
         String projectId = scanner.nextLine();
         System.out.println("Введите ID пользователя");
         String userId = scanner.nextLine();
-        projectService.assignUser(projectId, userId);
+        projectService.assignUser(getBootstrap().getCurrentUser(), projectId, userId);
     }
 
     @Override

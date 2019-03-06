@@ -1,5 +1,7 @@
 package ru.burmistrov.tm.service;
 
+import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.repository.UserRepository;
 
 public class UserService {
@@ -10,34 +12,22 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String logIn(String login, String auth) {
+    public User logIn(String login, String auth) {
         return userRepository.logIn(login, auth);
     }
 
-    public String logOut() {
-        return userRepository.logOut();
+    public User registrate(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType) {
+        return userRepository.registrate(login, password, firstName, middleName, lastName, email, roleType);
     }
 
-    public String registrate(String login, String password, String firstName, String middleName, String lastName, String email) {
-        return userRepository.registrate(login, password, firstName, middleName, lastName, email);
-    }
-
-    public String updatePassword(String login, String password) {
+    public void updatePassword(User currentUser, String login, String password) {
         if (password.length() > 0) {
-            return userRepository.updatePassword(login, password);
+            userRepository.updatePassword(currentUser, login, password);
         }
-        return "Нельзя использовать пустой пароль";
     }
 
-    public String showCurrentUser() {
-        return userRepository.showCurrentUser();
-    }
-
-    public String updateCurrentUser(String firstName, String middleName, String lastName, String email) {
-        if (firstName.length() == 0) return "Нельзя использовать пустое имя";
-        if (middleName.length() == 0) return "Нельзя использовать пустое отчество";
-        if (lastName.length() == 0) return "Нельзя использовать пустую фамалию";
-        if (email.length() == 0) return "Нельзя использовать пустую почту";
-        return userRepository.updateCurrentUser(firstName, middleName, lastName, email);
+    public void updateCurrentUser(User currentUser, String firstName, String middleName, String lastName, String email) {
+        if(firstName.length() == 0 && middleName.length() == 0 && lastName.length() == 0 && email.length() == 0)
+        userRepository.updateCurrentUser(currentUser, firstName, middleName, lastName, email);
     }
 }

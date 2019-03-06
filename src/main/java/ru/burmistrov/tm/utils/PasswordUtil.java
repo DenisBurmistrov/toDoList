@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.utils;
 
-public class Utils {
+public class PasswordUtil {
 
     public static String hashPassword(String md5) {
         try {

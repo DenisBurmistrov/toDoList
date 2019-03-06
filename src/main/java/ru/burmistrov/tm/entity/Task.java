@@ -10,7 +10,6 @@ public class Task {
     private String projectId;
     private String name;
     private String description;
-    private Integer priority;
     private Date dateBegin = new Date();
     private Date dateEnd;
     private String userId;
@@ -28,19 +27,6 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public boolean setPriority(Integer priority) {
-        if (priority >= 0 && priority <= 5) {
-            this.priority = priority;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void setId(String id) {
@@ -67,7 +53,6 @@ public class Task {
         return "ID: " + id +
                 "; Название: " + name +
                 "; Описание: " + description +
-                "; Приоритет: " + priority +
                 "; ID проекта: " + projectId;
     }
 

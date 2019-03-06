@@ -24,7 +24,7 @@ public class UserShowCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
-        System.out.println(userService.showCurrentUser());
+        System.out.println(getBootstrap().getCurrentUser().toString());
     }
 
     @Override

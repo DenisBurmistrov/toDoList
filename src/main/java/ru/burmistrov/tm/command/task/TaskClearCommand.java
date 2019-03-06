@@ -30,7 +30,7 @@ public class TaskClearCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
-            taskService.removeAll(id);
+            taskService.removeAllInProject(getBootstrap().getCurrentUser(), id);
     }
 
     @Override

@@ -2,7 +2,10 @@ package ru.burmistrov.tm.command.task;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.service.TaskService;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class TaskListCommand extends AbstractCommand {
@@ -29,7 +32,15 @@ public class TaskListCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
-            taskService.findAll(id).forEach((k, v) -> System.out.println(v));
+            List<Task> taskList = taskService.findAll(getBootstrap().getCurrentUser(), id);
+            if(taskList == null) {
+                System.out.println("У данного проекта нет задач");
+            }
+            else {
+                for(Task task : taskList) {
+                    System.out.println(task);
+                }
+            }
     }
 
     @Override

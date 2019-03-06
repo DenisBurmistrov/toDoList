@@ -1,59 +1,47 @@
 package ru.burmistrov.tm.repository;
 
-import ru.burmistrov.tm.Bootstrap;
-import ru.burmistrov.tm.api.IProjectRepository;
+import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.User;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ProjectRepository implements IProjectRepository {
 
-    private final Bootstrap bootstrap = Bootstrap.getInstance();
-
-    private Map<String, Project> projects = bootstrap.getProjects();
-
-    private Map<String, Task> tasks = bootstrap.getTasks();
+    private Map<String, Project> projects = new LinkedHashMap<>();
 
     @Override
-    public String persist(String name, String description) {
+    public Project persist(User currentUser, String name, String description) {
         Project project = new Project();
         project.setName(name);
         project.setDescription(description);
-        project.setUserId(bootstrap.getCurrentUser().getId());
-        if (projects.containsValue(project)) {
-            return "Проект с таким именем уже существует";
-        } else {
-            projects.put(project.getId(), project);
-            return "Добавление произведено";
-        }
+        project.setUserId(currentUser.getId());
+        projects.put(project.getId(), project);
+        return project;
+
     }
 
     @Override
-    public void remove(String projectId) {
-        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
-        tasks.entrySet().removeIf(e -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
+    public void remove(User currentUser, String projectId) {
+        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(currentUser.getId()));
     }
 
     @Override
-    public void removeAll() {
-        tasks.entrySet().removeIf(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
-        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()));
+    public void removeAll(User currentUser) {
+        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(currentUser.getId()));
     }
 
     @Override
-    public Map<String, Project> findAll() {
-        Map<String, Project> result = new LinkedHashMap<>();
+    public List<Project> findAll(User currentUser) {
+        List<Project> result = new LinkedList<>();
         projects.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()))
-                .forEach(e -> result.put(e.getKey(), e.getValue()));
+                .stream().filter(e -> e.getValue().getUserId().equals(currentUser.getId()))
+                .forEach(e -> result.add(e.getValue()));
         return result;
     }
 
     @Override
-    public String merge(String id, String name, String description) {
+    public void merge(User currentUser, String id, String name, String description) {
         Iterator it = projects.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -63,18 +51,20 @@ public class ProjectRepository implements IProjectRepository {
                 project.setName(name);
                 project.setDescription(description);
                 projects.put(id, project);
-                return "Обновление проекта произведено";
             }
         }
-        return "Нет проекта с введённый ID";
     }
 
     @Override
-    public void assignExpert(String projectId, String userId) {
+    public void assignExpert(User currentUser, String projectId, String userId) {
         projects.forEach((k,v) -> {
             if(v.getUserId().equals(projectId)){
                 v.setUserId(userId);
             }
         });
+    }
+
+    public Map<String, Project> getProjects() {
+        return projects;
     }
 }

@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.user;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
@@ -40,7 +41,7 @@ public class UserRegistrateCommand extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        System.out.println(userService.registrate(login, password, firstName, lastName, middleName, email));
+        System.out.println(userService.registrate(login, password, firstName, lastName, middleName, email, Role.COMMON_USER) + " зарегистрирован");
     }
 
     @Override

@@ -24,10 +24,7 @@ public class UserLogOutCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if(isSecure()){
-            System.out.println(userService.logOut());
-        }
-        else System.out.println("Для использования этой команды нужно авторизоваться");
+        getBootstrap().setCurrentUser(null);
     }
 
     @Override

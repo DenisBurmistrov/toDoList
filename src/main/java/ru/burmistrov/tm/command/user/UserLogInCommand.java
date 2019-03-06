@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.user;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.service.UserService;
 
 import java.util.Scanner;
@@ -32,7 +33,14 @@ public class UserLogInCommand extends AbstractCommand {
         String login = scanner.nextLine();
         System.out.println("Введите пароль:");
         String password = scanner.nextLine();
-        System.out.println(userService.logIn(login, password));
+        User user = userService.logIn(login, password);
+        if(user == null) {
+            System.out.println("Неверно введены данные");
+        }
+        else {
+            getBootstrap().setCurrentUser(user);
+        }
+
 
     }
 

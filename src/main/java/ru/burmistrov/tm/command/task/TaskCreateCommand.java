@@ -33,9 +33,7 @@ public class TaskCreateCommand extends AbstractCommand {
                 String oldName = scanner.nextLine();
                 System.out.println("Введите описание для задачи: ");
                 String description = scanner.nextLine();
-                System.out.println("Введите приоритет для задачи от 0 до 5: ");
-                String priority = scanner.nextLine();
-                System.out.println(taskService.persist(id, oldName, description, priority));
+                taskService.persist(getBootstrap().getCurrentUser(), id, oldName, description);
     }
 
     @Override

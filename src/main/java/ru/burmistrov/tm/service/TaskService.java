@@ -1,48 +1,45 @@
 package ru.burmistrov.tm.service;
 
 import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
 
-import java.util.Map;
+import java.util.List;
 
 public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    private final ProjectRepository projectRepository;
+
+    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository) {
         this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
     }
 
-    public String merge(String projectId, String oldName, String newName, String description, String priority) {
-        try {
-            if(newName.length() == 0) {
-                return "Нельзя использовать пустое имя";
+    public void merge(User currentUser, String projectId, String oldName, String newName, String description) {
+            if(newName.length() != 0) {
+                taskRepository.merge(currentUser, projectId, oldName, newName, description);
             }
-            Integer priorityInt = Integer.parseInt(priority);
-            return taskRepository.merge(projectId, oldName, newName, description, priorityInt);
-        } catch (NumberFormatException e) {
-            return "Некорректно введенный приоритет";
-        }
     }
 
-    public String persist(String projectId, String name, String description, String priority) {
-        try {
-            Integer priorityInt = Integer.parseInt(priority);
-            return taskRepository.persist(projectId, name, description, priorityInt);
-        } catch (NumberFormatException e) {
-            return "Некорректно введенный приоритет";
-        }
+    public Task persist(User currentUser, String projectId, String name, String description) {
+            if(name.length() != 0 && projectRepository.getProjects().containsKey(projectId)) {
+                return taskRepository.persist(currentUser, projectId, name, description);
+            }
+            return null;
     }
 
-    public Map<String, Task> findAll(String projectId) {
-        return taskRepository.findAll(projectId);
+    public List<Task> findAll(User currentUser, String projectId) {
+        return taskRepository.findAll(currentUser, projectId);
     }
 
-    public void removeAll(String projectId) {
-        taskRepository.removeAll(projectId);
+    public void removeAllInProject(User currentUser, String projectId) {
+        taskRepository.removeAllinProject(currentUser, projectId);
     }
 
-    public void remove(String projectId, String taskId) {
-        taskRepository.remove(projectId, taskId);
+    public void remove(User currentUser, String projectId, String taskId) {
+        taskRepository.remove(currentUser, projectId, taskId);
     }
 }

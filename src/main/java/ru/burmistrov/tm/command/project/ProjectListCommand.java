@@ -5,6 +5,7 @@ import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.service.ProjectService;
 
+import java.util.List;
 import java.util.Map;
 
 public class ProjectListCommand extends AbstractCommand {
@@ -28,11 +29,13 @@ public class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        Map<String, Project> projects = projectService.findAll();
+        List<Project> projects = projectService.findAll(getBootstrap().getCurrentUser());
         if (projects == null) {
             System.out.println("У пользователя нет проектов");
         } else {
-            projectService.findAll().forEach((k, v) -> System.out.println(v));
+            for(Project project : projects){
+                System.out.println(project);
+            }
         }
     }
 

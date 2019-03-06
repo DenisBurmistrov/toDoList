@@ -36,9 +36,7 @@ public class TaskUpdateCommand extends AbstractCommand {
         String newName = scanner.nextLine();
         System.out.println("Введите новое описание: ");
         String description = scanner.nextLine();
-        System.out.println("Введите новый приоритет(от 0 до 5): ");
-        String priority = scanner.nextLine();
-        System.out.println(taskService.merge(projectId, oldName, newName, description, priority));
+        taskService.merge(getBootstrap().getCurrentUser(), projectId, oldName, newName, description);
     }
 
     @Override

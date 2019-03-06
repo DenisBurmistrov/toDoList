@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.entity;
 
-import ru.burmistrov.tm.utils.Utils;
+import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.UUID;
 
@@ -83,12 +83,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = Utils.hashPassword(password);
+        this.password = PasswordUtil.hashPassword(password);
     }
 
     @Override
     public String toString() {
-        System.out.println(role.displayName());
-        return "User: " + firstName + " " + middleName + " " + lastName + "; Login: " + login + "; Role: " + role.displayName();
+        return "User: " + firstName + " " + middleName + " " + lastName + "; Login: " + login + "; Role: " + role;
     }
 }

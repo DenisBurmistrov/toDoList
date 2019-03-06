@@ -2,17 +2,17 @@ package ru.burmistrov.tm.entity;
 
 public enum Role {
 
-    ADMINISTRATOR, COMMON_USER;
+    ADMINISTRATOR("Администратор"),
+    COMMON_USER("Обычный пользователь");
 
-    public String displayName() {
-        switch (this){
-            case ADMINISTRATOR:
-                return "Администратор";
-            case COMMON_USER:
-                return "Обычный пользователь";
-            default:
-                return "Пользователь не авторизован";
-        }
+    private final String displayName;
+
+    Role(String displayName) {
+        this.displayName = displayName;
     }
 
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }

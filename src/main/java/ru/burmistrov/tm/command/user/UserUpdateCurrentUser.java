@@ -37,7 +37,7 @@ public class UserUpdateCurrentUser extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        System.out.println(userService.updateCurrentUser(firstName, middleName, lastName, email));
+        userService.updateCurrentUser(getBootstrap().getCurrentUser(), firstName, middleName, lastName, email);
     }
 
     @Override
