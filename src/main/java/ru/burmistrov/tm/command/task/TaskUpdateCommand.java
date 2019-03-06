@@ -28,20 +28,17 @@ public class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-            System.out.println("Введите ID проекта:");
-            String projectId = scanner.nextLine();
-            System.out.println("Введите имя задачи:");
-            String oldName = scanner.nextLine();
-            System.out.println("Введите новое имя:");
-            String newName = scanner.nextLine();
-            if (newName != null) {
-                System.out.println("Введите новое описание: ");
-                String description = scanner.nextLine();
-                System.out.println("Введите новый приоритет(от 0 до 5): ");
-                String priority = scanner.nextLine();
-                System.out.println(taskService.merge(projectId, oldName, newName, description, priority));
-            System.out.println("Некорректное значение нового имени");
-        } else System.out.println("Для использования этой команды нужно авторизоваться");
+        System.out.println("Введите ID проекта:");
+        String projectId = scanner.nextLine();
+        System.out.println("Введите имя задачи:");
+        String oldName = scanner.nextLine();
+        System.out.println("Введите новое имя:");
+        String newName = scanner.nextLine();
+        System.out.println("Введите новое описание: ");
+        String description = scanner.nextLine();
+        System.out.println("Введите новый приоритет(от 0 до 5): ");
+        String priority = scanner.nextLine();
+        System.out.println(taskService.merge(projectId, oldName, newName, description, priority));
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ProjectListCommand extends AbstractCommand {
         System.out.println("Список проектов:");
         Map<String, Project> projects = projectService.findAll();
         if (projects == null) {
-            System.out.println("У проекта нет задач");
+            System.out.println("У пользователя нет проектов");
         } else {
             projectService.findAll().forEach((k, v) -> System.out.println(v));
         }

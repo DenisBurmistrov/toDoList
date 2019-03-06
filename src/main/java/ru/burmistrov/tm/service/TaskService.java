@@ -15,6 +15,9 @@ public class TaskService {
 
     public String merge(String projectId, String oldName, String newName, String description, String priority) {
         try {
+            if(newName.length() == 0) {
+                return "Нельзя использовать пустое имя";
+            }
             Integer priorityInt = Integer.parseInt(priority);
             return taskRepository.merge(projectId, oldName, newName, description, priorityInt);
         } catch (NumberFormatException e) {

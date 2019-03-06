@@ -29,7 +29,7 @@ public class TaskCreateCommand extends AbstractCommand {
     public void execute() {
                 System.out.println("Введите ID проекта:");
                 String id = scanner.nextLine();
-                System.out.println("Введите имя задачи");
+                System.out.println("Введите имя задачи:");
                 String oldName = scanner.nextLine();
                 System.out.println("Введите описание для задачи: ");
                 String description = scanner.nextLine();

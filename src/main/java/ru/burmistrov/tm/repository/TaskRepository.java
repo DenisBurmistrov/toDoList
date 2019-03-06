@@ -2,6 +2,7 @@ package ru.burmistrov.tm.repository;
 
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.api.ITaskRepository;
+import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.LinkedHashMap;
@@ -15,6 +16,8 @@ public class TaskRepository implements ITaskRepository {
 
     private Map<String, Task> tasks = bootstrap.getTasks();
 
+    private Map<String, Project> projects = bootstrap.getProjects();
+
     @Override
     public String merge(String projectId, String oldName, String newName, String description, Integer priority) {
 
@@ -25,6 +28,7 @@ public class TaskRepository implements ITaskRepository {
                 task.setName(newName);
                 task.setDescription(description);
                 task.setProjectId(projectId);
+                task.setUserId(bootstrap.getCurrentUser().getId());
                 boolean isSetPriority = task.setPriority(priority);
                 if (isSetPriority) {
                     tasks.put(task.getId(), task);
@@ -42,8 +46,8 @@ public class TaskRepository implements ITaskRepository {
         task.setName(name);
         task.setDescription(description);
         task.setProjectId(projectId);
-        task.setProjectId(bootstrap.getCurrentUser().getId());
-        if (!tasks.containsValue(task)) {
+        task.setUserId(bootstrap.getCurrentUser().getId());
+        if (projects.containsKey(projectId)) {
             boolean isSetPriority = task.setPriority(priority);
             if (isSetPriority) {
                 tasks.put(task.getId(), task);
@@ -66,9 +70,11 @@ public class TaskRepository implements ITaskRepository {
     public Map<String, Task> findAll(String projectId) {
         Map<String, Task> result = new LinkedHashMap<>();
         tasks.entrySet()
-                .stream().filter(e -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(bootstrap.getCurrentUser().getId()))
+                .stream().filter(e -> e.getValue().
+                getProjectId().equals(projectId)
+                && e.getValue().getUserId().
+                equals(bootstrap.getCurrentUser().getId()))
                 .forEach(e -> result.put(e.getKey(), e.getValue()));
-
         return result;
     }
 
