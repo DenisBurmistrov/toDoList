@@ -119,9 +119,7 @@ public class Bootstrap {
         projects.put(project8.getId(), project8);
         projects.put(project9.getId(), project9);
         projects.put(project10.getId(), project10);
-
-
-        }
+    }
 
     private void initCommands(Bootstrap bootstrap) {
         PrintListCommand printListCommand = new PrintListCommand(bootstrap);
@@ -166,7 +164,7 @@ public class Bootstrap {
         if (command == null || command.isEmpty()) return;
         AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
-        if (abstractCommand.isSecure()){
+        if (abstractCommand.isSecure()) {
             if (currentUser != null) {
                 abstractCommand.execute();
             }
@@ -178,11 +176,11 @@ public class Bootstrap {
     private static void start() {
         System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
         while (true) {
-                    String input = scanner.nextLine();
-                    if ("-exit".equals(input)) {
-                        System.exit(0);
-                    }
-                    execute(input);
+            String input = scanner.nextLine();
+            if ("-exit".equals(input)) {
+                System.exit(0);
+            }
+            execute(input);
         }
     }
 
