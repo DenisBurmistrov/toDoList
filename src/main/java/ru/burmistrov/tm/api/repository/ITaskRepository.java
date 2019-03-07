@@ -1,17 +1,18 @@
 package ru.burmistrov.tm.api.repository;
 
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ITaskRepository {
 
-    Task persist(String userId, String projectId, String name, String description);
+    AbstractEntity persist(AbstractEntity abstractEntity);
 
-    void merge(String userId, String projectId, String oldName, String newName, String description);
+    void merge(AbstractEntity abstractEntity);
 
-    void remove(String userId, String projectId, String name);
+    void remove(String userId, String projectId, String taskId);
 
     void removeAll(String userId);
 
@@ -20,4 +21,6 @@ public interface ITaskRepository {
     void removeAllInProject(String userId, String projectId);
 
     Task findOne(String userId, String projectId, String name);
+
+    Map<String, AbstractEntity> getAbstractEntities();
 }

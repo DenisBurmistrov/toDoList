@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.api.repository;
 
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.Map;
 
 public interface IProjectRepository {
 
-    Project persist(String userId, String name, String description);
+    AbstractEntity persist(AbstractEntity abstractEntity);
 
-    void merge(String userId, String id, String name, String description);
+    void merge(AbstractEntity abstractEntity);
 
     void remove(String userId, String projectId);
 
@@ -17,7 +18,5 @@ public interface IProjectRepository {
 
     List<Project> findAll(String userId);
 
-    void assignExpert(String currentUserId, String projectId, String userId);
-
-    Map<String, Project> getProjects();
+    Map<String, AbstractEntity> getAbstractEntities();
 }

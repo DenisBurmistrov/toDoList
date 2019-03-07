@@ -33,7 +33,7 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
             String login = scanner.nextLine();
             System.out.println("Введите новый пароль");
             String newPassword = scanner.nextLine();
-            userService.updatePassword(getServiceLocator().getCurrentUser(), login, newPassword);
+            userService.updatePassword(getServiceLocator().getCurrentUser().getId(), login, newPassword);
         }
     }
 

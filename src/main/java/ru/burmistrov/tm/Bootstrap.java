@@ -12,6 +12,7 @@ import ru.burmistrov.tm.command.system.PrintListCommand;
 import ru.burmistrov.tm.command.project.*;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
@@ -55,12 +56,12 @@ public final class Bootstrap implements ServiceLocator {
 
     private void initProjectAndUser() {
 
-        User admin = userService.registrate("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-        User commonUser = userService.registrate("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
-        Project project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание");
-        Project project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание");
-        Project project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание");
-        Project project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание");
+        AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
+        AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
+        AbstractEntity project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание");
+        AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание");
+        AbstractEntity project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание");
+        AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание");
 
         taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание");
         taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание");
@@ -84,7 +85,6 @@ public final class Bootstrap implements ServiceLocator {
         registerCommand(new TaskClearCommand(serviceLocator));
         registerCommand(new TaskRemoveCommand(serviceLocator));
         registerCommand(new TaskUpdateCommand(serviceLocator));
-        registerCommand(new ProjectAssignUser(serviceLocator));
         registerCommand(new UserLogInCommand(serviceLocator));
         registerCommand(new UserLogOutCommand(serviceLocator));
         registerCommand(new UserRegistrateCommand(serviceLocator));

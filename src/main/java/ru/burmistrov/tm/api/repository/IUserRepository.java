@@ -1,16 +1,20 @@
 package ru.burmistrov.tm.api.repository;
 
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
+
+import java.util.Map;
 
 public interface IUserRepository {
 
     User logIn(String login, String password);
 
-    User registrate(String login, String password, String firstName, String middleName, String lastName, String email, Role role);
+    AbstractEntity persist(AbstractEntity entity);
 
     void updatePassword(String userId, String login, String newPassword);
 
-    void updateCurrentUser(String userId, String firstName, String middleName, String lastName, String email);
+    void merge(AbstractEntity abstractEntity);
+
+    Map<String, AbstractEntity> getAbstractEntities();
 
 }

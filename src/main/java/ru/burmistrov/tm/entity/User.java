@@ -2,11 +2,9 @@ package ru.burmistrov.tm.entity;
 
 import ru.burmistrov.tm.utils.PasswordUtil;
 
-import java.util.UUID;
+import java.util.Objects;
 
-public final class User {
-
-    private String id = UUID.randomUUID().toString();
+public final class User extends AbstractEntity {
 
     private String firstName;
 
@@ -36,14 +34,6 @@ public final class User {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPassword() {
@@ -89,5 +79,18 @@ public final class User {
     @Override
     public String toString() {
         return "User: " + firstName + " " + middleName + " " + lastName + "; Login: " + login + "; Role: " + role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(login, user.login);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login);
     }
 }

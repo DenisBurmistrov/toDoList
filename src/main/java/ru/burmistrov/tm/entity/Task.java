@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class Task {
+public final class Task extends AbstractEntity {
 
-    private String id = UUID.randomUUID().toString();
     private String projectId;
     private String name;
     private String description;
@@ -17,10 +16,6 @@ public final class Task {
     public Task() {
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -29,28 +24,23 @@ public final class Task {
         this.name = name;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id.equals(task.id) &&
+        return getId().equals(task.getId()) &&
                 projectId.equals(task.projectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId);
+        return Objects.hash(getId(), projectId);
     }
 
     @Override
     public String toString() {
-        return "ID: " + id +
+        return "ID: " + getId() +
                 "; Название: " + name +
                 "; Описание: " + description +
                 "; ID проекта: " + projectId;

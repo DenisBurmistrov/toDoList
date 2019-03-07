@@ -1,7 +1,7 @@
 package ru.burmistrov.tm.repository;
 
 import ru.burmistrov.tm.api.repository.IUserRepository;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
@@ -24,22 +24,14 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User registrate(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType) {
+    public AbstractEntity persist(AbstractEntity entity) {
         for (Map.Entry<String, User> entry : users.entrySet()) {
-            if (entry.getValue().getLogin().equals(login)) {
+            if (entry.getValue().equals(entity)) {
                 return null;
             }
         }
-        User user = new User();
-        user.setRole(roleType);
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setMiddleName(middleName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        users.put(user.getId(), user);
-        return user;
+        users.put(entity.getId(), (User) entity);
+        return entity;
     }
 
     @Override
@@ -53,11 +45,15 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void updateCurrentUser(String userId, String firstName, String middleName, String lastName, String email) {
-        User currentUser = users.get(userId);
-        currentUser.setFirstName(firstName);
-        currentUser.setMiddleName(middleName);
-        currentUser.setLastName(lastName);
-        currentUser.setEmail(email);
+    public void merge(AbstractEntity entity) {
+
+        users.put(entity.getId(), (User) entity);
+    }
+
+    @Override
+    public Map<String, AbstractEntity> getAbstractEntities() {
+        Map<String, AbstractEntity> map = new LinkedHashMap<>();
+        users.forEach(map::put);
+        return map;
     }
 }

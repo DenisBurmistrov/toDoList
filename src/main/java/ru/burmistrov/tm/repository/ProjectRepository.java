@@ -1,8 +1,8 @@
 package ru.burmistrov.tm.repository;
 
 import ru.burmistrov.tm.api.repository.IProjectRepository;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.*;
 
@@ -11,14 +11,15 @@ public final class ProjectRepository implements IProjectRepository {
     private final Map<String, Project> projects = new LinkedHashMap<>();
 
     @Override
-    public Project persist(String userId, String name, String description) {
-        Project project = new Project();
-        project.setName(name);
-        project.setDescription(description);
-        project.setUserId(userId);
-        projects.put(project.getId(), project);
-        return project;
+    public AbstractEntity persist(AbstractEntity entity) {
+        projects.put(entity.getId(), (Project) entity);
+        return entity;
 
+    }
+
+    @Override
+    public void merge(AbstractEntity entity) {
+        projects.put(entity.getId(), (Project) entity);
     }
 
     @Override
@@ -40,31 +41,12 @@ public final class ProjectRepository implements IProjectRepository {
         return result;
     }
 
-    @Override
-    public void merge(String userId, String id, String name, String description) {
-        Iterator it = projects.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getKey().equals(id)) {
-                Project project = new Project();
-                project.setId(id);
-                project.setName(name);
-                project.setDescription(description);
-                projects.put(id, project);
-            }
-        }
-    }
 
-    @Override
-    public void assignExpert(String currentUserId, String projectId, String userId) {
-        projects.forEach((k,v) -> {
-            if(v.getUserId().equals(projectId)){
-                v.setUserId(userId);
-            }
-        });
-    }
 
-    public Map<String, Project> getProjects() {
-        return projects;
+
+    public Map<String, AbstractEntity> getAbstractEntities() {
+        Map<String, AbstractEntity> map = new LinkedHashMap<>();
+        projects.forEach(map::put);
+        return map;
     }
 }

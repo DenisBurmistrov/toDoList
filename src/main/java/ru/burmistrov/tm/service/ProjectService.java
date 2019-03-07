@@ -3,8 +3,8 @@ package ru.burmistrov.tm.service;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 import java.util.Map;
@@ -26,18 +26,32 @@ public final class ProjectService implements IProjectService {
 
     }
 
-    public Project persist(String userId, String name, String merge) {
+    public Project persist(String userId, String name, String description) {
 
-        for(Map.Entry<String, Project> entry : projectRepository.getProjects().entrySet()){
-            if(entry.getValue().getName().equals(name)){
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setName(name);
+        project.setDescription(description);
+
+        for(Map.Entry<String, AbstractEntity> entry : projectRepository.getAbstractEntities().entrySet()){
+            if(entry.getValue().equals(project)){
                 return null;
             }
         }
-        return projectRepository.persist(userId, name, merge);
+        return (Project) projectRepository.persist(project);
     }
 
     public void merge(String userId, String projectId, String name, String description) {
-            projectRepository.merge(userId, projectId, name, description);
+        for (Map.Entry<String, AbstractEntity> entry : projectRepository.getAbstractEntities().entrySet()) {
+            if (entry.getKey().equals(projectId)) {
+                Project project = new Project();
+                project.setId(projectId);
+                project.setUserId(userId);
+                project.setName(name);
+                project.setDescription(description);
+                projectRepository.merge(project);
+            }
+        }
     }
 
     public void removeAll(String userId) {
@@ -49,7 +63,4 @@ public final class ProjectService implements IProjectService {
            return projectRepository.findAll(userId);
     }
 
-    public void assignUser(String currentUserId, String projectId, String userId) {
-        projectRepository.assignExpert(currentUserId, projectId, userId);
-    }
 }

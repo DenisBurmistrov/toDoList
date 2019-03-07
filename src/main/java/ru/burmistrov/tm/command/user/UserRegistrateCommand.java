@@ -1,6 +1,5 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -20,7 +19,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "-registrate";
+        return "-persist";
     }
 
     @Override
@@ -42,7 +41,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        System.out.println(userService.registrate(login, password, firstName, lastName, middleName, email, Role.COMMON_USER) + " зарегистрирован");
+        System.out.println(userService.persist(login, password, firstName, lastName, middleName, email, Role.COMMON_USER) + " зарегистрирован");
     }
 
     @Override

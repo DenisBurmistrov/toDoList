@@ -19,7 +19,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "-updateCurrentUser";
+        return "-merge";
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        userService.updateCurrentUser(getServiceLocator().getCurrentUser(), firstName, middleName, lastName, email);
+        userService.merge(getServiceLocator().getCurrentUser().getId(), firstName, middleName, lastName, email, getServiceLocator().getCurrentUser().getRole());
     }
 
     @Override

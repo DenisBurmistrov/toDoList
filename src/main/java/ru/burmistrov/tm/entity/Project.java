@@ -2,9 +2,8 @@ package ru.burmistrov.tm.entity;
 
 import java.util.*;
 
-public final class Project {
+public final class Project extends AbstractEntity {
 
-    private String id = UUID.randomUUID().toString();
     private String userId;
     private String name;
     private String description;
@@ -40,15 +39,6 @@ public final class Project {
         return dateBegin;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,7 +54,7 @@ public final class Project {
 
     @Override
     public String toString() {
-        return "ID: " + id + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + userId;
+        return "ID: " + getId() + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + userId;
     }
 
     public Date getDateEnd() {

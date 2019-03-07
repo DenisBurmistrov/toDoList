@@ -1,7 +1,6 @@
 package ru.burmistrov.tm.api.service;
 
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 
@@ -16,7 +15,5 @@ public interface IProjectService {
     void removeAll(String userId);
 
     List<Project> findAll(String userId);
-
-    void assignUser(String CurrentUserId, String projectId, String userId);
 
 }

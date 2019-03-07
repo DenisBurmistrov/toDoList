@@ -31,13 +31,13 @@ public final class TaskUpdateCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите ID проекта:");
         String projectId = scanner.nextLine();
-        System.out.println("Введите имя задачи:");
-        String oldName = scanner.nextLine();
+        System.out.println("Введите ID задачи:");
+        String taskId = scanner.nextLine();
         System.out.println("Введите новое имя:");
         String newName = scanner.nextLine();
         System.out.println("Введите новое описание: ");
         String description = scanner.nextLine();
-        taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, oldName, newName, description);
+        taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description);
     }
 
     @Override

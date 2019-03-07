@@ -4,7 +4,6 @@ import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.Task;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 
@@ -19,17 +18,30 @@ public final class TaskService implements ITaskService {
         this.projectRepository = projectRepository;
     }
 
-    public void merge(String userId, String projectId, String oldName, String newName, String description) {
-            if(newName.length() != 0) {
-                taskRepository.merge(userId, projectId, oldName, newName, description);
-            }
+    public Task persist(String userId, String projectId, String name, String description) {
+        if(name.length() != 0 && projectRepository.getAbstractEntities().containsKey(projectId)) {
+            Task task = new Task();
+            task.setName(name);
+            task.setDescription(description);
+            task.setProjectId(projectId);
+            task.setUserId(userId);
+            return (Task) taskRepository.persist(task);
+        }
+        return null;
     }
 
-    public Task persist(String userId, String projectId, String name, String description) {
-            if(name.length() != 0 && projectRepository.getProjects().containsKey(projectId)) {
-                return taskRepository.persist(userId, projectId, name, description);
+    public void merge(String userId, String projectId, String taskId, String newName, String description) {
+
+
+            if(newName.length() != 0 && taskRepository.getAbstractEntities().containsKey(taskId)) {
+                Task task = new Task();
+                task.setId(taskId);
+                task.setName(newName);
+                task.setDescription(description);
+                task.setProjectId(projectId);
+                task.setUserId(userId);
+                taskRepository.merge(task);
             }
-            return null;
     }
 
     public List<Task> findAll(String userId, String projectId) {
