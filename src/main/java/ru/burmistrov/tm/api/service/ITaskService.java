@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.api.service;
 
-import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ public interface ITaskService {
 
     void merge(String userId, String projectId, String oldName, String newName, String description);
 
-    Task persist(String userId, String projectId, String name, String description);
+    AbstractEntity persist(String userId, String projectId, String name, String description);
 
-    List<Task> findAll(String userId, String projectId);
+    List<AbstractEntity> findAll(String userId, String projectId);
 
     void removeAllInProject(String userId, String projectId);
 

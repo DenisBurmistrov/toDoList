@@ -5,9 +5,9 @@ import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;
-import java.util.Map;
 
 public final class ProjectService implements IProjectService {
 
@@ -21,8 +21,17 @@ public final class ProjectService implements IProjectService {
     }
 
     public void remove(String userId, String projectId) {
-            projectRepository.remove(userId, projectId);
-            taskRepository.removeAllInProject(userId, projectId);
+            Project project = new Project();
+            project.setUserId(userId);
+            project.setId(projectId);
+            AbstractEntity abstractEntity = projectRepository.findOne(project);
+            if(abstractEntity != null) {
+                projectRepository.remove(project);
+                Task task = new Task();
+                task.setUserId(userId);
+                task.setProjectId(projectId);
+                taskRepository.removeAllInProject(task);
+            }
 
     }
 
@@ -32,35 +41,36 @@ public final class ProjectService implements IProjectService {
         project.setUserId(userId);
         project.setName(name);
         project.setDescription(description);
-
-        for(Map.Entry<String, AbstractEntity> entry : projectRepository.getAbstractEntities().entrySet()){
-            if(entry.getValue().equals(project)){
-                return null;
-            }
+        AbstractEntity abstractEntity = projectRepository.findOne(project);
+        if(abstractEntity == null) {
+            return (Project) projectRepository.persist(project);
         }
-        return (Project) projectRepository.persist(project);
+        return null;
     }
 
     public void merge(String userId, String projectId, String name, String description) {
-        for (Map.Entry<String, AbstractEntity> entry : projectRepository.getAbstractEntities().entrySet()) {
-            if (entry.getKey().equals(projectId)) {
-                Project project = new Project();
-                project.setId(projectId);
-                project.setUserId(userId);
-                project.setName(name);
-                project.setDescription(description);
-                projectRepository.merge(project);
-            }
+        Project project = new Project();
+        project.setId(projectId);
+        project.setUserId(userId);
+        project.setName(name);
+        project.setDescription(description);
+        AbstractEntity abstractEntity = projectRepository.findOne(project);
+        if (abstractEntity != null) {
+            projectRepository.merge(project);
         }
     }
 
     public void removeAll(String userId) {
-        projectRepository.removeAll(userId);
-        taskRepository.removeAll(userId);
+        Project project = new Project();
+        project.setUserId(userId);
+        projectRepository.removeAll(project);
+        taskRepository.removeAll(project);
     }
 
-    public List<Project> findAll(String userId) {
-           return projectRepository.findAll(userId);
+    public List<AbstractEntity> findAll(String userId) {
+        Project project = new Project();
+        project.setUserId(userId);
+        return projectRepository.findAll(project);
     }
 
 }

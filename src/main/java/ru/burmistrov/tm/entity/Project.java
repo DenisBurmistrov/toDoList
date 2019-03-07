@@ -44,12 +44,13 @@ public final class Project extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return Objects.equals(name, project.name);
+        return Objects.equals(userId, project.userId) &&
+                Objects.equals(name, project.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(userId, name);
     }
 
     @Override

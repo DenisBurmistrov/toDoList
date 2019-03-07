@@ -3,6 +3,7 @@ package ru.burmistrov.tm.command.task;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;
@@ -32,12 +33,12 @@ public final class TaskListCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
-            List<Task> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
+            List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
             if(taskList == null) {
                 System.out.println("У данного проекта нет задач");
             }
             else {
-                for(Task task : taskList) {
+                for(AbstractEntity task : taskList) {
                     System.out.println(task);
                 }
             }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class TaskRepository implements ITaskRepository {
+public final class TaskRepository extends AbstractRepository implements ITaskRepository {
 
     private final Map<String, Task> tasks = new LinkedHashMap<>();
 
@@ -28,49 +28,45 @@ public final class TaskRepository implements ITaskRepository {
     }
 
     @Override
-    public void remove(String userId, String projectId, String taskId) {
-
-        tasks.entrySet().removeIf((k) ->
-                (k != null && projectId.equals(k.getValue().getProjectId()) && taskId.equals(k.getValue().getId()) && k.getValue().getUserId().equals(userId)));
+    public void remove(AbstractEntity entity) {
+        Task task = (Task) entity;
+        tasks.remove(task.getId());
     }
 
 
     @Override
-    public List<Task> findAll(String userId, String projectId) {
-        List<Task> result = new LinkedList<>();
+    public List<AbstractEntity> findAll(AbstractEntity entity) {
+        Task task = (Task) entity;
+        List<AbstractEntity> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> e.getValue().
-                getProjectId().equals(projectId)
+                getProjectId().equals(task.getProjectId())
                 && e.getValue().getUserId().
-                equals(userId))
+                equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         return result;
     }
 
     @Override
-    public void removeAllInProject(String userId, String projectId) {
-        tasks.entrySet().removeIf((e) -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(userId));
+    public void removeAllInProject(AbstractEntity entity) {
+        Task task = (Task) entity;
+        tasks.entrySet().removeIf((e) -> e.getValue().getProjectId().equals(task.getProjectId()) &&
+                task.getUserId().equals(e.getValue().getUserId()));
     }
 
     @Override
-    public void removeAll(String userId) {
-        tasks.entrySet().removeIf((e) -> e.getValue().getUserId().equals(userId));
+    public void removeAll(AbstractEntity entity) {
+        Task task = (Task) entity;
+        tasks.entrySet().removeIf((e) -> e.getValue().getUserId().equals(task.getUserId()));
     }
 
     @Override
-    public Task findOne(String userId, String projectId, String name) {
-        Task task;
-        List list = tasks.entrySet().stream().filter(e -> projectId.equals(e.getValue().getProjectId()) && name.equals(e.getValue().getName())
-                && e.getValue().getUserId().equals(userId)).collect(Collectors.toList());
-        task = (Task) list.get(0);
-
-        return task;
-    }
-
-    @Override
-    public Map<String, AbstractEntity> getAbstractEntities() {
-        Map<String, AbstractEntity> map = new LinkedHashMap<>();
-        tasks.forEach(map::put);
-        return map;
+    public AbstractEntity findOne(AbstractEntity entity) {
+        Task task = (Task) entity;
+        List list = tasks.entrySet().stream().filter(e -> task.equals(e.getValue())).collect(Collectors.toList());
+        if(list.size() > 0) {
+            return (AbstractEntity) list.get(0);
+        }
+        return null;
     }
 }

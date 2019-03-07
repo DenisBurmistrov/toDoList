@@ -29,6 +29,8 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
+        System.out.println("Введите логин");
+        String login = scanner.nextLine();
         System.out.println("Введите имя:");
         String firstName = scanner.nextLine();
         System.out.println("Введите фамилию:");
@@ -37,7 +39,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         String middleName = scanner.nextLine();
         System.out.println("Введите почту:");
         String email = scanner.nextLine();
-        userService.merge(getServiceLocator().getCurrentUser().getId(), firstName, middleName, lastName, email, getServiceLocator().getCurrentUser().getRole());
+        userService.merge(getServiceLocator().getCurrentUser().getId(), firstName, middleName, lastName, email, getServiceLocator().getCurrentUser().getRole(),login);
     }
 
     @Override

@@ -3,6 +3,7 @@ package ru.burmistrov.tm.command.project;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
 import java.util.List;
@@ -28,11 +29,11 @@ public final class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        List<Project> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
+        List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
         if (projects == null) {
             System.out.println("У пользователя нет проектов");
         } else {
-            for(Project project : projects){
+            for(AbstractEntity project : projects){
                 System.out.println(project);
             }
         }

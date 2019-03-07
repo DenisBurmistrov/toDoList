@@ -5,8 +5,9 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public final class ProjectRepository implements IProjectRepository {
+public final class ProjectRepository extends AbstractRepository implements IProjectRepository {
 
     private final Map<String, Project> projects = new LinkedHashMap<>();
 
@@ -14,7 +15,6 @@ public final class ProjectRepository implements IProjectRepository {
     public AbstractEntity persist(AbstractEntity entity) {
         projects.put(entity.getId(), (Project) entity);
         return entity;
-
     }
 
     @Override
@@ -23,30 +23,35 @@ public final class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void remove(String userId, String projectId) {
-        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(userId));
+    public void remove(AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        projects.remove(project.getId());
     }
 
     @Override
-    public void removeAll(String userId) {
-        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(userId));
+    public void removeAll(AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(project.getUserId()));
     }
 
     @Override
-    public List<Project> findAll(String userId) {
-        List<Project> result = new LinkedList<>();
+    public List<AbstractEntity> findAll(AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        List<AbstractEntity> result = new LinkedList<>();
         projects.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().equals(userId))
+                .stream().filter(e -> e.getValue().getUserId().equals(project.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         return result;
     }
 
-
-
-
-    public Map<String, AbstractEntity> getAbstractEntities() {
-        Map<String, AbstractEntity> map = new LinkedHashMap<>();
-        projects.forEach(map::put);
-        return map;
+    @Override
+    public AbstractEntity findOne(AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        List list = projects.entrySet().stream().filter(e -> project.equals(e.getValue())).collect(Collectors.toList());
+        if(list.size() > 0) {
+            return (AbstractEntity) list.get(0);
+        }
+        return null;
     }
+
 }

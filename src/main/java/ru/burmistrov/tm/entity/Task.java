@@ -29,13 +29,13 @@ public final class Task extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return getId().equals(task.getId()) &&
-                projectId.equals(task.projectId);
+        return Objects.equals(projectId, task.projectId) &&
+                Objects.equals(name, task.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), projectId);
+        return Objects.hash(projectId, name);
     }
 
     @Override

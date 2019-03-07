@@ -11,5 +11,10 @@ public interface IUserService {
 
     void updatePassword(String userId, String login, String password);
 
-    void merge(String userId, String firstName, String middleName, String lastName, String email, Role role);
+    void merge(String userId, String firstName, String middleName, String lastName, String email, Role role, String login);
+
+    void remove(String userId);
+
+    void removeAll(String userId);
+
 }

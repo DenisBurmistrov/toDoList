@@ -1,10 +1,8 @@
 package ru.burmistrov.tm.api.repository;
 
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ITaskRepository {
 
@@ -12,15 +10,13 @@ public interface ITaskRepository {
 
     void merge(AbstractEntity abstractEntity);
 
-    void remove(String userId, String projectId, String taskId);
+    void remove(AbstractEntity entity);
 
-    void removeAll(String userId);
+    void removeAll(AbstractEntity entity);
 
-    List<Task> findAll(String userId, String projectId);
+    List<AbstractEntity> findAll(AbstractEntity entity);
 
-    void removeAllInProject(String userId, String projectId);
+    void removeAllInProject(AbstractEntity entity);
 
-    Task findOne(String userId, String projectId, String name);
-
-    Map<String, AbstractEntity> getAbstractEntities();
+    AbstractEntity findOne(AbstractEntity entity);
 }

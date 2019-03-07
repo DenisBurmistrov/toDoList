@@ -6,9 +6,12 @@ import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public final class UserRepository implements IUserRepository {
+public final class UserRepository extends AbstractRepository implements IUserRepository {
 
     private final Map<String, User> users = new LinkedHashMap<>();
 
@@ -24,17 +27,6 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public AbstractEntity persist(AbstractEntity entity) {
-        for (Map.Entry<String, User> entry : users.entrySet()) {
-            if (entry.getValue().equals(entity)) {
-                return null;
-            }
-        }
-        users.put(entity.getId(), (User) entity);
-        return entity;
-    }
-
-    @Override
     public void updatePassword(String userId, String login, String newPassword) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
@@ -45,15 +37,42 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void merge(AbstractEntity entity) {
+    public AbstractEntity persist(AbstractEntity entity) {
+        users.put(entity.getId(), (User) entity);
+        return entity;
+    }
 
+    @Override
+    public void merge(AbstractEntity entity) {
         users.put(entity.getId(), (User) entity);
     }
 
     @Override
-    public Map<String, AbstractEntity> getAbstractEntities() {
-        Map<String, AbstractEntity> map = new LinkedHashMap<>();
-        users.forEach(map::put);
-        return map;
+    public void remove(AbstractEntity abstractEntity) {
+        User user = (User) abstractEntity;
+        users.remove(user.getId());
+    }
+
+    @Override
+    public void removeAll(AbstractEntity abstractEntity) {
+        users.clear();
+    }
+
+    @Override
+    public List<AbstractEntity> findAll(AbstractEntity abstractEntity) {
+
+        List<AbstractEntity> result = new LinkedList<>();
+        users.forEach((k, v) -> result.add(v));
+        return result;
+    }
+
+    @Override
+    public AbstractEntity findOne(AbstractEntity abstractEntity) {
+        User user = (User) abstractEntity;
+        List list = users.entrySet().stream().filter(e -> user.equals(e.getValue())).collect(Collectors.toList());
+        if(list.size() > 0) {
+            return (AbstractEntity) list.get(0);
+        }
+        return null;
     }
 }

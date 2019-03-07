@@ -2,7 +2,7 @@ package ru.burmistrov.tm.entity;
 
 import java.util.UUID;
 
-public class AbstractEntity {
+public abstract class AbstractEntity {
 
     private String id = UUID.randomUUID().toString();
 

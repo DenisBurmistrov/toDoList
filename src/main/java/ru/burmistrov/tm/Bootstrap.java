@@ -39,7 +39,7 @@ public final class Bootstrap implements ServiceLocator {
 
     private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
-    private final ITaskService taskService = new TaskService(taskRepository, projectRepository);
+    private final ITaskService taskService = new TaskService(taskRepository);
 
     private final IUserService userService = new UserService(userRepository);
 
@@ -91,6 +91,8 @@ public final class Bootstrap implements ServiceLocator {
         registerCommand(new UserShowCurrentUser(serviceLocator));
         registerCommand(new UserUpdateCurrentUser(serviceLocator));
         registerCommand(new UserUpdatePasswordCommand(serviceLocator));
+        registerCommand(new UserClearCommand(serviceLocator));
+        registerCommand(new UserRemoveCommand(serviceLocator));
     }
 
     private void execute(String command) {
