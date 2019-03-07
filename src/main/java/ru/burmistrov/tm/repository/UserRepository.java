@@ -43,7 +43,7 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void updatePassword(User currentUser, String login, String newPassword) {
+    public void updatePassword(String userId, String login, String newPassword) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
             if (entry.getValue().getLogin().equals(login)) {
@@ -53,7 +53,8 @@ public final class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void updateCurrentUser(User currentUser, String firstName, String middleName, String lastName, String email) {
+    public void updateCurrentUser(String userId, String firstName, String middleName, String lastName, String email) {
+        User currentUser = users.get(userId);
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
         currentUser.setLastName(lastName);

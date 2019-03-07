@@ -9,7 +9,7 @@ public interface IUserService {
 
     User registrate(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType);
 
-    void updatePassword(User currentUser, String login, String password);
+    void updatePassword(String userId, String login, String password);
 
-    void updateCurrentUser(User currentUser, String firstName, String middleName, String lastName, String email);
+    void updateCurrentUser(String userId, String firstName, String middleName, String lastName, String email);
 }

@@ -30,7 +30,7 @@ public final class ProjectRemoveCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта: ");
             String projectId = scanner.nextLine();
-            projectService.remove(getServiceLocator().getCurrentUser(), projectId);
+            projectService.remove(getServiceLocator().getCurrentUser().getId(), projectId);
         }
 
     @Override

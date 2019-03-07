@@ -1,24 +1,23 @@
 package ru.burmistrov.tm.api.repository;
 
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 import java.util.Map;
 
 public interface IProjectRepository {
 
-    Project persist(User currentUser, String name, String description);
+    Project persist(String userId, String name, String description);
 
-    void remove(User currentUser, String projectId);
+    void merge(String userId, String id, String name, String description);
 
-    void removeAll(User currentUser);
+    void remove(String userId, String projectId);
 
-    List<Project> findAll(User currentUser);
+    void removeAll(String userId);
 
-    void merge(User currentUser, String id, String name, String description);
+    List<Project> findAll(String userId);
 
-    void assignExpert(User currentUser, String projectId, String userId);
+    void assignExpert(String currentUserId, String projectId, String userId);
 
     Map<String, Project> getProjects();
 }

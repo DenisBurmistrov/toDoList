@@ -9,7 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <build>
         <finalName>tm</finalName>
-        <!--<outputDirectory>build</outputDirectory>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,6 +33,9 @@
                         <manifest>
                             <mainClass>ru.burmistrov.tm.App</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Developer-name>Бурмистров Денис Андреевич</Developer-name>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>

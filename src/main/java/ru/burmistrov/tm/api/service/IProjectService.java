@@ -7,16 +7,16 @@ import java.util.List;
 
 public interface IProjectService {
 
-     void remove(User currentUser, String projectId);
+     void remove(String userId, String projectId);
 
-    Project persist(User currentUser, String name, String merge);
+    Project persist(String userId, String name, String merge);
 
-    void merge(User currentUser, String projectId, String name, String description);
+    void merge(String userId, String projectId, String name, String description);
 
-    void removeAll(User currentUser);
+    void removeAll(String userId);
 
-    List<Project> findAll(User currentUser);
+    List<Project> findAll(String userId);
 
-    void assignUser(User currentUser, String projectId, String userId);
+    void assignUser(String CurrentUserId, String projectId, String userId);
 
 }

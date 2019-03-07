@@ -28,7 +28,7 @@ public final class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        List<Project> projects = projectService.findAll(getServiceLocator().getCurrentUser());
+        List<Project> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
         if (projects == null) {
             System.out.println("У пользователя нет проектов");
         } else {

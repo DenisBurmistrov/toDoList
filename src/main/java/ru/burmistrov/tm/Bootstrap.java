@@ -57,15 +57,15 @@ public final class Bootstrap implements ServiceLocator {
 
         User admin = userService.registrate("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
         User commonUser = userService.registrate("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
-        Project project1 = projectService.persist(admin, "Первый проект", "Первое описание");
-        Project project2 = projectService.persist(admin, "Второй проект", "Второе описание");
-        Project project3 = projectService.persist(commonUser, "Третий проект", "Третье описание");
-        Project project4 = projectService.persist(commonUser, "Четвертый проект", "Четвертое описание");
+        Project project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание");
+        Project project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание");
+        Project project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание");
+        Project project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание");
 
-        taskService.persist(admin, project1.getId(), "Первая задача", "Первое описание");
-        taskService.persist(admin, project2.getId(), "Вторая задача", "Вторая описание");
-        taskService.persist(commonUser, project3.getId(), "Третья задача", "Третье описание");
-        taskService.persist(commonUser, project4.getId(), "Четвертая задача", "Четвертое описание");
+        taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание");
+        taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание");
+        taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание");
+        taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание");
     }
 
     private void registerCommand(AbstractCommand abstractCommand) {

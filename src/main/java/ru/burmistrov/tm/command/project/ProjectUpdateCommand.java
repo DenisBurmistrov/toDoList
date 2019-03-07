@@ -34,7 +34,7 @@ public final class ProjectUpdateCommand extends AbstractCommand {
             String name = scanner.nextLine();
             System.out.println("Введите новое описание:");
             String description = scanner.nextLine();
-            projectService.merge(getServiceLocator().getCurrentUser(), projectId, name, description);
+            projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description);
         }
 
     @Override

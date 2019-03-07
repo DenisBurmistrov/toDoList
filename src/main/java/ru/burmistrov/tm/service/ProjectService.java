@@ -20,36 +20,36 @@ public final class ProjectService implements IProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public void remove(User currentUser, String projectId) {
-            projectRepository.remove(currentUser, projectId);
-            taskRepository.removeAllinProject(currentUser, projectId);
+    public void remove(String userId, String projectId) {
+            projectRepository.remove(userId, projectId);
+            taskRepository.removeAllInProject(userId, projectId);
 
     }
 
-    public Project persist(User currentUser, String name, String merge) {
+    public Project persist(String userId, String name, String merge) {
 
         for(Map.Entry<String, Project> entry : projectRepository.getProjects().entrySet()){
             if(entry.getValue().getName().equals(name)){
                 return null;
             }
         }
-        return projectRepository.persist(currentUser, name, merge);
+        return projectRepository.persist(userId, name, merge);
     }
 
-    public void merge(User currentUser, String projectId, String name, String description) {
-            projectRepository.merge(currentUser, projectId, name, description);
+    public void merge(String userId, String projectId, String name, String description) {
+            projectRepository.merge(userId, projectId, name, description);
     }
 
-    public void removeAll(User currentUser) {
-        projectRepository.removeAll(currentUser);
-        taskRepository.removeAll(currentUser);
+    public void removeAll(String userId) {
+        projectRepository.removeAll(userId);
+        taskRepository.removeAll(userId);
     }
 
-    public List<Project> findAll(User currentUser) {
-           return projectRepository.findAll(currentUser);
+    public List<Project> findAll(String userId) {
+           return projectRepository.findAll(userId);
     }
 
-    public void assignUser(User currentUser, String projectId, String userId) {
-        projectRepository.assignExpert(currentUser, projectId, userId);
+    public void assignUser(String currentUserId, String projectId, String userId) {
+        projectRepository.assignExpert(currentUserId, projectId, userId);
     }
 }

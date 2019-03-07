@@ -15,68 +15,68 @@ public final class TaskRepository implements ITaskRepository {
     private final Map<String, Task> tasks = new LinkedHashMap<>();
 
     @Override
-    public void merge(User currentUser, String projectId, String oldName, String newName, String description) {
+    public void merge(String userId, String projectId, String oldName, String newName, String description) {
 
         tasks.forEach((key, value) -> {
-            if (oldName.equals(value.getName()) && projectId.equals(value.getProjectId()) && value.getUserId().equals(currentUser.getId())) {
+            if (oldName.equals(value.getName()) && projectId.equals(value.getProjectId()) && value.getUserId().equals(userId)) {
                 Task task = new Task();
                 task.setId(value.getId());
                 task.setName(newName);
                 task.setDescription(description);
                 task.setProjectId(projectId);
-                task.setUserId(currentUser.getId());
+                task.setUserId(userId);
                 tasks.put(task.getId(), task);
             }
         });
     }
 
     @Override
-    public Task persist(User currentUser, String projectId, String name, String description) {
+    public Task persist(String userId, String projectId, String name, String description) {
 
         Task task = new Task();
         task.setName(name);
         task.setDescription(description);
         task.setProjectId(projectId);
-        task.setUserId(currentUser.getId());
+        task.setUserId(userId);
         tasks.put(task.getId(), task);
         return task;
     }
 
     @Override
-    public void remove(User currentUser, String projectId, String taskId) {
+    public void remove(String userId, String projectId, String taskId) {
 
         tasks.entrySet().removeIf((k) ->
-                (k != null && projectId.equals(k.getValue().getProjectId()) && taskId.equals(k.getValue().getId()) && k.getValue().getUserId().equals(currentUser.getId())));
+                (k != null && projectId.equals(k.getValue().getProjectId()) && taskId.equals(k.getValue().getId()) && k.getValue().getUserId().equals(userId)));
     }
 
 
     @Override
-    public List<Task> findAll(User currentUser, String projectId) {
+    public List<Task> findAll(String userId, String projectId) {
         List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> e.getValue().
                 getProjectId().equals(projectId)
                 && e.getValue().getUserId().
-                equals(currentUser.getId()))
+                equals(userId))
                 .forEach(e -> result.add(e.getValue()));
         return result;
     }
 
     @Override
-    public void removeAllinProject(User currentUser, String projectId) {
-        tasks.entrySet().removeIf((e) -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(currentUser.getId()));
+    public void removeAllInProject(String userId, String projectId) {
+        tasks.entrySet().removeIf((e) -> e.getValue().getProjectId().equals(projectId) && e.getValue().getUserId().equals(userId));
     }
 
     @Override
-    public void removeAll(User currentUser) {
-        tasks.entrySet().removeIf((e) -> e.getValue().getUserId().equals(currentUser.getId()));
+    public void removeAll(String userId) {
+        tasks.entrySet().removeIf((e) -> e.getValue().getUserId().equals(userId));
     }
 
     @Override
-    public Task findOne(User currentUser, String projectId, String name) {
+    public Task findOne(String userId, String projectId, String name) {
         Task task;
         List list = tasks.entrySet().stream().filter(e -> projectId.equals(e.getValue().getProjectId()) && name.equals(e.getValue().getName())
-                && e.getValue().getUserId().equals(currentUser.getId())).collect(Collectors.toList());
+                && e.getValue().getUserId().equals(userId)).collect(Collectors.toList());
         task = (Task) list.get(0);
 
         return task;

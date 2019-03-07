@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface ITaskRepository {
 
-    void merge(User currentUser, String projectId, String oldName, String newName, String description);
+    Task persist(String userId, String projectId, String name, String description);
 
-    Task persist(User currentUser, String projectId, String name, String description);
+    void merge(String userId, String projectId, String oldName, String newName, String description);
 
-    void remove(User currentUser, String projectId, String name);
+    void remove(String userId, String projectId, String name);
 
-    List<Task> findAll(User currentUser, String projectId);
+    void removeAll(String userId);
 
-    void removeAllinProject(User currentUser, String projectId);
+    List<Task> findAll(String userId, String projectId);
 
-    void removeAll(User currentUser);
+    void removeAllInProject(String userId, String projectId);
 
-    Task findOne(User currentUser, String projectId, String name);
+    Task findOne(String userId, String projectId, String name);
 }

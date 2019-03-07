@@ -19,28 +19,32 @@ public final class TaskService implements ITaskService {
         this.projectRepository = projectRepository;
     }
 
-    public void merge(User currentUser, String projectId, String oldName, String newName, String description) {
+    public void merge(String userId, String projectId, String oldName, String newName, String description) {
             if(newName.length() != 0) {
-                taskRepository.merge(currentUser, projectId, oldName, newName, description);
+                taskRepository.merge(userId, projectId, oldName, newName, description);
             }
     }
 
-    public Task persist(User currentUser, String projectId, String name, String description) {
+    public Task persist(String userId, String projectId, String name, String description) {
             if(name.length() != 0 && projectRepository.getProjects().containsKey(projectId)) {
-                return taskRepository.persist(currentUser, projectId, name, description);
+                return taskRepository.persist(userId, projectId, name, description);
             }
             return null;
     }
 
-    public List<Task> findAll(User currentUser, String projectId) {
-        return taskRepository.findAll(currentUser, projectId);
+    public List<Task> findAll(String userId, String projectId) {
+        return taskRepository.findAll(userId, projectId);
     }
 
-    public void removeAllInProject(User currentUser, String projectId) {
-        taskRepository.removeAllinProject(currentUser, projectId);
+    public void removeAllInProject(String userId, String projectId) {
+        taskRepository.removeAllInProject(userId, projectId);
     }
 
-    public void remove(User currentUser, String projectId, String taskId) {
-        taskRepository.remove(currentUser, projectId, taskId);
+    public void remove(String userId, String projectId, String taskId) {
+        taskRepository.remove(userId, projectId, taskId);
+    }
+
+    public void removeAll(String userId) {
+        taskRepository.removeAll(userId);
     }
 }

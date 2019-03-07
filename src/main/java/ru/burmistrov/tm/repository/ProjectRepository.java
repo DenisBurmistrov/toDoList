@@ -11,37 +11,37 @@ public final class ProjectRepository implements IProjectRepository {
     private final Map<String, Project> projects = new LinkedHashMap<>();
 
     @Override
-    public Project persist(User currentUser, String name, String description) {
+    public Project persist(String userId, String name, String description) {
         Project project = new Project();
         project.setName(name);
         project.setDescription(description);
-        project.setUserId(currentUser.getId());
+        project.setUserId(userId);
         projects.put(project.getId(), project);
         return project;
 
     }
 
     @Override
-    public void remove(User currentUser, String projectId) {
-        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(currentUser.getId()));
+    public void remove(String userId, String projectId) {
+        projects.entrySet().removeIf(e -> e.getValue().getId().equals(projectId) && e.getValue().getUserId().equals(userId));
     }
 
     @Override
-    public void removeAll(User currentUser) {
-        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(currentUser.getId()));
+    public void removeAll(String userId) {
+        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(userId));
     }
 
     @Override
-    public List<Project> findAll(User currentUser) {
+    public List<Project> findAll(String userId) {
         List<Project> result = new LinkedList<>();
         projects.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().equals(currentUser.getId()))
+                .stream().filter(e -> e.getValue().getUserId().equals(userId))
                 .forEach(e -> result.add(e.getValue()));
         return result;
     }
 
     @Override
-    public void merge(User currentUser, String id, String name, String description) {
+    public void merge(String userId, String id, String name, String description) {
         Iterator it = projects.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
@@ -56,7 +56,7 @@ public final class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void assignExpert(User currentUser, String projectId, String userId) {
+    public void assignExpert(String currentUserId, String projectId, String userId) {
         projects.forEach((k,v) -> {
             if(v.getUserId().equals(projectId)){
                 v.setUserId(userId);

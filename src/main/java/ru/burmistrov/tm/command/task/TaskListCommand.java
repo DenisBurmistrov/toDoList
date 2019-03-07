@@ -32,7 +32,7 @@ public final class TaskListCommand extends AbstractCommand {
     public void execute() {
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
-            List<Task> taskList = taskService.findAll(getServiceLocator().getCurrentUser(), id);
+            List<Task> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
             if(taskList == null) {
                 System.out.println("У данного проекта нет задач");
             }

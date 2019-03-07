@@ -33,7 +33,7 @@ public final class ProjectAssignUser extends AbstractCommand {
         String projectId = scanner.nextLine();
         System.out.println("Введите ID пользователя");
         String userId = scanner.nextLine();
-        projectService.assignUser(getServiceLocator().getCurrentUser(), projectId, userId);
+        projectService.assignUser(getServiceLocator().getCurrentUser().getId(), projectId, userId);
     }
 
     @Override
