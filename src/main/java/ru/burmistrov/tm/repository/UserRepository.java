@@ -5,10 +5,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class UserRepository extends AbstractRepository implements IUserRepository {
@@ -44,7 +41,11 @@ public final class UserRepository extends AbstractRepository implements IUserRep
 
     @Override
     public void merge(AbstractEntity entity) {
-        users.put(entity.getId(), (User) entity);
+        User user = (User) entity;
+        users.get(entity.getId()).setFirstName(user.getFirstName());
+        users.get(entity.getId()).setMiddleName(user.getMiddleName());
+        users.get(entity.getId()).setLastName(user.getLastName());
+        users.get(entity.getId()).setEmail(user.getEmail());
     }
 
     @Override
@@ -69,9 +70,14 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     @Override
     public AbstractEntity findOne(AbstractEntity abstractEntity) {
         User user = (User) abstractEntity;
-        List list = users.entrySet().stream().filter(e -> user.equals(e.getValue())).collect(Collectors.toList());
-        if(list.size() > 0) {
-            return (AbstractEntity) list.get(0);
+        List<User> result = new ArrayList<>();
+        users.forEach((k,v) -> {
+            if(v.equals(user)) {
+                result.add(v);
+            }
+        });
+        if(result.size() > 0) {
+            return result.get(0);
         }
         return null;
     }

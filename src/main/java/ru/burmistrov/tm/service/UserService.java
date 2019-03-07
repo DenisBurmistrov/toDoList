@@ -6,7 +6,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
 
-public final class UserService implements IUserService {
+public final class UserService extends AbstractService implements IUserService {
 
     private final IUserRepository userRepository;
 
@@ -51,8 +51,8 @@ public final class UserService implements IUserService {
         currentUser.setRole(role);
         currentUser.setLogin(login);
         AbstractEntity abstractEntity = userRepository.findOne(currentUser);
-        if (firstName.length() == 0 && middleName.length() == 0 && lastName.length() == 0
-                && email.length() == 0 && abstractEntity != null)
+        if (abstractEntity != null)
+            System.out.println("asdsad");
             userRepository.merge(currentUser);
     }
 
@@ -60,12 +60,13 @@ public final class UserService implements IUserService {
     public void remove(String userId) {
         User user = new User();
         user.setId(userId);
+        userRepository.remove(user);
     }
 
     @Override
     public void removeAll(String userId) {
         User user = new User();
         user.setId(userId);
-        userRepository.findAll(user);
+        userRepository.removeAll(user);
     }
 }

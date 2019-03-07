@@ -19,7 +19,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
 
     @Override
     public String getName() {
-        return "-persist";
+        return "-createNewUser";
     }
 
     @Override

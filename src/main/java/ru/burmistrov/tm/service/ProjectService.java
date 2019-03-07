@@ -9,7 +9,7 @@ import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;
 
-public final class ProjectService implements IProjectService {
+public final class ProjectService extends AbstractService implements IProjectService {
 
     private final IProjectRepository projectRepository;
 

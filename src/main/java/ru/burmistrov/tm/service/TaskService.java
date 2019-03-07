@@ -7,7 +7,7 @@ import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;
 
-public final class TaskService implements ITaskService {
+public final class TaskService extends AbstractService implements ITaskService {
 
     private final ITaskRepository taskRepository;
 
