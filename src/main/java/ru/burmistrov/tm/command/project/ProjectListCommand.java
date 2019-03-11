@@ -10,8 +10,6 @@ import java.util.List;
 
 public final class ProjectListCommand extends AbstractCommand {
 
-    private final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
-
     public ProjectListCommand() {
     }
 
@@ -27,6 +25,7 @@ public final class ProjectListCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
         System.out.println("Список проектов:");
         List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
         if (projects == null) {

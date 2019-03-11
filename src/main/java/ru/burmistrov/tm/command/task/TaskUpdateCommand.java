@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public final class TaskUpdateCommand extends AbstractCommand {
 
-    private final ITaskService taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public TaskUpdateCommand() {
     }
@@ -28,6 +26,8 @@ public final class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        ITaskService taskService = getServiceLocator().getTaskService();
+        Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта:");
         String projectId = scanner.nextLine();
         System.out.println("Введите ID задачи:");

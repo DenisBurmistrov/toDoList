@@ -3,9 +3,7 @@ package ru.burmistrov.tm.command.project;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
 
-public final  class ProjectClearCommand extends AbstractCommand {
-
-    private final IProjectService projectService = getServiceLocator().getProjectService();
+public final class ProjectClearCommand extends AbstractCommand {
 
     public ProjectClearCommand() {
     }
@@ -22,6 +20,7 @@ public final  class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+            IProjectService projectService = getServiceLocator().getProjectService();
             projectService.removeAll(getServiceLocator().getCurrentUser().getId());
     }
 

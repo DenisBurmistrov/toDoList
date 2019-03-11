@@ -8,13 +8,10 @@ import java.util.Scanner;
 
 public final class UserUpdateCurrentUser extends AbstractCommand {
 
-    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
 
     public UserUpdateCurrentUser() {
-
     }
 
     @Override
@@ -29,6 +26,9 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
+        IUserService userService = getServiceLocator().getUserService();
+
+        Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите новое имя:");
         String firstName = scanner.nextLine();
         System.out.println("Введите новую фамилию:");

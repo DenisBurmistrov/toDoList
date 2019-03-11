@@ -6,7 +6,6 @@ import ru.burmistrov.tm.api.loader.ServiceLocator;
 
 public abstract class AbstractCommand {
 
-    @NotNull
     private ServiceLocator serviceLocator;
 
     public AbstractCommand(){
@@ -20,7 +19,6 @@ public abstract class AbstractCommand {
 
     public abstract void execute();
 
-    @NotNull
     public ServiceLocator getServiceLocator() {
         return serviceLocator;
     }
@@ -28,7 +26,6 @@ public abstract class AbstractCommand {
     @Nullable
     public abstract boolean isSecure();
 
-    @Nullable
     public void setServiceLocator(@NotNull ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }

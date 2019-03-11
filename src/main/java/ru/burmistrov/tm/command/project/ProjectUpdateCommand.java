@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public final class ProjectUpdateCommand extends AbstractCommand {
 
-    private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public ProjectUpdateCommand() {
     }
@@ -27,6 +25,9 @@ public final class ProjectUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+            IProjectService projectService = getServiceLocator().getProjectService();
+
+            Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
             String projectId = scanner.nextLine();
             System.out.println("Введите новое название проекта:");

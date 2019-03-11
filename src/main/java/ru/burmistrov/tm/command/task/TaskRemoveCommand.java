@@ -7,9 +7,7 @@ import java.util.Scanner;
 
 public final class TaskRemoveCommand extends AbstractCommand {
 
-    private final ITaskService taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public TaskRemoveCommand() {
 
@@ -27,6 +25,9 @@ public final class TaskRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+            ITaskService taskService = getServiceLocator().getTaskService();
+
+            Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта");
             String projectId = scanner.nextLine();
             System.out.println("Введите ID задачи");

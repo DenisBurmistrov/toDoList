@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public final class UserUpdatePasswordCommand extends AbstractCommand {
 
-    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public UserUpdatePasswordCommand() {
 
@@ -28,6 +26,8 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        IUserService userService = getServiceLocator().getUserService();
+        Scanner scanner = getServiceLocator().getScanner();
         if(isSecure()){
             System.out.println("Введите логин:");
             String login = scanner.nextLine();

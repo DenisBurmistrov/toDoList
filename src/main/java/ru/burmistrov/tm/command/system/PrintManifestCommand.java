@@ -1,6 +1,5 @@
 package ru.burmistrov.tm.command.system;
 
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.utils.ReadManifestUtil;
 

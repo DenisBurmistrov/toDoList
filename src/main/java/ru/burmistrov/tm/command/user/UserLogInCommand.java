@@ -1,18 +1,14 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 
 import java.util.Scanner;
 
 public final class UserLogInCommand extends AbstractCommand {
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final IUserService userService = getServiceLocator().getUserService();
 
     public UserLogInCommand() {
 
@@ -30,6 +26,8 @@ public final class UserLogInCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        Scanner scanner = getServiceLocator().getScanner();
+        IUserService userService = getServiceLocator().getUserService();
         System.out.println("Введите логин:");
         String login = scanner.nextLine();
         System.out.println("Введите пароль:");

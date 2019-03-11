@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public final class ProjectRemoveCommand extends AbstractCommand {
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
-    private final IProjectService projectService = getServiceLocator().getProjectService();
 
     public ProjectRemoveCommand() {
 
@@ -28,10 +26,13 @@ public final class ProjectRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-            System.out.println("Введите ID проекта: ");
-            String projectId = scanner.nextLine();
-            projectService.remove(getServiceLocator().getCurrentUser().getId(), projectId);
-        }
+        Scanner scanner = getServiceLocator().getScanner();
+
+        IProjectService projectService = getServiceLocator().getProjectService();
+        System.out.println("Введите ID проекта: ");
+        String projectId = scanner.nextLine();
+        projectService.remove(getServiceLocator().getCurrentUser().getId(), projectId);
+    }
 
     @Override
     public boolean isSecure() {

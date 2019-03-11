@@ -50,13 +50,32 @@ public final class Bootstrap implements ServiceLocator {
 
     private User currentUser;
 
-    Class[] classes = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
-    ProjectUpdateCommand.class, PrintListCommand.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskRemoveCommand.class,
-    TaskUpdateCommand.class, UserClearCommand.class, UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
-    UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
+
+    public void registry(ServiceLocator serviceLocator, Class ...classes) {
+        for(Class commandClass : classes) {
+            try {
+                if(commandClass.getSuperclass().equals(AbstractCommand.class)) {
+                    AbstractCommand abstractCommand = (AbstractCommand) commandClass.newInstance();
+                    if (abstractCommand != null) {
+                        abstractCommand.setServiceLocator(serviceLocator);
+                        commands.put(abstractCommand.getName(), abstractCommand);
+                    }
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     public void init(@NotNull Bootstrap bootstrap) {
-        bootstrap.initCommands(bootstrap);
+        Class[] classes = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
+                ProjectUpdateCommand.class, PrintListCommand.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskRemoveCommand.class,
+                TaskUpdateCommand.class, UserClearCommand.class, UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
+                UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
+
+        bootstrap.registry(bootstrap, classes);
         bootstrap.initProjectAndUser();
 
         start();
@@ -75,33 +94,6 @@ public final class Bootstrap implements ServiceLocator {
         taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание");
         taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание");
         taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание");
-    }
-
-    private void registerCommand(@NotNull AbstractCommand abstractCommand) {
-        commands.put(abstractCommand.getName(), abstractCommand);
-    }
-
-    private void initCommands(ServiceLocator serviceLocator) {
-        registerCommand(new PrintListCommand(serviceLocator));
-        registerCommand(new ProjectListCommand(serviceLocator));
-        registerCommand(new ProjectCreateCommand(serviceLocator));
-        registerCommand(new ProjectRemoveCommand(serviceLocator));
-        registerCommand(new ProjectClearCommand(serviceLocator));
-        registerCommand(new TaskListCommand(serviceLocator));
-        registerCommand(new ProjectUpdateCommand(serviceLocator));
-        registerCommand(new TaskCreateCommand(serviceLocator));
-        registerCommand(new TaskClearCommand(serviceLocator));
-        registerCommand(new TaskRemoveCommand(serviceLocator));
-        registerCommand(new TaskUpdateCommand(serviceLocator));
-        registerCommand(new UserLogInCommand(serviceLocator));
-        registerCommand(new UserLogOutCommand(serviceLocator));
-        registerCommand(new UserRegistrateCommand(serviceLocator));
-        registerCommand(new UserShowCurrentUser(serviceLocator));
-        registerCommand(new UserUpdateCurrentUser(serviceLocator));
-        registerCommand(new UserUpdatePasswordCommand(serviceLocator));
-        registerCommand(new UserClearCommand(serviceLocator));
-        registerCommand(new UserRemoveCommand(serviceLocator));
-        registerCommand(new PrintManifestCommand(serviceLocator));
     }
 
     private void execute(@Nullable String command) {

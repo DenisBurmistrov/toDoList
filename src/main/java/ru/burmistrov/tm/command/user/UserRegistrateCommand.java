@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public final class UserRegistrateCommand extends AbstractCommand {
 
-    private final IUserService userService = getServiceLocator().getUserService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public UserRegistrateCommand() {
     }
@@ -28,6 +26,9 @@ public final class UserRegistrateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        IUserService userService = getServiceLocator().getUserService();
+
+        Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите логин:");
         String login = scanner.nextLine();
         System.out.println("Введите пароль:");

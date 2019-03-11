@@ -1,12 +1,10 @@
 package ru.burmistrov.tm.command.user;
 
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 
 public class UserRemoveCommand extends AbstractCommand {
 
     public UserRemoveCommand() {
-
     }
 
     @Override

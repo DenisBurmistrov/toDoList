@@ -11,9 +11,7 @@ import java.util.Scanner;
 
 public final class TaskListCommand extends AbstractCommand {
 
-    private final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
 
-    private final Scanner scanner = getServiceLocator().getScanner();
 
     public TaskListCommand() {
     }
@@ -30,6 +28,8 @@ public final class TaskListCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+            ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
+            Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
             List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
