@@ -10,10 +10,10 @@ import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.command.system.PrintListCommand;
 import ru.burmistrov.tm.command.project.*;
+import ru.burmistrov.tm.command.system.PrintManifestCommand;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.repository.ProjectRepository;
@@ -93,6 +93,7 @@ public final class Bootstrap implements ServiceLocator {
         registerCommand(new UserUpdatePasswordCommand(serviceLocator));
         registerCommand(new UserClearCommand(serviceLocator));
         registerCommand(new UserRemoveCommand(serviceLocator));
+        registerCommand(new PrintManifestCommand(serviceLocator));
     }
 
     private void execute(String command) {
