@@ -1,5 +1,7 @@
 package ru.burmistrov.tm.api.loader;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.api.service.IUserService;
@@ -12,17 +14,23 @@ import java.util.Scanner;
 
 public interface ServiceLocator {
 
+    @NotNull
     IProjectService<AbstractEntity> getProjectService();
 
+    @NotNull
     ITaskService<AbstractEntity> getTaskService();
 
+    @NotNull
     IUserService<AbstractEntity> getUserService();
 
+    @NotNull
     Map<String, AbstractCommand> getCommands();
 
+    @NotNull
     Scanner getScanner();
 
+    @NotNull
     User getCurrentUser();
 
-    void setCurrentUser(User user);
+    void setCurrentUser(@NotNull User user);
 }

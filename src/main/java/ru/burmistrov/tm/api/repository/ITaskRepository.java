@@ -1,22 +1,26 @@
 package ru.burmistrov.tm.api.repository;
 
+import com.sun.istack.internal.NotNull;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
 public interface ITaskRepository<T extends  AbstractEntity> {
 
-    T persist(T abstractEntity);
+    @NotNull
+    T persist(@NotNull T abstractEntity);
 
-    void merge(T abstractEntity);
+    void merge(@NotNull T abstractEntity);
 
-    void remove(T entity);
+    void remove(@NotNull T entity);
 
-    void removeAll(T entity);
+    void removeAll(@NotNull T entity);
 
-    List<T> findAll(T entity);
+    @NotNull
+    List<T> findAll(@NotNull T entity);
 
-    void removeAllInProject(T entity);
+    void removeAllInProject(@NotNull T entity);
 
-    T findOne(T entity);
+    @NotNull
+    T findOne(@NotNull T entity);
 }

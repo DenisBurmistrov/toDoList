@@ -1,20 +1,25 @@
 package ru.burmistrov.tm.api.service;
 
+import com.sun.istack.internal.NotNull;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 
 public interface IUserService<T extends AbstractEntity> {
 
-    T logIn(String login, String auth);
+    @NotNull
+    T logIn(@NotNull String login,@NotNull String auth);
 
-    T persist(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType);
+    @NotNull
+    T persist(@NotNull String login,@NotNull String password,@NotNull String firstName,@NotNull String middleName,@NotNull String lastName,
+              @NotNull String email,@NotNull Role roleType);
 
-    void updatePassword(String userId, String login, String password);
+    void updatePassword(@NotNull String userId,@NotNull String login,@NotNull String password);
 
-    void merge(String userId, String firstName, String middleName, String lastName, String email, Role role, String login);
+    void merge(@NotNull String userId,@NotNull String firstName,@NotNull String middleName,@NotNull String lastName,@NotNull String email,
+               @NotNull Role role,@NotNull String login);
 
-    void remove(String userId);
+    void remove(@NotNull String userId);
 
-    void removeAll(String userId);
+    void removeAll(@NotNull String userId);
 
 }

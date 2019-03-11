@@ -1,20 +1,24 @@
 package ru.burmistrov.tm.api.service;
 
+import com.sun.istack.internal.NotNull;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
 public interface ITaskService<T extends AbstractEntity> {
 
-    void merge(String userId, String projectId, String oldName, String newName, String description);
+    @NotNull
+    void merge(@NotNull String userId,@NotNull String projectId,@NotNull String oldName,@NotNull String newName,@NotNull String description);
 
-    T persist(String userId, String projectId, String name, String description);
+    @NotNull
+    T persist(@NotNull String userId,@NotNull String projectId,@NotNull String name,@NotNull String description);
 
-    List<T> findAll(String userId, String projectId);
+    @NotNull
+    List<T> findAll(@NotNull String userId,@NotNull String projectId);
 
-    void removeAllInProject(String userId, String projectId);
+    void removeAllInProject(@NotNull String userId,@NotNull String projectId);
 
-    void remove(String userId, String projectId, String taskId);
+    void remove(@NotNull String userId,@NotNull String projectId,@NotNull String taskId);
 
-    void removeAll(String userId);
+    void removeAll(@NotNull String userId);
 }
