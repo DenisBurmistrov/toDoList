@@ -6,8 +6,8 @@ import ru.burmistrov.tm.utils.ReadManifestUtil;
 
 public class PrintManifestCommand extends AbstractCommand {
 
-    public PrintManifestCommand(ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public PrintManifestCommand() {
+
     }
 
     @Override

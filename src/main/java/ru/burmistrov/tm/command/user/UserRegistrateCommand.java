@@ -13,8 +13,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public UserRegistrateCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserRegistrateCommand() {
     }
 
     @Override

@@ -12,8 +12,7 @@ public final class ProjectCreateCommand extends AbstractCommand {
 
     private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectCreateCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public ProjectCreateCommand() {
     }
 
     @Override

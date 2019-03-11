@@ -14,8 +14,8 @@ public final class UserLogInCommand extends AbstractCommand {
 
     private final IUserService userService = getServiceLocator().getUserService();
 
-    public UserLogInCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserLogInCommand() {
+
     }
 
     @Override

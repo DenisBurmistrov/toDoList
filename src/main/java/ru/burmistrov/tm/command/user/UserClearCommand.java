@@ -5,8 +5,8 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public class UserClearCommand extends AbstractCommand {
 
-    public UserClearCommand(ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserClearCommand() {
+
     }
 
     @Override

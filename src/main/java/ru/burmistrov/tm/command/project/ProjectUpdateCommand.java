@@ -12,8 +12,7 @@ public final class ProjectUpdateCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public ProjectUpdateCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public ProjectUpdateCommand() {
     }
 
     @Override

@@ -11,8 +11,8 @@ public final class TaskCreateCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskCreateCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public TaskCreateCommand() {
+
     }
 
     @Override

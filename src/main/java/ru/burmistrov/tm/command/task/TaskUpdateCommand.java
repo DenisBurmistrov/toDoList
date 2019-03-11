@@ -13,8 +13,7 @@ public final class TaskUpdateCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskUpdateCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public TaskUpdateCommand() {
     }
 
     @Override

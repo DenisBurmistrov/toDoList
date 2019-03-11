@@ -5,8 +5,8 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class UserLogOutCommand extends AbstractCommand {
 
-    public UserLogOutCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserLogOutCommand() {
+
     }
 
     @Override

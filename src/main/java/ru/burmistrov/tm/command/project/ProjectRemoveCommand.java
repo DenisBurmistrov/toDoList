@@ -12,8 +12,8 @@ public final class ProjectRemoveCommand extends AbstractCommand {
 
     private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectRemoveCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public ProjectRemoveCommand() {
+
     }
 
     @Override

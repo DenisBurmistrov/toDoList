@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.command;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
 public abstract class AbstractCommand {
@@ -8,14 +9,13 @@ public abstract class AbstractCommand {
     @NotNull
     private ServiceLocator serviceLocator;
 
-    public AbstractCommand(@NotNull ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
+    public AbstractCommand(){
     }
 
-    @NotNull
+    @Nullable
     public abstract String getName();
 
-    @NotNull
+    @Nullable
     public abstract String getDescription();
 
     public abstract void execute();
@@ -25,7 +25,12 @@ public abstract class AbstractCommand {
         return serviceLocator;
     }
 
-    @NotNull
+    @Nullable
     public abstract boolean isSecure();
+
+    @Nullable
+    public void setServiceLocator(@NotNull ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
+    }
 
 }

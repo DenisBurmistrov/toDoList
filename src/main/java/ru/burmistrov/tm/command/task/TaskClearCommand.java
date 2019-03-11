@@ -12,8 +12,8 @@ public final class TaskClearCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskClearCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public TaskClearCommand() {
+
     }
 
     @Override

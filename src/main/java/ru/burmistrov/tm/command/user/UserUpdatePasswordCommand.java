@@ -12,8 +12,8 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public UserUpdatePasswordCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserUpdatePasswordCommand() {
+
     }
 
     @Override

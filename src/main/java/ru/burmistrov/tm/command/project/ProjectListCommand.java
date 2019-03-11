@@ -12,8 +12,7 @@ public final class ProjectListCommand extends AbstractCommand {
 
     private final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
 
-    public ProjectListCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public ProjectListCommand() {
     }
 
     @Override

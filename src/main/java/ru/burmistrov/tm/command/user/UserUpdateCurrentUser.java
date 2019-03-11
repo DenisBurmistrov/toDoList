@@ -13,8 +13,8 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
     private final Scanner scanner = getServiceLocator().getScanner();
 
 
-    public UserUpdateCurrentUser(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserUpdateCurrentUser() {
+
     }
 
     @Override

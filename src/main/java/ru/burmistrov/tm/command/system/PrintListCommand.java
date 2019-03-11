@@ -5,8 +5,7 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class PrintListCommand extends AbstractCommand {
 
-    public PrintListCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public PrintListCommand() {
     }
 
     @Override

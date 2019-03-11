@@ -15,8 +15,7 @@ public final class TaskListCommand extends AbstractCommand {
 
     private final Scanner scanner = getServiceLocator().getScanner();
 
-    public TaskListCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public TaskListCommand() {
     }
 
     @Override

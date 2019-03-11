@@ -16,6 +16,7 @@ import ru.burmistrov.tm.command.system.PrintManifestCommand;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
 import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.repository.ProjectRepository;
@@ -48,6 +49,11 @@ public final class Bootstrap implements ServiceLocator {
     private final Scanner scanner = new Scanner(System.in);
 
     private User currentUser;
+
+    Class[] classes = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
+    ProjectUpdateCommand.class, PrintListCommand.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskRemoveCommand.class,
+    TaskUpdateCommand.class, UserClearCommand.class, UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
+    UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
 
     public void init(@NotNull Bootstrap bootstrap) {
         bootstrap.initCommands(bootstrap);

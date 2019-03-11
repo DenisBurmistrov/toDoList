@@ -5,8 +5,8 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class UserShowCurrentUser extends AbstractCommand {
 
-    public UserShowCurrentUser(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public UserShowCurrentUser() {
+
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ru.burmistrov.tm.command.project;
 
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
 
@@ -8,8 +7,7 @@ public final  class ProjectClearCommand extends AbstractCommand {
 
     private final IProjectService projectService = getServiceLocator().getProjectService();
 
-    public ProjectClearCommand(final ServiceLocator serviceLocator) {
-        super(serviceLocator);
+    public ProjectClearCommand() {
     }
 
     @Override
@@ -31,4 +29,5 @@ public final  class ProjectClearCommand extends AbstractCommand {
     public boolean isSecure() {
         return true;
     }
+
 }
