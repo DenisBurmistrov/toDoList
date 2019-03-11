@@ -1,25 +1,26 @@
 package ru.burmistrov.tm.api.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 
 public interface IUserService<T extends AbstractEntity> {
 
-    @NotNull
-    T logIn(@NotNull String login,@NotNull String auth);
+    @Nullable
+    T logIn(@Nullable String login,@Nullable String auth);
 
-    @NotNull
-    T persist(@NotNull String login,@NotNull String password,@NotNull String firstName,@NotNull String middleName,@NotNull String lastName,
-              @NotNull String email,@NotNull Role roleType);
+    @Nullable
+    T persist(@Nullable String login,@Nullable String password,@Nullable String firstName,@Nullable String middleName,@Nullable String lastName,
+              @Nullable String email,@Nullable Role roleType);
 
-    void updatePassword(@NotNull String userId,@NotNull String login,@NotNull String password);
+    void updatePassword(@Nullable String userId,@Nullable String login,@Nullable String password);
 
-    void merge(@NotNull String userId,@NotNull String firstName,@NotNull String middleName,@NotNull String lastName,@NotNull String email,
-               @NotNull Role role,@NotNull String login);
+    void merge(@Nullable String userId,@Nullable String firstName,@Nullable String middleName,@Nullable String lastName,@Nullable String email,
+               @Nullable Role role,@Nullable String login);
 
-    void remove(@NotNull String userId);
+    void remove(@Nullable String userId);
 
-    void removeAll(@NotNull String userId);
+    void removeAll(@Nullable String userId);
 
 }

@@ -1,22 +1,23 @@
 package ru.burmistrov.tm.api.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
 public interface IProjectService<T extends AbstractEntity> {
 
-    void remove(@NotNull String userId,@NotNull String projectId);
+    void remove(@Nullable String userId, @Nullable String projectId);
 
-    @NotNull
-    T persist(@NotNull String userId,@NotNull String name,@NotNull String merge);
+    @Nullable
+    T persist(@Nullable String userId,@Nullable String name,@Nullable String merge);
 
-    void merge(@NotNull String userId,@NotNull String projectId,@NotNull String name,@NotNull String description);
+    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description);
 
-    void removeAll(@NotNull String userId);
+    void removeAll(@Nullable String userId);
 
-    @NotNull
-    List<T> findAll(@NotNull String userId);
+    @Nullable
+    List<T> findAll(@Nullable String userId);
 
 }

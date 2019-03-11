@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.api.loader;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.api.service.IUserService;
@@ -13,23 +13,23 @@ import java.util.Scanner;
 
 public interface ServiceLocator {
 
-    @NotNull
+    @Nullable
     IProjectService<AbstractEntity> getProjectService();
 
-    @NotNull
+    @Nullable
     ITaskService<AbstractEntity> getTaskService();
 
-    @NotNull
+    @Nullable
     IUserService<AbstractEntity> getUserService();
 
-    @NotNull
+    @Nullable
     Map<String, AbstractCommand> getCommands();
 
-    @NotNull
+    @Nullable
     Scanner getScanner();
 
-    @NotNull
+    @Nullable
     User getCurrentUser();
 
-    void setCurrentUser(@NotNull User user);
+    void setCurrentUser(@Nullable User user);
 }

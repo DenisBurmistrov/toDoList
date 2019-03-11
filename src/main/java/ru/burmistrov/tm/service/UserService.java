@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
@@ -14,7 +15,8 @@ public final class UserService extends AbstractService implements IUserService {
         this.userRepository = userRepository;
     }
 
-    public User logIn(String login, String auth) {
+    @Nullable
+    public User logIn(@Nullable String login,@Nullable String auth) {
         return userRepository.logIn(login, auth);
     }
 
