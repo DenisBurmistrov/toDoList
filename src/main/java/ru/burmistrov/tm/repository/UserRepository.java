@@ -6,9 +6,8 @@ import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public final class UserRepository extends AbstractRepository implements IUserRepository {
+public final class UserRepository extends AbstractRepository implements IUserRepository<AbstractEntity>  {
 
     private final Map<String, User> users = new LinkedHashMap<>();
 

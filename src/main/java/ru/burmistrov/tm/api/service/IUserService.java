@@ -1,13 +1,13 @@
 package ru.burmistrov.tm.api.service;
 
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
-import ru.burmistrov.tm.entity.User;
 
-public interface IUserService {
+public interface IUserService<T extends AbstractEntity> {
 
-    User logIn(String login, String auth);
+    T logIn(String login, String auth);
 
-    User persist(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType);
+    T persist(String login, String password, String firstName, String middleName, String lastName, String email, Role roleType);
 
     void updatePassword(String userId, String login, String password);
 

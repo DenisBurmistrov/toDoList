@@ -4,19 +4,19 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
-public interface IProjectRepository {
+public interface IProjectRepository<T extends  AbstractEntity> {
 
-    AbstractEntity persist(AbstractEntity abstractEntity);
+    T persist(T abstractEntity);
 
-    void merge(AbstractEntity abstractEntity);
+    void merge(T abstractEntity);
 
-    void remove(AbstractEntity abstractEntity);
+    void remove(T abstractEntity);
 
-    void removeAll(AbstractEntity abstractEntity);
+    void removeAll(T abstractEntity);
 
-    List<AbstractEntity> findAll(AbstractEntity abstractEntity);
+    List<T> findAll(T abstractEntity);
 
-    AbstractEntity findOne(AbstractEntity abstractEntity);
+    T findOne(T abstractEntity);
 
 
 }

@@ -7,7 +7,7 @@ import ru.burmistrov.tm.entity.Project;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class ProjectRepository extends AbstractRepository implements IProjectRepository {
+public final class ProjectRepository extends AbstractRepository implements IProjectRepository<AbstractEntity> {
 
     private final Map<String, Project> projects = new LinkedHashMap<>();
 

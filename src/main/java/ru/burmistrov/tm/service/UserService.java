@@ -8,9 +8,9 @@ import ru.burmistrov.tm.entity.User;
 
 public final class UserService extends AbstractService implements IUserService {
 
-    private final IUserRepository userRepository;
+    private final IUserRepository<AbstractEntity> userRepository;
 
-    public UserService(IUserRepository userRepository) {
+    public UserService(IUserRepository<AbstractEntity> userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -52,7 +52,6 @@ public final class UserService extends AbstractService implements IUserService {
         currentUser.setLogin(login);
         AbstractEntity abstractEntity = userRepository.findOne(currentUser);
         if (abstractEntity != null)
-            System.out.println("asdsad");
             userRepository.merge(currentUser);
     }
 

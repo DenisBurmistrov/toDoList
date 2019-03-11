@@ -5,21 +5,21 @@ import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 
-public interface IUserRepository {
+public interface IUserRepository<T extends AbstractEntity> {
 
     User logIn(String login, String password);
 
     void updatePassword(String userId, String login, String newPassword);
 
-    AbstractEntity persist(AbstractEntity entity);
+    T persist(T entity);
 
-    void merge(AbstractEntity abstractEntity);
+    void merge(T abstractEntity);
 
-    void remove(AbstractEntity abstractEntity);
+    void remove(T abstractEntity);
 
-    void removeAll(AbstractEntity abstractEntity);
+    void removeAll(T abstractEntity);
 
-    List<AbstractEntity> findAll(AbstractEntity abstractEntity);
+    List<T> findAll(T abstractEntity);
 
-    AbstractEntity findOne(AbstractEntity abstractEntity);
+    T findOne(T abstractEntity);
 }

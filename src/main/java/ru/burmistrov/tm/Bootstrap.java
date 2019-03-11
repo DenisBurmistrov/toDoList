@@ -31,11 +31,11 @@ public final class Bootstrap implements ServiceLocator {
 
     private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
-    private final IProjectRepository projectRepository = new ProjectRepository();
+    private final IProjectRepository<AbstractEntity> projectRepository = new ProjectRepository();
 
-    private final ITaskRepository taskRepository = new TaskRepository();
+    private final ITaskRepository<AbstractEntity> taskRepository = new TaskRepository();
 
-    private final IUserRepository userRepository = new UserRepository();
+    private final IUserRepository<AbstractEntity> userRepository = new UserRepository();
 
     private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 

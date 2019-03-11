@@ -4,13 +4,13 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
-public interface ITaskService {
+public interface ITaskService<T extends AbstractEntity> {
 
     void merge(String userId, String projectId, String oldName, String newName, String description);
 
-    AbstractEntity persist(String userId, String projectId, String name, String description);
+    T persist(String userId, String projectId, String name, String description);
 
-    List<AbstractEntity> findAll(String userId, String projectId);
+    List<T> findAll(String userId, String projectId);
 
     void removeAllInProject(String userId, String projectId);
 

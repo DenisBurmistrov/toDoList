@@ -4,18 +4,18 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
-public abstract class AbstractRepository {
+public abstract class AbstractRepository<T extends AbstractEntity> {
 
-    public abstract AbstractEntity persist(AbstractEntity abstractEntity);
+    public abstract T persist(T abstractEntity);
 
-    public abstract void merge(AbstractEntity abstractEntity);
+    public abstract void merge(T abstractEntity);
 
-    public abstract void remove(AbstractEntity abstractEntity);
+    public abstract void remove(T abstractEntity);
 
-    public abstract void removeAll(AbstractEntity abstractEntity);
+    public abstract void removeAll(T abstractEntity);
 
-    public abstract List<AbstractEntity> findAll(AbstractEntity abstractEntity);
+    public abstract List<T> findAll(T abstractEntity);
 
-    public abstract AbstractEntity findOne(AbstractEntity abstractEntity);
+    public abstract T findOne(T abstractEntity);
 
 }
