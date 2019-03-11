@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public final class TaskListCommand extends AbstractCommand {
 
-    private final ITaskService taskService = getServiceLocator().getTaskService();
+    private final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
 
     private final Scanner scanner = getServiceLocator().getScanner();
 

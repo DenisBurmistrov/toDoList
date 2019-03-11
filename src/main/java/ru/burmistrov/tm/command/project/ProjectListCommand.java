@@ -10,7 +10,7 @@ import java.util.List;
 
 public final class ProjectListCommand extends AbstractCommand {
 
-    private final IProjectService projectService = getServiceLocator().getProjectService();
+    private final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
 
     public ProjectListCommand(final ServiceLocator serviceLocator) {
         super(serviceLocator);
