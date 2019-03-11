@@ -1,5 +1,7 @@
 package ru.burmistrov.tm;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -47,7 +49,7 @@ public final class Bootstrap implements ServiceLocator {
 
     private User currentUser;
 
-    public void init(Bootstrap bootstrap) {
+    public void init(@NotNull Bootstrap bootstrap) {
         bootstrap.initCommands(bootstrap);
         bootstrap.initProjectAndUser();
 
@@ -69,7 +71,7 @@ public final class Bootstrap implements ServiceLocator {
         taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание");
     }
 
-    private void registerCommand(AbstractCommand abstractCommand) {
+    private void registerCommand(@NotNull AbstractCommand abstractCommand) {
         commands.put(abstractCommand.getName(), abstractCommand);
     }
 
@@ -96,7 +98,7 @@ public final class Bootstrap implements ServiceLocator {
         registerCommand(new PrintManifestCommand(serviceLocator));
     }
 
-    private void execute(String command) {
+    private void execute(@Nullable String command) {
         if (command == null || command.isEmpty()) return;
         AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

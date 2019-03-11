@@ -1,9 +1,11 @@
 package ru.burmistrov.tm.entity;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
+@Data
 public final class Task extends AbstractEntity {
 
     private String projectId;
@@ -44,41 +46,5 @@ public final class Task extends AbstractEntity {
                 "; Название: " + name +
                 "; Описание: " + description +
                 "; ID проекта: " + projectId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getDateBegin() {
-        return dateBegin;
-    }
-
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

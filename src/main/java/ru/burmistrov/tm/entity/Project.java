@@ -1,7 +1,10 @@
 package ru.burmistrov.tm.entity;
 
+import lombok.Data;
+
 import java.util.*;
 
+@Data
 public final class Project extends AbstractEntity {
 
     private String userId;
@@ -17,26 +20,6 @@ public final class Project extends AbstractEntity {
         this.name = name;
         this.description = description;
         this.dateBegin = new Date();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getDateBegin() {
-        return dateBegin;
     }
 
     @Override
@@ -58,19 +41,4 @@ public final class Project extends AbstractEntity {
         return "ID: " + getId() + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + userId;
     }
 
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }
