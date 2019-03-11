@@ -1,7 +1,6 @@
 package ru.burmistrov.tm.api.loader;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.api.service.IUserService;

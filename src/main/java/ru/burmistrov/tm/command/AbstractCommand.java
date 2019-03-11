@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.command;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
 public abstract class AbstractCommand {

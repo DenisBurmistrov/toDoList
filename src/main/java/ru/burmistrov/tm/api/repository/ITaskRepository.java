@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.api.repository;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;

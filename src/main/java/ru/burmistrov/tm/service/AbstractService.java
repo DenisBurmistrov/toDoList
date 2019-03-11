@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.service;
 
-import com.sun.istack.internal.NotNull;
+
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractService {
 
