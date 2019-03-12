@@ -25,14 +25,18 @@ public final class ProjectListCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
-        System.out.println("Список проектов:");
-        List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
-        if (projects == null) {
-            System.out.println("У пользователя нет проектов");
-        } else {
-            for(AbstractEntity project : projects){
-                System.out.println(project);
+        if (getServiceLocator() != null) {
+            IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
+            System.out.println("Список проектов:");
+            if(projectService != null) {
+                List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
+                if (projects == null) {
+                    System.out.println("У пользователя нет проектов");
+                } else {
+                    for (AbstractEntity project : projects) {
+                        System.out.println(project);
+                    }
+                }
             }
         }
     }

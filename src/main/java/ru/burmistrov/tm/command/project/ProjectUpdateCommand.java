@@ -25,6 +25,7 @@ public final class ProjectUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        if (getServiceLocator() != null) {
             IProjectService projectService = getServiceLocator().getProjectService();
 
             Scanner scanner = getServiceLocator().getScanner();
@@ -34,8 +35,11 @@ public final class ProjectUpdateCommand extends AbstractCommand {
             String name = scanner.nextLine();
             System.out.println("Введите новое описание:");
             String description = scanner.nextLine();
-            projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description);
+            if (projectService != null) {
+                projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description);
+            }
         }
+    }
 
     @Override
     public boolean isSecure() {

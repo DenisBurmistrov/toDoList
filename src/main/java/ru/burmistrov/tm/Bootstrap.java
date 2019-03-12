@@ -51,32 +51,25 @@ public final class Bootstrap implements ServiceLocator {
     private User currentUser;
 
 
-    public void registry(ServiceLocator serviceLocator, Class ...classes) {
+    public void registry(Class ...classes) {
         for(Class commandClass : classes) {
             try {
-                if(commandClass.getSuperclass().equals(AbstractCommand.class)) {
+                if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
                     AbstractCommand abstractCommand = (AbstractCommand) commandClass.newInstance();
-                    if (abstractCommand != null) {
-                        abstractCommand.setServiceLocator(serviceLocator);
-                        commands.put(abstractCommand.getName(), abstractCommand);
-                    }
+                    abstractCommand.setServiceLocator(this);
+                    commands.put(abstractCommand.getName(), abstractCommand);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
     }
 
-    public void init(@NotNull Bootstrap bootstrap) {
-        Class[] classes = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
-                ProjectUpdateCommand.class, PrintListCommand.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskRemoveCommand.class,
-                TaskUpdateCommand.class, UserClearCommand.class, UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
-                UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
+    public void init(Class ...classes) {
 
-        bootstrap.registry(bootstrap, classes);
-        bootstrap.initProjectAndUser();
+        registry(classes);
+        initProjectAndUser();
 
         start();
     }

@@ -20,8 +20,10 @@ public class UserClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().getUserService().removeAll(getServiceLocator().getCurrentUser().getId());
-        getServiceLocator().setCurrentUser(null);
+        if (getServiceLocator() != null) {
+            getServiceLocator().getUserService().removeAll(getServiceLocator().getCurrentUser().getId());
+            getServiceLocator().setCurrentUser(null);
+        }
     }
 
     @Override

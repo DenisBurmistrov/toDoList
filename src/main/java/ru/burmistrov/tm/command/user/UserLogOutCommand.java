@@ -5,7 +5,6 @@ import ru.burmistrov.tm.command.AbstractCommand;
 public final class UserLogOutCommand extends AbstractCommand {
 
     public UserLogOutCommand() {
-
     }
 
     @Override
@@ -20,7 +19,9 @@ public final class UserLogOutCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().setCurrentUser(null);
+        if (getServiceLocator() != null) {
+            getServiceLocator().setCurrentUser(null);
+        }
     }
 
     @Override

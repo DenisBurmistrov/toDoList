@@ -25,15 +25,19 @@ public final class TaskCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-                ITaskService taskService = getServiceLocator().getTaskService();
-                Scanner scanner = getServiceLocator().getScanner();
-                System.out.println("Введите ID проекта:");
-                String id = scanner.nextLine();
-                System.out.println("Введите имя задачи:");
-                String oldName = scanner.nextLine();
-                System.out.println("Введите описание для задачи: ");
-                String description = scanner.nextLine();
+        if(getServiceLocator() != null) {
+            ITaskService taskService = getServiceLocator().getTaskService();
+            Scanner scanner = getServiceLocator().getScanner();
+            System.out.println("Введите ID проекта:");
+            String id = scanner.nextLine();
+            System.out.println("Введите имя задачи:");
+            String oldName = scanner.nextLine();
+            System.out.println("Введите описание для задачи: ");
+            String description = scanner.nextLine();
+            if (taskService != null) {
                 taskService.persist(getServiceLocator().getCurrentUser().getId(), id, oldName, description);
+            }
+        }
     }
 
     @Override

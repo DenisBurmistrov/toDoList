@@ -19,11 +19,11 @@ public abstract class AbstractCommand {
 
     public abstract void execute();
 
+    @Nullable
     public ServiceLocator getServiceLocator() {
         return serviceLocator;
     }
 
-    @Nullable
     public abstract boolean isSecure();
 
     public void setServiceLocator(@NotNull ServiceLocator serviceLocator) {

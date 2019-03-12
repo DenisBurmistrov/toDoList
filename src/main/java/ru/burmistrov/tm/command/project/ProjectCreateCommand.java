@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public final class ProjectCreateCommand extends AbstractCommand {
 
-
-
     public ProjectCreateCommand() {
     }
 
@@ -25,16 +23,20 @@ public final class ProjectCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        Scanner scanner = getServiceLocator().getScanner();
-        IProjectService projectService = getServiceLocator().getProjectService();
-        System.out.println("Введите имя:");
-        String name = scanner.nextLine();
-        if (name.length() == 0) {
-            System.out.println("Нельзя использовать пустое имя");
+        if (getServiceLocator() != null) {
+            Scanner scanner = getServiceLocator().getScanner();
+            IProjectService projectService = getServiceLocator().getProjectService();
+            System.out.println("Введите имя:");
+            String name = scanner.nextLine();
+            if (name.length() == 0) {
+                System.out.println("Нельзя использовать пустое имя");
+            }
+            System.out.println("Введите описание:");
+            String description = scanner.nextLine();
+            if (projectService != null) {
+                projectService.persist(getServiceLocator().getCurrentUser().getId(), name, description);
+            }
         }
-        System.out.println("Введите описание:");
-        String description = scanner.nextLine();
-        projectService.persist(getServiceLocator().getCurrentUser().getId(), name, description);
     }
 
     @Override

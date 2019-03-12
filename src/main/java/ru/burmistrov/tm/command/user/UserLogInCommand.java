@@ -26,21 +26,20 @@ public final class UserLogInCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        Scanner scanner = getServiceLocator().getScanner();
-        IUserService userService = getServiceLocator().getUserService();
-        System.out.println("Введите логин:");
-        String login = scanner.nextLine();
-        System.out.println("Введите пароль:");
-        String password = scanner.nextLine();
-        User user = (User) userService.logIn(login, password);
-        if(user == null) {
-            System.out.println("Неверно введены данные");
+        if(getServiceLocator() != null) {
+            Scanner scanner = getServiceLocator().getScanner();
+            IUserService userService = getServiceLocator().getUserService();
+            System.out.println("Введите логин:");
+            String login = scanner.nextLine();
+            System.out.println("Введите пароль:");
+            String password = scanner.nextLine();
+            User user = (User) userService.logIn(login, password);
+            if (user == null) {
+                System.out.println("Неверно введены данные");
+            } else {
+                getServiceLocator().setCurrentUser(user);
+            }
         }
-        else {
-            getServiceLocator().setCurrentUser(user);
-        }
-
-
     }
 
     @Override

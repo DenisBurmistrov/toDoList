@@ -20,8 +20,12 @@ public final class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        if (getServiceLocator() != null) {
             IProjectService projectService = getServiceLocator().getProjectService();
-            projectService.removeAll(getServiceLocator().getCurrentUser().getId());
+            if (projectService != null) {
+                projectService.removeAll(getServiceLocator().getCurrentUser().getId());
+            }
+        }
     }
 
     @Override

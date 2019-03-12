@@ -28,19 +28,23 @@ public final class TaskListCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        if (getServiceLocator() != null) {
             ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
             Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
             String id = scanner.nextLine();
-            List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
-            if(taskList == null) {
-                System.out.println("У данного проекта нет задач");
+            List<AbstractEntity> taskList = null;
+            if (taskService != null) {
+                taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
             }
-            else {
-                for(AbstractEntity task : taskList) {
+            if (taskList == null) {
+                System.out.println("У данного проекта нет задач");
+            } else {
+                for (AbstractEntity task : taskList) {
                     System.out.println(task);
                 }
             }
+        }
     }
 
     @Override

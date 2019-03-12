@@ -26,12 +26,16 @@ public final class ProjectRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        Scanner scanner = getServiceLocator().getScanner();
+        if (getServiceLocator() != null) {
+            Scanner scanner = getServiceLocator().getScanner();
 
-        IProjectService projectService = getServiceLocator().getProjectService();
-        System.out.println("Введите ID проекта: ");
-        String projectId = scanner.nextLine();
-        projectService.remove(getServiceLocator().getCurrentUser().getId(), projectId);
+            IProjectService projectService = getServiceLocator().getProjectService();
+            System.out.println("Введите ID проекта: ");
+            String projectId = scanner.nextLine();
+            if (projectService != null) {
+                projectService.remove(getServiceLocator().getCurrentUser().getId(), projectId);
+            }
+        }
     }
 
     @Override

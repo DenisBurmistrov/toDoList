@@ -19,11 +19,11 @@ public class UserRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().getUserService().remove(getServiceLocator().getCurrentUser().getId());
-        getServiceLocator().setCurrentUser(null);
-
+        if (getServiceLocator() != null) {
+            getServiceLocator().getUserService().remove(getServiceLocator().getCurrentUser().getId());
+            getServiceLocator().setCurrentUser(null);
+        }
     }
-
     @Override
     public boolean isSecure() {
         return true;

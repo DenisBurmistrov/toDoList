@@ -24,10 +24,12 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        if(getServiceLocator() != null) {
             ITaskService taskService = getServiceLocator().getTaskService();
-
-            Scanner scanner = getServiceLocator().getScanner();
-            taskService.removeAll(getServiceLocator().getCurrentUser().getId());
+            if (taskService != null) {
+                taskService.removeAll(getServiceLocator().getCurrentUser().getId());
+            }
+        }
     }
 
     @Override

@@ -26,17 +26,21 @@ public final class TaskUpdateCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        ITaskService taskService = getServiceLocator().getTaskService();
-        Scanner scanner = getServiceLocator().getScanner();
-        System.out.println("Введите ID проекта:");
-        String projectId = scanner.nextLine();
-        System.out.println("Введите ID задачи:");
-        String taskId = scanner.nextLine();
-        System.out.println("Введите новое имя:");
-        String newName = scanner.nextLine();
-        System.out.println("Введите новое описание: ");
-        String description = scanner.nextLine();
-        taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description);
+        if (getServiceLocator() != null) {
+            ITaskService taskService = getServiceLocator().getTaskService();
+            Scanner scanner = getServiceLocator().getScanner();
+            System.out.println("Введите ID проекта:");
+            String projectId = scanner.nextLine();
+            System.out.println("Введите ID задачи:");
+            String taskId = scanner.nextLine();
+            System.out.println("Введите новое имя:");
+            String newName = scanner.nextLine();
+            System.out.println("Введите новое описание: ");
+            String description = scanner.nextLine();
+            if (taskService != null) {
+                taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description);
+            }
+        }
     }
 
     @Override

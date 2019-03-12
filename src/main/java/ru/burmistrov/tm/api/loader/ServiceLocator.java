@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.api.loader;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
@@ -22,10 +23,10 @@ public interface ServiceLocator {
     @Nullable
     IUserService<AbstractEntity> getUserService();
 
-    @Nullable
+    @NotNull
     Map<String, AbstractCommand> getCommands();
 
-    @Nullable
+    @NotNull
     Scanner getScanner();
 
     @Nullable
