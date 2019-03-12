@@ -24,6 +24,7 @@ import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.service.ProjectService;
 import ru.burmistrov.tm.service.TaskService;
+import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.service.UserService;
 
 import java.util.LinkedHashMap;
@@ -48,6 +49,8 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final Scanner scanner = new Scanner(System.in);
 
+    @NotNull private final TerminalCommandService terminalCommandService = new TerminalCommandService(this);
+
     @Nullable private User currentUser;
 
 
@@ -70,7 +73,7 @@ public final class Bootstrap implements ServiceLocator {
 
         registry(classes);
         initProjectAndUser();
-        start();
+        terminalCommandService.start();
     }
 
     private void initProjectAndUser() {
@@ -88,7 +91,8 @@ public final class Bootstrap implements ServiceLocator {
         taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание");
     }
 
-    private void execute(@Nullable String command) {
+    @Override
+    public void execute(@Nullable String command) {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
@@ -99,17 +103,6 @@ public final class Bootstrap implements ServiceLocator {
             return;
         }
         abstractCommand.execute();
-    }
-
-    private void start() {
-        System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
-        while (true) {
-            String input = scanner.nextLine();
-            if ("-exit".equals(input)) {
-                System.exit(0);
-            }
-            execute(input);
-        }
     }
 
     @NotNull

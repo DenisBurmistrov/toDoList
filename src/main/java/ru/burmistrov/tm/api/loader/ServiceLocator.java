@@ -33,4 +33,6 @@ public interface ServiceLocator {
     User getCurrentUser();
 
     void setCurrentUser(@Nullable User user);
+
+    void execute(@Nullable String command);
 }
