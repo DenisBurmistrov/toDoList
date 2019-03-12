@@ -32,23 +32,23 @@ import java.util.Scanner;
 
 public final class Bootstrap implements ServiceLocator {
 
-    private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
+   @NotNull private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
-    private final IProjectRepository<AbstractEntity> projectRepository = new ProjectRepository();
+    @NotNull private final IProjectRepository<AbstractEntity> projectRepository = new ProjectRepository();
 
-    private final ITaskRepository<AbstractEntity> taskRepository = new TaskRepository();
+    @NotNull private final ITaskRepository<AbstractEntity> taskRepository = new TaskRepository();
 
-    private final IUserRepository<AbstractEntity> userRepository = new UserRepository();
+    @NotNull private final IUserRepository<AbstractEntity> userRepository = new UserRepository();
 
-    private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
+    @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
-    private final ITaskService taskService = new TaskService(taskRepository);
+    @NotNull private final ITaskService taskService = new TaskService(taskRepository);
 
-    private final IUserService userService = new UserService(userRepository);
+    @NotNull private final IUserService userService = new UserService(userRepository);
 
-    private final Scanner scanner = new Scanner(System.in);
+    @NotNull private final Scanner scanner = new Scanner(System.in);
 
-    private User currentUser;
+    @Nullable private User currentUser;
 
 
     public void registry(Class ...classes) {
@@ -70,7 +70,6 @@ public final class Bootstrap implements ServiceLocator {
 
         registry(classes);
         initProjectAndUser();
-
         start();
     }
 
@@ -91,7 +90,7 @@ public final class Bootstrap implements ServiceLocator {
 
     private void execute(@Nullable String command) {
         if (command == null || command.isEmpty()) return;
-        AbstractCommand abstractCommand = commands.get(command);
+        @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
         if (abstractCommand.isSecure()) {
             if (isAuth()) {
@@ -113,6 +112,7 @@ public final class Bootstrap implements ServiceLocator {
         }
     }
 
+    @NotNull
     public Map<String, AbstractCommand> getCommands() {
         return commands;
     }
@@ -125,26 +125,31 @@ public final class Bootstrap implements ServiceLocator {
         return taskRepository;
     }
 
+    @NotNull
     public IProjectService getProjectService() {
         return projectService;
     }
 
+    @NotNull
     public ITaskService getTaskService() {
         return taskService;
     }
 
+    @NotNull
     public Scanner getScanner() {
         return scanner;
     }
 
+    @Nullable
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(@Nullable User currentUser) {
         this.currentUser = currentUser;
     }
 
+    @NotNull
     public IUserService getUserService() {
         return userService;
     }

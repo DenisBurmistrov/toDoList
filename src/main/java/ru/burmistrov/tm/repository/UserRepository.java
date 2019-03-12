@@ -26,7 +26,7 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     }
 
     @Override
-    public void updatePassword(@NotNull String userId,@NotNull String login, @NotNull String newPassword) {
+    public void updatePassword(@Nullable String userId,@Nullable String login, @Nullable String newPassword) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
             if (entry.getValue().getLogin().equals(login)) {
