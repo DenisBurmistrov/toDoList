@@ -9,8 +9,9 @@ import ru.burmistrov.tm.command.user.*;
 public class App {
 
     public static final  Class[] CLASSES = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
-            ProjectUpdateCommand.class, PrintListCommand.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskRemoveCommand.class,
-            TaskUpdateCommand.class, UserClearCommand.class, UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
+            ProjectUpdateCommand.class, PrintListCommand.class, ProjectListSortedByDateBeginCommand.class, TaskClearCommand.class, TaskCreateCommand.class,
+            TaskListCommand.class, TaskListSortedByDateBeginCommand.class, TaskRemoveCommand.class, TaskUpdateCommand.class, UserClearCommand.class,
+            UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
             UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
 
     public static void main(String[] args) {

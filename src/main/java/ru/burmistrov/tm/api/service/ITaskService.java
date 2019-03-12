@@ -21,4 +21,6 @@ public interface ITaskService<T extends AbstractEntity> {
     void remove(@Nullable String userId,@Nullable String projectId,@Nullable String taskId);
 
     void removeAll(@Nullable String userId);
+
+    List<T> findAllSortByDateBegin(@Nullable String userId);
 }

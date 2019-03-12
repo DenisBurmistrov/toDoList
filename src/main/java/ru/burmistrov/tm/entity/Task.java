@@ -14,6 +14,7 @@ public final class Task extends AbstractEntity {
     private Date dateBegin = new Date();
     private Date dateEnd;
     private String userId;
+    private Status status = Status.SHEDULED;
 
     public Task() {
     }

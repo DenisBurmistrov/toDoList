@@ -9,19 +9,21 @@ import java.util.List;
 public interface ITaskRepository<T extends  AbstractEntity> {
 
     @Nullable
-    T persist(@Nullable T abstractEntity);
+    T persist(@NotNull T abstractEntity);
 
-    void merge(@Nullable T abstractEntity);
+    void merge(@NotNull T abstractEntity);
 
-    void remove(@Nullable T entity);
+    void remove(@NotNull T entity);
 
-    void removeAll(@Nullable T entity);
-
-    @Nullable
-    List<T> findAll(@Nullable T entity);
-
-    void removeAllInProject(@Nullable T entity);
+    void removeAll(@NotNull T entity);
 
     @Nullable
-    T findOne(@Nullable T entity);
+    List<T> findAll(@NotNull T entity);
+
+    void removeAllInProject(@NotNull T entity);
+
+    @Nullable
+    T findOne(@NotNull T entity);
+
+    @NotNull List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
 }

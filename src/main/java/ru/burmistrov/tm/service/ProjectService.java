@@ -89,4 +89,16 @@ public final class ProjectService extends AbstractService implements IProjectSer
         return null;
     }
 
+    @Nullable
+    @Override
+    public List<AbstractEntity> findAllSortByDateBegin(@Nullable String userId) {
+        Project project = new Project();
+        project.setUserId(userId);
+        if (projectRepository != null) {
+            return projectRepository.findAllSortByDateBegin(project);
+        }
+        return null;
+    }
+
+
 }

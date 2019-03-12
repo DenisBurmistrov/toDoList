@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
-import ru.burmistrov.tm.entity.User;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -73,5 +73,28 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
             return (AbstractEntity) list.get(0);
         }
         return null;
+    }
+
+    @NotNull
+    @Override
+    public List<AbstractEntity> findAllSortByDateBegin(@NotNull AbstractEntity abstractEntity) {
+        Task task = (Task) abstractEntity;
+        List<AbstractEntity> result = new LinkedList<>();
+        tasks.entrySet()
+                .stream().filter(e -> e.getValue().getUserId().
+                equals(task.getUserId()))
+                .forEach(e -> result.add(e.getValue()));
+        result.sort((s1, s2) -> {
+            if(((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() < 0){
+                return 1;
+            }
+            else if(((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() > 0){
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        });
+        return result;
     }
 }

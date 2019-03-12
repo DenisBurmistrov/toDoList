@@ -85,4 +85,16 @@ public final class TaskService extends AbstractService implements ITaskService {
             taskRepository.removeAll(task);
         }
     }
+
+    @Override
+    public List<AbstractEntity> findAllSortByDateBegin(@Nullable String userId) {
+        Task task = new Task();
+        task.setUserId(userId);
+        if (taskRepository != null) {
+            return taskRepository.findAllSortByDateBegin(task);
+        }
+        return null;
+    }
+
+
 }

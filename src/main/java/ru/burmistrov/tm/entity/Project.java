@@ -12,6 +12,7 @@ public final class Project extends AbstractEntity {
     private String description;
     private Date dateBegin = new Date();
     private Date dateEnd;
+    private Status status = Status.SHEDULED;
 
     public Project() {
     }
