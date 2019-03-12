@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.Bootstrap;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
@@ -27,16 +28,16 @@ public final class TaskUpdateCommand extends AbstractCommand {
     @Override
     public void execute() {
         if (getServiceLocator() != null) {
-            ITaskService taskService = getServiceLocator().getTaskService();
-            Scanner scanner = getServiceLocator().getScanner();
+            @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
+            @Nullable final Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
-            String projectId = scanner.nextLine();
+            @Nullable final String projectId = scanner.nextLine();
             System.out.println("Введите ID задачи:");
-            String taskId = scanner.nextLine();
+            @Nullable final String taskId = scanner.nextLine();
             System.out.println("Введите новое имя:");
-            String newName = scanner.nextLine();
+            @Nullable final String newName = scanner.nextLine();
             System.out.println("Введите новое описание: ");
-            String description = scanner.nextLine();
+            @Nullable final String description = scanner.nextLine();
             if (taskService != null) {
                 taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description);
             }

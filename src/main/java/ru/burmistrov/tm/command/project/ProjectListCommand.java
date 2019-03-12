@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -26,10 +27,10 @@ public final class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() {
         if (getServiceLocator() != null) {
-            IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
+            @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
             System.out.println("Список проектов:");
             if(projectService != null) {
-                List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
+                @Nullable final List<AbstractEntity> projects = projectService.findAll(getServiceLocator().getCurrentUser().getId());
                 if (projects == null) {
                     System.out.println("У пользователя нет проектов");
                 } else {

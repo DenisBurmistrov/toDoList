@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -26,9 +27,9 @@ public final class ProjectUpdateCommand extends AbstractCommand {
     @Override
     public void execute() {
         if (getServiceLocator() != null) {
-            IProjectService projectService = getServiceLocator().getProjectService();
+            @Nullable final IProjectService projectService = getServiceLocator().getProjectService();
 
-            Scanner scanner = getServiceLocator().getScanner();
+            @Nullable final Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
             String projectId = scanner.nextLine();
             System.out.println("Введите новое название проекта:");

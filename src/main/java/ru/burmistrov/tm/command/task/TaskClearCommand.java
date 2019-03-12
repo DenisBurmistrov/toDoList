@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -25,7 +26,7 @@ public final class TaskClearCommand extends AbstractCommand {
     @Override
     public void execute() {
         if(getServiceLocator() != null) {
-            ITaskService taskService = getServiceLocator().getTaskService();
+            @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
             if (taskService != null) {
                 taskService.removeAll(getServiceLocator().getCurrentUser().getId());
             }

@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.user;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 
@@ -24,13 +25,13 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
     @Override
     public void execute() {
         if(getServiceLocator() != null) {
-            IUserService userService = getServiceLocator().getUserService();
-            Scanner scanner = getServiceLocator().getScanner();
+            @Nullable final IUserService userService = getServiceLocator().getUserService();
+            @Nullable final Scanner scanner = getServiceLocator().getScanner();
             if (isSecure()) {
                 System.out.println("Введите логин:");
-                String login = scanner.nextLine();
+                @Nullable final String login = scanner.nextLine();
                 System.out.println("Введите новый пароль");
-                String newPassword = scanner.nextLine();
+                @Nullable final String newPassword = scanner.nextLine();
                 if (userService != null) {
                     userService.updatePassword(getServiceLocator().getCurrentUser().getId(), login, newPassword);
                 }

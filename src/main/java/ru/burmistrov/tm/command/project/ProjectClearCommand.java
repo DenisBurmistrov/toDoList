@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
 
@@ -21,7 +22,7 @@ public final class ProjectClearCommand extends AbstractCommand {
     @Override
     public void execute() {
         if (getServiceLocator() != null) {
-            IProjectService projectService = getServiceLocator().getProjectService();
+            @Nullable final IProjectService projectService = getServiceLocator().getProjectService();
             if (projectService != null) {
                 projectService.removeAll(getServiceLocator().getCurrentUser().getId());
             }

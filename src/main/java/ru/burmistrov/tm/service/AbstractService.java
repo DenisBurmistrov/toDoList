@@ -1,10 +1,9 @@
 package ru.burmistrov.tm.service;
 
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractService {
 
-    @NotNull
-    abstract public void removeAll(@NotNull String userId);
+    abstract public void removeAll(@Nullable String userId);
 }

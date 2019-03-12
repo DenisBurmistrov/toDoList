@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -29,19 +30,18 @@ public final class TaskListCommand extends AbstractCommand {
     @Override
     public void execute() {
         if (getServiceLocator() != null) {
-            ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
-            Scanner scanner = getServiceLocator().getScanner();
+            @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
+            @Nullable final Scanner scanner = getServiceLocator().getScanner();
             System.out.println("Введите ID проекта:");
-            String id = scanner.nextLine();
-            List<AbstractEntity> taskList = null;
-            if (taskService != null) {
-                taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
-            }
-            if (taskList == null) {
-                System.out.println("У данного проекта нет задач");
-            } else {
-                for (AbstractEntity task : taskList) {
-                    System.out.println(task);
+            @Nullable final String id = scanner.nextLine();
+            if(taskService != null) {
+                @Nullable final List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
+                if (taskList == null) {
+                    System.out.println("У данного проекта нет задач");
+                } else {
+                    for (AbstractEntity task : taskList) {
+                        System.out.println(task);
+                    }
                 }
             }
         }

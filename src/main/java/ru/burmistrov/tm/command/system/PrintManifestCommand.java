@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.system;
 
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.utils.ReadManifestUtil;
 
@@ -21,7 +22,7 @@ public class PrintManifestCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        ReadManifestUtil readManifestUtil = new ReadManifestUtil();
+        @Nullable final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
         System.out.println(readManifestUtil.getManifestInfo());
     }
 

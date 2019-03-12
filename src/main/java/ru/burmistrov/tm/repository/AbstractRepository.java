@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.repository;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
@@ -16,10 +17,10 @@ public abstract class AbstractRepository<T extends AbstractEntity> {
 
     public abstract void removeAll(@NotNull T abstractEntity);
 
-    @NotNull
+    @Nullable
     public abstract List<T> findAll(@NotNull T abstractEntity);
 
-    @NotNull
+    @Nullable
     public abstract T findOne(@NotNull T abstractEntity);
 
 }
