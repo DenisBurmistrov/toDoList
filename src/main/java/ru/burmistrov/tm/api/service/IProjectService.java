@@ -23,4 +23,7 @@ public interface IProjectService<T extends AbstractEntity> {
     @Nullable
     List<T> findAllSortByDateBegin(@Nullable String userId);
 
+    @Nullable
+    List<T> findAllSortByDateEnd(@Nullable String userId);
+
 }

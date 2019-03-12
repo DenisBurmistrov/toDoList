@@ -26,4 +26,6 @@ public interface ITaskRepository<T extends  AbstractEntity> {
     T findOne(@NotNull T entity);
 
     @NotNull List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
+
+    @NotNull List<T> findAllSortByDateEnd(@NotNull T abstractEntity);
 }

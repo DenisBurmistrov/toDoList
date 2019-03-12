@@ -22,5 +22,9 @@ public interface ITaskService<T extends AbstractEntity> {
 
     void removeAll(@Nullable String userId);
 
+    @Nullable
     List<T> findAllSortByDateBegin(@Nullable String userId);
+
+    @Nullable
+    List<T> findAllSortByDateEnd(@Nullable String userId);
 }

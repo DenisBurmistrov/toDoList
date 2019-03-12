@@ -23,4 +23,6 @@ public interface IProjectRepository<T extends  AbstractEntity> {
 
     @NotNull List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
 
+    @NotNull List<T> findAllSortByDateEnd(@NotNull T abstractEntity);
+
 }
