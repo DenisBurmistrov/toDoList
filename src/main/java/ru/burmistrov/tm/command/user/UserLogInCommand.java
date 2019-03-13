@@ -29,12 +29,11 @@ public final class UserLogInCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         @Nullable final IUserService userService = getServiceLocator().getUserService();
         System.out.println("Введите логин:");
-        @NotNull final String login = scanner.nextLine();
+        @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");
-        @NotNull final String password = scanner.nextLine();
+        @NotNull final String password = getServiceLocator().getTerminalCommandService().nextLine();
         @Nullable final User user = (User) userService.logIn(login, password);
         if (user == null) {
             System.out.println("Неверно введены данные");

@@ -4,28 +4,29 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Data
-public final class Task extends AbstractEntity {
+public final class Task extends AbstractEntity implements Serializable {
 
-    @NotNull
+    @Nullable
     private String projectId;
 
-    @NotNull
+    @Nullable
     private String name;
 
-    @NotNull
+    @Nullable
     private String description;
 
     @NotNull
     private Date dateBegin = new Date();
 
-    @NotNull
+    @Nullable
     private Date dateEnd;
 
-    @NotNull
+    @Nullable
     private String userId;
 
     @NotNull
@@ -34,7 +35,7 @@ public final class Task extends AbstractEntity {
     public Task() {
     }
 
-    @NotNull
+    @Nullable
     public String getName() {
         return name;
     }

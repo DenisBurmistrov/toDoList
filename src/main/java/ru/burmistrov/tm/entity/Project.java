@@ -4,24 +4,25 @@ import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Data
-public final class Project extends AbstractEntity {
+public final class Project extends AbstractEntity implements Serializable {
 
-    @NotNull
+    @Nullable
     private String userId;
 
-    @NotNull
+    @Nullable
     private String name;
 
-    @NotNull
+    @Nullable
     private String description;
 
     @NotNull
     private Date dateBegin = new Date();
 
-    @NotNull
+    @Nullable
     private Date dateEnd;
 
     @NotNull

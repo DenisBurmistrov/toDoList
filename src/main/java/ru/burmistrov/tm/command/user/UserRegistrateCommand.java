@@ -28,19 +28,18 @@ public final class UserRegistrateCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final IUserService userService = getServiceLocator().getUserService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите логин:");
-        @NotNull final String login = scanner.nextLine();
+        @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");
-        @NotNull final String password = scanner.nextLine();
+        @NotNull final String password = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите имя:");
-        @NotNull final String firstName = scanner.nextLine();
+        @NotNull final String firstName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите фамалию:");
-        @NotNull final String lastName = scanner.nextLine();
+        @NotNull final String lastName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите отчество:");
-        @NotNull final String middleName = scanner.nextLine();
+        @NotNull final String middleName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите почту:");
-        @NotNull final String email = scanner.nextLine();
+        @NotNull final String email = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println(userService.persist(login, password, firstName, lastName, middleName, email, Role.COMMON_USER) + " зарегистрирован");
     }
 

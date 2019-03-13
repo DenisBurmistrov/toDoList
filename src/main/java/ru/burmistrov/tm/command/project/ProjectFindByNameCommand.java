@@ -25,9 +25,8 @@ public class ProjectFindByNameCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите имя проекта:");
-        @NotNull final String name = scanner.nextLine();
+        @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Проект:");
         @Nullable final Project project = (Project) projectService.findOneByName(getServiceLocator().getCurrentUser().getId(), name);
         System.out.println(project);

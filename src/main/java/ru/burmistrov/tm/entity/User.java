@@ -4,10 +4,11 @@ import lombok.Data;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Data
-public final class User extends AbstractEntity {
+public final class User extends AbstractEntity implements Serializable {
 
     @Nullable
     private String firstName;

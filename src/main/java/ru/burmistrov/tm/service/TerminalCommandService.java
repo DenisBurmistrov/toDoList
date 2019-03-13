@@ -37,7 +37,7 @@ public class TerminalCommandService {
     }
 
     @NotNull
-    public Scanner getScanner() {
-        return scanner;
+    public String nextLine() {
+        return scanner.nextLine();
     }
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public final class ProjectUpdateCommand extends AbstractCommand {
-    
+
     public ProjectUpdateCommand() {
     }
 
@@ -30,15 +30,14 @@ public final class ProjectUpdateCommand extends AbstractCommand {
     @Override
     public void execute() throws ParseException {
         @Nullable final IProjectService projectService = getServiceLocator().getProjectService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта:");
-        @NotNull final String projectId = scanner.nextLine();
+        @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новое название проекта:");
-        @NotNull final String name = scanner.nextLine();
+        @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новое описание:");
-        @NotNull final String description = scanner.nextLine();
+        @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новую дату окончания (Пример: 27.10.2019):");
-        @NotNull final String date = scanner.nextLine();
+        @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description, date);
     }
 

@@ -25,11 +25,10 @@ public class ProjectFindByDescriptionCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите описание проекта:");
-        @NotNull final String description = scanner.nextLine();
+        @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Проект:");
-        @NotNull final Project project = (Project) projectService.findOneByDescription(getServiceLocator().getCurrentUser().getId(), description);
+        @Nullable final Project project = (Project) projectService.findOneByDescription(getServiceLocator().getCurrentUser().getId(), description);
         if (project == null) {
             System.out.println("Нет проекта с таким описанием");
         } else {

@@ -28,15 +28,14 @@ public final class TaskCreateCommand extends AbstractCommand {
     @Override
     public void execute() throws ParseException {
         @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта:");
-        @NotNull final String id = scanner.nextLine();
+        @NotNull final String id = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите имя задачи:");
-        @NotNull final String oldName = scanner.nextLine();
+        @NotNull final String oldName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите описание для задачи: ");
-        @NotNull final String description = scanner.nextLine();
+        @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
-        @NotNull final String date = scanner.nextLine();
+        @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         taskService.persist(getServiceLocator().getCurrentUser().getId(), id, oldName, description, date);
     }
 

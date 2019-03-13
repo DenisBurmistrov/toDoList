@@ -18,7 +18,8 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     public User logIn(@Nullable String login, @Nullable String password) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
-            if (password != null && entry.getValue().getLogin().equals(login) && entry.getValue().getPassword().equals(PasswordUtil.hashPassword(password))) {
+            if (password != null && Objects.requireNonNull(entry.getValue().getLogin()).equals(login)
+                    && Objects.requireNonNull(entry.getValue().getPassword()).equals(PasswordUtil.hashPassword(password))) {
                 return entry.getValue();
             }
         }
@@ -29,7 +30,7 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     public void updatePassword(@Nullable String userId,@Nullable String login, @Nullable String newPassword) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
-            if (entry.getValue().getLogin().equals(login)) {
+            if (Objects.requireNonNull(entry.getValue().getLogin()).equals(login)) {
                 entry.getValue().setPassword(newPassword);
             }
         }
@@ -38,14 +39,14 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     @NotNull
     @Override
     public AbstractEntity persist(@Nullable AbstractEntity entity) {
-        users.put(entity.getId(), (User) entity);
+        users.put(Objects.requireNonNull(entity).getId(), (User) entity);
         return entity;
     }
 
     @Override
     public void merge(@Nullable  AbstractEntity entity) {
         User user = (User) entity;
-        users.get(entity.getId()).setFirstName(user.getFirstName());
+        users.get(Objects.requireNonNull(entity).getId()).setFirstName(Objects.requireNonNull(user).getFirstName());
         users.get(entity.getId()).setMiddleName(user.getMiddleName());
         users.get(entity.getId()).setLastName(user.getLastName());
         users.get(entity.getId()).setEmail(user.getEmail());
@@ -54,7 +55,7 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     @Override
     public void remove(@Nullable AbstractEntity abstractEntity) {
         User user = (User) abstractEntity;
-        users.remove(user.getId());
+        users.remove(Objects.requireNonNull(user).getId());
     }
 
     @Override

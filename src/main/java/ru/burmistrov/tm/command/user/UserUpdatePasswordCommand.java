@@ -28,12 +28,11 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final IUserService userService = getServiceLocator().getUserService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         if (isSecure()) {
             System.out.println("Введите логин:");
-            @NotNull final String login = scanner.nextLine();
+            @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
             System.out.println("Введите новый пароль");
-            @NotNull final String newPassword = scanner.nextLine();
+            @NotNull final String newPassword = getServiceLocator().getTerminalCommandService().nextLine();
             userService.updatePassword(getServiceLocator().getCurrentUser().getId(), login, newPassword);
         }
     }

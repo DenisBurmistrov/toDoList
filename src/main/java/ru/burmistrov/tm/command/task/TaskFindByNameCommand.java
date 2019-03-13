@@ -24,9 +24,8 @@ public class TaskFindByNameCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите имя задачи:");
-        @NotNull final String name = scanner.nextLine();
+        @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println(taskService.findOneByName(getServiceLocator().getCurrentUser().getId(), name));
     }
 

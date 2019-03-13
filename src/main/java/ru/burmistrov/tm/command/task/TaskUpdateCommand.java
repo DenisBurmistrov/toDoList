@@ -31,17 +31,16 @@ public final class TaskUpdateCommand extends AbstractCommand {
     @Override
     public void execute() throws ParseException {
         @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта:");
-        @NotNull final String projectId = scanner.nextLine();
+        @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите ID задачи:");
-        @NotNull final String taskId = scanner.nextLine();
+        @NotNull final String taskId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новое имя:");
-        @NotNull final String newName = scanner.nextLine();
+        @NotNull final String newName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новое описание: ");
-        @NotNull final String description = scanner.nextLine();
+        @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
-        @NotNull final String date = scanner.nextLine();
+        @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description, date);
     }
 

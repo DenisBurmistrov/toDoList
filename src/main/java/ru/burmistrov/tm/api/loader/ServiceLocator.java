@@ -8,10 +8,10 @@ import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.service.TerminalCommandService;
 
 import java.text.ParseException;
 import java.util.Map;
-import java.util.Scanner;
 
 public interface ServiceLocator {
 
@@ -28,7 +28,7 @@ public interface ServiceLocator {
     Map<String, AbstractCommand> getCommands();
 
     @NotNull
-    Scanner getScanner();
+    TerminalCommandService getTerminalCommandService();
 
     @NotNull
     User getCurrentUser();

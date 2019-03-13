@@ -30,11 +30,10 @@ public final class TaskRemoveCommand extends AbstractCommand {
     @Override
     public void execute() {
         @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта");
-        @NotNull final String projectId = scanner.nextLine();
+        @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите ID задачи");
-        @NotNull final String taskId = scanner.next();
+        @NotNull final String taskId = getServiceLocator().getTerminalCommandService().nextLine();
         taskService.remove(getServiceLocator().getCurrentUser().getId(), projectId, taskId);
     }
 

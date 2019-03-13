@@ -2,7 +2,9 @@ package ru.burmistrov.tm.entity;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum Status {
+import java.io.Serializable;
+
+public enum Status implements Serializable {
 
     SHEDULED("Запланировано"),
     IN_PROCESS("В процессе"),

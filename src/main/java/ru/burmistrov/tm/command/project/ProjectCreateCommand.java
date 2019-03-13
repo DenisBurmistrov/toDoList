@@ -27,17 +27,16 @@ public final class ProjectCreateCommand extends AbstractCommand {
 
     @Override
     public void execute() throws ParseException {
-        @Nullable final Scanner scanner = getServiceLocator().getScanner();
         @Nullable final IProjectService projectService = getServiceLocator().getProjectService();
         System.out.println("Введите имя:");
-        @NotNull final String name = scanner.nextLine();
+        @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         if (name.length() == 0) {
             System.out.println("Нельзя использовать пустое имя");
         }
         System.out.println("Введите описание:");
-        @NotNull final String description = scanner.nextLine();
+        @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончания (Пример: 27.10.2019):");
-        @NotNull final String date = scanner.nextLine();
+        @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         projectService.persist(getServiceLocator().getCurrentUser().getId(), name, description, date);
     }
 

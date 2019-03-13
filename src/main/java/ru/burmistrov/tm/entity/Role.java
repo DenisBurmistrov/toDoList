@@ -2,7 +2,9 @@ package ru.burmistrov.tm.entity;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum Role {
+import java.io.Serializable;
+
+public enum Role implements Serializable {
 
     ADMINISTRATOR("Администратор"),
     COMMON_USER("Обычный пользователь");
