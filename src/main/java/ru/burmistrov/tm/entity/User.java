@@ -1,7 +1,6 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
@@ -19,10 +18,10 @@ public final class User extends AbstractEntity {
     @Nullable
     private String lastName;
 
-    @NotNull
+    @Nullable
     private String login;
 
-    @NotNull
+    @Nullable
     private String password;
 
     @Nullable

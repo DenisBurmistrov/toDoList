@@ -10,33 +10,24 @@ import java.util.jar.Manifest;
 
 public class ReadManifestUtil {
 
-    public String getManifestInfo() {
-        Enumeration resEnum;
+    public Manifest getManifest() {
+        Enumeration<URL> resources = null;
         try {
-            resEnum = Thread.currentThread().getContextClassLoader().getResources(JarFile.MANIFEST_NAME);
-            while (resEnum.hasMoreElements()) {
+            resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (resources != null) {
+            while (resources.hasMoreElements()) {
                 try {
-                    URL url = (URL) resEnum.nextElement();
-                    InputStream is = url.openStream();
-                    if (is != null) {
-                        Manifest manifest = new Manifest(is);
-                        Attributes mainAttribs = manifest.getMainAttributes();
-                        String builtBy = mainAttribs.getValue("Built-By");
-                        String mainClass = mainAttribs.getValue("Main-Class");
-                        String build = mainAttribs.getValue("Implementation-Build");
-                        String version = mainAttribs.getValue("Build-Jdk");
-                        if (version != null && builtBy != null && mainClass != null && build != null) {
-                            return "Build by: " + builtBy + "\nMain-Class: " + mainClass + "\nBuild-Jdk: " + version + "\nImplementation-Build: " +build;
-                        }
-
-                    }
-                } catch (Exception e) {
-                    // Silently ignore wrong manifests on classpath?
+                    return new Manifest(resources.nextElement().openStream());
+                    // check that this is your manifest and do what you need or get the next one
+                } catch (IOException E) {
+                    // handle
                 }
             }
-        } catch (IOException e1) {
-            // Silently ignore wrong manifests on classpath?
         }
         return null;
     }
+
 }
