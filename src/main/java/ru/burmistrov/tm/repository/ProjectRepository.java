@@ -77,4 +77,22 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         return result;
     }
 
+    @NotNull
+    @Override
+    public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity) {
+        List<AbstractEntity> result = findAll(abstractEntity);
+        result.sort((s1, s2) -> {
+            if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() > 0){
+                return 1;
+            }
+            else if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() < 0){
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        });
+        return result;
+    }
+
 }

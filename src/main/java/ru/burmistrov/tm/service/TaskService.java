@@ -28,7 +28,7 @@ public final class TaskService extends AbstractService implements ITaskService {
             task.setDescription(description);
             task.setProjectId(projectId);
             task.setUserId(userId);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy"); //dd-MM-yyyy
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
             Date dateEnd = simpleDateFormat.parse(dateEndString);
             task.setDateEnd(dateEnd);
             if (taskRepository != null) {
@@ -52,7 +52,7 @@ public final class TaskService extends AbstractService implements ITaskService {
             task.setDescription(description);
             task.setProjectId(projectId);
             task.setUserId(userId);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy"); //dd-MM-yyyy
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
             Date dateEnd = simpleDateFormat.parse(dateEndString);
             task.setDateEnd(dateEnd);
             if (taskRepository != null) {
@@ -111,6 +111,17 @@ public final class TaskService extends AbstractService implements ITaskService {
         task.setUserId(userId);
         if (taskRepository != null) {
             return taskRepository.findAllSortByDateBegin(task);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public List findAllSortByDateEnd(@Nullable String userId) {
+        Task task = new Task();
+        task.setUserId(userId);
+        if (taskRepository != null) {
+            return taskRepository.findAllSortByDateEnd(task);
         }
         return null;
     }

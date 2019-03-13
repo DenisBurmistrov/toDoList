@@ -21,6 +21,7 @@ import ru.burmistrov.tm.service.TaskService;
 import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.service.UserService;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -74,15 +75,15 @@ public final class Bootstrap implements ServiceLocator {
 
         AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
         AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
-        AbstractEntity project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание");
-        AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание");
-        AbstractEntity project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание");
-        AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание");
+        AbstractEntity project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание", "10.10.2019");
+        AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");
+        AbstractEntity project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание","12.10.2019");
+        AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание", "13.10.2019");
 
-        taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание");
-        taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание");
-        taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание");
-        taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание");
+        taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание", "14.10.2019");
+        taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание", "15.10.2019");
+        taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание", "16.10.2019");
+        taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
     }
 
     @Override

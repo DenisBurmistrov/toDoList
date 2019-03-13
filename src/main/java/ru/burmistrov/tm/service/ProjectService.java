@@ -49,7 +49,7 @@ public final class ProjectService extends AbstractService implements IProjectSer
             project.setUserId(userId);
             project.setName(name);
             project.setDescription(description);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy"); //dd-MM-yyyy
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
             Date dateEnd = simpleDateFormat.parse(dateEndString);
             project.setDateEnd(dateEnd);
             if(projectRepository != null) {
@@ -73,7 +73,7 @@ public final class ProjectService extends AbstractService implements IProjectSer
            project.setUserId(userId);
            project.setName(name);
            project.setDescription(description);
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy"); //dd-MM-yyyy
+           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
            Date dateEnd = simpleDateFormat.parse(dateEndString);
            project.setDateEnd(dateEnd);
            if (projectRepository != null) {
@@ -113,6 +113,17 @@ public final class ProjectService extends AbstractService implements IProjectSer
         project.setUserId(userId);
         if (projectRepository != null) {
             return projectRepository.findAllSortByDateBegin(project);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public List findAllSortByDateEnd(@Nullable String userId) {
+        Project project = new Project();
+        project.setUserId(userId);
+        if (projectRepository != null) {
+            return projectRepository.findAllSortByDateEnd(project);
         }
         return null;
     }
