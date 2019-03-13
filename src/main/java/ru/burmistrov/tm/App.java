@@ -10,8 +10,10 @@ public class App {
 
     public static final  Class[] CLASSES = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
             ProjectUpdateCommand.class, PrintListCommand.class, ProjectListSortedByDateBeginCommand.class, ProjectListSortedByDateEndCommand.class,
+            ProjectFindByNameCommand.class, ProjectFindByDescriptionCommand.class,
             ProjectListSortedByStatus.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskListSortedByDateBeginCommand.class,
-            TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class, UserClearCommand.class,
+            TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class,
+            TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
             UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
             UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
 

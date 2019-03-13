@@ -52,9 +52,14 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @Override
     public AbstractEntity findOne(@NotNull AbstractEntity abstractEntity) {
         Project project = (Project) abstractEntity;
-        List list = projects.entrySet().stream().filter(e -> project.equals(e.getValue())).collect(Collectors.toList());
-        if(list.size() > 0) {
-            return (AbstractEntity) list.get(0);
+        List<Project> result = new ArrayList<>();
+        projects.forEach((k, v) -> {
+            if(project.getId().equals(k)){
+                result.add(v);
+            }
+        });
+        if(result.size() > 0) {
+            return result.get(0);
         }
         return null;
     }
@@ -101,6 +106,40 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> Integer.compare(0, ((Project) s1).getStatus().ordinal() - ((Project) s2).getStatus().ordinal()));
         return result;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByName(@NotNull AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        List<Project> result = new ArrayList<>();
+        projects.forEach((k, v) -> {
+            if(project.getUserId().equals(v.getUserId()) &&
+                    project.getName().equals(v.getName())){
+                result.add(v);
+            }
+        });
+        if(result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByDescription(@NotNull AbstractEntity abstractEntity) {
+        Project project = (Project) abstractEntity;
+        List<Project> result = new ArrayList<>();
+        projects.forEach((k, v) -> {
+            if(project.getUserId().equals(v.getUserId()) &&
+                    project.getDescription().equals(v.getDescription())){
+                result.add(v);
+            }
+        });
+        if(result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
     }
 
 }

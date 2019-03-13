@@ -4,13 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class TaskRepository extends AbstractRepository implements ITaskRepository<AbstractEntity> {
@@ -69,7 +65,7 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
     public AbstractEntity findOne(@NotNull AbstractEntity entity) {
         Task task = (Task) entity;
         List list = tasks.entrySet().stream().filter(e -> task.equals(e.getValue())).collect(Collectors.toList());
-        if(list.size() > 0) {
+        if (list.size() > 0) {
             return (AbstractEntity) list.get(0);
         }
         return null;
@@ -85,13 +81,11 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if(((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() < 0){
+            if (((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() < 0) {
                 return 1;
-            }
-            else if(((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() > 0){
+            } else if (((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() > 0) {
                 return -1;
-            }
-            else {
+            } else {
                 return 0;
             }
         });
@@ -108,13 +102,11 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if(((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() > 0){
+            if (((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() > 0) {
                 return 1;
-            }
-            else if(((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() < 0){
+            } else if (((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() < 0) {
                 return -1;
-            }
-            else {
+            } else {
                 return 0;
             }
         });
@@ -132,5 +124,39 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> Integer.compare(0, ((Task) s1).getStatus().ordinal() - ((Task) s2).getStatus().ordinal()));
         return result;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByName(@NotNull AbstractEntity abstractEntity) {
+        Task task = (Task) abstractEntity;
+        List<Task> result = new ArrayList<>();
+        tasks.forEach((k, v) -> {
+            if (task.getUserId().equals(v.getUserId()) &&
+                    task.getName().equals(v.getName())) {
+                result.add(v);
+            }
+        });
+        if (result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByDescription(@NotNull AbstractEntity abstractEntity) {
+        Task task = (Task) abstractEntity;
+        List<Task> result = new ArrayList<>();
+        tasks.forEach((k, v) -> {
+            if (task.getUserId().equals(v.getUserId()) &&
+                    task.getDescription().equals(v.getDescription())) {
+                result.add(v);
+            }
+        });
+        if (result.size() > 0) {
+            return result.get(0);
+        }
+        return null;
     }
 }

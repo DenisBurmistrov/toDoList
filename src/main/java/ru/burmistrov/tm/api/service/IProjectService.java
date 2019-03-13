@@ -29,4 +29,10 @@ public interface IProjectService<T extends AbstractEntity> {
     @Nullable
     List<T> findAllSortByStatus(@NotNull String userId);
 
+    @Nullable
+    T findOneByName(@Nullable String userId, String name);
+
+    @Nullable
+    T findOneByDescription(@Nullable String userId, String description);
+
 }

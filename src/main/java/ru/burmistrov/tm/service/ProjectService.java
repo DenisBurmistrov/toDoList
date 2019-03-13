@@ -33,6 +33,7 @@ public final class ProjectService extends AbstractService implements IProjectSer
             project.setId(projectId);
             if(projectRepository != null && taskRepository != null) {
                 AbstractEntity abstractEntity = projectRepository.findOne(project);
+                System.out.println(abstractEntity);
                 if (abstractEntity != null) {
                     projectRepository.remove(project);
                     Task task = new Task();
@@ -50,7 +51,7 @@ public final class ProjectService extends AbstractService implements IProjectSer
             project.setUserId(userId);
             project.setName(name);
             project.setDescription(description);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
             Date dateEnd = simpleDateFormat.parse(dateEndString);
             project.setDateEnd(dateEnd);
             if(projectRepository != null) {
@@ -136,6 +137,30 @@ public final class ProjectService extends AbstractService implements IProjectSer
         project.setUserId(userId);
         if (projectRepository != null) {
             return projectRepository.findAllSortByStatus(project);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByName(@Nullable String userId, String name) {
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setName(name);
+        if(projectRepository != null) {
+            return projectRepository.findOneByName(project);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public AbstractEntity findOneByDescription(@Nullable String userId, String description) {
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setDescription(description);
+        if(projectRepository != null) {
+            return projectRepository.findOneByDescription(project);
         }
         return null;
     }
