@@ -32,7 +32,10 @@ public final class TaskService extends AbstractService implements ITaskService {
         Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = taskRepository.findOne(task);
-        return (Task) taskRepository.persist(abstractEntity);
+        if(abstractEntity == null)
+            return (Task) taskRepository.persist(task);
+
+        return null;
     }
 
     public void merge(@Nullable String userId, @Nullable String projectId, @Nullable String taskId, @Nullable String newName, @Nullable String description, @Nullable String dateEndString) throws ParseException {
@@ -46,8 +49,8 @@ public final class TaskService extends AbstractService implements ITaskService {
         Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = taskRepository.findOne(task);
-        if (newName.length() != 0) {
-            taskRepository.merge(abstractEntity);
+        if (newName.length() != 0 && abstractEntity != null) {
+            taskRepository.merge(task);
         }
     }
 

@@ -1,6 +1,5 @@
 package ru.burmistrov.tm.service;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.IUserService;
@@ -35,7 +34,10 @@ public final class UserService extends AbstractService implements IUserService {
         user.setLastName(lastName);
         user.setEmail(email);
         AbstractEntity abstractEntity = userRepository.findOne(user);
-        return (User) userRepository.persist(abstractEntity);
+        if(abstractEntity == null)
+            return (User) userRepository.persist(user);
+
+        return null;
     }
 
     public void updatePassword(@Nullable String userId, @Nullable String login, @Nullable String password) {
@@ -55,7 +57,8 @@ public final class UserService extends AbstractService implements IUserService {
         currentUser.setRole(role);
         currentUser.setLogin(login);
         AbstractEntity abstractEntity = userRepository.findOne(currentUser);
-        userRepository.merge(abstractEntity);
+        if(abstractEntity != null)
+            userRepository.merge(currentUser);
     }
 
     @Override

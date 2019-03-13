@@ -6,7 +6,6 @@ import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class ProjectFindByNameCommand extends AbstractCommand {

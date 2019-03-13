@@ -49,7 +49,10 @@ public final class ProjectService extends AbstractService implements IProjectSer
         Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = projectRepository.findOne(project);
-        return (Project) projectRepository.persist(abstractEntity);
+        if (abstractEntity == null)
+            return (Project) projectRepository.persist(project);
+        return null;
+
     }
 
 
@@ -63,7 +66,9 @@ public final class ProjectService extends AbstractService implements IProjectSer
         Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = projectRepository.findOne(project);
-        projectRepository.merge(abstractEntity);
+        if(abstractEntity != null) {
+            projectRepository.merge(project);
+        }
     }
 
     public void removeAll(@Nullable String userId) {

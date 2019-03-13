@@ -66,33 +66,29 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     public void init(Class ...classes) {
-        try {
             registry(classes);
             initProjectAndUser();
             terminalCommandService.start();
-        }
-        catch (ParseException e) {
-            System.out.println("Неверно введенна дата");
-        }
-        catch (NullPointerException e) {
-            System.out.println("Неверно введены данные");
-            e.printStackTrace();
-        }
     }
 
-    private void initProjectAndUser() throws ParseException {
+    private void initProjectAndUser() {
+        try {
+            AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
+            AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
 
-        AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-        AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
-        AbstractEntity project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание", "10.10.2019");
-        AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");
-        AbstractEntity project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание","12.10.2019");
-        AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание", "13.10.2019");
+            AbstractEntity project1 = projectService.persist(admin.getId(), "Первый проект", "Первое описание", "10.10.2019");
+            AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");
+            AbstractEntity project3 = projectService.persist(commonUser.getId(), "Третий проект", "Третье описание","12.10.2019");
+            AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание", "13.10.2019");
 
-        taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание", "14.10.2019");
-        taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание", "15.10.2019");
-        taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание", "16.10.2019");
-        taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
+            taskService.persist(admin.getId(), project1.getId(), "Первая задача", "Первое описание", "14.10.2019");
+            taskService.persist(admin.getId(), project2.getId(), "Вторая задача", "Вторая описание", "15.10.2019");
+            taskService.persist(commonUser.getId(), project3.getId(), "Третья задача", "Третье описание", "16.10.2019");
+            taskService.persist(commonUser.getId(), project4.getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

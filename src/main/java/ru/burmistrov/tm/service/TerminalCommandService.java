@@ -15,7 +15,7 @@ public class TerminalCommandService {
         this.serviceLocator = serviceLocator;
     }
 
-    public void start() throws ParseException {
+    public void start() {
         Scanner scanner = serviceLocator.getScanner();
         System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
         while (true) {
@@ -23,7 +23,14 @@ public class TerminalCommandService {
             if ("-exit".equals(input)) {
                 System.exit(0);
             }
-            serviceLocator.execute(input);
+            try {
+                serviceLocator.execute(input);
+            } catch (ParseException e) {
+                System.out.println("Неверно введенна дата");
+            } catch (NullPointerException e) {
+                System.out.println("Неверно введены данные");
+                e.printStackTrace();
+            }
         }
     }
 }
