@@ -36,8 +36,10 @@ public final class ProjectUpdateCommand extends AbstractCommand {
             String name = scanner.nextLine();
             System.out.println("Введите новое описание:");
             String description = scanner.nextLine();
+            System.out.println("Введите новую дату окончания (Пример: 27.10.2019):");
+            String date = scanner.nextLine();
             if (projectService != null) {
-                projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description);
+                projectService.merge(getServiceLocator().getCurrentUser().getId(), projectId, name, description, date);
             }
         }
     }

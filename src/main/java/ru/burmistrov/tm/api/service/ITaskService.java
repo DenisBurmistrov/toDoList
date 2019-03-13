@@ -8,10 +8,10 @@ import java.util.List;
 public interface ITaskService<T extends AbstractEntity> {
 
     @Nullable
-    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String oldName,@Nullable String newName,@Nullable String description);
+    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String oldName,@Nullable String newName,@Nullable String description, @Nullable String dateEnd);
 
     @Nullable
-    T persist(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description);
+    T persist(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description, @Nullable String dateEnd);
 
     @Nullable
     List<T> findAll(@Nullable String userId,@Nullable String projectId);

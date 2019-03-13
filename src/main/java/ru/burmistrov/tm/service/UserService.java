@@ -17,7 +17,7 @@ public final class UserService extends AbstractService implements IUserService {
     }
 
     @Nullable
-    public User logIn(@Nullable String login,@Nullable String auth)
+    public User logIn(@Nullable String login, @Nullable String auth)
     {
         if (userRepository != null) {
             return userRepository.logIn(login, auth);
@@ -26,8 +26,8 @@ public final class UserService extends AbstractService implements IUserService {
     }
 
     @Nullable
-    public User persist(@Nullable String login,@Nullable String password,@Nullable String firstName,@Nullable String middleName,@Nullable String lastName,
-                        @Nullable String email,@Nullable Role roleType) {
+    public User persist(@Nullable String login, @Nullable String password, @Nullable String firstName, @Nullable String middleName, @Nullable String lastName,
+                        @Nullable String email, @Nullable Role roleType) {
 
         User user = new User();
         user.setRole(roleType);

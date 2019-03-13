@@ -35,8 +35,10 @@ public final class ProjectCreateCommand extends AbstractCommand {
             }
             System.out.println("Введите описание:");
             @Nullable final String description = scanner.nextLine();
+            System.out.println("Введите дату окончания (Пример: 27.10.2019):");
+            String date = scanner.nextLine();
             if (projectService != null) {
-                projectService.persist(getServiceLocator().getCurrentUser().getId(), name, description);
+                projectService.persist(getServiceLocator().getCurrentUser().getId(), name, description, date);
             }
         }
     }

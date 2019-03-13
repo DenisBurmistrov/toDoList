@@ -38,8 +38,10 @@ public final class TaskUpdateCommand extends AbstractCommand {
             @Nullable final String newName = scanner.nextLine();
             System.out.println("Введите новое описание: ");
             @Nullable final String description = scanner.nextLine();
+            System.out.println("Введите дату окончание (Пример: 27.10.2019):");
+            String date = scanner.nextLine();
             if (taskService != null) {
-                taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description);
+                taskService.merge(getServiceLocator().getCurrentUser().getId(), projectId, taskId, newName, description, date);
             }
         }
     }

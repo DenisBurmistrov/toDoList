@@ -35,8 +35,10 @@ public final class TaskCreateCommand extends AbstractCommand {
             @Nullable final String oldName = scanner.nextLine();
             System.out.println("Введите описание для задачи: ");
             @Nullable final String description = scanner.nextLine();
+            System.out.println("Введите дату окончание (Пример: 27.10.2019):");
+            String date = scanner.nextLine();
             if (taskService != null) {
-                taskService.persist(getServiceLocator().getCurrentUser().getId(), id, oldName, description);
+                taskService.persist(getServiceLocator().getCurrentUser().getId(), id, oldName, description, date);
             }
         }
     }
