@@ -9,31 +9,31 @@ import java.util.List;
 
 public interface IProjectService<T extends AbstractEntity> {
 
-    void remove(@Nullable String userId, @Nullable String projectId);
+    void remove(@NotNull String userId, @NotNull String projectId);
 
     @Nullable
-    T persist(@Nullable String userId,@Nullable String name, @Nullable String description, @Nullable String dateEnd) throws ParseException;
+    T persist(@NotNull String userId,@NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
-    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description,@Nullable String dateEnd) throws ParseException;
+    void merge(@NotNull String userId,@NotNull String projectId,@NotNull String name,@NotNull String description,@NotNull String dateEnd) throws ParseException;
 
-    void removeAll(@Nullable String userId);
+    void removeAll(@NotNull String userId);
 
-    @Nullable
-    List<T> findAll(@Nullable String userId);
+    @NotNull
+    List<T> findAll(@NotNull String userId);
 
-    @Nullable
-    List<T> findAllSortByDateBegin(@Nullable String userId);
+    @NotNull
+    List<T> findAllSortByDateBegin(@NotNull String userId);
 
-    @Nullable
-    List<T> findAllSortByDateEnd(@Nullable String userId);
+    @NotNull
+    List<T> findAllSortByDateEnd(@NotNull String userId);
 
-    @Nullable
+    @NotNull
     List<T> findAllSortByStatus(@NotNull String userId);
 
     @Nullable
-    T findOneByName(@Nullable String userId, String name);
+    T findOneByName(@NotNull String userId, @NotNull String name);
 
     @Nullable
-    T findOneByDescription(@Nullable String userId, String description);
+    T findOneByDescription(@NotNull String userId, @NotNull String description);
 
 }

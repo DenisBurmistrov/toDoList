@@ -22,14 +22,13 @@ import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.service.UserService;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public final class Bootstrap implements ServiceLocator {
 
-   @NotNull private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
+    @NotNull private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
     @NotNull private final IProjectRepository<AbstractEntity> projectRepository = new ProjectRepository();
 
@@ -43,9 +42,9 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IUserService userService = new UserService(userRepository);
 
-    @NotNull private final Scanner scanner = new Scanner(System.in);
-
     @NotNull private final TerminalCommandService terminalCommandService = new TerminalCommandService(this);
+
+    @NotNull private final Scanner scanner = terminalCommandService.getScanner();
 
     @Nullable private User currentUser;
 
@@ -110,14 +109,6 @@ public final class Bootstrap implements ServiceLocator {
         return commands;
     }
 
-    public IProjectRepository getProjectRepository() {
-        return projectRepository;
-    }
-
-    public ITaskRepository getTaskRepository() {
-        return taskRepository;
-    }
-
     @NotNull
     public IProjectService getProjectService() {
         return projectService;
@@ -133,7 +124,7 @@ public final class Bootstrap implements ServiceLocator {
         return scanner;
     }
 
-    @Nullable
+    @NotNull
     public User getCurrentUser() {
         return currentUser;
     }

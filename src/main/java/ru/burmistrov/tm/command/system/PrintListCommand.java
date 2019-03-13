@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.system;
 
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class PrintListCommand extends AbstractCommand {
@@ -7,11 +8,13 @@ public final class PrintListCommand extends AbstractCommand {
     public PrintListCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-help";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Print list of getLogin";

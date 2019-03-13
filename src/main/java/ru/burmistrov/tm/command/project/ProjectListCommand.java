@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
@@ -14,11 +15,13 @@ public final class ProjectListCommand extends AbstractCommand {
     public ProjectListCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-print";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Print all projects";

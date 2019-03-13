@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -9,13 +10,13 @@ import ru.burmistrov.tm.entity.Project;
 import java.util.Scanner;
 
 public class ProjectFindByNameCommand extends AbstractCommand {
-    @Nullable
+    @NotNull
     @Override
     public String getName() {
         return "-printProjectByName";
     }
 
-    @Nullable
+    @NotNull
     @Override
     public String getDescription() {
         return "Print project by name";
@@ -26,7 +27,7 @@ public class ProjectFindByNameCommand extends AbstractCommand {
         @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
         @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите имя проекта:");
-        String name = scanner.nextLine();
+        @NotNull final String name = scanner.nextLine();
         System.out.println("Проект:");
         @Nullable final Project project = (Project) projectService.findOneByName(getServiceLocator().getCurrentUser().getId(), name);
         System.out.println(project);

@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.project;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -9,13 +10,13 @@ import java.util.List;
 
 public class ProjectListSortedByDateBeginCommand extends AbstractCommand {
 
-    @Nullable
+    @NotNull
     @Override
     public String getName() {
         return "-printByDateBegin";
     }
 
-    @Nullable
+    @NotNull
     @Override
     public String getDescription() {
         return "Print project list of sorted by date begin";

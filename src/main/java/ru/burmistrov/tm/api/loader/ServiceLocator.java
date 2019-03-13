@@ -15,13 +15,13 @@ import java.util.Scanner;
 
 public interface ServiceLocator {
 
-    @Nullable
+    @NotNull
     IProjectService<AbstractEntity> getProjectService();
 
-    @Nullable
+    @NotNull
     ITaskService<AbstractEntity> getTaskService();
 
-    @Nullable
+    @NotNull
     IUserService<AbstractEntity> getUserService();
 
     @NotNull
@@ -30,7 +30,7 @@ public interface ServiceLocator {
     @NotNull
     Scanner getScanner();
 
-    @Nullable
+    @NotNull
     User getCurrentUser();
 
     void setCurrentUser(@Nullable User user);

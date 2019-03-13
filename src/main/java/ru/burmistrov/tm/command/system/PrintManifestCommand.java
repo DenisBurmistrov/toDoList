@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.system;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.utils.ReadManifestUtil;
@@ -9,11 +10,13 @@ public class PrintManifestCommand extends AbstractCommand {
     public PrintManifestCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-about";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Print info from manifest";
@@ -21,7 +24,7 @@ public class PrintManifestCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        @Nullable final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
+        @NotNull final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
         System.out.println(readManifestUtil.getManifestInfo());
     }
 

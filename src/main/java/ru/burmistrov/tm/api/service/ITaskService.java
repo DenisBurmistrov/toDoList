@@ -9,33 +9,32 @@ import java.util.List;
 
 public interface ITaskService<T extends AbstractEntity> {
 
-    @Nullable
-    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String oldName,@Nullable String newName,@Nullable String description, @Nullable String dateEnd) throws ParseException;
+    void merge(@NotNull String userId,@NotNull String projectId,@NotNull String oldName,@NotNull String newName, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
     @Nullable
-    T persist(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description, @Nullable String dateEnd) throws ParseException;
+    T persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
-    @Nullable
-    List<T> findAll(@Nullable String userId,@Nullable String projectId);
+    @NotNull
+    List<T> findAll(@NotNull String userId, @NotNull String projectId);
 
-    void removeAllInProject(@Nullable String userId,@Nullable String projectId);
+    void removeAllInProject(@NotNull String userId, @NotNull String projectId);
 
-    void remove(@Nullable String userId,@Nullable String projectId,@Nullable String taskId);
+    void remove(@NotNull String userId,@NotNull String projectId,@NotNull String taskId);
 
-    void removeAll(@Nullable String userId);
+    void removeAll(@NotNull String userId);
 
-    @Nullable
-    List<T> findAllSortByDateBegin(@Nullable String userId);
+    @NotNull
+    List<T> findAllSortByDateBegin(@NotNull String userId);
 
-    @Nullable
-    List<T> findAllSortByDateEnd(@Nullable String userId);
+    @NotNull
+    List<T> findAllSortByDateEnd(@NotNull String userId);
 
-    @Nullable
+    @NotNull
     List<T> findAllSortByStatus(@NotNull String userId);
 
-    @Nullable
-    T findOneByName(@Nullable String userId, String name);
+    @NotNull
+    T findOneByName(@NotNull String userId, String name);
 
-    @Nullable
-    T findOneByDescription(@Nullable String userId, String description);
+    @NotNull
+    T findOneByDescription(@NotNull String userId, String description);
 }

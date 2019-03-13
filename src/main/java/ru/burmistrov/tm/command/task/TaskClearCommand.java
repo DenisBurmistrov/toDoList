@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
@@ -12,11 +13,13 @@ public final class TaskClearCommand extends AbstractCommand {
     public TaskClearCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-clearTasks";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Clear project tasks by ID";
@@ -24,7 +27,7 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
+        @NotNull final ITaskService taskService = getServiceLocator().getTaskService();
         taskService.removeAll(getServiceLocator().getCurrentUser().getId());
     }
 

@@ -13,15 +13,15 @@ public abstract class AbstractCommand {
     public AbstractCommand(){
     }
 
-    @Nullable
+    @NotNull
     public abstract String getName();
 
-    @Nullable
+    @NotNull
     public abstract String getDescription();
 
     public abstract void execute() throws ParseException;
 
-    @Nullable
+    @NotNull
     public ServiceLocator getServiceLocator() {
         return serviceLocator;
     }

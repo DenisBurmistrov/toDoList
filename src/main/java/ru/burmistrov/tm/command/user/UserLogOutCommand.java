@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.user;
 
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class UserLogOutCommand extends AbstractCommand {
@@ -7,11 +8,13 @@ public final class UserLogOutCommand extends AbstractCommand {
     public UserLogOutCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-logOut";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Exit from authorise user";
@@ -19,9 +22,7 @@ public final class UserLogOutCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            getServiceLocator().setCurrentUser(null);
-        }
+        getServiceLocator().setCurrentUser(null);
     }
 
     @Override

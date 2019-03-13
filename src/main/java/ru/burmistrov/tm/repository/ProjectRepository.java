@@ -7,7 +7,6 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class ProjectRepository extends AbstractRepository implements IProjectRepository<AbstractEntity> {
 
@@ -27,21 +26,21 @@ public final class ProjectRepository extends AbstractRepository implements IProj
 
     @Override
     public void remove(@NotNull AbstractEntity abstractEntity) {
-        Project project = (Project) abstractEntity;
+        @NotNull final Project project = (Project) abstractEntity;
         projects.remove(project.getId());
     }
 
     @Override
     public void removeAll(@NotNull AbstractEntity abstractEntity) {
-        Project project = (Project) abstractEntity;
+        @NotNull final Project project = (Project) abstractEntity;
         projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(project.getUserId()));
     }
 
     @NotNull
     @Override
     public List<AbstractEntity> findAll(@NotNull AbstractEntity abstractEntity){
-        Project project = (Project) abstractEntity;
-        List<AbstractEntity> result = new LinkedList<>();
+        @NotNull final Project project = (Project) abstractEntity;
+        @NotNull final List<AbstractEntity> result = new LinkedList<>();
         projects.entrySet()
                 .stream().filter(e -> e.getValue().getUserId().equals(project.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
@@ -51,8 +50,8 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @Nullable
     @Override
     public AbstractEntity findOne(@NotNull AbstractEntity abstractEntity) {
-        Project project = (Project) abstractEntity;
-        List<Project> result = new ArrayList<>();
+        @NotNull final Project project = (Project) abstractEntity;
+        @NotNull final List<Project> result = new ArrayList<>();
         projects.forEach((k, v) -> {
             if(project.getId().equals(k)){
                 result.add(v);
@@ -67,7 +66,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @NotNull
     @Override
     public List<AbstractEntity> findAllSortByDateBegin(@NotNull AbstractEntity abstractEntity){
-        List<AbstractEntity> result = findAll(abstractEntity);
+        @NotNull final List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> {
             if(((Project) s1).getDateBegin().getTime() - ((Project) s2).getDateBegin().getTime() < 0){
                 return 1;
@@ -85,9 +84,9 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @NotNull
     @Override
     public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity){
-        List<AbstractEntity> result = findAll(abstractEntity);
+        @NotNull final List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> {
-            if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() > 0){
+            if(Objects.requireNonNull(((Project) s1).getDateEnd()).getTime() - ((Project) s2).getDateEnd().getTime() > 0){
                 return 1;
             }
             else if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() < 0){
@@ -103,7 +102,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @NotNull
     @Override
     public List<AbstractEntity> findAllSortByStatus(@NotNull AbstractEntity abstractEntity) {
-        List<AbstractEntity> result = findAll(abstractEntity);
+        @NotNull final List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> Integer.compare(0, ((Project) s1).getStatus().ordinal() - ((Project) s2).getStatus().ordinal()));
         return result;
     }
@@ -111,8 +110,8 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @Nullable
     @Override
     public AbstractEntity findOneByName(@NotNull AbstractEntity abstractEntity) {
-        Project project = (Project) abstractEntity;
-        List<Project> result = new ArrayList<>();
+        @NotNull final Project project = (Project) abstractEntity;
+        @NotNull final List<Project> result = new ArrayList<>();
         projects.forEach((k, v) -> {
             if(project.getUserId().equals(v.getUserId()) &&
                     project.getName().equals(v.getName())){
@@ -128,8 +127,8 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @Nullable
     @Override
     public AbstractEntity findOneByDescription(@NotNull AbstractEntity abstractEntity) {
-        Project project = (Project) abstractEntity;
-        List<Project> result = new ArrayList<>();
+        @NotNull final Project project = (Project) abstractEntity;
+        @NotNull final List<Project> result = new ArrayList<>();
         projects.forEach((k, v) -> {
             if(project.getUserId().equals(v.getUserId()) &&
                     project.getDescription().equals(v.getDescription())){

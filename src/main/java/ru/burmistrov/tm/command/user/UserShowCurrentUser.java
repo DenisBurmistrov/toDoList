@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.user;
 
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 
@@ -8,11 +9,13 @@ public final class UserShowCurrentUser extends AbstractCommand {
     public UserShowCurrentUser() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-showCurrentUser";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Print info about current user";
@@ -20,9 +23,7 @@ public final class UserShowCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
             System.out.println(getServiceLocator().getCurrentUser().toString());
-        }
     }
 
     @Override

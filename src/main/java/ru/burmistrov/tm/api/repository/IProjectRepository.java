@@ -17,7 +17,7 @@ public interface IProjectRepository<T extends  AbstractEntity> {
 
     void removeAll(@NotNull T abstractEntity);
 
-    @Nullable List<T> findAll(@NotNull T abstractEntity);
+    @NotNull List<T> findAll(@NotNull T abstractEntity);
 
     @Nullable T findOne(@NotNull T abstractEntity);
 

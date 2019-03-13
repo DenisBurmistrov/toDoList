@@ -14,22 +14,22 @@ import java.util.List;
 
 public final class TaskService extends AbstractService implements ITaskService {
 
-    @Nullable
+    @NotNull
     private final ITaskRepository<AbstractEntity> taskRepository;
 
-    public TaskService(@Nullable ITaskRepository<AbstractEntity> taskRepository) {
+    public TaskService(@NotNull ITaskRepository<AbstractEntity> taskRepository) {
         this.taskRepository = taskRepository;
     }
 
     @Nullable
-    public Task persist(@Nullable String userId, @Nullable String projectId, @Nullable String name, @Nullable String description, @Nullable String dateEndString) throws ParseException {
-        Task task = new Task();
+    public Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws ParseException {
+        @NotNull final Task task = new Task();
         task.setName(name);
         task.setDescription(description);
         task.setProjectId(projectId);
         task.setUserId(userId);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-        Date dateEnd = simpleDateFormat.parse(dateEndString);
+        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
+        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = taskRepository.findOne(task);
         if(abstractEntity == null)
@@ -38,15 +38,16 @@ public final class TaskService extends AbstractService implements ITaskService {
         return null;
     }
 
-    public void merge(@Nullable String userId, @Nullable String projectId, @Nullable String taskId, @Nullable String newName, @Nullable String description, @Nullable String dateEndString) throws ParseException {
-        Task task = new Task();
+    public void merge(@NotNull String userId, @NotNull String projectId, @NotNull String taskId, @NotNull String newName, @NotNull String description,
+                      @NotNull String dateEndString) throws ParseException {
+        @NotNull final Task task = new Task();
         task.setId(taskId);
         task.setName(newName);
         task.setDescription(description);
         task.setProjectId(projectId);
         task.setUserId(userId);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-        Date dateEnd = simpleDateFormat.parse(dateEndString);
+        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
+        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = taskRepository.findOne(task);
         if (newName.length() != 0 && abstractEntity != null) {
@@ -54,7 +55,7 @@ public final class TaskService extends AbstractService implements ITaskService {
         }
     }
 
-    @Nullable
+    @NotNull
     public List<AbstractEntity> findAll(@Nullable String userId, @Nullable String projectId) {
         Task task = new Task();
         task.setUserId(userId);
@@ -62,14 +63,14 @@ public final class TaskService extends AbstractService implements ITaskService {
         return taskRepository.findAll(task);
     }
 
-    public void removeAllInProject(String userId, String projectId) {
+    public void removeAllInProject(@NotNull String userId, @NotNull String projectId) {
         Task task = new Task();
         task.setUserId(userId);
         task.setProjectId(projectId);
         taskRepository.removeAllInProject(task);
     }
 
-    public void remove(String userId, String projectId, String taskId) {
+    public void remove(@NotNull String userId, @NotNull String projectId, @NotNull String taskId) {
         Task task = new Task();
         task.setProjectId(userId);
         task.setProjectId(projectId);
@@ -83,6 +84,7 @@ public final class TaskService extends AbstractService implements ITaskService {
         taskRepository.removeAll(task);
     }
 
+    @NotNull
     @Override
     public List<AbstractEntity> findAllSortByDateBegin(@Nullable String userId) {
         Task task = new Task();
@@ -106,7 +108,7 @@ public final class TaskService extends AbstractService implements ITaskService {
         return taskRepository.findAllSortByStatus(task);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public AbstractEntity findOneByName(@Nullable String userId, String name) {
         Task task = new Task();
@@ -115,7 +117,7 @@ public final class TaskService extends AbstractService implements ITaskService {
         return taskRepository.findOneByName(task);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public AbstractEntity findOneByDescription(@Nullable String userId, String description) {
         Task task = new Task();

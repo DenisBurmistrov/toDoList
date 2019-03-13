@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -13,11 +14,13 @@ public final class TaskListCommand extends AbstractCommand {
     public TaskListCommand() {
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-printTasks";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Print tasks of project by project ID";
@@ -28,8 +31,8 @@ public final class TaskListCommand extends AbstractCommand {
         @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
         @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта:");
-        @Nullable final String id = scanner.nextLine();
-        @Nullable final List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
+        @NotNull final String id = scanner.nextLine();
+        @NotNull final List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
         for (AbstractEntity task : taskList) {
             System.out.println(task);
         }

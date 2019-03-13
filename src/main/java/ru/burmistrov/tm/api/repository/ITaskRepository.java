@@ -17,7 +17,7 @@ public interface ITaskRepository<T extends  AbstractEntity> {
 
     void removeAll(@NotNull T entity);
 
-    @Nullable
+    @NotNull
     List<T> findAll(@NotNull T entity);
 
     void removeAllInProject(@NotNull T entity);
@@ -25,13 +25,18 @@ public interface ITaskRepository<T extends  AbstractEntity> {
     @Nullable
     T findOne(@NotNull T entity);
 
-    @NotNull List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
+    @NotNull
+    List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
 
-    @NotNull List<T> findAllSortByDateEnd(@NotNull T abstractEntity);
+    @NotNull
+    List<T> findAllSortByDateEnd(@NotNull T abstractEntity);
 
-    @NotNull List<T> findAllSortByStatus(@NotNull T abstractEntity);
+    @NotNull
+    List<T> findAllSortByStatus(@NotNull T abstractEntity);
 
-    @Nullable T findOneByName(@NotNull T abstractEntity);
+    @Nullable
+    T findOneByName(@NotNull T abstractEntity);
 
-    @Nullable T findOneByDescription(@NotNull T abstractEntity);
+    @Nullable
+    T findOneByDescription(@NotNull T abstractEntity);
 }

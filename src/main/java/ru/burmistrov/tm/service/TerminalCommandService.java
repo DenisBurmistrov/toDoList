@@ -11,15 +11,17 @@ public class TerminalCommandService {
     @NotNull
     private final ServiceLocator serviceLocator;
 
+    @NotNull
+    private final Scanner scanner = new Scanner(System.in);
+
     public TerminalCommandService(@NotNull ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     public void start() {
-        Scanner scanner = serviceLocator.getScanner();
         System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
         while (true) {
-            String input = scanner.nextLine();
+            @NotNull final String input = scanner.nextLine();
             if ("-exit".equals(input)) {
                 System.exit(0);
             }
@@ -32,5 +34,10 @@ public class TerminalCommandService {
                 e.printStackTrace();
             }
         }
+    }
+
+    @NotNull
+    public Scanner getScanner() {
+        return scanner;
     }
 }

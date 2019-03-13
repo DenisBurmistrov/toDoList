@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.task;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ITaskService;
@@ -14,11 +15,13 @@ public final class TaskRemoveCommand extends AbstractCommand {
 
     }
 
+    @NotNull
     @Override
     public String getName() {
         return "-removeTask";
     }
 
+    @NotNull
     @Override
     public String getDescription() {
         return "Remove task by task ID by Project ID";
@@ -29,9 +32,9 @@ public final class TaskRemoveCommand extends AbstractCommand {
         @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
         @Nullable final Scanner scanner = getServiceLocator().getScanner();
         System.out.println("Введите ID проекта");
-        @Nullable final String projectId = scanner.nextLine();
+        @NotNull final String projectId = scanner.nextLine();
         System.out.println("Введите ID задачи");
-        @Nullable final String taskId = scanner.next();
+        @NotNull final String taskId = scanner.next();
         taskService.remove(getServiceLocator().getCurrentUser().getId(), projectId, taskId);
     }
 

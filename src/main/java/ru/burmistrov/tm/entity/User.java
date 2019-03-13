@@ -1,6 +1,8 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.Objects;
@@ -8,18 +10,25 @@ import java.util.Objects;
 @Data
 public final class User extends AbstractEntity {
 
+    @Nullable
     private String firstName;
 
+    @Nullable
     private String middleName;
 
+    @Nullable
     private String lastName;
 
+    @NotNull
     private String login;
 
+    @NotNull
     private String password;
 
+    @Nullable
     private String email;
 
+    @Nullable
     private Role role;
 
     public void setPassword(String password) {

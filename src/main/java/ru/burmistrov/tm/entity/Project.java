@@ -1,26 +1,33 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 @Data
 public final class Project extends AbstractEntity {
 
+    @NotNull
     private String userId;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String description;
+
+    @NotNull
     private Date dateBegin = new Date();
+
+    @NotNull
     private Date dateEnd;
+
+    @NotNull
     private Status status = Status.SHEDULED;
 
     public Project() {
-    }
-
-    public Project(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.dateBegin = new Date();
     }
 
     @Override
