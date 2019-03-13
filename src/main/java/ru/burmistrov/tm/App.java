@@ -3,6 +3,7 @@ package ru.burmistrov.tm;
 
 import ru.burmistrov.tm.command.project.*;
 import ru.burmistrov.tm.command.system.PrintListCommand;
+import ru.burmistrov.tm.command.system.PrintManifestCommand;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
 
@@ -15,7 +16,7 @@ public class App {
             TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class,
             TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
             UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
-            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class};
+            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class};
 
     public static void main(String[] args) {
         Bootstrap bootstrap = new Bootstrap();

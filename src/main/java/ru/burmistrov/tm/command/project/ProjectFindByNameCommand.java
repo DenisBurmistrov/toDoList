@@ -24,22 +24,15 @@ public class ProjectFindByNameCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
-            @Nullable final Scanner scanner = getServiceLocator().getScanner();
-            System.out.println("Введите имя проекта:");
-            String name = scanner.nextLine();
-            System.out.println("Проект:");
-            if(projectService != null) {
-                @Nullable final Project project = (Project) projectService.findOneByName(getServiceLocator().getCurrentUser().getId(), name);
-                if (project == null) {
-                    System.out.println("Нет проекта с таким именем");
-                } else {
-                    System.out.println(project);
-                    }
-                }
-            }
-        }
+        @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
+        @Nullable final Scanner scanner = getServiceLocator().getScanner();
+        System.out.println("Введите имя проекта:");
+        String name = scanner.nextLine();
+        System.out.println("Проект:");
+        @Nullable final Project project = (Project) projectService.findOneByName(getServiceLocator().getCurrentUser().getId(), name);
+        System.out.println(project);
+    }
+
     @Override
     public boolean isSecure() {
         return true;

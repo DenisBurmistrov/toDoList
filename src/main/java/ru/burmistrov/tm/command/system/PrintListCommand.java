@@ -19,11 +19,9 @@ public final class PrintListCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            System.out.println("Список команд:");
-            getServiceLocator().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.getDescription()));
-            System.out.println("-exit : Exit from program");
-        }
+        System.out.println("Список команд:");
+        getServiceLocator().getCommands().forEach((k, v) -> System.out.println(k + " : " + v.getDescription()));
+        System.out.println("-exit : Exit from program");
     }
 
     @Override

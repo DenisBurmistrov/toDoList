@@ -10,7 +10,6 @@ import java.util.Scanner;
 public final class TaskClearCommand extends AbstractCommand {
 
     public TaskClearCommand() {
-
     }
 
     @Override
@@ -25,12 +24,8 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if(getServiceLocator() != null) {
-            @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-            if (taskService != null) {
-                taskService.removeAll(getServiceLocator().getCurrentUser().getId());
-            }
-        }
+        @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
+        taskService.removeAll(getServiceLocator().getCurrentUser().getId());
     }
 
     @Override

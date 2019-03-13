@@ -4,15 +4,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface ITaskService<T extends AbstractEntity> {
 
     @Nullable
-    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String oldName,@Nullable String newName,@Nullable String description, @Nullable String dateEnd);
+    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String oldName,@Nullable String newName,@Nullable String description, @Nullable String dateEnd) throws ParseException;
 
     @Nullable
-    T persist(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description, @Nullable String dateEnd);
+    T persist(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description, @Nullable String dateEnd) throws ParseException;
 
     @Nullable
     List<T> findAll(@Nullable String userId,@Nullable String projectId);

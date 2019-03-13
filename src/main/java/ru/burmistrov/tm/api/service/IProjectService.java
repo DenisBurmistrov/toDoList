@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface IProjectService<T extends AbstractEntity> {
@@ -11,9 +12,9 @@ public interface IProjectService<T extends AbstractEntity> {
     void remove(@Nullable String userId, @Nullable String projectId);
 
     @Nullable
-    T persist(@Nullable String userId,@Nullable String name, @Nullable String description, @Nullable String dateEnd);
+    T persist(@Nullable String userId,@Nullable String name, @Nullable String description, @Nullable String dateEnd) throws ParseException;
 
-    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description,@Nullable String dateEnd);
+    void merge(@Nullable String userId,@Nullable String projectId,@Nullable String name,@Nullable String description,@Nullable String dateEnd) throws ParseException;
 
     void removeAll(@Nullable String userId);
 

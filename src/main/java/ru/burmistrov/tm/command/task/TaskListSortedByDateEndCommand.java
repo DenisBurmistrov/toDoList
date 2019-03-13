@@ -22,18 +22,10 @@ public class TaskListSortedByDateEndCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
-            if(taskService != null) {
-                @Nullable final List<AbstractEntity> taskList = taskService.findAllSortByDateEnd(getServiceLocator().getCurrentUser().getId());
-                if (taskList == null) {
-                    System.out.println("Нет задач");
-                } else {
-                    for (AbstractEntity task : taskList) {
-                        System.out.println(task);
-                    }
-                }
-            }
+        @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
+        @Nullable final List<AbstractEntity> taskList = taskService.findAllSortByDateEnd(getServiceLocator().getCurrentUser().getId());
+        for (AbstractEntity task : taskList) {
+            System.out.println(task);
         }
     }
 

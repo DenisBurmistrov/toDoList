@@ -39,7 +39,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAll(@NotNull AbstractEntity abstractEntity) {
+    public List<AbstractEntity> findAll(@NotNull AbstractEntity abstractEntity){
         Project project = (Project) abstractEntity;
         List<AbstractEntity> result = new LinkedList<>();
         projects.entrySet()
@@ -66,7 +66,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllSortByDateBegin(@NotNull AbstractEntity abstractEntity) {
+    public List<AbstractEntity> findAllSortByDateBegin(@NotNull AbstractEntity abstractEntity){
         List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> {
             if(((Project) s1).getDateBegin().getTime() - ((Project) s2).getDateBegin().getTime() < 0){
@@ -84,7 +84,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity) {
+    public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity){
         List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> {
             if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() > 0){

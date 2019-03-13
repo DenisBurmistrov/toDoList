@@ -8,6 +8,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import java.util.List;
 
 public class TaskListSortedByDateBeginCommand extends AbstractCommand {
+
     @Nullable
     @Override
     public String getName() {
@@ -22,18 +23,10 @@ public class TaskListSortedByDateBeginCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
-            if(taskService != null) {
-                @Nullable final List<AbstractEntity> taskList = taskService.findAllSortByDateBegin(getServiceLocator().getCurrentUser().getId());
-                if (taskList == null) {
-                    System.out.println("Нет задач");
-                } else {
-                    for (AbstractEntity task : taskList) {
-                        System.out.println(task);
-                    }
-                }
-            }
+        @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
+        @Nullable final List<AbstractEntity> taskList = taskService.findAllSortByDateBegin(getServiceLocator().getCurrentUser().getId());
+        for (AbstractEntity task : taskList) {
+            System.out.println(task);
         }
     }
 

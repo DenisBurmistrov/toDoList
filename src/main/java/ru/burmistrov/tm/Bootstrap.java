@@ -21,6 +21,7 @@ import ru.burmistrov.tm.service.TaskService;
 import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.service.UserService;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -65,13 +66,21 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     public void init(Class ...classes) {
-
-        registry(classes);
-        initProjectAndUser();
-        terminalCommandService.start();
+        try {
+            registry(classes);
+            initProjectAndUser();
+            terminalCommandService.start();
+        }
+        catch (ParseException e) {
+            System.out.println("Неверно введенна дата");
+        }
+        catch (NullPointerException e) {
+            System.out.println("Неверно введены данные");
+            e.printStackTrace();
+        }
     }
 
-    private void initProjectAndUser() {
+    private void initProjectAndUser() throws ParseException {
 
         AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
         AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
@@ -87,7 +96,7 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) {
+    public void execute(@Nullable String command) throws ParseException {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

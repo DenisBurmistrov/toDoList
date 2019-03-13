@@ -10,19 +10,16 @@ import ru.burmistrov.tm.entity.User;
 
 public final class UserService extends AbstractService implements IUserService {
 
-    @Nullable private final IUserRepository<AbstractEntity> userRepository;
+    @Nullable
+    private final IUserRepository<AbstractEntity> userRepository;
 
     public UserService(@Nullable IUserRepository<AbstractEntity> userRepository) {
         this.userRepository = userRepository;
     }
 
     @Nullable
-    public User logIn(@Nullable String login, @Nullable String auth)
-    {
-        if (userRepository != null) {
-            return userRepository.logIn(login, auth);
-        }
-        return null;
+    public User logIn(@Nullable String login, @Nullable String auth) {
+        return userRepository.logIn(login, auth);
     }
 
     @Nullable
@@ -37,23 +34,18 @@ public final class UserService extends AbstractService implements IUserService {
         user.setMiddleName(middleName);
         user.setLastName(lastName);
         user.setEmail(email);
-        if (userRepository != null) {
-            AbstractEntity abstractEntity = userRepository.findOne(user);
-            if (abstractEntity == null) {
-                return (User) userRepository.persist(user);
-            }
-        }
-        return null;
+        AbstractEntity abstractEntity = userRepository.findOne(user);
+        return (User) userRepository.persist(abstractEntity);
     }
 
-    public void updatePassword(@Nullable String userId,@Nullable String login,@Nullable String password) {
-        if (password != null && password.length() > 0 && userRepository != null) {
+    public void updatePassword(@Nullable String userId, @Nullable String login, @Nullable String password) {
+        if (password != null && password.length() > 0) {
             userRepository.updatePassword(userId, login, password);
         }
     }
 
     public void merge(@Nullable String userId, @Nullable String firstName, @Nullable String middleName, @Nullable String lastName, @Nullable String email,
-                       @Nullable Role role, @Nullable String login) {
+                      @Nullable Role role, @Nullable String login) {
         User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -62,28 +54,21 @@ public final class UserService extends AbstractService implements IUserService {
         currentUser.setId(userId);
         currentUser.setRole(role);
         currentUser.setLogin(login);
-        if (userRepository != null) {
-            AbstractEntity abstractEntity = userRepository.findOne(currentUser);
-            if (abstractEntity != null)
-                userRepository.merge(currentUser);
-        }
+        AbstractEntity abstractEntity = userRepository.findOne(currentUser);
+        userRepository.merge(abstractEntity);
     }
 
     @Override
     public void remove(@Nullable String userId) {
         User user = new User();
         user.setId(userId);
-        if (userRepository != null) {
-            userRepository.remove(user);
-        }
+        userRepository.remove(user);
     }
 
     @Override
     public void removeAll(@Nullable String userId) {
         User user = new User();
         user.setId(userId);
-        if (userRepository != null) {
-            userRepository.removeAll(user);
-        }
+        userRepository.removeAll(user);
     }
 }

@@ -22,123 +22,86 @@ public final class ProjectService extends AbstractService implements IProjectSer
     @Nullable
     private final ITaskRepository<AbstractEntity> taskRepository;
 
-    public ProjectService(@Nullable IProjectRepository<AbstractEntity> projectRepository,@Nullable ITaskRepository<AbstractEntity> taskRepository) {
+    public ProjectService(@Nullable IProjectRepository<AbstractEntity> projectRepository, @Nullable ITaskRepository<AbstractEntity> taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
 
-    public void remove(@Nullable String userId, @Nullable String projectId) {
-            Project project = new Project();
-            project.setUserId(userId);
-            project.setId(projectId);
-            if(projectRepository != null && taskRepository != null) {
-                AbstractEntity abstractEntity = projectRepository.findOne(project);
-                System.out.println(abstractEntity);
-                if (abstractEntity != null) {
-                    projectRepository.remove(project);
-                    Task task = new Task();
-                    task.setUserId(userId);
-                    task.setProjectId(projectId);
-                    taskRepository.removeAllInProject(task);
-                }
-            }
-
+    public void remove(@Nullable String userId, @Nullable String projectId) throws NullPointerException {
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setId(projectId);
+        AbstractEntity abstractEntity = projectRepository.findOne(project);
+        System.out.println(abstractEntity);
+        projectRepository.remove(project);
+        Task task = new Task();
+        task.setUserId(userId);
+        task.setProjectId(projectId);
+        taskRepository.removeAllInProject(task);
     }
 
-    public Project persist(@Nullable String userId, @Nullable String name, @Nullable String description, @Nullable String dateEndString) {
-        try {
-            Project project = new Project();
-            project.setUserId(userId);
-            project.setName(name);
-            project.setDescription(description);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-            Date dateEnd = simpleDateFormat.parse(dateEndString);
-            project.setDateEnd(dateEnd);
-            if(projectRepository != null) {
-                AbstractEntity abstractEntity = projectRepository.findOne(project);
-                if (abstractEntity == null) {
-                    return (Project) projectRepository.persist(project);
-                }
-            }
-            return null;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-
+    public Project persist(@Nullable String userId, @Nullable String name, @Nullable String description, @Nullable String dateEndString) throws NullPointerException, ParseException {
+        Project project = new Project();
+        project.setUserId(userId);
+        project.setName(name);
+        project.setDescription(description);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date dateEnd = simpleDateFormat.parse(dateEndString);
+        project.setDateEnd(dateEnd);
+        AbstractEntity abstractEntity = projectRepository.findOne(project);
+        return (Project) projectRepository.persist(abstractEntity);
     }
 
-    public void merge(@Nullable String userId, @Nullable String projectId, @Nullable String name, @Nullable String description, @Nullable String dateEndString) {
-       try {
-           Project project = new Project();
-           project.setId(projectId);
-           project.setUserId(userId);
-           project.setName(name);
-           project.setDescription(description);
-           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-           Date dateEnd = simpleDateFormat.parse(dateEndString);
-           project.setDateEnd(dateEnd);
-           if (projectRepository != null) {
-               AbstractEntity abstractEntity = projectRepository.findOne(project);
-               if (abstractEntity != null) {
-                   projectRepository.merge(project);
-               }
-           }
-       }catch (ParseException e) {
-           e.printStackTrace();
-       }
+
+    public void merge(@Nullable String userId, @Nullable String projectId, @Nullable String name, @Nullable String description, @Nullable String dateEndString) throws NullPointerException, ParseException {
+        Project project = new Project();
+        project.setId(projectId);
+        project.setUserId(userId);
+        project.setName(name);
+        project.setDescription(description);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
+        Date dateEnd = simpleDateFormat.parse(dateEndString);
+        project.setDateEnd(dateEnd);
+        AbstractEntity abstractEntity = projectRepository.findOne(project);
+        projectRepository.merge(abstractEntity);
     }
 
     public void removeAll(@Nullable String userId) {
         Project project = new Project();
         project.setUserId(userId);
-        if(projectRepository != null && taskRepository != null) {
-            projectRepository.removeAll(project);
-            taskRepository.removeAll(project);
-        }
+        projectRepository.removeAll(project);
+        taskRepository.removeAll(project);
     }
 
     @Nullable
     public List<AbstractEntity> findAll(String userId) {
         Project project = new Project();
         project.setUserId(userId);
-        if (projectRepository != null) {
-            return projectRepository.findAll(project);
-        }
-        return null;
+        return projectRepository.findAll(project);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public List<AbstractEntity> findAllSortByDateBegin(@Nullable String userId) {
         Project project = new Project();
         project.setUserId(userId);
-        if (projectRepository != null) {
-            return projectRepository.findAllSortByDateBegin(project);
-        }
-        return null;
+        return projectRepository.findAllSortByDateBegin(project);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public List findAllSortByDateEnd(@Nullable String userId) {
         Project project = new Project();
         project.setUserId(userId);
-        if (projectRepository != null) {
-            return projectRepository.findAllSortByDateEnd(project);
-        }
-        return null;
+        return projectRepository.findAllSortByDateEnd(project);
     }
 
-    @Nullable
+    @NotNull
     @Override
     public List findAllSortByStatus(@NotNull String userId) {
         Project project = new Project();
         project.setUserId(userId);
-        if (projectRepository != null) {
-            return projectRepository.findAllSortByStatus(project);
-        }
-        return null;
+        return projectRepository.findAllSortByStatus(project);
     }
 
     @Nullable
@@ -147,10 +110,7 @@ public final class ProjectService extends AbstractService implements IProjectSer
         Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
-        if(projectRepository != null) {
-            return projectRepository.findOneByName(project);
-        }
-        return null;
+        return projectRepository.findOneByName(project);
     }
 
     @Nullable
@@ -159,11 +119,6 @@ public final class ProjectService extends AbstractService implements IProjectSer
         Project project = new Project();
         project.setUserId(userId);
         project.setDescription(description);
-        if(projectRepository != null) {
-            return projectRepository.findOneByDescription(project);
-        }
-        return null;
+        return projectRepository.findOneByDescription(project);
     }
-
-
 }

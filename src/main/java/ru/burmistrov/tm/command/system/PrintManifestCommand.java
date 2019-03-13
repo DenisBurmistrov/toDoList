@@ -7,7 +7,6 @@ import ru.burmistrov.tm.utils.ReadManifestUtil;
 public class PrintManifestCommand extends AbstractCommand {
 
     public PrintManifestCommand() {
-
     }
 
     @Override

@@ -22,15 +22,11 @@ public class TaskFindByDescriptionCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        if (getServiceLocator() != null) {
-            @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
-            @Nullable final Scanner scanner = getServiceLocator().getScanner();
-            System.out.println("Введите описание задачи:");
-            @Nullable final String description = scanner.nextLine();
-            if (taskService != null) {
-                System.out.println(taskService.findOneByDescription(getServiceLocator().getCurrentUser().getId(), description));
-            }
-        }
+        @Nullable final ITaskService taskService = getServiceLocator().getTaskService();
+        @Nullable final Scanner scanner = getServiceLocator().getScanner();
+        System.out.println("Введите описание задачи:");
+        @Nullable final String description = scanner.nextLine();
+        System.out.println(taskService.findOneByDescription(getServiceLocator().getCurrentUser().getId(), description));
     }
 
     @Override

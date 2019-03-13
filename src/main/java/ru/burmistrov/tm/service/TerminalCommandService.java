@@ -3,17 +3,19 @@ package ru.burmistrov.tm.service;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class TerminalCommandService {
 
-    @NotNull private final ServiceLocator serviceLocator;
+    @NotNull
+    private final ServiceLocator serviceLocator;
 
     public TerminalCommandService(@NotNull ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
-    public void start() {
+    public void start() throws ParseException {
         Scanner scanner = serviceLocator.getScanner();
         System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
         while (true) {

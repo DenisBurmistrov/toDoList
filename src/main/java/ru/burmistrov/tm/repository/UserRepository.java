@@ -18,7 +18,7 @@ public final class UserRepository extends AbstractRepository implements IUserRep
     public User logIn(@Nullable String login, @Nullable String password) {
 
         for (Map.Entry<String, User> entry : users.entrySet()) {
-            if (password != null && entry.getValue().getLogin().equals(login) && entry.getValue().getPassword().equals(PasswordUtil.hashPassword(password))) {
+            if (entry.getValue().getLogin().equals(login) && entry.getValue().getPassword().equals(PasswordUtil.hashPassword(password))) {
                 return entry.getValue();
             }
         }

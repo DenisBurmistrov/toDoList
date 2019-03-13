@@ -29,7 +29,7 @@ public class ProjectFindByDescriptionCommand extends AbstractCommand {
             System.out.println("Введите описание проекта:");
             String description = scanner.nextLine();
             System.out.println("Проект:");
-            if(projectService != null) {
+            if (projectService != null) {
                 @Nullable final Project project = (Project) projectService.findOneByDescription(getServiceLocator().getCurrentUser().getId(), description);
                 if (project == null) {
                     System.out.println("Нет проекта с таким описанием");
@@ -39,6 +39,7 @@ public class ProjectFindByDescriptionCommand extends AbstractCommand {
             }
         }
     }
+
     @Override
     public boolean isSecure() {
         return true;
