@@ -3,11 +3,14 @@ package ru.burmistrov.tm.command.serialize;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.entity.Domain;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Status;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.repository.ProjectRepository;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 
 public class SerializeCommand extends AbstractCommand {
@@ -15,18 +18,25 @@ public class SerializeCommand extends AbstractCommand {
     @NotNull
     @Override
     public String getName() {
-        return "name";
+        return "-serialize";
     }
 
     @NotNull
     @Override
     public String getDescription() {
-        return "desc";
+        return "Serialize all projects and tasks";
     }
 
     @Override
     public void execute() {
-        ProjectRepository.class.getResource("projects");
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("person.dat")))
+        {
+            Domain domain = new Domain();
+            oos.writeObject(domain);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override

@@ -1,16 +1,14 @@
 package ru.burmistrov.tm.utils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.jar.Attributes;
-import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 public class ReadManifestUtil {
 
     public Manifest getManifest() {
+
         Enumeration<URL> resources = null;
         try {
             resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");

@@ -110,5 +110,13 @@
         <artifactId>annotations</artifactId>
         <version>13.0</version>
     </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.jcabi/jcabi-maven-plugin -->
+        <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-manifests</artifactId>
+            <version>1.1</version>
+        </dependency>
+
     </dependencies>
 </project>

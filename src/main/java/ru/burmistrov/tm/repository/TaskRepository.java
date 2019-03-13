@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public final class TaskRepository extends AbstractRepository implements ITaskRepository<AbstractEntity> {
 
-    private final Map<String, Task> tasks = new LinkedHashMap<>();
+    public final Map<String, Task> tasks = new LinkedHashMap<>();
 
     @NotNull
     @Override
@@ -39,9 +39,9 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) entity;
         @NotNull final List<AbstractEntity> result = new LinkedList<>();
         tasks.entrySet()
-                .stream().filter(e -> e.getValue().
-                getProjectId().equals(task.getProjectId())
-                && e.getValue().getUserId().
+                .stream().filter(e -> Objects.requireNonNull(e.getValue().
+                getProjectId()).equals(task.getProjectId())
+                && Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         return result;
@@ -50,14 +50,14 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
     @Override
     public void removeAllInProject(@NotNull AbstractEntity entity) {
         @NotNull final Task task = (Task) entity;
-        tasks.entrySet().removeIf((e) -> e.getValue().getProjectId().equals(task.getProjectId()) &&
-                task.getUserId().equals(e.getValue().getUserId()));
+        tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getProjectId()).equals(task.getProjectId()) &&
+                Objects.requireNonNull(task.getUserId()).equals(e.getValue().getUserId()));
     }
 
     @Override
     public void removeAll(@NotNull AbstractEntity entity) {
         @NotNull final Task task = (Task) entity;
-        tasks.entrySet().removeIf((e) -> e.getValue().getUserId().equals(task.getUserId()));
+        tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getUserId()).equals(task.getUserId()));
     }
 
     @Nullable
@@ -77,7 +77,7 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) abstractEntity;
         @NotNull final List<AbstractEntity> result = new LinkedList<>();
         tasks.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().
+                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
@@ -98,13 +98,14 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) abstractEntity;
         @NotNull final List<AbstractEntity> result = new LinkedList<>();
         tasks.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().
+                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if (((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() > 0) {
+            if (Objects.requireNonNull(((Task) s1).getDateEnd()).getTime() - Objects.requireNonNull(((Task) s2).getDateEnd()).getTime() > 0) {
                 return 1;
-            } else if (((Task) s1).getDateEnd().getTime() - ((Task) s2).getDateEnd().getTime() < 0) {
+            } else if (Objects.requireNonNull(((Task) s1).getDateEnd()).getTime()
+                    - Objects.requireNonNull(((Task) s2).getDateEnd()).getTime() < 0) {
                 return -1;
             } else {
                 return 0;
@@ -119,7 +120,7 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) abstractEntity;
         @NotNull final List<AbstractEntity> result = new LinkedList<>();
         tasks.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().
+                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> Integer.compare(0, ((Task) s1).getStatus().ordinal() - ((Task) s2).getStatus().ordinal()));
@@ -132,8 +133,8 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
         tasks.forEach((k, v) -> {
-            if (task.getUserId().equals(v.getUserId()) &&
-                    task.getName().equals(v.getName())) {
+            if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
+                    Objects.requireNonNull(task.getName()).equals(v.getName())) {
                 result.add(v);
             }
         });
@@ -149,8 +150,8 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
         @NotNull final Task task = (Task) abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
         tasks.forEach((k, v) -> {
-            if (task.getUserId().equals(v.getUserId()) &&
-                    task.getDescription().equals(v.getDescription())) {
+            if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
+                    Objects.requireNonNull(task.getDescription()).equals(v.getDescription())) {
                 result.add(v);
             }
         });

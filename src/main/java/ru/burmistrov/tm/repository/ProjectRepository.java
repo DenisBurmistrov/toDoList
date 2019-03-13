@@ -10,7 +10,7 @@ import java.util.*;
 
 public final class ProjectRepository extends AbstractRepository implements IProjectRepository<AbstractEntity> {
 
-    private final Map<String, Project> projects = new LinkedHashMap<>();
+    public final Map<String, Project> projects = new LinkedHashMap<>();
 
     @NotNull
     @Override
@@ -33,7 +33,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     @Override
     public void removeAll(@NotNull AbstractEntity abstractEntity) {
         @NotNull final Project project = (Project) abstractEntity;
-        projects.entrySet().removeIf(e -> e.getValue().getUserId().equals(project.getUserId()));
+        projects.entrySet().removeIf(e -> Objects.requireNonNull(e.getValue().getUserId()).equals(project.getUserId()));
     }
 
     @NotNull
@@ -42,7 +42,7 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         @NotNull final Project project = (Project) abstractEntity;
         @NotNull final List<AbstractEntity> result = new LinkedList<>();
         projects.entrySet()
-                .stream().filter(e -> e.getValue().getUserId().equals(project.getUserId()))
+                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).equals(project.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         return result;
     }
@@ -86,10 +86,10 @@ public final class ProjectRepository extends AbstractRepository implements IProj
     public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity){
         @NotNull final List<AbstractEntity> result = findAll(abstractEntity);
         result.sort((s1, s2) -> {
-            if(Objects.requireNonNull(((Project) s1).getDateEnd()).getTime() - ((Project) s2).getDateEnd().getTime() > 0){
+            if(Objects.requireNonNull(((Project) s1).getDateEnd()).getTime() - Objects.requireNonNull(((Project) s2).getDateEnd()).getTime() > 0){
                 return 1;
             }
-            else if(((Project) s1).getDateEnd().getTime() - ((Project) s2).getDateEnd().getTime() < 0){
+            else if(Objects.requireNonNull(((Project) s1).getDateEnd()).getTime() - Objects.requireNonNull(((Project) s2).getDateEnd()).getTime() < 0){
                 return -1;
             }
             else {
@@ -113,8 +113,8 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         @NotNull final Project project = (Project) abstractEntity;
         @NotNull final List<Project> result = new ArrayList<>();
         projects.forEach((k, v) -> {
-            if(project.getUserId().equals(v.getUserId()) &&
-                    project.getName().equals(v.getName())){
+            if(Objects.requireNonNull(project.getUserId()).equals(v.getUserId()) &&
+                    Objects.requireNonNull(project.getName()).equals(v.getName())){
                 result.add(v);
             }
         });
@@ -130,8 +130,8 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         @NotNull final Project project = (Project) abstractEntity;
         @NotNull final List<Project> result = new ArrayList<>();
         projects.forEach((k, v) -> {
-            if(project.getUserId().equals(v.getUserId()) &&
-                    project.getDescription().equals(v.getDescription())){
+            if(Objects.requireNonNull(project.getUserId()).equals(v.getUserId()) &&
+                    Objects.requireNonNull(project.getDescription()).equals(v.getDescription())){
                 result.add(v);
             }
         });
