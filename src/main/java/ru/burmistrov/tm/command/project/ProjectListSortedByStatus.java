@@ -7,18 +7,18 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 
 import java.util.List;
 
-public class ProjectListSortedByDateBeginCommand extends AbstractCommand {
+public class ProjectListSortedByStatus extends AbstractCommand {
 
     @Nullable
     @Override
     public String getName() {
-        return "-printByDateBegin";
+        return "-printByStatus";
     }
 
     @Nullable
     @Override
     public String getDescription() {
-        return "Print project list of sorted by date begin";
+        return "Print project list of sorted by status";
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ProjectListSortedByDateBeginCommand extends AbstractCommand {
             @Nullable final IProjectService<AbstractEntity> projectService = getServiceLocator().getProjectService();
             System.out.println("Список проектов:");
             if(projectService != null) {
-                @Nullable final List<AbstractEntity> projects = projectService.findAllSortByDateBegin(getServiceLocator().getCurrentUser().getId());
+                @Nullable final List<AbstractEntity> projects = projectService.findAllSortByStatus(getServiceLocator().getCurrentUser().getId());
                 if (projects == null) {
                     System.out.println("У пользователя нет проектов");
                 } else {

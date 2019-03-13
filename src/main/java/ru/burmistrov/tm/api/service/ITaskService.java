@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.api.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
@@ -27,4 +28,7 @@ public interface ITaskService<T extends AbstractEntity> {
 
     @Nullable
     List<T> findAllSortByDateEnd(@Nullable String userId);
+
+    @Nullable
+    List<T> findAllSortByStatus(@NotNull String userId);
 }

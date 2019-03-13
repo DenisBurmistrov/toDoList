@@ -95,4 +95,12 @@ public final class ProjectRepository extends AbstractRepository implements IProj
         return result;
     }
 
+    @NotNull
+    @Override
+    public List<AbstractEntity> findAllSortByStatus(@NotNull AbstractEntity abstractEntity) {
+        List<AbstractEntity> result = findAll(abstractEntity);
+        result.sort((s1, s2) -> Integer.compare(0, ((Project) s1).getStatus().ordinal() - ((Project) s2).getStatus().ordinal()));
+        return result;
+    }
+
 }

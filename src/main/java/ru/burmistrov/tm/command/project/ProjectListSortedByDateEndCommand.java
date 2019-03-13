@@ -18,7 +18,7 @@ public class ProjectListSortedByDateEndCommand extends AbstractCommand {
     @Nullable
     @Override
     public String getDescription() {
-        return "Print list of sorted by date end projects";
+        return "Print project list of sorted by date end";
     }
 
     @Override

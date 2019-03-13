@@ -126,5 +126,16 @@ public final class TaskService extends AbstractService implements ITaskService {
         return null;
     }
 
+    @Nullable
+    @Override
+    public List findAllSortByStatus(@NotNull String userId) {
+        Task task = new Task();
+        task.setUserId(userId);
+        if (taskRepository != null) {
+            return taskRepository.findAllSortByStatus(task);
+        }
+        return null;
+    }
+
 
 }

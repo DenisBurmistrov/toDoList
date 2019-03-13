@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -124,6 +125,17 @@ public final class ProjectService extends AbstractService implements IProjectSer
         project.setUserId(userId);
         if (projectRepository != null) {
             return projectRepository.findAllSortByDateEnd(project);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public List findAllSortByStatus(@NotNull String userId) {
+        Project project = new Project();
+        project.setUserId(userId);
+        if (projectRepository != null) {
+            return projectRepository.findAllSortByStatus(project);
         }
         return null;
     }
