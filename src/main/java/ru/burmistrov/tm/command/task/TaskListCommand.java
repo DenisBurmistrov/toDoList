@@ -31,7 +31,7 @@ public final class TaskListCommand extends AbstractCommand {
         @Nullable final ITaskService<AbstractEntity> taskService = getServiceLocator().getTaskService();
         System.out.println("Введите ID проекта:");
         @NotNull final String id = getServiceLocator().getTerminalCommandService().nextLine();
-        @NotNull final List<AbstractEntity> taskList = taskService.findAll(getServiceLocator().getCurrentUser().getId(), id);
+        @NotNull final List<AbstractEntity> taskList = taskService.findAllInProject(getServiceLocator().getCurrentUser().getId(), id);
         for (AbstractEntity task : taskList) {
             System.out.println(task);
         }

@@ -4,6 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 
 public abstract class AbstractCommand {
@@ -19,7 +22,7 @@ public abstract class AbstractCommand {
     @NotNull
     public abstract String getDescription();
 
-    public abstract void execute() throws ParseException;
+    public abstract void execute() throws ParseException, IOException, JAXBException;
 
     @NotNull
     public ServiceLocator getServiceLocator() {

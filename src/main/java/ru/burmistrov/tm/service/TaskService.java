@@ -56,10 +56,9 @@ public final class TaskService extends AbstractService implements ITaskService {
     }
 
     @NotNull
-    public List<AbstractEntity> findAll(@Nullable String userId, @Nullable String projectId) {
+    public List<AbstractEntity> findAll(@Nullable String userId) {
         Task task = new Task();
         task.setUserId(userId);
-        task.setProjectId(projectId);
         return taskRepository.findAll(task);
     }
 
@@ -108,21 +107,30 @@ public final class TaskService extends AbstractService implements ITaskService {
         return taskRepository.findAllSortByStatus(task);
     }
 
-    @NotNull
+    @Nullable
     @Override
-    public AbstractEntity findOneByName(@Nullable String userId, String name) {
+    public AbstractEntity findOneByName(@NotNull String userId, @NotNull String name) {
         Task task = new Task();
         task.setUserId(userId);
         task.setName(name);
         return taskRepository.findOneByName(task);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public AbstractEntity findOneByDescription(@Nullable String userId, String description) {
         Task task = new Task();
         task.setUserId(userId);
         task.setDescription(description);
         return taskRepository.findOneByDescription(task);
+    }
+
+    @NotNull
+    @Override
+    public List findAllInProject(@NotNull String userId, @NotNull String projectId) {
+        Task task = new Task();
+        task.setUserId(userId);
+        task.setProjectId(projectId);
+        return taskRepository.findAllInProject(task);
     }
 }

@@ -10,6 +10,8 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
 
@@ -35,5 +37,5 @@ public interface ServiceLocator {
 
     void setCurrentUser(@Nullable User user);
 
-    void execute(@Nullable String command) throws ParseException;
+    void execute(@Nullable String command) throws ParseException, IOException, JAXBException;
 }

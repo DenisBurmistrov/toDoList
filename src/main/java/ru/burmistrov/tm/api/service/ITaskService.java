@@ -15,7 +15,7 @@ public interface ITaskService<T extends AbstractEntity> {
     T persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
     @NotNull
-    List<T> findAll(@NotNull String userId, @NotNull String projectId);
+    List<T> findAll(@NotNull String userId);
 
     void removeAllInProject(@NotNull String userId, @NotNull String projectId);
 
@@ -32,9 +32,12 @@ public interface ITaskService<T extends AbstractEntity> {
     @NotNull
     List<T> findAllSortByStatus(@NotNull String userId);
 
-    @NotNull
+    @Nullable
     T findOneByName(@NotNull String userId, String name);
 
-    @NotNull
+    @Nullable
     T findOneByDescription(@NotNull String userId, String description);
+
+    @NotNull
+    List<T> findAllInProject(@NotNull String userId, @NotNull String projectId);
 }

@@ -23,6 +23,8 @@ import ru.burmistrov.tm.service.TaskService;
 import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.service.UserService;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -91,7 +93,7 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException {
+    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

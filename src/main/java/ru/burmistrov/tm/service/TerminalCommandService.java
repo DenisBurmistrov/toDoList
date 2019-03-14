@@ -3,6 +3,8 @@ package ru.burmistrov.tm.service;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -31,6 +33,8 @@ public class TerminalCommandService {
                 System.out.println("Неверно введенна дата");
             } catch (NullPointerException e) {
                 System.out.println("Неверно введены данные");
+                e.printStackTrace();
+            } catch (IOException | JAXBException e) {
                 e.printStackTrace();
             }
         }

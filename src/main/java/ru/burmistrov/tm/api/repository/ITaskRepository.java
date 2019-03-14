@@ -22,6 +22,9 @@ public interface ITaskRepository<T extends  AbstractEntity> {
 
     void removeAllInProject(@NotNull T entity);
 
+    @NotNull
+    List<T> findAllInProject(@NotNull T entity);
+
     @Nullable
     T findOne(@NotNull T entity);
 

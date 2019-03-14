@@ -1,21 +1,44 @@
 package ru.burmistrov.tm.entity;
 
-import lombok.Data;
-import ru.burmistrov.tm.repository.ProjectRepository;
-import ru.burmistrov.tm.repository.TaskRepository;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.Map;
+import java.util.List;
 
-@Data
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Domain implements Serializable {
 
-    private ProjectRepository projectRepository = new ProjectRepository();
+    @XmlElementWrapper(name="projects")
+    @XmlElement(name="project")
+    private List<Project> projects;
 
-    private TaskRepository taskRepository = new TaskRepository();
+    @XmlElementWrapper(name="tasks")
+    @XmlElement(name="task")
+    private List<Task> tasks;
 
-    Map<String, Project> projects = projectRepository.projects;
+    public Domain() {
+    }
 
-    Map<String, Task> tasks = taskRepository.tasks;
+    @Getter
+    public List<Project> getProjects() {
+        return projects;
+    }
 
+    @Setter
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    @Getter
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    @Setter
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 }
