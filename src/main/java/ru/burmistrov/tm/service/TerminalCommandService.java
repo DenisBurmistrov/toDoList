@@ -34,7 +34,7 @@ public class TerminalCommandService {
             } catch (NullPointerException e) {
                 System.out.println("Неверно введены данные");
                 e.printStackTrace();
-            } catch (IOException | JAXBException e) {
+            } catch (IOException | JAXBException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

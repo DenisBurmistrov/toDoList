@@ -22,7 +22,7 @@ public abstract class AbstractCommand {
     @NotNull
     public abstract String getDescription();
 
-    public abstract void execute() throws ParseException, IOException, JAXBException;
+    public abstract void execute() throws ParseException, IOException, JAXBException, ClassNotFoundException;
 
     @NotNull
     public ServiceLocator getServiceLocator() {

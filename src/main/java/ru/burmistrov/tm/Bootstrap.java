@@ -93,7 +93,7 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException {
+    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

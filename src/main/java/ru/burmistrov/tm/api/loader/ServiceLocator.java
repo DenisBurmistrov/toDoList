@@ -37,5 +37,5 @@ public interface ServiceLocator {
 
     void setCurrentUser(@Nullable User user);
 
-    void execute(@Nullable String command) throws ParseException, IOException, JAXBException;
+    void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException;
 }
