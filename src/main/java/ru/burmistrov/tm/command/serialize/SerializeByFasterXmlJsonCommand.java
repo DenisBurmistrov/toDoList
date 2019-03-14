@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SerializeByFasterXmlJson extends AbstractCommand {
+public class SerializeByFasterXmlJsonCommand extends AbstractCommand {
     @NotNull
     @Override
     public String getName() {
