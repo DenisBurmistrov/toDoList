@@ -11,14 +11,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.namespace.QName;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SerializeByJaxbXmlCommand extends AbstractCommand {
+
     @NotNull
     @Override
     public String getName() {

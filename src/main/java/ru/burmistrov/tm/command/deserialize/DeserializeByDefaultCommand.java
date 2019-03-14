@@ -4,11 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.entity.Domain;
 
-import javax.xml.bind.JAXBException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.text.ParseException;
 
 public class DeserializeByDefaultCommand extends AbstractCommand {
 
