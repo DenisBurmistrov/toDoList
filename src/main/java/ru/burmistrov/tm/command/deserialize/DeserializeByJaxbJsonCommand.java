@@ -8,7 +8,7 @@ import ru.burmistrov.tm.entity.Domain;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
+import java.io.File;
 
 public class DeserializeByJaxbJsonCommand extends AbstractCommand {
 
@@ -29,16 +29,16 @@ public class DeserializeByJaxbJsonCommand extends AbstractCommand {
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
         JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        Unmarshaller jaxbContextUnmarshaller = jaxbContext.createUnmarshaller();
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
         //Set JSON type
-        jaxbContextUnmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, "application/json");
-        StreamSource json = new StreamSource("projects-and-tasks-by-"
-                + getServiceLocator().getCurrentUser().getLogin() + ".json");
+        unmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, "application/json");
+        unmarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT, true);
+        Domain domain = (Domain) unmarshaller.unmarshal(new File("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-"
+                + getServiceLocator().getCurrentUser().getLogin() + ".json"));
+        System.out.println(domain.getProjects());
+        System.out.println(domain.getTasks());
 
-        Domain domain = jaxbContextUnmarshaller.unmarshal(json, Domain.class).getValue();
-
-        System.out.println(domain);
     }
 
     @Override
