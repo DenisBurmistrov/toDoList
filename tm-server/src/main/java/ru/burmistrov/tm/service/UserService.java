@@ -18,8 +18,8 @@ public final class UserService implements IUserService {
     }
 
     @Nullable
-    public User logIn(@NotNull String login, @NotNull String auth) {
-        return userRepository.logIn(login, auth);
+    public User logIn(@NotNull String login, @NotNull String password) {
+        return userRepository.logIn(login, password);
     }
 
     @Nullable

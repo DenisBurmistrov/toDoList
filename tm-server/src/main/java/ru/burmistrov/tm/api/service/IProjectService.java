@@ -30,30 +30,30 @@ public interface IProjectService<T extends AbstractEntity> {
                            @WebParam(name = "dateEnd") @NotNull String dateEnd) throws ParseException;
 
     @WebMethod
-    void removeAllProjects(@WebParam @NotNull String userId);
+    void removeAllProjects(@WebParam(name = "userId") @NotNull String userId);
 
     @NotNull
     @WebMethod
-    List<T> findAllProjects(@WebParam @NotNull String userId);
+    List<T> findAllProjects(@WebParam(name = "userId") @NotNull String userId);
 
     @NotNull
     @WebMethod
-    List<T> findAllProjectsSortByDateBegin(@WebParam @NotNull String userId);
+    List<T> findAllProjectsSortByDateBegin(@WebParam(name = "userId") @NotNull String userId);
 
     @NotNull
     @WebMethod
-    List<T> findAllProjectsSortByDateEnd(@WebParam @NotNull String userId);
+    List<T> findAllProjectsSortByDateEnd(@WebParam(name = "userId") @NotNull String userId);
 
     @NotNull
     @WebMethod
-    List<T> findAllProjectsSortByStatus(@WebParam @NotNull String userId);
+    List<T> findAllProjectsSortByStatus(@WebParam(name = "userId") @NotNull String userId);
 
     @Nullable
     @WebMethod
-    T findProjectByName(@WebParam @NotNull String userId, @WebParam @NotNull String name);
+    T findProjectByName(@WebParam(name = "userId") @NotNull String userId, @WebParam(name = "userId") @NotNull String name);
 
     @Nullable
     @WebMethod
-    T findProjectByDescription(@WebParam @NotNull String userId, @WebParam @NotNull String description);
+    T findProjectByDescription(@WebParam(name = "userId") @NotNull String userId, @WebParam(name = "description") @NotNull String description);
 
 }
