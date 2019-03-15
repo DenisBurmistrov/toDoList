@@ -3,43 +3,46 @@ package ru.burmistrov.tm.api.repository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.repository.AbstractRepository;
 
 import java.util.List;
 
-public interface ITaskRepository<T extends  AbstractEntity> {
+public interface ITaskRepository {
 
     @Nullable
-    T persist(@NotNull T abstractEntity);
+    Task persist(@NotNull Task abstractEntity);
 
-    void merge(@NotNull T abstractEntity);
+    void merge(@NotNull Task abstractEntity);
 
-    void remove(@NotNull T entity);
+    void remove(@NotNull Task entity);
 
-    void removeAll(@NotNull T entity);
-
-    @NotNull
-    List<T> findAll(@NotNull T entity);
-
-    void removeAllInProject(@NotNull T entity);
+    void removeAll(@NotNull Task entity);
 
     @NotNull
-    List<T> findAllInProject(@NotNull T entity);
+    List<Task> findAll(@NotNull Task entity);
+
+    void removeAllInProject(@NotNull Task entity);
+
+    @NotNull
+    List<Task> findAllInProject(@NotNull Task entity);
 
     @Nullable
-    T findOne(@NotNull T entity);
+    Task findOne(@NotNull Task entity);
 
     @NotNull
-    List<T> findAllSortByDateBegin(@NotNull T abstractEntity);
+    List<Task> findAllSortByDateBegin(@NotNull Task abstractEntity);
 
     @NotNull
-    List<T> findAllSortByDateEnd(@NotNull T abstractEntity);
+    List<Task> findAllSortByDateEnd(@NotNull Task abstractEntity);
 
     @NotNull
-    List<T> findAllSortByStatus(@NotNull T abstractEntity);
+    List<Task> findAllSortByStatus(@NotNull Task abstractEntity);
 
     @Nullable
-    T findOneByName(@NotNull T abstractEntity);
+    Task findOneByName(@NotNull Task abstractEntity);
 
     @Nullable
-    T findOneByDescription(@NotNull T abstractEntity);
+    Task findOneByDescription(@NotNull Task abstractEntity);
+
 }

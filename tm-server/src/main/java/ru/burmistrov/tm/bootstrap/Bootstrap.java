@@ -14,9 +14,7 @@ import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.endpoint.ProjectEndpoint;
 import ru.burmistrov.tm.endpoint.TaskEndpoint;
 import ru.burmistrov.tm.endpoint.UserEndpoint;
-import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Role;
-import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.repository.UserRepository;
@@ -32,11 +30,11 @@ import java.util.Objects;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    @NotNull private final IProjectRepository<AbstractEntity> projectRepository = new ProjectRepository();
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository();
 
-    @NotNull private final ITaskRepository<AbstractEntity> taskRepository = new TaskRepository();
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository();
 
-    @NotNull private final IUserRepository<AbstractEntity> userRepository = new UserRepository();
+    @NotNull private final IUserRepository userRepository = new UserRepository();
 
     @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
@@ -68,9 +66,9 @@ public final class Bootstrap implements ServiceLocator {
     }
 
     private void initEndpoints() {
-        Endpoint.publish("http://localhost:8080/project", new ProjectEndpoint(this));
-        Endpoint.publish("http://localhost:8080/task", new TaskEndpoint(this));
-        Endpoint.publish("http://localhost:8080/user", new UserEndpoint(this));
+        Endpoint.publish("http://localhost:8080/ProjectEndpoint", new ProjectEndpoint(this));
+        Endpoint.publish("http://localhost:8080/TaskEndpoint", new TaskEndpoint(this));
+        Endpoint.publish("http://localhost:8080/UserEndpoint", new UserEndpoint(this));
     }
 
     @Override

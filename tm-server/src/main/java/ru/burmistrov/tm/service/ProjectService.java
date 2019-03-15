@@ -17,12 +17,12 @@ import java.util.List;
 public final class ProjectService implements IProjectService {
 
     @NotNull
-    private final IProjectRepository<AbstractEntity> projectRepository;
+    private final IProjectRepository projectRepository;
 
     @NotNull
-    private final ITaskRepository<AbstractEntity> taskRepository;
+    private final ITaskRepository taskRepository;
 
-    public ProjectService(@NotNull IProjectRepository<AbstractEntity> projectRepository, @NotNull ITaskRepository<AbstractEntity> taskRepository) {
+    public ProjectService(@NotNull IProjectRepository projectRepository, @NotNull ITaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
@@ -50,7 +50,7 @@ public final class ProjectService implements IProjectService {
         project.setDateEnd(dateEnd);
         AbstractEntity abstractEntity = projectRepository.findOne(project);
         if (abstractEntity == null)
-            return (Project) projectRepository.persist(project);
+            return projectRepository.persist(project);
         return null;
 
     }
@@ -74,13 +74,15 @@ public final class ProjectService implements IProjectService {
 
     public void removeAllProjects(@Nullable String userId) {
         @NotNull final Project project = new Project();
+        @NotNull final Task task = new Task();
+        task.setUserId(userId);
         project.setUserId(userId);
         projectRepository.removeAll(project);
-        taskRepository.removeAll(project);
+        taskRepository.removeAll(task);
     }
 
     @NotNull
-    public List<AbstractEntity> findAllProjects(@NotNull String userId) {
+    public List<Project> findAllProjects(@NotNull String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAll(project);
@@ -88,7 +90,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllProjectsSortByDateBegin(@Nullable String userId) {
+    public List<Project> findAllProjectsSortByDateBegin(@Nullable String userId) {
         Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateBegin(project);
@@ -96,7 +98,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List findAllProjectsSortByDateEnd(@Nullable String userId) {
+    public List<Project> findAllProjectsSortByDateEnd(@Nullable String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateEnd(project);
@@ -104,7 +106,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List findAllProjectsSortByStatus(@NotNull String userId) {
+    public List<Project> findAllProjectsSortByStatus(@NotNull String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByStatus(project);
@@ -112,7 +114,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public AbstractEntity findProjectByName(@Nullable String userId, @NotNull String name) {
+    public Project findProjectByName(@Nullable String userId, @NotNull String name) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
@@ -121,7 +123,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public AbstractEntity findProjectByDescription(@Nullable String userId, @NotNull String description) {
+    public Project findProjectByDescription(@Nullable String userId, @NotNull String description) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setDescription(description);

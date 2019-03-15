@@ -3,9 +3,9 @@ package ru.burmistrov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -21,13 +21,13 @@ public class UserEndpoint{
 
     @WebMethod
     @Nullable
-    public AbstractEntity logIn(@NotNull String login, @NotNull String password) {
+    public User logIn(@NotNull String login, @NotNull String password) {
         return serviceLocator.getUserService().logIn(login, password);
     }
 
     @WebMethod
     @Nullable
-    public AbstractEntity createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName,
+    public User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName,
                                      @NotNull String lastName, @NotNull String email, @NotNull Role roleType) {
         return serviceLocator.getUserService().createUser(login, password, firstName, middleName, lastName, email, roleType);
     }

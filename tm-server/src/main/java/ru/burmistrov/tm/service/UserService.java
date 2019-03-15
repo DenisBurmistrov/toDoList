@@ -11,9 +11,9 @@ import ru.burmistrov.tm.entity.User;
 public final class UserService implements IUserService {
 
     @NotNull
-    private final IUserRepository<AbstractEntity> userRepository;
+    private final IUserRepository userRepository;
 
-    public UserService(@NotNull IUserRepository<AbstractEntity> userRepository) {
+    public UserService(@NotNull IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -34,9 +34,9 @@ public final class UserService implements IUserService {
         user.setMiddleName(middleName);
         user.setLastName(lastName);
         user.setEmail(email);
-        AbstractEntity abstractEntity = userRepository.findOne(user);
+        User abstractEntity = userRepository.findOne(user);
         if(abstractEntity == null)
-            return (User) userRepository.persist(user);
+            return userRepository.persist(user);
 
         return null;
     }

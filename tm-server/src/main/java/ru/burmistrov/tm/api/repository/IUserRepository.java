@@ -7,7 +7,7 @@ import ru.burmistrov.tm.entity.User;
 
 import java.util.List;
 
-public interface IUserRepository<T extends AbstractEntity> {
+public interface IUserRepository {
 
     @Nullable
     User logIn(@NotNull String login, @NotNull String password);
@@ -15,17 +15,17 @@ public interface IUserRepository<T extends AbstractEntity> {
     void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String newPassword);
 
     @Nullable
-    T persist(@NotNull T entity);
+    User persist(@NotNull User entity);
 
-    void merge(@NotNull T abstractEntity);
+    void merge(@NotNull User abstractEntity);
 
-    void remove(@NotNull T abstractEntity);
+    void remove(@NotNull User abstractEntity);
 
-    void removeAll(@NotNull T abstractEntity);
-
-    @Nullable
-    List<T> findAll(@NotNull T abstractEntity);
+    void removeAll(@NotNull User abstractEntity);
 
     @Nullable
-    T findOne(@NotNull T abstractEntity);
+    List<User> findAll(@NotNull User abstractEntity);
+
+    @Nullable
+    User findOne(@NotNull User abstractEntity);
 }

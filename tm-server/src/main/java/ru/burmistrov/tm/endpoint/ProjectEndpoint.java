@@ -3,7 +3,7 @@ package ru.burmistrov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Project;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -14,6 +14,9 @@ import java.util.List;
 public class ProjectEndpoint{
 
     private ServiceLocator serviceLocator;
+
+    public ProjectEndpoint() {
+    }
 
     public ProjectEndpoint(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
@@ -26,7 +29,7 @@ public class ProjectEndpoint{
 
     @WebMethod
     @Nullable
-    public AbstractEntity createProject(@NotNull String userId, @NotNull String name,
+    public Project createProject(@NotNull String userId, @NotNull String name,
                                   @NotNull String description, @NotNull String dateEnd) throws ParseException {
         return serviceLocator.getProjectService().createProject(userId, name, description, dateEnd);
     }
@@ -45,37 +48,37 @@ public class ProjectEndpoint{
 
     @WebMethod
     @NotNull
-    public List findAllProjects(@NotNull String userId) {
+    public List<Project> findAllProjects(@NotNull String userId) {
         return serviceLocator.getProjectService().findAllProjects(userId);
     }
 
     @WebMethod
     @NotNull
-    public List findAllProjectsSortByDateBegin(@NotNull String userId) {
+    public List<Project> findAllProjectsSortByDateBegin(@NotNull String userId) {
         return serviceLocator.getProjectService().findAllProjectsSortByDateBegin(userId);
     }
 
     @WebMethod
     @NotNull
-    public List findAllProjectsSortByDateEnd(@NotNull String userId) {
+    public List<Project> findAllProjectsSortByDateEnd(@NotNull String userId) {
         return serviceLocator.getProjectService().findAllProjectsSortByDateEnd(userId);
     }
 
     @WebMethod
     @NotNull
-    public List findAllProjectsSortByStatus(@NotNull String userId) {
+    public List<Project> findAllProjectsSortByStatus(@NotNull String userId) {
         return serviceLocator.getProjectService().findAllProjectsSortByStatus(userId);
     }
 
     @WebMethod
     @Nullable
-    public AbstractEntity findProjectByName(@NotNull String userId, @NotNull String name) {
-        return null;
+    public Project findProjectByName(@NotNull String userId, @NotNull String name) {
+        return serviceLocator.getProjectService().findProjectByName(userId, name);
     }
 
     @WebMethod
     @Nullable
-    public AbstractEntity findProjectByDescription(@NotNull String userId, @NotNull String description) {
-        return null;
+    public Project findProjectByDescription(@NotNull String userId, @NotNull String description) {
+        return serviceLocator.getProjectService().findProjectByDescription(userId, description);
     }
 }

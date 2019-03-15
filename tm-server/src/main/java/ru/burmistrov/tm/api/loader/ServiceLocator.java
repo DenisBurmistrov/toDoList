@@ -5,19 +5,18 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.api.service.IUserService;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 
 public interface ServiceLocator {
 
     @NotNull
-    IProjectService<AbstractEntity> getProjectService();
+    IProjectService getProjectService();
 
     @NotNull
-    ITaskService<AbstractEntity> getTaskService();
+    ITaskService getTaskService();
 
     @NotNull
-    IUserService<AbstractEntity> getUserService();
+    IUserService getUserService();
 
     @NotNull
     User getCurrentUser();

@@ -3,7 +3,7 @@ package ru.burmistrov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Task;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -27,14 +27,14 @@ public class TaskEndpoint {
 
     @WebMethod
     @Nullable
-    public AbstractEntity createTask(@NotNull String userId, @NotNull String projectId, @NotNull String name,
-                                  @NotNull String description, @NotNull String dateEnd) throws ParseException {
+    public Task createTask(@NotNull String userId, @NotNull String projectId, @NotNull String name,
+                           @NotNull String description, @NotNull String dateEnd) throws ParseException {
         return serviceLocator.getTaskService().createTask(userId, projectId, name, description, dateEnd);
     }
 
     @WebMethod
     @NotNull
-    public List findAllTasks(@NotNull String userId) {
+    public List<Task> findAllTasks(@NotNull String userId) {
         return serviceLocator.getTaskService().findAllTasks(userId);
     }
 
@@ -55,36 +55,36 @@ public class TaskEndpoint {
 
     @WebMethod
     @NotNull
-    public List findAllTasksSortByDateBegin(@NotNull String userId) {
+    public List<Task> findAllTasksSortByDateBegin(@NotNull String userId) {
         return serviceLocator.getTaskService().findAllTasksSortByDateBegin(userId);
     }
 
     @WebMethod
     @NotNull
-    public List findAllTasksSortByDateEnd(@NotNull String userId) {
+    public List<Task> findAllTasksSortByDateEnd(@NotNull String userId) {
         return serviceLocator.getTaskService().findAllTasksSortByDateEnd(userId);
     }
 
     @NotNull
-    public List findAllTasksSortByStatus(@NotNull String userId) {
+    public List<Task> findAllTasksSortByStatus(@NotNull String userId) {
         return serviceLocator.getTaskService().findAllTasksSortByStatus(userId);
     }
 
     @WebMethod
     @Nullable
-    public AbstractEntity findTaskByName(@NotNull String userId, String name) {
+    public Task findTaskByName(@NotNull String userId, String name) {
         return serviceLocator.getTaskService().findTaskByName(userId, name);
     }
 
     @WebMethod
     @Nullable
-    public AbstractEntity findTaskByDescription(@NotNull String userId, String description) {
+    public Task findTaskByDescription(@NotNull String userId, String description) {
         return serviceLocator.getTaskService().findTaskByDescription(userId, description);
     }
 
     @WebMethod
     @NotNull
-    public List findAllTasksInProject(@NotNull String userId, @NotNull String projectId) {
+    public List<Task> findAllTasksInProject(@NotNull String userId, @NotNull String projectId) {
         return serviceLocator.getTaskService().findAllTasksInProject(userId, projectId);
     }
 }

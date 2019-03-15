@@ -9,7 +9,7 @@ import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.*;
 
-public final class UserRepository extends AbstractRepository implements IUserRepository<AbstractEntity>  {
+public final class UserRepository /*extends AbstractRepository<User>*/ implements IUserRepository  {
 
     private final Map<String, User> users = new LinkedHashMap<>();
 
@@ -38,47 +38,44 @@ public final class UserRepository extends AbstractRepository implements IUserRep
 
     @NotNull
     @Override
-    public AbstractEntity persist(@Nullable AbstractEntity entity) {
-        users.put(Objects.requireNonNull(entity).getId(), (User) entity);
+    public User persist(@Nullable User entity) {
+        users.put(Objects.requireNonNull(entity).getId(), entity);
         return entity;
     }
 
     @Override
-    public void merge(@Nullable  AbstractEntity entity) {
-        User user = (User) entity;
-        users.get(Objects.requireNonNull(entity).getId()).setFirstName(Objects.requireNonNull(user).getFirstName());
-        users.get(entity.getId()).setMiddleName(user.getMiddleName());
-        users.get(entity.getId()).setLastName(user.getLastName());
-        users.get(entity.getId()).setEmail(user.getEmail());
+    public void merge(@Nullable  User entity) {
+        users.get(Objects.requireNonNull(entity).getId()).setFirstName(Objects.requireNonNull(entity).getFirstName());
+        users.get(entity.getId()).setMiddleName(entity.getMiddleName());
+        users.get(entity.getId()).setLastName(entity.getLastName());
+        users.get(entity.getId()).setEmail(entity.getEmail());
     }
 
     @Override
-    public void remove(@Nullable AbstractEntity abstractEntity) {
-        User user = (User) abstractEntity;
-        users.remove(Objects.requireNonNull(user).getId());
+    public void remove(@Nullable User abstractEntity) {
+        users.remove(Objects.requireNonNull(abstractEntity).getId());
     }
 
     @Override
-    public void removeAll(@Nullable AbstractEntity abstractEntity) {
+    public void removeAll(@Nullable User abstractEntity) {
         users.clear();
     }
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAll(@Nullable AbstractEntity abstractEntity) {
+    public List<User> findAll(@Nullable User abstractEntity) {
 
-        List<AbstractEntity> result = new LinkedList<>();
+        List<User> result = new LinkedList<>();
         users.forEach((k, v) -> result.add(v));
         return result;
     }
 
     @Nullable
     @Override
-    public AbstractEntity findOne(@Nullable AbstractEntity abstractEntity) {
-        User user = (User) abstractEntity;
+    public User findOne(@Nullable User abstractEntity) {
         List<User> result = new ArrayList<>();
         users.forEach((k,v) -> {
-            if(v.equals(user)) {
+            if(v.equals(abstractEntity)) {
                 result.add(v);
             }
         });

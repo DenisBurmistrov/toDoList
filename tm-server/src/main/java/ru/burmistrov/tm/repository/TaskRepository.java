@@ -9,35 +9,34 @@ import ru.burmistrov.tm.entity.Task;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class TaskRepository extends AbstractRepository implements ITaskRepository<AbstractEntity> {
+public final class TaskRepository /*extends AbstractRepository<Task>*/ implements ITaskRepository {
 
     private final Map<String, Task> tasks = new LinkedHashMap<>();
 
     @NotNull
     @Override
-    public AbstractEntity persist(@NotNull AbstractEntity entity) {
-        tasks.put(entity.getId(), (Task) entity);
+    public Task persist(@NotNull Task entity) {
+        tasks.put(entity.getId(), entity);
         return entity;
     }
 
 
     @Override
-    public void merge(@NotNull AbstractEntity entity) {
-        tasks.put(entity.getId(), (Task) entity);
+    public void merge(@NotNull Task entity) {
+        tasks.put(entity.getId(), entity);
     }
 
     @Override
-    public void remove(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
+    public void remove(@NotNull Task entity) {
+        @NotNull final Task task = entity;
         tasks.remove(task.getId());
     }
 
-
     @NotNull
     @Override
-    public List<AbstractEntity> findAll(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
-        @NotNull final List<AbstractEntity> result = new LinkedList<>();
+    public List<Task> findAll(@NotNull Task entity) {
+        @NotNull final Task task = entity;
+        @NotNull final List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e ->Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
@@ -47,9 +46,9 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllInProject(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
-        @NotNull final List<AbstractEntity> result = new LinkedList<>();
+    public List<Task> findAllInProject(@NotNull Task entity) {
+        @NotNull final Task task = entity;
+        @NotNull final List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().
                 getProjectId()).equals(task.getProjectId())
@@ -60,43 +59,43 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
     }
 
     @Override
-    public void removeAllInProject(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
+    public void removeAllInProject(@NotNull Task entity) {
+        @NotNull final Task task = entity;
         tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getProjectId()).equals(task.getProjectId()) &&
                 Objects.requireNonNull(task.getUserId()).equals(e.getValue().getUserId()));
     }
 
 
     @Override
-    public void removeAll(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
+    public void removeAll(@NotNull Task entity) {
+        @NotNull final Task task = entity;
         tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getUserId()).equals(task.getUserId()));
     }
 
     @Nullable
     @Override
-    public AbstractEntity findOne(@NotNull AbstractEntity entity) {
-        @NotNull final Task task = (Task) entity;
+    public Task findOne(@NotNull Task entity) {
+        @NotNull final Task task = entity;
         List list = tasks.entrySet().stream().filter(e -> task.equals(e.getValue())).collect(Collectors.toList());
         if (list.size() > 0) {
-            return (AbstractEntity) list.get(0);
+            return (Task) list.get(0);
         }
         return null;
     }
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllSortByDateBegin(@NotNull AbstractEntity abstractEntity) {
-        @NotNull final Task task = (Task) abstractEntity;
-        @NotNull final List<AbstractEntity> result = new LinkedList<>();
+    public List<Task> findAllSortByDateBegin(@NotNull Task abstractEntity) {
+        @NotNull final Task task = abstractEntity;
+        @NotNull final List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if (((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() < 0) {
+            if (s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0) {
                 return 1;
-            } else if (((Task) s1).getDateBegin().getTime() - ((Task) s2).getDateBegin().getTime() > 0) {
+            } else if (s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0) {
                 return -1;
             } else {
                 return 0;
@@ -107,18 +106,18 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllSortByDateEnd(@NotNull AbstractEntity abstractEntity) {
-        @NotNull final Task task = (Task) abstractEntity;
-        @NotNull final List<AbstractEntity> result = new LinkedList<>();
+    public List<Task> findAllSortByDateEnd(@NotNull Task abstractEntity) {
+        @NotNull final Task task = abstractEntity;
+        @NotNull final List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if (Objects.requireNonNull(((Task) s1).getDateEnd()).getTime() - Objects.requireNonNull(((Task) s2).getDateEnd()).getTime() > 0) {
+            if (Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0) {
                 return 1;
-            } else if (Objects.requireNonNull(((Task) s1).getDateEnd()).getTime()
-                    - Objects.requireNonNull(((Task) s2).getDateEnd()).getTime() < 0) {
+            } else if (Objects.requireNonNull(s1.getDateEnd()).getTime()
+                    - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0) {
                 return -1;
             } else {
                 return 0;
@@ -129,21 +128,21 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
 
     @NotNull
     @Override
-    public List<AbstractEntity> findAllSortByStatus(@NotNull AbstractEntity abstractEntity) {
-        @NotNull final Task task = (Task) abstractEntity;
-        @NotNull final List<AbstractEntity> result = new LinkedList<>();
+    public List<Task> findAllSortByStatus(@NotNull Task abstractEntity) {
+        @NotNull final Task task = abstractEntity;
+        @NotNull final List<Task> result = new LinkedList<>();
         tasks.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
-        result.sort((s1, s2) -> Integer.compare(0, ((Task) s1).getStatus().ordinal() - ((Task) s2).getStatus().ordinal()));
+        result.sort((s1, s2) -> Integer.compare(0, s1.getStatus().ordinal() - s2.getStatus().ordinal()));
         return result;
     }
 
     @Nullable
     @Override
-    public AbstractEntity findOneByName(@NotNull AbstractEntity abstractEntity) {
-        @NotNull final Task task = (Task) abstractEntity;
+    public Task findOneByName(@NotNull Task abstractEntity) {
+        @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
         tasks.forEach((k, v) -> {
             if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
@@ -159,8 +158,8 @@ public final class TaskRepository extends AbstractRepository implements ITaskRep
 
     @Nullable
     @Override
-    public AbstractEntity findOneByDescription(@NotNull AbstractEntity abstractEntity) {
-        @NotNull final Task task = (Task) abstractEntity;
+    public Task findOneByDescription(@NotNull Task abstractEntity) {
+        @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
         tasks.forEach((k, v) -> {
             if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
