@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.command.serialize;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
@@ -8,10 +9,8 @@ import ru.burmistrov.tm.entity.Domain;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,6 +49,7 @@ public class SerializeByFasterXmlJsonCommand extends AbstractCommand {
         domain.setTasks(tasks);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.writeValue(new File("projects-and-tasks-by-"
                 + getServiceLocator().getCurrentUser().getLogin() + ".json"), domain);
     }

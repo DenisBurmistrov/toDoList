@@ -4,15 +4,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import java.text.ParseException;
 import java.util.List;
 
 public interface ITaskService<T extends AbstractEntity> {
 
-    void merge(@NotNull String userId,@NotNull String projectId,@NotNull String oldName,@NotNull String newName, @NotNull String description, @NotNull String dateEnd) throws ParseException;
+    void merge(@NotNull String userId,@NotNull String projectId, @NotNull String taskId, @NotNull String newName,
+               @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
     @Nullable
-    T persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
+    T persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
+              @NotNull String dateEnd) throws ParseException;
 
     @NotNull
     List<T> findAll(@NotNull String userId);
