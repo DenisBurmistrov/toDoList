@@ -2,6 +2,7 @@ package ru.burmistrov.tm.entity;
 
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -10,5 +11,10 @@ public abstract class AbstractEntity {
 
     @NotNull
     private String id = UUID.randomUUID().toString();
+
+    @Nullable
+    private String userId;
+
+
 
 }

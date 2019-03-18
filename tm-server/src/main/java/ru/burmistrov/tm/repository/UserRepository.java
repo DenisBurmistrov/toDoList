@@ -9,7 +9,7 @@ import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.*;
 
-public final class UserRepository /*extends AbstractRepository<User>*/ implements IUserRepository  {
+public final class UserRepository implements IUserRepository  {
 
     private final Map<String, User> users = new LinkedHashMap<>();
 

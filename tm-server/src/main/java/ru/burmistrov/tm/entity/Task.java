@@ -26,9 +26,6 @@ public final class Task extends AbstractEntity implements Serializable {
     @Nullable
     private Date dateEnd;
 
-    @Nullable
-    private String userId;
-
     @NotNull
     private Status status = Status.SHEDULED;
 

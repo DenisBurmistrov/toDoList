@@ -9,39 +9,12 @@ import ru.burmistrov.tm.entity.Task;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class TaskRepository /*extends AbstractRepository<Task>*/ implements ITaskRepository {
+public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
 
-    private final Map<String, Task> tasks = new LinkedHashMap<>();
+    private final Map<String, Task> tasks = getAbstractMap();
 
-    @NotNull
-    @Override
-    public Task persist(@NotNull Task entity) {
-        tasks.put(entity.getId(), entity);
-        return entity;
-    }
-
-
-    @Override
-    public void merge(@NotNull Task entity) {
-        tasks.put(entity.getId(), entity);
-    }
-
-    @Override
-    public void remove(@NotNull Task entity) {
-        @NotNull final Task task = entity;
-        tasks.remove(task.getId());
-    }
-
-    @NotNull
-    @Override
-    public List<Task> findAll(@NotNull Task entity) {
-        @NotNull final Task task = entity;
-        @NotNull final List<Task> result = new LinkedList<>();
-        tasks.entrySet()
-                .stream().filter(e ->Objects.requireNonNull(e.getValue().getUserId()).
-                equals(task.getUserId()))
-                .forEach(e -> result.add(e.getValue()));
-        return result;
+    public TaskRepository(LinkedHashMap<String, Task> abstractMap) {
+        super(abstractMap);
     }
 
     @NotNull
@@ -63,24 +36,6 @@ public final class TaskRepository /*extends AbstractRepository<Task>*/ implement
         @NotNull final Task task = entity;
         tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getProjectId()).equals(task.getProjectId()) &&
                 Objects.requireNonNull(task.getUserId()).equals(e.getValue().getUserId()));
-    }
-
-
-    @Override
-    public void removeAll(@NotNull Task entity) {
-        @NotNull final Task task = entity;
-        tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getUserId()).equals(task.getUserId()));
-    }
-
-    @Nullable
-    @Override
-    public Task findOne(@NotNull Task entity) {
-        @NotNull final Task task = entity;
-        List list = tasks.entrySet().stream().filter(e -> task.equals(e.getValue())).collect(Collectors.toList());
-        if (list.size() > 0) {
-            return (Task) list.get(0);
-        }
-        return null;
     }
 
     @NotNull

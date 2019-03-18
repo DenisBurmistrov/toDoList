@@ -24,15 +24,16 @@ import ru.burmistrov.tm.service.UserService;
 
 import javax.xml.ws.Endpoint;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 @Getter
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    @NotNull private final IProjectRepository projectRepository = new ProjectRepository();
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(new LinkedHashMap<>());
 
-    @NotNull private final ITaskRepository taskRepository = new TaskRepository();
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository(new LinkedHashMap<>());
 
     @NotNull private final IUserRepository userRepository = new UserRepository();
 

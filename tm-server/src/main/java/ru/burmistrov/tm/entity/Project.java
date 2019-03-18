@@ -12,9 +12,6 @@ import java.util.Objects;
 public final class Project extends AbstractEntity implements Serializable {
 
     @Nullable
-    private String userId;
-
-    @Nullable
     private String name;
 
     @Nullable
@@ -37,18 +34,18 @@ public final class Project extends AbstractEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return Objects.equals(userId, project.userId) &&
+        return Objects.equals(getUserId(), project.getUserId()) &&
                 Objects.equals(name, project.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name);
+        return Objects.hash(getUserId(), name);
     }
 
     @Override
     public String toString() {
-        return "ID: " + getId() + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + userId;
+        return "ID: " + getId() + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + getUserId();
     }
 
 }

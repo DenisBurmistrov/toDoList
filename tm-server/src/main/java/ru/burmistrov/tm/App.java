@@ -1,9 +1,7 @@
 package ru.burmistrov.tm;
 
 import ru.burmistrov.tm.bootstrap.Bootstrap;
-import ru.burmistrov.tm.endpoint.ProjectEndpoint;
 
-import javax.xml.ws.Endpoint;
 
 public class App {
 
