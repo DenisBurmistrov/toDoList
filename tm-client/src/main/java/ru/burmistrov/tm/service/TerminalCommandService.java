@@ -2,6 +2,7 @@ package ru.burmistrov.tm.service;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class TerminalCommandService {
             } catch (NullPointerException e) {
                 System.out.println("Неверно введены данные");
                 e.printStackTrace();
-            } catch (IOException | JAXBException | ClassNotFoundException e) {
+            } catch (IOException | JAXBException | ClassNotFoundException | ParseException_Exception e) {
                 e.printStackTrace();
             }
         }

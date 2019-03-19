@@ -2,9 +2,8 @@ package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.endpoint.User;
 
 public final class UserLogInCommand extends AbstractCommand {
 
@@ -35,7 +34,7 @@ public final class UserLogInCommand extends AbstractCommand {
         if (user == null) {
             System.out.println("Неверно введены данные");
         } else {
-            //getServiceLocator().setCurrentUser(user);
+            getServiceLocator().setSession(getServiceLocator().getSessionEndpoint().getNewSession(user.getId()));
         }
     }
 

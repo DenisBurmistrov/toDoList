@@ -1,9 +1,9 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public class TaskFindByNameCommand extends AbstractCommand {
 
@@ -23,7 +23,7 @@ public class TaskFindByNameCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите имя задачи:");
         @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
-        System.out.println(getServiceLocator().getTaskEndpoint().findTaskByName(, name));
+        System.out.println(getServiceLocator().getTaskEndpoint().findTaskByName(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), name));
     }
 
     @Override

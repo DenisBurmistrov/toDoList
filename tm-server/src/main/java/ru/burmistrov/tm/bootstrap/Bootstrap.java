@@ -18,6 +18,7 @@ import ru.burmistrov.tm.api.service.ISessionService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.endpoint.ProjectEndpoint;
+import ru.burmistrov.tm.endpoint.SessionEndpoint;
 import ru.burmistrov.tm.endpoint.TaskEndpoint;
 import ru.burmistrov.tm.endpoint.UserEndpoint;
 import ru.burmistrov.tm.entity.*;
@@ -82,6 +83,7 @@ public final class Bootstrap implements ServiceLocator {
         Endpoint.publish("http://localhost:8080/ProjectEndpoint", new ProjectEndpoint(this));
         Endpoint.publish("http://localhost:8080/TaskEndpoint", new TaskEndpoint(this));
         Endpoint.publish("http://localhost:8080/UserEndpoint", new UserEndpoint(this));
+        Endpoint.publish("http://localhost:8080/SessionEndpoint", new SessionEndpoint(this));
     }
 
 

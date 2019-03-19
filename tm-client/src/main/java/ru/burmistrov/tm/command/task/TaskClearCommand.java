@@ -1,8 +1,9 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public final class TaskClearCommand extends AbstractCommand {
 
@@ -23,7 +24,7 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().getTaskEndpoint().removeAllTasks();
+        getServiceLocator().getTaskEndpoint().removeAllTasks(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
     }
 
     @Override

@@ -4,9 +4,7 @@ import com.sun.istack.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.ProjectEndpoint;
-import ru.burmistrov.tm.endpoint.TaskEndpoint;
-import ru.burmistrov.tm.endpoint.UserEndpoint;
+import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
 import javax.xml.bind.JAXBException;
@@ -14,19 +12,29 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 public class Bootstrap implements ServiceLocator {
 
-    private final ProjectEndpoint projectEndpoint = new ProjectEndpoint(this);
+    private final ProjectEndpointService projectEndpointService = new ProjectEndpointService();
 
-    private final TaskEndpoint taskEndpoint = new TaskEndpoint(this);
+    private final TaskEndpointService taskEndpointService = new TaskEndpointService();
 
-    private final UserEndpoint userEndpoint = new UserEndpoint(this);
+    private final UserEndpointService userEndpointService = new UserEndpointService();
 
-   private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
+    private final SessionEndpointService sessionEndpointService = new SessionEndpointService();
 
-    @NotNull
+    private final SessionEndpoint sessionEndpoint = sessionEndpointService.getSessionEndpointPort();
+
+    private final ProjectEndpoint projectEndpoint = projectEndpointService.getProjectEndpointPort();
+
+    private final TaskEndpoint taskEndpoint = taskEndpointService.getTaskEndpointPort();
+
+    private final UserEndpoint userEndpoint = userEndpointService.getUserEndpointPort();
+
+    private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
+
     private final TerminalCommandService terminalCommandService = new TerminalCommandService(this);
+
+    private Session session;
 
     private void registry(Class... classes) {
         for (Class commandClass : classes) {
@@ -43,23 +51,24 @@ public class Bootstrap implements ServiceLocator {
         }
     }
 
-    void init(Class... classes) {
+    public void init(Class... classes) {
         registry(classes);
+        terminalCommandService.start();
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException {
+    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException, ParseException_Exception {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
         if (abstractCommand.isSecure()) {
-            /*if (isAuth()) {*/
+            if (isAuth()) {
                 abstractCommand.execute();
-           // }
-            return;
+                 }
+                return;
+            }
+            abstractCommand.execute();
         }
-        abstractCommand.execute();
-    }
 
     @NotNull
     public ProjectEndpoint getProjectEndpoint() {
@@ -83,6 +92,22 @@ public class Bootstrap implements ServiceLocator {
 
     public Map<String, AbstractCommand> getCommands() {
         return commands;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    private boolean isAuth() {
+        return session != null;
+    }
+
+    public SessionEndpoint getSessionEndpoint() {
+        return sessionEndpoint;
     }
 }
 

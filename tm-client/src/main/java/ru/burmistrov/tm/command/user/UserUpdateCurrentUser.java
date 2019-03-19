@@ -1,9 +1,8 @@
 package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.Role;
 
 import java.util.Objects;
 
@@ -34,7 +33,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         @NotNull final String middleName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новую почту:");
         @NotNull final String email = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getUserEndpoint().updateUserById(, firstName, middleName, lastName, email, ,);
+        getServiceLocator().getUserEndpoint().updateUserById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), firstName, middleName, lastName, email, Role.COMMON_USER);
     }
 
     @Override

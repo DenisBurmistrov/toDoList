@@ -1,10 +1,9 @@
 package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IProjectService;
-import ru.burmistrov.tm.api.service.RemoveAllProjects;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public final class ProjectClearCommand extends AbstractCommand {
 
@@ -25,7 +24,7 @@ public final class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().getProjectEndpoint().removeAllProjects();
+        getServiceLocator().getProjectEndpoint().removeAllProjects(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
     }
 
     @Override

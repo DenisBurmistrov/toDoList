@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public abstract class AbstractCommand {
     @NotNull
     public abstract String getDescription();
 
-    public abstract void execute() throws ParseException, IOException, JAXBException, ClassNotFoundException;
+    public abstract void execute() throws ParseException, IOException, JAXBException, ClassNotFoundException, ParseException_Exception;
 
     @NotNull
     public ServiceLocator getServiceLocator() {

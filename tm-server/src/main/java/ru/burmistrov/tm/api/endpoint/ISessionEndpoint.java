@@ -12,5 +12,5 @@ import javax.jws.WebService;
 public interface ISessionEndpoint {
 
     @WebMethod
-    Session getNewSession(@WebParam @NotNull User user);
+    Session getNewSession(@WebParam @NotNull String userId);
 }

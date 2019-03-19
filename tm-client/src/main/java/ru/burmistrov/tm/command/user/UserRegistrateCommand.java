@@ -1,10 +1,8 @@
 package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.endpoint.Role;
 
 public final class UserRegistrateCommand extends AbstractCommand {
 

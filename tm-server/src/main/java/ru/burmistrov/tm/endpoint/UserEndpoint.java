@@ -3,14 +3,13 @@ package ru.burmistrov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-@WebService(endpointInterface = "ru.burmistrov.tm.api.service.IUserService")
+@WebService
 public class UserEndpoint{
 
     private ServiceLocator serviceLocator;
@@ -39,8 +38,8 @@ public class UserEndpoint{
 
     @WebMethod
     public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName,
-                               @NotNull String lastName, @NotNull String email, @NotNull Role role, @NotNull String login) {
-        serviceLocator.getUserService().merge(userId, firstName, middleName, lastName, email, role, login);
+                               @NotNull String lastName, @NotNull String email, @NotNull Role role) {
+        serviceLocator.getUserService().merge(userId, firstName, middleName, lastName, email, role);
     }
 
     @WebMethod

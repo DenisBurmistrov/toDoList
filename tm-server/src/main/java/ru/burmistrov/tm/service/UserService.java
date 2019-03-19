@@ -52,7 +52,7 @@ public final class UserService implements IUserService {
 
     @Override
     public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                               @NotNull Role role, @NotNull String login) {
+                               @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -60,7 +60,6 @@ public final class UserService implements IUserService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
-        currentUser.setLogin(login);
         AbstractEntity abstractEntity = userRepository.findOne(currentUser);
         if(abstractEntity != null)
             userRepository.merge(currentUser);

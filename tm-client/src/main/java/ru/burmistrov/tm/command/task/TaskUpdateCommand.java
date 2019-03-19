@@ -1,11 +1,11 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import java.text.ParseException;
+import java.util.Objects;
 
 public final class TaskUpdateCommand extends AbstractCommand {
 
@@ -26,7 +26,7 @@ public final class TaskUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws ParseException {
+    public void execute() throws ParseException_Exception {
         System.out.println("Введите ID проекта:");
         @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите ID задачи:");
@@ -37,7 +37,7 @@ public final class TaskUpdateCommand extends AbstractCommand {
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getTaskEndpoint().updateTaskById(, projectId, taskId, newName, description, date);
+        getServiceLocator().getTaskEndpoint().updateTaskById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId, taskId, newName, description, date);
     }
 
     @Override

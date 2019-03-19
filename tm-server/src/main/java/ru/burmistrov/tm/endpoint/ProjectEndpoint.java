@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import java.text.ParseException;
 import java.util.List;
 
-@WebService(endpointInterface = "ru.burmistrov.tm.api.service.IProjectService")
+@WebService
 public class ProjectEndpoint{
 
     private ServiceLocator serviceLocator;

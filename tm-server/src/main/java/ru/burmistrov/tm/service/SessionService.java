@@ -17,7 +17,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public Session persist(@NotNull User user) {
-        return sessionRepository.persist(user);
+    public Session persist(@NotNull String userId) {
+        return sessionRepository.persist(userId);
     }
 }

@@ -1,9 +1,9 @@
 package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public final class UserUpdatePasswordCommand extends AbstractCommand {
 
@@ -30,7 +30,7 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
             @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
             System.out.println("Введите новый пароль");
             @NotNull final String newPassword = getServiceLocator().getTerminalCommandService().nextLine();
-            getServiceLocator().getUserEndpoint().updatePasswordById(, login, newPassword);
+            getServiceLocator().getUserEndpoint().updatePasswordById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), login, newPassword);
         }
     }
 

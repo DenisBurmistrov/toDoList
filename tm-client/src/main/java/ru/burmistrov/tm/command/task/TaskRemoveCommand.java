@@ -1,9 +1,9 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public final class TaskRemoveCommand extends AbstractCommand {
 
@@ -28,7 +28,7 @@ public final class TaskRemoveCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите ID задачи");
         @NotNull final String taskId = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getTaskEndpoint().removeTaskById(, taskId);
+        getServiceLocator().getTaskEndpoint().removeTaskById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), taskId);
     }
 
     @Override

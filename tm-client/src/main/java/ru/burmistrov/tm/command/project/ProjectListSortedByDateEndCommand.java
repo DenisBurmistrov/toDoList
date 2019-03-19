@@ -2,11 +2,11 @@ package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.endpoint.Project;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ProjectListSortedByDateEndCommand extends AbstractCommand {
 
@@ -25,10 +25,11 @@ public class ProjectListSortedByDateEndCommand extends AbstractCommand {
     @Override
     public void execute() {
         System.out.println("Список проектов:");
-        @Nullable final List<AbstractEntity> projects = getServiceLocator().getProjectEndpoint().findAllProjectsSortByDateEnd();
+        @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint().findAllProjectsSortByDateEnd(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
         System.out.println("У пользователя нет проектов");
-        for (AbstractEntity project : projects) {
-            System.out.println(project);
+        for (Project project : Objects.requireNonNull(projects)) {
+            System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
+                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getDateEnd());
         }
     }
 

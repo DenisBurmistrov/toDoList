@@ -22,7 +22,7 @@ public final class UserShowCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
-            System.out.println(getServiceLocator().getUserEndpoint().getCurrentUser().toString());
+            System.out.println(getServiceLocator().getSession().getUserId());
     }
 
     @Override

@@ -1,12 +1,11 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.endpoint.Task;
 
 import java.util.List;
+import java.util.Objects;
 
 public final class TaskListCommand extends AbstractCommand {
 
@@ -29,9 +28,12 @@ public final class TaskListCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите ID проекта:");
         @NotNull final String id = getServiceLocator().getTerminalCommandService().nextLine();
-        @NotNull final List<AbstractEntity> taskList = getServiceLocator().getTaskEndpoint().findAllTasksInProject( , id);
-        for (AbstractEntity task : taskList) {
-            System.out.println(task);
+        @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint().findAllTasksInProject(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), id);
+        for (Task task : taskList) {
+            System.out.println("ID: " + task.getId() +
+                    "; Название: " + task.getName() +
+                    "; Описание: " + task.getDescription() +
+                    "; ID проекта: " + task.getProjectId());
         }
     }
 

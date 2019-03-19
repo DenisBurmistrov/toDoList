@@ -1,9 +1,9 @@
 package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public final class ProjectRemoveCommand extends AbstractCommand {
 
@@ -26,7 +26,7 @@ public final class ProjectRemoveCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите ID проекта: ");
         @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getProjectEndpoint().removeProjectById( ,projectId);
+        getServiceLocator().getProjectEndpoint().removeProjectById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId);
     }
 
     @Override

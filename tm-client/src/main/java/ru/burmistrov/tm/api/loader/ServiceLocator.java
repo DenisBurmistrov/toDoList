@@ -2,9 +2,7 @@ package ru.burmistrov.tm.api.loader;
 
 import com.sun.istack.internal.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.ProjectEndpoint;
-import ru.burmistrov.tm.endpoint.TaskEndpoint;
-import ru.burmistrov.tm.endpoint.UserEndpoint;
+import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
 import javax.xml.bind.JAXBException;
@@ -34,7 +32,7 @@ public interface ServiceLocator {
 
     void setCurrentUser(@Nullable User user);*/
 
-    void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException;
+    void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException, ParseException_Exception;
 
     ProjectEndpoint getProjectEndpoint();
 
@@ -44,5 +42,13 @@ public interface ServiceLocator {
 
     TerminalCommandService getTerminalCommandService();
 
-    public Map<String, AbstractCommand> getCommands();
-}
+    Map<String, AbstractCommand> getCommands();
+
+    void setSession(Session session);
+
+    Session getSession();
+
+    SessionEndpoint getSessionEndpoint();
+
+
+    }

@@ -1,9 +1,9 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
+
+import java.util.Objects;
 
 public class TaskFindByDescriptionCommand extends AbstractCommand {
 
@@ -23,7 +23,7 @@ public class TaskFindByDescriptionCommand extends AbstractCommand {
     public void execute() {
         System.out.println("Введите описание задачи:");
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
-        System.out.println(getServiceLocator().getTaskEndpoint().findTaskByDescription( , description));
+        System.out.println(getServiceLocator().getTaskEndpoint().findTaskByDescription(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), description));
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface IUserService {
     void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password);
 
     void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-               @NotNull Role role, @NotNull String login);
+               @NotNull Role role);
 
     void remove(@NotNull String userId);
 

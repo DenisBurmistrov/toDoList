@@ -1,12 +1,11 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.endpoint.Task;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TaskListSortedByStatus extends AbstractCommand {
 
@@ -24,10 +23,13 @@ public class TaskListSortedByStatus extends AbstractCommand {
 
     @Override
     public void execute() {
-        @NotNull final List<AbstractEntity> taskList = getServiceLocator().getTaskEndpoint().findAllTasksSortByStatus();
+        @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint().findAllTasksSortByStatus(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
         System.out.println("Нет задач");
-        for (AbstractEntity task : taskList) {
-            System.out.println(task);
+        for (Task task : taskList) {
+            System.out.println("ID: " + task.getId() +
+                    "; Название: " + task.getName() +
+                    "; Описание: " + task.getDescription() +
+                    "; ID проекта: " + task.getProjectId());
         }
     }
 

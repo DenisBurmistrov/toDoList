@@ -6,5 +6,5 @@ import ru.burmistrov.tm.entity.User;
 
 public interface ISessionRepository {
 
-    Session persist(@NotNull User user);
+    Session persist(@NotNull String userId);
 }
