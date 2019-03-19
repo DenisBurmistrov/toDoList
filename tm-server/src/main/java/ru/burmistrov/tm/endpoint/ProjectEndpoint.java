@@ -24,61 +24,61 @@ public class ProjectEndpoint{
 
     @WebMethod
     public void removeProjectById(@NotNull String userId, @NotNull String projectId) {
-        serviceLocator.getProjectEndpoint().removeProjectById(userId, projectId);
+        serviceLocator.getProjectService().remove(userId, projectId);
     }
 
     @WebMethod
     @Nullable
     public Project createProject(@NotNull String userId, @NotNull String name,
                                   @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        return serviceLocator.getProjectEndpoint().createProject(userId, name, description, dateEnd);
+        return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
     }
 
     @WebMethod
     public void updateProjectById(@NotNull String userId, @NotNull String projectId,
                                   @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        serviceLocator.getProjectEndpoint().updateProjectById(userId, projectId, name, description, dateEnd);
+        serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
 
     }
 
     @WebMethod
     public void removeAllProjects(@NotNull String userId) {
-        serviceLocator.getProjectEndpoint().removeAllProjects(userId);
+        serviceLocator.getProjectService().removeAll(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Project> findAllProjects(@NotNull String userId) {
-        return serviceLocator.getProjectEndpoint().findAllProjects(userId);
+        return serviceLocator.getProjectService().findAll(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Project> findAllProjectsSortByDateBegin(@NotNull String userId) {
-        return serviceLocator.getProjectEndpoint().findAllProjectsSortByDateBegin(userId);
+        return serviceLocator.getProjectService().findAllSortByDateBegin(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Project> findAllProjectsSortByDateEnd(@NotNull String userId) {
-        return serviceLocator.getProjectEndpoint().findAllProjectsSortByDateEnd(userId);
+        return serviceLocator.getProjectService().findAllSortByDateEnd(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Project> findAllProjectsSortByStatus(@NotNull String userId) {
-        return serviceLocator.getProjectEndpoint().findAllProjectsSortByStatus(userId);
+        return serviceLocator.getProjectService().findAllSortByStatus(userId);
     }
 
     @WebMethod
     @Nullable
     public Project findProjectByName(@NotNull String userId, @NotNull String name) {
-        return serviceLocator.getProjectEndpoint().findProjectByName(userId, name);
+        return serviceLocator.getProjectService().findOneByName(userId, name);
     }
 
     @WebMethod
     @Nullable
     public Project findProjectByDescription(@NotNull String userId, @NotNull String description) {
-        return serviceLocator.getProjectEndpoint().findProjectByDescription(userId, description);
+        return serviceLocator.getProjectService().findOneByDescription(userId, description);
     }
 }
