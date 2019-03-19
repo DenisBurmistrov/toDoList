@@ -61,14 +61,17 @@ public class Bootstrap implements ServiceLocator {
         abstractCommand.execute();
     }
 
+    @NotNull
     public ProjectEndpoint getProjectEndpoint() {
         return projectEndpoint;
     }
 
+    @NotNull
     public TaskEndpoint getTaskEndpoint() {
         return taskEndpoint;
     }
 
+    @NotNull
     public UserEndpoint getUserEndpoint() {
         return userEndpoint;
     }

@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
+import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
@@ -27,7 +28,8 @@ public final class ProjectService implements IProjectService {
         this.taskRepository = taskRepository;
     }
 
-    public void removeProjectById(@NotNull String userId, @NotNull String projectId) throws NullPointerException {
+    @Override
+    public void remove(@NotNull String userId, @NotNull String projectId) throws NullPointerException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setId(projectId);
@@ -40,7 +42,8 @@ public final class ProjectService implements IProjectService {
         taskRepository.removeAllInProject(task);
     }
 
-    public Project createProject(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws NullPointerException, ParseException {
+    @Override
+    public Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws NullPointerException, ParseException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
@@ -55,8 +58,8 @@ public final class ProjectService implements IProjectService {
 
     }
 
-
-    public void updateProjectById(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
+    @Override
+    public void merge(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
                                   @NotNull String dateEndString) throws NullPointerException, ParseException {
         @NotNull final Project project = new Project();
         project.setId(projectId);
@@ -72,7 +75,8 @@ public final class ProjectService implements IProjectService {
         }
     }
 
-    public void removeAllProjects(@Nullable String userId) {
+    @Override
+    public void removeAll(@Nullable String userId) {
         @NotNull final Project project = new Project();
         @NotNull final Task task = new Task();
         task.setUserId(userId);
@@ -81,8 +85,9 @@ public final class ProjectService implements IProjectService {
         taskRepository.removeAll(task);
     }
 
+    @Override
     @NotNull
-    public List<Project> findAllProjects(@NotNull String userId) {
+    public List<Project> findAll(@NotNull String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAll(project);
@@ -90,7 +95,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllProjectsSortByDateBegin(@Nullable String userId) {
+    public List<Project> findAllSortByDateBegin(@Nullable String userId) {
         Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateBegin(project);
@@ -98,7 +103,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllProjectsSortByDateEnd(@Nullable String userId) {
+    public List<Project> findAllSortByDateEnd(@Nullable String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateEnd(project);
@@ -106,7 +111,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllProjectsSortByStatus(@NotNull String userId) {
+    public List<Project> findAllSortByStatus(@NotNull String userId) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByStatus(project);
@@ -114,7 +119,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public Project findProjectByName(@Nullable String userId, @NotNull String name) {
+    public Project findOneByName(@Nullable String userId, @NotNull String name) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
@@ -123,7 +128,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public Project findProjectByDescription(@Nullable String userId, @NotNull String description) {
+    public Project findOneByDescription(@Nullable String userId, @NotNull String description) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setDescription(description);

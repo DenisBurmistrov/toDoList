@@ -17,13 +17,15 @@ public final class UserService implements IUserService {
         this.userRepository = userRepository;
     }
 
+    @Override
     @Nullable
     public User logIn(@NotNull String login, @NotNull String password) {
         return userRepository.logIn(login, password);
     }
 
+    @Override
     @Nullable
-    public User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+    public User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
                            @NotNull String email, @NotNull Role roleType) {
 
         @NotNull final User user = new User();
@@ -41,13 +43,15 @@ public final class UserService implements IUserService {
         return null;
     }
 
-    public void updatePasswordById(@NotNull String userId, @NotNull String login, @NotNull String password) {
+    @Override
+    public void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password) {
         if (password.length() > 0) {
             userRepository.updatePassword(userId, login, password);
         }
     }
 
-    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+    @Override
+    public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
                                @NotNull Role role, @NotNull String login) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
@@ -63,14 +67,14 @@ public final class UserService implements IUserService {
     }
 
     @Override
-    public void removeUserById(@NotNull String userId) {
+    public void remove(@NotNull String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.remove(user);
     }
 
     @Override
-    public void removeAllUsers(@Nullable String userId) {
+    public void removeAll(@Nullable String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.removeAll(user);

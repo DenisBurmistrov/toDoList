@@ -5,63 +5,42 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 import java.text.ParseException;
 import java.util.List;
 
-@WebService
 public interface ITaskService {
 
-    @WebMethod
-    void updateTaskById(@WebParam @NotNull String userId, @WebParam @NotNull String projectId,
-                        @WebParam @NotNull String taskId, @WebParam @NotNull String newName,
-                        @WebParam @NotNull String description,
-                        @WebParam @NotNull String dateEnd) throws ParseException;
+    void merge(@NotNull String userId, @NotNull String projectId, @NotNull String taskId, @NotNull String newName,
+               @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
-    @WebMethod
     @Nullable
-    Task createTask(@NotNull @WebParam String userId, @WebParam @NotNull String projectId,
-                 @WebParam @NotNull String name, @WebParam @NotNull String description,
-                 @WebParam @NotNull String dateEnd) throws ParseException;
+    Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
+                 @NotNull String dateEnd) throws ParseException;
 
-    @WebMethod
     @NotNull
-    List<Task> findAllTasks(@WebParam @NotNull String userId);
+    List<Task> findAll(@NotNull String userId);
 
-    @WebMethod
-    void removeAllTasksInProject(@WebParam @NotNull String userId,
-                                 @WebParam @NotNull String projectId);
+    void removeAllInProject(@NotNull String userId, @NotNull String projectId);
 
-    @WebMethod
-    void removeTaskById(@WebParam @NotNull String userId, @WebParam @NotNull String taskId);
+    void remove(@NotNull String userId, @NotNull String taskId);
 
-    @WebMethod
-    void removeAllTasks(@WebParam @NotNull String userId);
+    void removeAll(@NotNull String userId);
 
-    @WebMethod
     @NotNull
-    List<Task> findAllTasksSortByDateBegin(@WebParam @NotNull String userId);
+    List<Task> findAllSortByDateBegin(@NotNull String userId);
 
-    @WebMethod
     @NotNull
-    List<Task> findAllTasksSortByDateEnd(@WebParam @NotNull String userId);
+    List<Task> findAllSortByDateEnd(@NotNull String userId);
 
-    @WebMethod
     @NotNull
-    List<Task> findAllTasksSortByStatus(@WebParam @NotNull String userId);
+    List<Task> findAllSortByStatus(@NotNull String userId);
 
-    @WebMethod
     @Nullable
-    Task findTaskByName(@WebParam(name = "userId") @NotNull String userId, String name);
+    Task findOneByName(@NotNull String userId, String name);
 
-    @WebMethod
     @Nullable
-    Task findTaskByDescription(@WebParam(name = "userId") @NotNull String userId, String description);
+    Task findOneByDescription(@NotNull String userId, String description);
 
-    @WebMethod
     @NotNull
-    List<Task> findAllTasksInProject(@WebParam(name = "userId") @NotNull String userId, @WebParam @NotNull String projectId);
+    List<Task> findAllInProject(@NotNull String userId, @NotNull String projectId);
 }

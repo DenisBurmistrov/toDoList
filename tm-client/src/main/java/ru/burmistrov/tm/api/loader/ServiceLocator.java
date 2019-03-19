@@ -15,13 +15,13 @@ import java.util.Map;
 public interface ServiceLocator {
 /*
     @NotNull
-    IProjectService<AbstractEntity> getProjectService();
+    IProjectService<AbstractEntity> getProjectEndpoint();
 
     @NotNull
-    ITaskService<AbstractEntity> getTaskService();
+    ITaskService<AbstractEntity> getTaskEndpoint();
 
     @NotNull
-    IUserService<AbstractEntity> getUserService();
+    IUserService<AbstractEntity> getUserEndpoint();
 
     @NotNull
     Map<String, AbstractCommand> getCommands();

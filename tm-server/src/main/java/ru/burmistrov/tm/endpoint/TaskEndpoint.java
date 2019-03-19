@@ -22,69 +22,69 @@ public class TaskEndpoint {
     @WebMethod
     public void updateTaskById(@NotNull String userId, @NotNull String projectId, @NotNull String taskId,
                       @NotNull String newName, @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        serviceLocator.getTaskService().updateTaskById(userId, projectId, taskId, newName, description, dateEnd);
+        serviceLocator.getTaskEndpoint().updateTaskById(userId, projectId, taskId, newName, description, dateEnd);
     }
 
     @WebMethod
     @Nullable
     public Task createTask(@NotNull String userId, @NotNull String projectId, @NotNull String name,
                            @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        return serviceLocator.getTaskService().createTask(userId, projectId, name, description, dateEnd);
+        return serviceLocator.getTaskEndpoint().createTask(userId, projectId, name, description, dateEnd);
     }
 
     @WebMethod
     @NotNull
     public List<Task> findAllTasks(@NotNull String userId) {
-        return serviceLocator.getTaskService().findAllTasks(userId);
+        return serviceLocator.getTaskEndpoint().findAllTasks(userId);
     }
 
     @WebMethod
     public void removeAllTasksInProject(@NotNull String userId, @NotNull String projectId) {
-        serviceLocator.getTaskService().removeAllTasksInProject(userId, projectId);
+        serviceLocator.getTaskEndpoint().removeAllTasksInProject(userId, projectId);
     }
 
     @WebMethod
     public void removeTaskById(@NotNull String userId, @NotNull String taskId) {
-        serviceLocator.getTaskService().removeTaskById(userId, taskId);
+        serviceLocator.getTaskEndpoint().removeTaskById(userId, taskId);
     }
 
     @WebMethod
     public void removeAllTasks(@NotNull String userId) {
-        serviceLocator.getTaskService().removeAllTasks(userId);
+        serviceLocator.getTaskEndpoint().removeAllTasks(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Task> findAllTasksSortByDateBegin(@NotNull String userId) {
-        return serviceLocator.getTaskService().findAllTasksSortByDateBegin(userId);
+        return serviceLocator.getTaskEndpoint().findAllTasksSortByDateBegin(userId);
     }
 
     @WebMethod
     @NotNull
     public List<Task> findAllTasksSortByDateEnd(@NotNull String userId) {
-        return serviceLocator.getTaskService().findAllTasksSortByDateEnd(userId);
+        return serviceLocator.getTaskEndpoint().findAllTasksSortByDateEnd(userId);
     }
 
     @NotNull
     public List<Task> findAllTasksSortByStatus(@NotNull String userId) {
-        return serviceLocator.getTaskService().findAllTasksSortByStatus(userId);
+        return serviceLocator.getTaskEndpoint().findAllTasksSortByStatus(userId);
     }
 
     @WebMethod
     @Nullable
     public Task findTaskByName(@NotNull String userId, String name) {
-        return serviceLocator.getTaskService().findTaskByName(userId, name);
+        return serviceLocator.getTaskEndpoint().findTaskByName(userId, name);
     }
 
     @WebMethod
     @Nullable
     public Task findTaskByDescription(@NotNull String userId, String description) {
-        return serviceLocator.getTaskService().findTaskByDescription(userId, description);
+        return serviceLocator.getTaskEndpoint().findTaskByDescription(userId, description);
     }
 
     @WebMethod
     @NotNull
     public List<Task> findAllTasksInProject(@NotNull String userId, @NotNull String projectId) {
-        return serviceLocator.getTaskService().findAllTasksInProject(userId, projectId);
+        return serviceLocator.getTaskEndpoint().findAllTasksInProject(userId, projectId);
     }
 }

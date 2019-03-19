@@ -5,55 +5,36 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 import java.text.ParseException;
 import java.util.List;
 
-@WebService
 public interface IProjectService {
 
-    @WebMethod
-    void removeProjectById(@WebParam @NotNull String userId, @WebParam @NotNull String projectId);
+    void remove(@NotNull String userId, @NotNull String projectId);
 
     @Nullable
-    @WebMethod
-    Project createProject(@WebParam @NotNull String userId, @WebParam @NotNull String name,
-                    @WebParam @NotNull String description,
-                    @WebParam @NotNull String dateEnd) throws ParseException;
+    Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
-    @WebMethod
-    void updateProjectById(@WebParam @NotNull String userId, @WebParam @NotNull String projectId,
-                           @WebParam @NotNull String name, @WebParam @NotNull String description,
-                           @WebParam @NotNull String dateEnd) throws ParseException;
+    void merge(@NotNull String userId, @NotNull String taskId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 
-    @WebMethod
-    void removeAllProjects(@WebParam @NotNull String userId);
+    void removeAll(@NotNull String userId);
 
     @NotNull
-    @WebMethod
-    List<Project> findAllProjects(@WebParam @NotNull String userId);
+    List<Project> findAll(@NotNull String userId);
 
     @NotNull
-    @WebMethod
-    List<Project> findAllProjectsSortByDateBegin(@WebParam @NotNull String userId);
+    List<Project> findAllSortByDateBegin(@NotNull String userId);
 
     @NotNull
-    @WebMethod
-    List<Project> findAllProjectsSortByDateEnd(@WebParam @NotNull String userId);
+    List<Project> findAllSortByDateEnd(@NotNull String userId);
 
     @NotNull
-    @WebMethod
-    List<Project> findAllProjectsSortByStatus(@WebParam @NotNull String userId);
+    List<Project> findAllSortByStatus(@NotNull String userId);
 
     @Nullable
-    @WebMethod
-    Project findProjectByName(@WebParam @NotNull String userId, @WebParam @NotNull String name);
+    Project findOneByName(@NotNull String userId, @NotNull String name);
 
     @Nullable
-    @WebMethod
-    Project findProjectByDescription(@WebParam @NotNull String userId, @WebParam @NotNull String description);
+    Project findOneByDescription(@NotNull String userId, @NotNull String description);
 
 }

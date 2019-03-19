@@ -6,39 +6,27 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
 @WebService
+@SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface IUserService {
 
-    @WebMethod
     @Nullable
-    User logIn(@WebParam @NotNull String login, @WebParam @NotNull String password);
+    User logIn(@NotNull String login, @NotNull String auth);
 
-    @WebMethod
     @Nullable
-    User createUser(@WebParam @NotNull String login, @WebParam @NotNull String password,
-                 @WebParam @NotNull String firstName, @WebParam @NotNull String middleName,
-                 @WebParam @NotNull String lastName, @WebParam @NotNull String email,
-                 @WebParam @NotNull Role roleType);
+    User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+              @NotNull String email, @Nullable Role roleType);
 
-    @WebMethod
-    void updatePasswordById(@WebParam @NotNull String userId, @WebParam @NotNull String login,
-                            @WebParam @NotNull String password);
+    void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password);
 
-    @WebMethod
-    void updateUserById(@WebParam @NotNull String userId, @WebParam @NotNull String firstName,
-                        @WebParam @NotNull String middleName, @WebParam @NotNull String lastName,
-                        @WebParam @NotNull String email, @WebParam @NotNull Role role,
-                        @WebParam @NotNull String login);
+    void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+               @NotNull Role role, @NotNull String login);
 
-    @WebMethod
-    void removeUserById(@WebParam @NotNull String userId);
+    void remove(@NotNull String userId);
 
-    @WebMethod
-    void removeAllUsers(@WebParam @NotNull String userId);
+    void removeAll(@NotNull String userId);
 
 }
