@@ -3,6 +3,7 @@ package ru.burmistrov.tm.command.project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.Project;
 
 import java.util.Objects;
@@ -21,11 +22,12 @@ public class ProjectFindByNameCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws CloneNotSupportedException_Exception {
         System.out.println("Введите имя проекта:");
         @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Проект:");
-        @Nullable final Project project = getServiceLocator().getProjectEndpoint().findProjectByName(Objects.requireNonNull(getServiceLocator().getSession().getUserId()) , name);
+        @Nullable final Project project = getServiceLocator().getProjectEndpoint()
+                .findProjectByName(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()) , name);
         System.out.println(project);
     }
 

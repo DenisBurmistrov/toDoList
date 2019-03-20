@@ -17,12 +17,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="arg0" type="{http://endpoint.tm.burmistrov.ru/}session" minOccurs="0"/&gt;
  *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg5" type="{http://endpoint.tm.burmistrov.ru/}role" minOccurs="0"/&gt;
+ *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="arg6" type="{http://endpoint.tm.burmistrov.ru/}role" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,27 +39,29 @@ import javax.xml.bind.annotation.XmlType;
     "arg2",
     "arg3",
     "arg4",
-    "arg5"
+    "arg5",
+    "arg6"
 })
 public class UpdateUserById {
 
-    protected String arg0;
+    protected Session arg0;
     protected String arg1;
     protected String arg2;
     protected String arg3;
     protected String arg4;
+    protected String arg5;
     @XmlSchemaType(name = "string")
-    protected Role arg5;
+    protected Role arg6;
 
     /**
      * Gets the value of the arg0 property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Session }
      *     
      */
-    public String getArg0() {
+    public Session getArg0() {
         return arg0;
     }
 
@@ -67,10 +70,10 @@ public class UpdateUserById {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Session }
      *     
      */
-    public void setArg0(String value) {
+    public void setArg0(Session value) {
         this.arg0 = value;
     }
 
@@ -175,10 +178,10 @@ public class UpdateUserById {
      * 
      * @return
      *     possible object is
-     *     {@link Role }
+     *     {@link String }
      *     
      */
-    public Role getArg5() {
+    public String getArg5() {
         return arg5;
     }
 
@@ -187,11 +190,35 @@ public class UpdateUserById {
      * 
      * @param value
      *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setArg5(String value) {
+        this.arg5 = value;
+    }
+
+    /**
+     * Gets the value of the arg6 property.
+     * 
+     * @return
+     *     possible object is
      *     {@link Role }
      *     
      */
-    public void setArg5(Role value) {
-        this.arg5 = value;
+    public Role getArg6() {
+        return arg6;
+    }
+
+    /**
+     * Sets the value of the arg6 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Role }
+     *     
+     */
+    public void setArg6(Role value) {
+        this.arg6 = value;
     }
 
 }

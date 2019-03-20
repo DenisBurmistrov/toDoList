@@ -3,16 +3,11 @@ package ru.burmistrov.tm.bootstrap;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.repository.IUserRepository;
-import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
-import ru.burmistrov.tm.api.endpoint.ISessionEndpoint;
-import ru.burmistrov.tm.api.endpoint.ITaskEndpoint;
-import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
 import ru.burmistrov.tm.api.service.*;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.entity.*;
@@ -45,7 +40,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IUserService userService = new UserService(userRepository);
 
-    @NotNull private final ISessionService sessionService = new SessionService(sessionRepository);
+    @NotNull private final ISessionService sessionService = new SessionService(sessionRepository, userRepository);
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 

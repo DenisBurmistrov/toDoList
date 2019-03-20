@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
@@ -27,7 +28,9 @@ public class UserEndpoint implements IUserEndpoint {
 
     @WebMethod
     @Override
-    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) {
-        serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
+    public void updateUserById(@NotNull Session session, @NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
+        }
     }
 }

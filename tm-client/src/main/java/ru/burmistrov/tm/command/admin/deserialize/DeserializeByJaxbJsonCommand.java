@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.admin.deserialize;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.JAXBException_Exception;
 
 public class DeserializeByJaxbJsonCommand extends AbstractCommand {
@@ -19,7 +20,7 @@ public class DeserializeByJaxbJsonCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws JAXBException_Exception {
+    public void execute() throws JAXBException_Exception, CloneNotSupportedException_Exception {
         getServiceLocator().getAdminEndpoint().loadDataByJaxbJson(getServiceLocator().getSession());
     }
 

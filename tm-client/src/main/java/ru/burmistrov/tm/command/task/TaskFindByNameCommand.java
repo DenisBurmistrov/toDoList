@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 
 import java.util.Objects;
 
@@ -20,10 +21,11 @@ public class TaskFindByNameCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws CloneNotSupportedException_Exception {
         System.out.println("Введите имя задачи:");
         @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
-        System.out.println(getServiceLocator().getTaskEndpoint().findTaskByName(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), name));
+        System.out.println(getServiceLocator().getTaskEndpoint()
+                .findTaskByName(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()), name));
     }
 
     @Override

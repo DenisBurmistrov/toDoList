@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 
 import java.util.Objects;
 
@@ -23,8 +24,8 @@ public final class TaskClearCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
-        getServiceLocator().getTaskEndpoint().removeAllTasks(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+    public void execute() throws CloneNotSupportedException_Exception {
+        getServiceLocator().getTaskEndpoint().removeAllTasks(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
     }
 
     @Override

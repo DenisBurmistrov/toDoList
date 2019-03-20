@@ -25,6 +25,7 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _ClassNotFoundException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "ClassNotFoundException");
+    private final static QName _CloneNotSupportedException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "CloneNotSupportedException");
     private final static QName _IOException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "IOException");
     private final static QName _JAXBException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "JAXBException");
     private final static QName _CreateUser_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "createUser");
@@ -71,6 +72,14 @@ public class ObjectFactory {
      */
     public ClassNotFoundException createClassNotFoundException() {
         return new ClassNotFoundException();
+    }
+
+    /**
+     * Create an instance of {@link CloneNotSupportedException }
+     * 
+     */
+    public CloneNotSupportedException createCloneNotSupportedException() {
+        return new CloneNotSupportedException();
     }
 
     /**
@@ -368,6 +377,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "ClassNotFoundException")
     public JAXBElement<ClassNotFoundException> createClassNotFoundException(ClassNotFoundException value) {
         return new JAXBElement<ClassNotFoundException>(_ClassNotFoundException_QNAME, ClassNotFoundException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CloneNotSupportedException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "CloneNotSupportedException")
+    public JAXBElement<CloneNotSupportedException> createCloneNotSupportedException(CloneNotSupportedException value) {
+        return new JAXBElement<CloneNotSupportedException>(_CloneNotSupportedException_QNAME, CloneNotSupportedException.class, null, value);
     }
 
     /**

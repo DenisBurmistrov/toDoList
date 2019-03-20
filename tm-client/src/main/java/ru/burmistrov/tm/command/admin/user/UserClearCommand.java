@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.admin.user;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 
 import java.util.Objects;
 
@@ -24,8 +25,8 @@ public class UserClearCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
-        getServiceLocator().getAdminEndpoint().removeAllUsers(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+    public void execute() throws CloneNotSupportedException_Exception {
+        getServiceLocator().getAdminEndpoint().removeAllUsers(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
     }
 
     @Override

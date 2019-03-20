@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.admin.user;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.Role;
 
 public final class UserRegistrateCommand extends AbstractCommand {
@@ -22,7 +23,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws CloneNotSupportedException_Exception {
         System.out.println("Введите логин:");
         @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");
@@ -35,7 +36,8 @@ public final class UserRegistrateCommand extends AbstractCommand {
         @NotNull final String middleName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите почту:");
         @NotNull final String email = getServiceLocator().getTerminalCommandService().nextLine();
-        System.out.println(getServiceLocator().getAdminEndpoint().createUser(login, password, firstName, lastName, middleName, email, Role.COMMON_USER) + " зарегистрирован");
+        System.out.println(getServiceLocator().getAdminEndpoint().createUser(getServiceLocator().getSession(), login, password, firstName, lastName, middleName,
+                email, Role.COMMON_USER) + " зарегистрирован");
     }
 
     @Override

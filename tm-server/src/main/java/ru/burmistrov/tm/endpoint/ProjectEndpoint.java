@@ -2,8 +2,10 @@ package ru.burmistrov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Session;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -11,7 +13,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @WebService
-public class ProjectEndpoint{
+public class ProjectEndpoint implements IProjectEndpoint {
 
     private ServiceLocator serviceLocator;
 
@@ -23,62 +25,88 @@ public class ProjectEndpoint{
     }
 
     @WebMethod
-    public void removeProjectById(@NotNull String userId, @NotNull String projectId) {
-        serviceLocator.getProjectService().remove(userId, projectId);
+    public void removeProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            serviceLocator.getProjectService().remove(userId, projectId);
+        }
     }
 
     @WebMethod
     @Nullable
-    public Project createProject(@NotNull String userId, @NotNull String name,
-                                  @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
+    public Project createProject(@NotNull Session session, @NotNull String userId, @NotNull String name,
+                                  @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
+        }
+        return null;
     }
 
     @WebMethod
-    public void updateProjectById(@NotNull String userId, @NotNull String projectId,
-                                  @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException {
-        serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
-
+    public void updateProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId,
+                                  @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
+        }
     }
 
     @WebMethod
-    public void removeAllProjects(@NotNull String userId) {
-        serviceLocator.getProjectService().removeAll(userId);
-    }
-
-    @WebMethod
-    @NotNull
-    public List<Project> findAllProjects(@NotNull String userId) {
-        return serviceLocator.getProjectService().findAll(userId);
-    }
-
-    @WebMethod
-    @NotNull
-    public List<Project> findAllProjectsSortByDateBegin(@NotNull String userId) {
-        return serviceLocator.getProjectService().findAllSortByDateBegin(userId);
+    public void removeAllProjects(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            serviceLocator.getProjectService().removeAll(userId);
+        }
     }
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjectsSortByDateEnd(@NotNull String userId) {
-        return serviceLocator.getProjectService().findAllSortByDateEnd(userId);
+    public List<Project> findAllProjects(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findAll(userId);
+        }
+        return null;
     }
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjectsSortByStatus(@NotNull String userId) {
-        return serviceLocator.getProjectService().findAllSortByStatus(userId);
+    public List<Project> findAllProjectsSortByDateBegin(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findAllSortByDateBegin(userId);
+        }
+        return null;
+    }
+
+    @WebMethod
+    @NotNull
+    public List<Project> findAllProjectsSortByDateEnd(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findAllSortByDateEnd(userId);
+        }
+        return null;
+    }
+
+    @WebMethod
+    @NotNull
+    public List<Project> findAllProjectsSortByStatus(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findAllSortByStatus(userId);
+        }
+        return null;
     }
 
     @WebMethod
     @Nullable
-    public Project findProjectByName(@NotNull String userId, @NotNull String name) {
-        return serviceLocator.getProjectService().findOneByName(userId, name);
+    public Project findProjectByName(@NotNull Session session, @NotNull String userId, @NotNull String name) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findOneByName(userId, name);
+        }
+        return null;
     }
 
     @WebMethod
     @Nullable
-    public Project findProjectByDescription(@NotNull String userId, @NotNull String description) {
-        return serviceLocator.getProjectService().findOneByDescription(userId, description);
+    public Project findProjectByDescription(@NotNull Session session, @NotNull String userId, @NotNull String description) throws CloneNotSupportedException {
+        if (serviceLocator.getSessionService().validate(session)) {
+            return serviceLocator.getProjectService().findOneByDescription(userId, description);
+        }
+        return null;
     }
 }

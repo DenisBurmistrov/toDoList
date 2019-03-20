@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Session;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -16,44 +17,44 @@ import java.util.List;
 public interface IProjectEndpoint {
 
     @WebMethod
-    void removeProjectById(@WebParam @NotNull String userId, @WebParam @NotNull String projectId);
+    void removeProjectById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId) throws CloneNotSupportedException;
 
     @Nullable
     @WebMethod
-    Project createProject(@WebParam @NotNull String userId, @WebParam @NotNull String name,
+    Project createProject(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String name,
                     @WebParam @NotNull String description,
-                    @WebParam @NotNull String dateEnd) throws ParseException;
+                    @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException;
 
     @WebMethod
-    void updateProjectById(@WebParam @NotNull String userId, @WebParam @NotNull String projectId,
+    void updateProjectById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId,
                            @WebParam @NotNull String name, @WebParam @NotNull String description,
-                           @WebParam @NotNull String dateEnd) throws ParseException;
+                           @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException;
 
     @WebMethod
-    void removeAllProjects(@WebParam @NotNull String userId);
-
-    @NotNull
-    @WebMethod
-    List<Project> findAllProjects(@WebParam @NotNull String userId);
+    void removeAllProjects(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
     @NotNull
     @WebMethod
-    List<Project> findAllProjectsSortByDateBegin(@WebParam @NotNull String userId);
+    List<Project> findAllProjects(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
     @NotNull
     @WebMethod
-    List<Project> findAllProjectsSortByDateEnd(@WebParam @NotNull String userId);
+    List<Project> findAllProjectsSortByDateBegin(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
     @NotNull
     @WebMethod
-    List<Project> findAllProjectsSortByStatus(@WebParam @NotNull String userId);
+    List<Project> findAllProjectsSortByDateEnd(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+
+    @NotNull
+    @WebMethod
+    List<Project> findAllProjectsSortByStatus(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
     @Nullable
     @WebMethod
-    Project findProjectByName(@WebParam @NotNull String userId, @WebParam @NotNull String name);
+    Project findProjectByName(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String name) throws CloneNotSupportedException;
 
     @Nullable
     @WebMethod
-    Project findProjectByDescription(@WebParam @NotNull String userId, @WebParam @NotNull String description);
+    Project findProjectByDescription(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String description) throws CloneNotSupportedException;
 
 }

@@ -10,8 +10,12 @@ public class Session extends AbstractEntity {
 
     private String userId;
 
-    //private String signature;
+    private String signature;
 
-    //private Date dateBegin = new Date();
+    private Date timesTemp = new Date();
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

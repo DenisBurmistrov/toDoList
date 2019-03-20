@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.Task;
 
 import java.util.List;
@@ -21,8 +22,9 @@ public class TaskListSortedByDateEndCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
-        @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint().findAllTasksSortByDateEnd(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+    public void execute() throws CloneNotSupportedException_Exception {
+        @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint()
+                .findAllTasksSortByDateEnd(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
         for (Task task : taskList) {
             System.out.println("ID: " + task.getId() +
                     "; Название: " + task.getName() +

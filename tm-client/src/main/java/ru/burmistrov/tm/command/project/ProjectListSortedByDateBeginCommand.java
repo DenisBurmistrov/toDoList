@@ -3,6 +3,7 @@ package ru.burmistrov.tm.command.project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.Project;
 
 import java.util.List;
@@ -23,9 +24,10 @@ public class ProjectListSortedByDateBeginCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws CloneNotSupportedException_Exception {
         System.out.println("Список проектов:");
-        @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint().findAllProjectsSortByDateBegin(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+        @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint()
+                .findAllProjectsSortByDateBegin(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
         for (Project project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
                     + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getDateEnd());

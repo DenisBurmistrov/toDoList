@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import java.text.ParseException;
@@ -25,7 +26,7 @@ public final class ProjectCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws ParseException_Exception {
+    public void execute() throws ParseException_Exception, CloneNotSupportedException_Exception {
         System.out.println("Введите имя:");
         @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         if (name.length() == 0) {
@@ -35,7 +36,8 @@ public final class ProjectCreateCommand extends AbstractCommand {
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончания (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getProjectEndpoint().createProject(Objects.requireNonNull(getServiceLocator().getSession().getUserId()) , name, description, date);
+        getServiceLocator().getProjectEndpoint().createProject(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()),
+                name, description, date);
     }
 
     @Override

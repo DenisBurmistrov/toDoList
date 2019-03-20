@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 
 import java.util.Objects;
 
@@ -23,8 +24,8 @@ public final class ProjectClearCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() {
-        getServiceLocator().getProjectEndpoint().removeAllProjects(Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+    public void execute() throws CloneNotSupportedException_Exception {
+        getServiceLocator().getProjectEndpoint().removeAllProjects(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
     }
 
     @Override

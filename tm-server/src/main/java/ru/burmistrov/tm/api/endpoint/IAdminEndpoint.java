@@ -17,55 +17,55 @@ import java.io.IOException;
 public interface IAdminEndpoint {
 
     @WebMethod
-    void saveDataByDefault(@WebParam @NotNull Session session) throws IOException;
+    void saveDataByDefault(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void saveDataByFasterXmlJson(@WebParam @NotNull Session session) throws IOException;
+    void saveDataByFasterXmlJson(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void saveDataByFasterXml(@WebParam @NotNull Session session) throws IOException;
+    void saveDataByFasterXml(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void saveDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException, IOException;
+    void saveDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException, IOException, CloneNotSupportedException;
 
     @WebMethod
-    void saveDataByJaxbXml(@WebParam @NotNull Session session) throws IOException, JAXBException;
+    void saveDataByJaxbXml(@WebParam @NotNull Session session) throws IOException, JAXBException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByDefault(@WebParam @NotNull Session session) throws IOException, ClassNotFoundException;
+    void loadDataByDefault(@WebParam @NotNull Session session) throws IOException, ClassNotFoundException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByFasterXmlJson(@WebParam @NotNull Session session) throws IOException;
+    void loadDataByFasterXmlJson(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByFasterXml(@WebParam @NotNull Session session) throws IOException;
+    void loadDataByFasterXml(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException;
+    void loadDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByJaxbXml(@WebParam @NotNull Session session) throws JAXBException;
+    void loadDataByJaxbXml(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException;
 
     @WebMethod
     @Nullable
-    User createUser(@WebParam @NotNull String login, @WebParam @NotNull String password,
+    User createUser(@WebParam @NotNull Session session, @WebParam @NotNull String login, @WebParam @NotNull String password,
                     @WebParam @NotNull String firstName, @WebParam @NotNull String middleName,
                     @WebParam @NotNull String lastName, @WebParam @NotNull String email,
-                    @WebParam @NotNull Role roleType);
+                    @WebParam @NotNull Role roleType) throws CloneNotSupportedException;
 
     @WebMethod
-    void updatePasswordById(@WebParam @NotNull String userId, @WebParam @NotNull String login,
-                            @WebParam @NotNull String password);
+    void updatePasswordById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String login,
+                            @WebParam @NotNull String password) throws CloneNotSupportedException;
 
     @WebMethod
-    void updateUserById(@WebParam @NotNull String userId, @WebParam @NotNull String firstName,
+    void updateUserById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String firstName,
                         @WebParam @NotNull String middleName, @WebParam @NotNull String lastName,
-                        @WebParam @NotNull String email, @WebParam @NotNull Role role);
+                        @WebParam @NotNull String email, @WebParam @NotNull Role role) throws CloneNotSupportedException;
 
     @WebMethod
-    void removeUserById(@WebParam @NotNull String userId);
+    void removeUserById(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
     @WebMethod
-    void removeAllUsers(@WebParam @NotNull String userId);
+    void removeAllUsers(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
 
 }

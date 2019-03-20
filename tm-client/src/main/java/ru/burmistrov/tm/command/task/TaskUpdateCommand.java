@@ -2,6 +2,7 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
 import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import java.text.ParseException;
@@ -26,7 +27,7 @@ public final class TaskUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws ParseException_Exception {
+    public void execute() throws ParseException_Exception, CloneNotSupportedException_Exception {
         System.out.println("Введите ID проекта:");
         @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите ID задачи:");
@@ -37,7 +38,8 @@ public final class TaskUpdateCommand extends AbstractCommand {
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getTaskEndpoint().updateTaskById(Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId, taskId, newName, description, date);
+        getServiceLocator().getTaskEndpoint()
+                .updateTaskById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId, taskId, newName, description, date);
     }
 
     @Override
