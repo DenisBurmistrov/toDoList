@@ -1,7 +1,7 @@
 package ru.burmistrov.tm.bootstrap;
 
-import com.sun.istack.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.*;
@@ -62,7 +62,7 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception {
+    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception, CloneNotSupportedException_Exception {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

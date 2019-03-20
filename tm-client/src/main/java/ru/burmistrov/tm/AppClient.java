@@ -1,6 +1,6 @@
 package ru.burmistrov.tm;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.bootstrap.Bootstrap;
 import ru.burmistrov.tm.command.admin.deserialize.*;
 import ru.burmistrov.tm.command.admin.serialize.*;

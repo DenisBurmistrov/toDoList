@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-public class Session extends AbstractEntity {
+public class Session extends AbstractEntity implements Cloneable {
 
     private String userId;
 

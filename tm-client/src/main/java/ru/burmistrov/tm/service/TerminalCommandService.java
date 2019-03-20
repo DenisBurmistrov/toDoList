@@ -2,13 +2,11 @@ package ru.burmistrov.tm.service;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.endpoint.ClassNotFoundException_Exception;
-import ru.burmistrov.tm.endpoint.IOException_Exception;
-import ru.burmistrov.tm.endpoint.JAXBException_Exception;
-import ru.burmistrov.tm.endpoint.ParseException_Exception;
+import ru.burmistrov.tm.endpoint.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.lang.ClassNotFoundException;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -38,7 +36,7 @@ public class TerminalCommandService {
             } catch (NullPointerException e) {
                 System.out.println("Неверно введены данные");
                 e.printStackTrace();
-            } catch (IOException | JAXBException | ClassNotFoundException | ParseException_Exception | IOException_Exception | JAXBException_Exception | ClassNotFoundException_Exception e) {
+            } catch (IOException | JAXBException | ClassNotFoundException | ParseException_Exception | IOException_Exception | JAXBException_Exception | ClassNotFoundException_Exception | CloneNotSupportedException_Exception e) {
                 e.printStackTrace();
             }
         }
