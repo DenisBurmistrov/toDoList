@@ -2,7 +2,9 @@ package ru.burmistrov.tm;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.bootstrap.Bootstrap;
+import ru.burmistrov.tm.command.deserialize.*;
 import ru.burmistrov.tm.command.project.*;
+import ru.burmistrov.tm.command.serialize.*;
 import ru.burmistrov.tm.command.task.*;
 import ru.burmistrov.tm.command.user.*;
 import ru.burmistrov.tm.command.system.*;
@@ -18,9 +20,9 @@ public class AppClient {
             TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class,
             TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
             UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
-            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class/*, SerializeByDefaultCommand.class,
+            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class, SerializeByDefaultCommand.class,
                 SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFatserXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
-                DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class*/};
+                DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class};
 
     public static void main(String[] args) throws MalformedURLException {
 

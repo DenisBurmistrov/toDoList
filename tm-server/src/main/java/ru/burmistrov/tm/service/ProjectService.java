@@ -34,12 +34,13 @@ public final class ProjectService implements IProjectService {
         project.setUserId(userId);
         project.setId(projectId);
         AbstractEntity abstractEntity = projectRepository.findOne(project);
-        System.out.println(abstractEntity);
-        projectRepository.remove(project);
-        Task task = new Task();
-        task.setUserId(userId);
-        task.setProjectId(projectId);
-        taskRepository.removeAllInProject(task);
+        if(abstractEntity != null) {
+            projectRepository.remove(project);
+            Task task = new Task();
+            task.setUserId(userId);
+            task.setProjectId(projectId);
+            taskRepository.removeAllInProject(task);
+        }
     }
 
     @Override

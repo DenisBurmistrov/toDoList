@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="arg5" type="{http://endpoint.tm.burmistrov.ru/}role" minOccurs="0"/&gt;
- *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,8 +38,7 @@ import javax.xml.bind.annotation.XmlType;
     "arg2",
     "arg3",
     "arg4",
-    "arg5",
-    "arg6"
+    "arg5"
 })
 public class UpdateUserById {
 
@@ -51,7 +49,6 @@ public class UpdateUserById {
     protected String arg4;
     @XmlSchemaType(name = "string")
     protected Role arg5;
-    protected String arg6;
 
     /**
      * Gets the value of the arg0 property.
@@ -195,30 +192,6 @@ public class UpdateUserById {
      */
     public void setArg5(Role value) {
         this.arg5 = value;
-    }
-
-    /**
-     * Gets the value of the arg6 property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getArg6() {
-        return arg6;
-    }
-
-    /**
-     * Sets the value of the arg6 property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setArg6(String value) {
-        this.arg6 = value;
     }
 
 }

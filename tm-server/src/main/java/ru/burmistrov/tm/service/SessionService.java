@@ -18,6 +18,8 @@ public class SessionService implements ISessionService {
 
     @Override
     public Session persist(@NotNull String userId) {
-        return sessionRepository.persist(userId);
+        Session session = new Session();
+        session.setUserId(userId);
+        return sessionRepository.persist(session);
     }
 }

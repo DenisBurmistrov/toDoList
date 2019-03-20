@@ -13,23 +13,14 @@ import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
 import ru.burmistrov.tm.api.endpoint.ISessionEndpoint;
 import ru.burmistrov.tm.api.endpoint.ITaskEndpoint;
 import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
-import ru.burmistrov.tm.api.service.IProjectService;
-import ru.burmistrov.tm.api.service.ISessionService;
-import ru.burmistrov.tm.api.service.ITaskService;
-import ru.burmistrov.tm.api.service.IUserService;
-import ru.burmistrov.tm.endpoint.ProjectEndpoint;
-import ru.burmistrov.tm.endpoint.SessionEndpoint;
-import ru.burmistrov.tm.endpoint.TaskEndpoint;
-import ru.burmistrov.tm.endpoint.UserEndpoint;
+import ru.burmistrov.tm.api.service.*;
+import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.SessionRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.repository.UserRepository;
-import ru.burmistrov.tm.service.ProjectService;
-import ru.burmistrov.tm.service.SessionService;
-import ru.burmistrov.tm.service.TaskService;
-import ru.burmistrov.tm.service.UserService;
+import ru.burmistrov.tm.service.*;
 
 import javax.xml.ws.Endpoint;
 import java.text.ParseException;
@@ -56,8 +47,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final ISessionService sessionService = new SessionService(sessionRepository);
 
-    @Nullable private User currentUser;
-
+    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository);
 
     private void initProjectAndUserAndTask() {
         try {
@@ -84,6 +74,7 @@ public final class Bootstrap implements ServiceLocator {
         Endpoint.publish("http://localhost:8080/TaskEndpoint", new TaskEndpoint(this));
         Endpoint.publish("http://localhost:8080/UserEndpoint", new UserEndpoint(this));
         Endpoint.publish("http://localhost:8080/SessionEndpoint", new SessionEndpoint(this));
+        Endpoint.publish("http://localhost:8080/AdminEndpoint", new AdminEndpoint(this));
     }
 
 

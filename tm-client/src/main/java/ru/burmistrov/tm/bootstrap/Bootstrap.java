@@ -9,6 +9,7 @@ import ru.burmistrov.tm.service.TerminalCommandService;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.lang.ClassNotFoundException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,6 +23,8 @@ public class Bootstrap implements ServiceLocator {
 
     private final SessionEndpointService sessionEndpointService = new SessionEndpointService();
 
+    private final AdminEndpointService adminEndpointService = new AdminEndpointService();
+
     private final SessionEndpoint sessionEndpoint = sessionEndpointService.getSessionEndpointPort();
 
     private final ProjectEndpoint projectEndpoint = projectEndpointService.getProjectEndpointPort();
@@ -29,6 +32,8 @@ public class Bootstrap implements ServiceLocator {
     private final TaskEndpoint taskEndpoint = taskEndpointService.getTaskEndpointPort();
 
     private final UserEndpoint userEndpoint = userEndpointService.getUserEndpointPort();
+
+    private final AdminEndpoint adminEndpoint = adminEndpointService.getAdminEndpointPort();
 
     private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
@@ -57,7 +62,7 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException, ParseException_Exception {
+    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
@@ -108,6 +113,11 @@ public class Bootstrap implements ServiceLocator {
 
     public SessionEndpoint getSessionEndpoint() {
         return sessionEndpoint;
+    }
+
+    @Override
+    public AdminEndpoint getAdminEndpoint() {
+        return adminEndpoint;
     }
 }
 

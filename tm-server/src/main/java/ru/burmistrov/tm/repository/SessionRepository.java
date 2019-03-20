@@ -16,10 +16,4 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     @NotNull
     private final LinkedHashMap<String, Session> sessions = getAbstractMap();
 
-    @Override
-    public Session persist(@NotNull String userId) {
-        Session session = new Session();
-        session.setUserId(userId);
-        return session;
-    }
 }

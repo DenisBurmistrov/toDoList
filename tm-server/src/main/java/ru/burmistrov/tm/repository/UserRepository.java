@@ -75,7 +75,7 @@ public final class UserRepository implements IUserRepository  {
     public User findOne(@Nullable User abstractEntity) {
         List<User> result = new ArrayList<>();
         users.forEach((k,v) -> {
-            if(v.equals(abstractEntity)) {
+            if(k.equals(Objects.requireNonNull(abstractEntity).getId())) {
                 result.add(v);
             }
         });
