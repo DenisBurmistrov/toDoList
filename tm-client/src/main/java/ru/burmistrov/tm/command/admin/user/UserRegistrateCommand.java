@@ -37,7 +37,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
         System.out.println("Введите почту:");
         @NotNull final String email = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println(getServiceLocator().getAdminEndpoint().createUser(getServiceLocator().getSession(), login, password, firstName, lastName, middleName,
-                email, Role.COMMON_USER) + " зарегистрирован");
+                email, Role.COMMON_USER));
     }
 
     @Override
