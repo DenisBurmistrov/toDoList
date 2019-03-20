@@ -69,11 +69,11 @@ public class Bootstrap implements ServiceLocator {
         if (abstractCommand.isSecure()) {
             if (isAuth()) {
                 abstractCommand.execute();
-                 }
-                return;
             }
-            abstractCommand.execute();
+            return;
         }
+        abstractCommand.execute();
+    }
 
     @NotNull
     public ProjectEndpoint getProjectEndpoint() {
@@ -120,4 +120,3 @@ public class Bootstrap implements ServiceLocator {
         return adminEndpoint;
     }
 }
-

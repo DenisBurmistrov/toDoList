@@ -2,9 +2,9 @@ package ru.burmistrov.tm;
 
 
 import org.jetbrains.annotations.NotNull;
-import ru.burmistrov.tm.command.deserialize.*;
+import ru.burmistrov.tm.command.admin.deserialize.*;
 import ru.burmistrov.tm.command.project.*;
-import ru.burmistrov.tm.command.serialize.*;
+import ru.burmistrov.tm.command.admin.serialize.*;
 import ru.burmistrov.tm.command.system.PrintListCommand;
 import ru.burmistrov.tm.command.system.PrintManifestCommand;
 import ru.burmistrov.tm.command.task.*;

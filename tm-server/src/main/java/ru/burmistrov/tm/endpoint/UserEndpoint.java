@@ -2,6 +2,7 @@ package ru.burmistrov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.User;
@@ -10,7 +11,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 @WebService
-public class UserEndpoint{
+public class UserEndpoint implements IUserEndpoint {
 
     private ServiceLocator serviceLocator;
 
@@ -25,30 +26,8 @@ public class UserEndpoint{
     }
 
     @WebMethod
-    @Nullable
-    public User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName,
-                                     @NotNull String lastName, @NotNull String email, @NotNull Role roleType) {
-        return serviceLocator.getUserService().persist(login, password, firstName, middleName, lastName, email, roleType);
-    }
-
-    @WebMethod
-    public void updatePasswordById(@NotNull String userId, @NotNull String login, @NotNull String password) {
-        serviceLocator.getUserService().updatePassword(userId, login, password);
-    }
-
-    @WebMethod
-    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName,
-                               @NotNull String lastName, @NotNull String email, @NotNull Role role) {
-        serviceLocator.getUserService().merge(userId, firstName, middleName, lastName, email, role);
-    }
-
-    @WebMethod
-    public void removeUserById(@NotNull String userId) {
-        serviceLocator.getUserService().remove(userId);
-    }
-
-    @WebMethod
-    public void removeAllUsers(@NotNull String userId) {
-        serviceLocator.getUserService().removeAll(userId);
+    @Override
+    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) {
+        serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
     }
 }

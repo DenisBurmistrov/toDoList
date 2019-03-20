@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.endpoint;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.ISessionEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.entity.Session;
@@ -26,5 +27,11 @@ public class SessionEndpoint implements ISessionEndpoint {
     public Session getNewSession(@NotNull String userId) {
 
         return serviceLocator.getSessionService().persist(userId);
+    }
+
+    @WebMethod
+    @Nullable
+    public User logIn(@NotNull String login, @NotNull String password) {
+        return serviceLocator.getUserService().logIn(login, password);
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.repository.IUserRepository;
@@ -12,9 +13,6 @@ import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.*;
-import ru.burmistrov.tm.repository.ProjectRepository;
-import ru.burmistrov.tm.repository.TaskRepository;
-import ru.burmistrov.tm.repository.UserRepository;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -35,11 +33,14 @@ public class AdminService implements IAdminService {
 
     private ITaskRepository taskRepository;
 
-    public AdminService(IProjectService projectService, ITaskService taskService, IProjectRepository projectRepository, ITaskRepository taskRepository) {
+    private IUserRepository userRepository;
+
+    public AdminService(IProjectService projectService, ITaskService taskService, IProjectRepository projectRepository, ITaskRepository taskRepository, IUserRepository userRepository) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
     }
 
     public void saveDataByDefault(@NotNull Session session) throws IOException {
@@ -241,6 +242,62 @@ public class AdminService implements IAdminService {
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
         }
+    }
+
+    @Override
+    @Nullable
+    public User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+                        @NotNull String email, @NotNull Role roleType) {
+
+        @NotNull final User user = new User();
+        user.setRole(roleType);
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setFirstName(firstName);
+        user.setMiddleName(middleName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        User abstractEntity = userRepository.findOne(user);
+        if(abstractEntity == null)
+            return userRepository.persist(user);
+
+        return null;
+    }
+
+    @Override
+    public void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password) {
+        if (password.length() > 0) {
+            userRepository.updatePassword(userId, login, password);
+        }
+    }
+
+    @Override
+    public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+                      @NotNull Role role) {
+        @NotNull final User currentUser = new User();
+        currentUser.setFirstName(firstName);
+        currentUser.setMiddleName(middleName);
+        currentUser.setLastName(lastName);
+        currentUser.setEmail(email);
+        currentUser.setId(userId);
+        currentUser.setRole(role);
+        AbstractEntity abstractEntity = userRepository.findOne(currentUser);
+        if(abstractEntity != null)
+            userRepository.merge(currentUser);
+    }
+
+    @Override
+    public void remove(@NotNull String userId) {
+        @NotNull final User user = new User();
+        user.setId(userId);
+        userRepository.remove(user);
+    }
+
+    @Override
+    public void removeAll(@Nullable String userId) {
+        @NotNull final User user = new User();
+        user.setId(userId);
+        userRepository.removeAll(user);
     }
 
 }

@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.api.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.*;
 
 import javax.xml.bind.JAXBException;
@@ -27,4 +28,18 @@ public interface IAdminService {
     void loadDataByJaxbJson(@NotNull Session session) throws JAXBException;
 
     void loadDataByJaxbXml(@NotNull Session session) throws JAXBException;
+
+    @Nullable
+    User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+                 @NotNull String email, @Nullable Role roleType);
+
+    void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password);
+
+    void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+               @NotNull Role role);
+
+    void remove(@NotNull String userId);
+
+    void removeAll(@NotNull String userId);
+
 }

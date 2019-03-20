@@ -47,12 +47,12 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final ISessionService sessionService = new SessionService(sessionRepository);
 
-    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository);
+    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
     private void initProjectAndUserAndTask() {
         try {
-            AbstractEntity admin = userService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-            AbstractEntity commonUser = userService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
+            AbstractEntity admin = adminService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
+            AbstractEntity commonUser = adminService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
 
             AbstractEntity project1 = projectService.persist(Objects.requireNonNull(admin).getId(), "Первый проект", "Первое описание", "10.10.2019");
             AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");

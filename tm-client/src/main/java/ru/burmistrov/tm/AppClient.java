@@ -1,17 +1,22 @@
 package ru.burmistrov.tm;
 
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 import ru.burmistrov.tm.bootstrap.Bootstrap;
-import ru.burmistrov.tm.command.deserialize.*;
+import ru.burmistrov.tm.command.admin.deserialize.*;
+import ru.burmistrov.tm.command.admin.serialize.*;
+import ru.burmistrov.tm.command.admin.user.*;
 import ru.burmistrov.tm.command.project.*;
-import ru.burmistrov.tm.command.serialize.*;
+import ru.burmistrov.tm.command.system.PrintListCommand;
+import ru.burmistrov.tm.command.system.PrintManifestCommand;
 import ru.burmistrov.tm.command.task.*;
-import ru.burmistrov.tm.command.user.*;
-import ru.burmistrov.tm.command.system.*;
+import ru.burmistrov.tm.command.user.UserLogInCommand;
+import ru.burmistrov.tm.command.user.UserLogOutCommand;
+import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 
 import java.net.MalformedURLException;
 
 public class AppClient {
+
     @NotNull
     private static final  Class[] CLASSES = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
             ProjectUpdateCommand.class, PrintListCommand.class, ProjectListSortedByDateBeginCommand.class, ProjectListSortedByDateEndCommand.class,

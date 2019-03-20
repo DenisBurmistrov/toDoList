@@ -27,6 +27,8 @@ public class ObjectFactory {
     private final static QName _ClassNotFoundException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "ClassNotFoundException");
     private final static QName _IOException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "IOException");
     private final static QName _JAXBException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "JAXBException");
+    private final static QName _CreateUser_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "createUser");
+    private final static QName _CreateUserResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "createUserResponse");
     private final static QName _LoadDataByDefault_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByDefault");
     private final static QName _LoadDataByDefaultResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByDefaultResponse");
     private final static QName _LoadDataByFasterXml_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByFasterXml");
@@ -37,6 +39,10 @@ public class ObjectFactory {
     private final static QName _LoadDataByJaxbJsonResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByJaxbJsonResponse");
     private final static QName _LoadDataByJaxbXml_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByJaxbXml");
     private final static QName _LoadDataByJaxbXmlResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByJaxbXmlResponse");
+    private final static QName _RemoveAllUsers_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "removeAllUsers");
+    private final static QName _RemoveAllUsersResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "removeAllUsersResponse");
+    private final static QName _RemoveUserById_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "removeUserById");
+    private final static QName _RemoveUserByIdResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "removeUserByIdResponse");
     private final static QName _SaveDataByDefault_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByDefault");
     private final static QName _SaveDataByDefaultResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByDefaultResponse");
     private final static QName _SaveDataByFasterXml_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByFasterXml");
@@ -47,6 +53,10 @@ public class ObjectFactory {
     private final static QName _SaveDataByJaxbJsonResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByJaxbJsonResponse");
     private final static QName _SaveDataByJaxbXml_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByJaxbXml");
     private final static QName _SaveDataByJaxbXmlResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "saveDataByJaxbXmlResponse");
+    private final static QName _UpdatePasswordById_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "updatePasswordById");
+    private final static QName _UpdatePasswordByIdResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "updatePasswordByIdResponse");
+    private final static QName _UpdateUserById_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "updateUserById");
+    private final static QName _UpdateUserByIdResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "updateUserByIdResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: ru.burmistrov.tm.endpoint
@@ -77,6 +87,22 @@ public class ObjectFactory {
      */
     public JAXBException createJAXBException() {
         return new JAXBException();
+    }
+
+    /**
+     * Create an instance of {@link CreateUser }
+     * 
+     */
+    public CreateUser createCreateUser() {
+        return new CreateUser();
+    }
+
+    /**
+     * Create an instance of {@link CreateUserResponse }
+     * 
+     */
+    public CreateUserResponse createCreateUserResponse() {
+        return new CreateUserResponse();
     }
 
     /**
@@ -160,6 +186,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RemoveAllUsers }
+     * 
+     */
+    public RemoveAllUsers createRemoveAllUsers() {
+        return new RemoveAllUsers();
+    }
+
+    /**
+     * Create an instance of {@link RemoveAllUsersResponse }
+     * 
+     */
+    public RemoveAllUsersResponse createRemoveAllUsersResponse() {
+        return new RemoveAllUsersResponse();
+    }
+
+    /**
+     * Create an instance of {@link RemoveUserById }
+     * 
+     */
+    public RemoveUserById createRemoveUserById() {
+        return new RemoveUserById();
+    }
+
+    /**
+     * Create an instance of {@link RemoveUserByIdResponse }
+     * 
+     */
+    public RemoveUserByIdResponse createRemoveUserByIdResponse() {
+        return new RemoveUserByIdResponse();
+    }
+
+    /**
      * Create an instance of {@link SaveDataByDefault }
      * 
      */
@@ -240,6 +298,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UpdatePasswordById }
+     * 
+     */
+    public UpdatePasswordById createUpdatePasswordById() {
+        return new UpdatePasswordById();
+    }
+
+    /**
+     * Create an instance of {@link UpdatePasswordByIdResponse }
+     * 
+     */
+    public UpdatePasswordByIdResponse createUpdatePasswordByIdResponse() {
+        return new UpdatePasswordByIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link UpdateUserById }
+     * 
+     */
+    public UpdateUserById createUpdateUserById() {
+        return new UpdateUserById();
+    }
+
+    /**
+     * Create an instance of {@link UpdateUserByIdResponse }
+     * 
+     */
+    public UpdateUserByIdResponse createUpdateUserByIdResponse() {
+        return new UpdateUserByIdResponse();
+    }
+
+    /**
      * Create an instance of {@link Session }
      * 
      */
@@ -261,6 +351,14 @@ public class ObjectFactory {
      */
     public StackTraceElement createStackTraceElement() {
         return new StackTraceElement();
+    }
+
+    /**
+     * Create an instance of {@link User }
+     * 
+     */
+    public User createUser() {
+        return new User();
     }
 
     /**
@@ -288,6 +386,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "JAXBException")
     public JAXBElement<JAXBException> createJAXBException(JAXBException value) {
         return new JAXBElement<JAXBException>(_JAXBException_QNAME, JAXBException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateUser }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "createUser")
+    public JAXBElement<CreateUser> createCreateUser(CreateUser value) {
+        return new JAXBElement<CreateUser>(_CreateUser_QNAME, CreateUser.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateUserResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "createUserResponse")
+    public JAXBElement<CreateUserResponse> createCreateUserResponse(CreateUserResponse value) {
+        return new JAXBElement<CreateUserResponse>(_CreateUserResponse_QNAME, CreateUserResponse.class, null, value);
     }
 
     /**
@@ -381,6 +497,42 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RemoveAllUsers }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "removeAllUsers")
+    public JAXBElement<RemoveAllUsers> createRemoveAllUsers(RemoveAllUsers value) {
+        return new JAXBElement<RemoveAllUsers>(_RemoveAllUsers_QNAME, RemoveAllUsers.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RemoveAllUsersResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "removeAllUsersResponse")
+    public JAXBElement<RemoveAllUsersResponse> createRemoveAllUsersResponse(RemoveAllUsersResponse value) {
+        return new JAXBElement<RemoveAllUsersResponse>(_RemoveAllUsersResponse_QNAME, RemoveAllUsersResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RemoveUserById }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "removeUserById")
+    public JAXBElement<RemoveUserById> createRemoveUserById(RemoveUserById value) {
+        return new JAXBElement<RemoveUserById>(_RemoveUserById_QNAME, RemoveUserById.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link RemoveUserByIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "removeUserByIdResponse")
+    public JAXBElement<RemoveUserByIdResponse> createRemoveUserByIdResponse(RemoveUserByIdResponse value) {
+        return new JAXBElement<RemoveUserByIdResponse>(_RemoveUserByIdResponse_QNAME, RemoveUserByIdResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SaveDataByDefault }{@code >}}
      * 
      */
@@ -468,6 +620,42 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "saveDataByJaxbXmlResponse")
     public JAXBElement<SaveDataByJaxbXmlResponse> createSaveDataByJaxbXmlResponse(SaveDataByJaxbXmlResponse value) {
         return new JAXBElement<SaveDataByJaxbXmlResponse>(_SaveDataByJaxbXmlResponse_QNAME, SaveDataByJaxbXmlResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdatePasswordById }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "updatePasswordById")
+    public JAXBElement<UpdatePasswordById> createUpdatePasswordById(UpdatePasswordById value) {
+        return new JAXBElement<UpdatePasswordById>(_UpdatePasswordById_QNAME, UpdatePasswordById.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdatePasswordByIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "updatePasswordByIdResponse")
+    public JAXBElement<UpdatePasswordByIdResponse> createUpdatePasswordByIdResponse(UpdatePasswordByIdResponse value) {
+        return new JAXBElement<UpdatePasswordByIdResponse>(_UpdatePasswordByIdResponse_QNAME, UpdatePasswordByIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateUserById }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "updateUserById")
+    public JAXBElement<UpdateUserById> createUpdateUserById(UpdateUserById value) {
+        return new JAXBElement<UpdateUserById>(_UpdateUserById_QNAME, UpdateUserById.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateUserByIdResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "updateUserByIdResponse")
+    public JAXBElement<UpdateUserByIdResponse> createUpdateUserByIdResponse(UpdateUserByIdResponse value) {
+        return new JAXBElement<UpdateUserByIdResponse>(_UpdateUserByIdResponse_QNAME, UpdateUserByIdResponse.class, null, value);
     }
 
 }

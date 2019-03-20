@@ -24,35 +24,8 @@ public final class UserService implements IUserService {
     }
 
     @Override
-    @Nullable
-    public User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
-                           @NotNull String email, @NotNull Role roleType) {
-
-        @NotNull final User user = new User();
-        user.setRole(roleType);
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setMiddleName(middleName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        User abstractEntity = userRepository.findOne(user);
-        if(abstractEntity == null)
-            return userRepository.persist(user);
-
-        return null;
-    }
-
-    @Override
-    public void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password) {
-        if (password.length() > 0) {
-            userRepository.updatePassword(userId, login, password);
-        }
-    }
-
-    @Override
     public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                               @NotNull Role role) {
+                      @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -65,17 +38,5 @@ public final class UserService implements IUserService {
             userRepository.merge(currentUser);
     }
 
-    @Override
-    public void remove(@NotNull String userId) {
-        @NotNull final User user = new User();
-        user.setId(userId);
-        userRepository.remove(user);
-    }
 
-    @Override
-    public void removeAll(@Nullable String userId) {
-        @NotNull final User user = new User();
-        user.setId(userId);
-        userRepository.removeAll(user);
-    }
 }
