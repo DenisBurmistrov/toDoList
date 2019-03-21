@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.User;
 
 public final class UserService implements IUserService {

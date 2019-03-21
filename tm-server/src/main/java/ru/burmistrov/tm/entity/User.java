@@ -2,6 +2,7 @@ package ru.burmistrov.tm.entity;
 
 import lombok.Data;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.io.Serializable;

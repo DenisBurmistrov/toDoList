@@ -13,14 +13,13 @@ import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.*;
+import ru.burmistrov.tm.entity.enumerated.Role;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 public class AdminService implements IAdminService {
@@ -202,8 +201,8 @@ public class AdminService implements IAdminService {
 
     @Override
     @Nullable
-    public User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
-                        @NotNull String email, @NotNull Role roleType) {
+    public User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+                           @NotNull String email, @NotNull Role roleType) {
 
         @NotNull final User user = new User();
         user.setRole(roleType);
@@ -228,8 +227,8 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                      @NotNull Role role) {
+    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+                               @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -243,14 +242,14 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void remove(@NotNull String userId) {
+    public void removeUserById(@NotNull String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.remove(user);
     }
 
     @Override
-    public void removeAll(@Nullable String userId) {
+    public void removeAllUsers(@Nullable String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.removeAll(user);

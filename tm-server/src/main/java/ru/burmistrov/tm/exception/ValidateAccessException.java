@@ -1,4 +1,4 @@
-package ru.burmistrov.tm.utils.exceptions;
+package ru.burmistrov.tm.exception;
 
 public class ValidateAccessException extends Exception {
 

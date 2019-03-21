@@ -4,14 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IAdminEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 
 @WebService
 public class AdminEndpoint implements IAdminEndpoint {
@@ -110,7 +108,7 @@ public class AdminEndpoint implements IAdminEndpoint {
     public User createUser(@NotNull Session session, @NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName,
                            @NotNull String lastName, @NotNull String email, @NotNull Role roleType) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            return serviceLocator.getAdminService().persist(login, password, firstName, middleName, lastName, email, roleType);
+            return serviceLocator.getAdminService().createUser(login, password, firstName, middleName, lastName, email, roleType);
         }
         return null;
     }
@@ -125,14 +123,14 @@ public class AdminEndpoint implements IAdminEndpoint {
     @WebMethod
     public void removeUserById(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            serviceLocator.getAdminService().remove(userId);
+            serviceLocator.getAdminService().removeUserById(userId);
         }
     }
 
     @WebMethod
     public void removeAllUsers(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            serviceLocator.getAdminService().removeAll(userId);
+            serviceLocator.getAdminService().removeAllUsers(userId);
         }
     }
 
@@ -142,7 +140,7 @@ public class AdminEndpoint implements IAdminEndpoint {
             (@NotNull Session session, @NotNull String userId, @NotNull String firstName,
              @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
+            serviceLocator.getAdminService().updateUserById(userId, firstName, middleName, lastName, email, role);
         }
     }
 }

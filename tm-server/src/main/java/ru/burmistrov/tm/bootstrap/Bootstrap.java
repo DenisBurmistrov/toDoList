@@ -11,6 +11,7 @@ import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.*;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.entity.*;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.SessionRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
@@ -46,8 +47,8 @@ public final class Bootstrap implements ServiceLocator {
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
     private void initProjectAndUserAndTask() throws IOException, ParseException {
-            AbstractEntity admin = adminService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-            AbstractEntity commonUser = adminService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
+            AbstractEntity admin = adminService.createUser("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
+            AbstractEntity commonUser = adminService.createUser("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
 
             AbstractEntity project1 = projectService.persist(Objects.requireNonNull(admin).getId(), "Первый проект", "Первое описание", "10.10.2019");
             AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");

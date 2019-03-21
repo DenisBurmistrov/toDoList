@@ -22,10 +22,13 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
     public List<Project> findAllSortByDateBegin(@NotNull Project abstractEntity){
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
         result.sort((s1, s2) -> {
-            if(s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0){
+            boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
+            boolean secondDateMareFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
+
+            if(firstDateMoreThanSecond){
                 return 1;
             }
-            else if(s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0){
+            else if(secondDateMareFirst){
                 return -1;
             }
             else {
@@ -40,10 +43,13 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
     public List<Project> findAllSortByDateEnd(@NotNull Project abstractEntity){
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
         result.sort((s1, s2) -> {
-            if(Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0){
+            boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
+            boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
+
+            if(firstDateMoreThanSecond){
                 return 1;
             }
-            else if(Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0){
+            else if(secondDateMoreThanFirst){
                 return -1;
             }
             else {
@@ -69,7 +75,7 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
         projects.forEach((k, v) -> {
             if(Objects.requireNonNull(project.getUserId()).equals(v.getUserId()) &&
                     Objects.requireNonNull(project.getName()).equals(v.getName())){
-                result.add((Project) v);
+                result.add(v);
             }
         });
         if(result.size() > 0) {

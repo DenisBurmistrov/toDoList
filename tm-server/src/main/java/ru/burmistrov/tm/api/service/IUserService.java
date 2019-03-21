@@ -2,8 +2,7 @@ package ru.burmistrov.tm.api.service;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebService;

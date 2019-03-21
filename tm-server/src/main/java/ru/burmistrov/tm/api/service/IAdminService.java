@@ -3,6 +3,7 @@ package ru.burmistrov.tm.api.service;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.*;
+import ru.burmistrov.tm.entity.enumerated.Role;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
@@ -30,16 +31,16 @@ public interface IAdminService {
     void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, IOException;
 
     @Nullable
-    User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
-                 @NotNull String email, @Nullable Role roleType);
+    User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
+                    @NotNull String email, @Nullable Role roleType);
 
     void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password);
 
-    void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-               @NotNull Role role);
+    void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
+                        @NotNull Role role);
 
-    void remove(@NotNull String userId);
+    void removeUserById(@NotNull String userId);
 
-    void removeAll(@NotNull String userId);
+    void removeAllUsers(@NotNull String userId);
 
 }

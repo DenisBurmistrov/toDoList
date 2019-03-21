@@ -1,18 +1,19 @@
-package ru.burmistrov.tm.entity;
+package ru.burmistrov.tm.entity.enumerated;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
-public enum Role implements Serializable {
+public enum Status implements Serializable {
 
-    ADMINISTRATOR("Администратор"),
-    COMMON_USER("Обычный пользователь");
+    SHEDULED("Запланировано"),
+    IN_PROCESS("В процессе"),
+    COMPLETE("Готово");
 
     @NotNull
     private final String displayName;
 
-    Role(@NotNull String displayName) {
+    Status(@NotNull String displayName) {
         this.displayName = displayName;
     }
 

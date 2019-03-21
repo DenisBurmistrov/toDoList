@@ -3,11 +3,9 @@ package ru.burmistrov.tm.repository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
 
@@ -48,9 +46,12 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if (s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0) {
+            boolean firstDateMoreThanSecond= s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
+            boolean secondDateMoreThaFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
+
+            if (firstDateMoreThanSecond) {
                 return 1;
-            } else if (s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0) {
+            } else if (secondDateMoreThaFirst) {
                 return -1;
             } else {
                 return 0;
@@ -69,10 +70,12 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
         result.sort((s1, s2) -> {
-            if (Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0) {
+            boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
+            boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
+
+            if (firstDateMoreThanSecond) {
                 return 1;
-            } else if (Objects.requireNonNull(s1.getDateEnd()).getTime()
-                    - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0) {
+            } else if (secondDateMoreThanFirst) {
                 return -1;
             } else {
                 return 0;

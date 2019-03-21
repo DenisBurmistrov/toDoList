@@ -4,10 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.ISessionService;
-import ru.burmistrov.tm.entity.Role;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
-import ru.burmistrov.tm.utils.exceptions.ValidateAccessException;
+import ru.burmistrov.tm.exception.ValidateAccessException;
 
 import java.io.IOException;
 import java.util.Objects;

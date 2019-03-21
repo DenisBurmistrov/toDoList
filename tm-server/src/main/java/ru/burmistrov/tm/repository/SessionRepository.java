@@ -2,14 +2,11 @@ package ru.burmistrov.tm.repository;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
-import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.utils.PasswordUtil;
 import ru.burmistrov.tm.utils.SignatureUtil;
-import ru.burmistrov.tm.utils.exceptions.ValidateAccessException;
+import ru.burmistrov.tm.exception.ValidateAccessException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;

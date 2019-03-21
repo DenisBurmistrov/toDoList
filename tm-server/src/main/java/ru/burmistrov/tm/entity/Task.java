@@ -3,6 +3,7 @@ package ru.burmistrov.tm.entity;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.entity.enumerated.Status;
 
 import java.io.Serializable;
 import java.util.Date;
