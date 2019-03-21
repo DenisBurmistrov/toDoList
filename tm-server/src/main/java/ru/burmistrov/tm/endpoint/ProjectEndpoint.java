@@ -8,6 +8,7 @@ import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Session;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.io.IOException;
 import java.text.ParseException;
@@ -26,7 +27,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    public void removeProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws Exception {
+    public void removeProjectById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().remove(userId, projectId);
         }
@@ -34,8 +37,10 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    public Project createProject(@NotNull Session session, @NotNull String userId, @NotNull String name,
-                                  @NotNull String description, @NotNull String dateEnd) throws Exception {
+    public Project createProject
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "name") @NotNull String name, @WebParam(name = "description") @NotNull String description,
+             @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
         }
@@ -43,23 +48,27 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    public void updateProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId,
-                                  @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws Exception {
+    public void updateProjectById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "name") @NotNull String name,
+             @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
         }
     }
 
     @WebMethod
-    public void removeAllProjects(@NotNull Session session, @NotNull String userId) throws Exception {
+    public void removeAllProjects
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().removeAll(userId);
         }
     }
 
     @WebMethod
-    @NotNull
-    public List<Project> findAllProjects(@NotNull Session session, @NotNull String userId) throws Exception {
+    @Nullable
+    public List<Project> findAllProjects
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAll(userId);
         }
@@ -67,8 +76,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    @NotNull
-    public List<Project> findAllProjectsSortByDateBegin(@NotNull Session session, @NotNull String userId) throws Exception {
+    @Nullable
+    public List<Project> findAllProjectsSortByDateBegin
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByDateBegin(userId);
         }
@@ -76,8 +86,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    @NotNull
-    public List<Project> findAllProjectsSortByDateEnd(@NotNull Session session, @NotNull String userId) throws Exception {
+    @Nullable
+    public List<Project> findAllProjectsSortByDateEnd
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByDateEnd(userId);
         }
@@ -85,8 +96,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    @NotNull
-    public List<Project> findAllProjectsSortByStatus(@NotNull Session session, @NotNull String userId) throws Exception {
+    @Nullable
+    public List<Project> findAllProjectsSortByStatus
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByStatus(userId);
         }
@@ -95,7 +107,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    public Project findProjectByName(@NotNull Session session, @NotNull String userId, @NotNull String name) throws Exception {
+    public Project findProjectByName
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "name") @NotNull String name) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findOneByName(userId, name);
         }
@@ -104,7 +118,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    public Project findProjectByDescription(@NotNull Session session, @NotNull String userId, @NotNull String description) throws Exception {
+    public Project findProjectByDescription
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "description") @NotNull String description) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findOneByDescription(userId, description);
         }

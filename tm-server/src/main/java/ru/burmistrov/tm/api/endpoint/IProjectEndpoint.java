@@ -39,22 +39,22 @@ public interface IProjectEndpoint {
     void removeAllProjects
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
-    @NotNull
+    @Nullable
     @WebMethod
     List<Project> findAllProjects
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
-    @NotNull
+    @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByDateBegin
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
-    @NotNull
+    @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByDateEnd
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
-    @NotNull
+    @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByStatus
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;

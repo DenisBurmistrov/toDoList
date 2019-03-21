@@ -8,6 +8,7 @@ import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.io.IOException;
 
@@ -25,14 +26,13 @@ public class SessionEndpoint implements ISessionEndpoint {
 
     @WebMethod
     @Override
-    public Session getNewSession(@NotNull String userId) throws Exception {
-
+    public Session getNewSession(@WebParam(name = "userId") @NotNull String userId) throws Exception {
         return serviceLocator.getSessionService().persist(userId);
     }
 
     @WebMethod
     @Nullable
-    public User logIn(@NotNull String login, @NotNull String password) {
+    public User logIn(@WebParam(name = "login") @NotNull String login,@WebParam(name = "password") @NotNull String password) {
         return serviceLocator.getUserService().logIn(login, password);
     }
 }

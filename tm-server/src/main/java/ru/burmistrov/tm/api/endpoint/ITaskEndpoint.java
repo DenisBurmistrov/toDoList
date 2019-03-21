@@ -32,7 +32,7 @@ public interface ITaskEndpoint {
              @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
 
     @WebMethod
-    @NotNull
+    @Nullable
     List<Task> findAllTasks
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
@@ -51,17 +51,17 @@ public interface ITaskEndpoint {
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
-    @NotNull
+    @Nullable
     List<Task> findAllTasksSortByDateBegin
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
-    @NotNull
+    @Nullable
     List<Task> findAllTasksSortByDateEnd
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
-    @NotNull
+    @Nullable
     List<Task> findAllTasksSortByStatus
             (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
