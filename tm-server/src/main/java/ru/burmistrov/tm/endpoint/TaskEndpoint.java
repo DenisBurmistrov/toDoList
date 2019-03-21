@@ -24,7 +24,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     public void updateTaskById(@NotNull Session session, @NotNull String userId, @NotNull String projectId, @NotNull String taskId,
-                               @NotNull String newName, @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException {
+                               @NotNull String newName, @NotNull String description, @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().merge(userId, projectId, taskId, newName, description, dateEnd);
         }
@@ -33,7 +33,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public Task createTask(@NotNull Session session, @NotNull String userId, @NotNull String projectId, @NotNull String name,
-                           @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException {
+                           @NotNull String description, @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().persist(userId, projectId, name, description, dateEnd);
         }
@@ -42,7 +42,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Task> findAllTasks(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Task> findAllTasks(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAll(userId);
         }
@@ -50,21 +50,21 @@ public class TaskEndpoint implements ITaskEndpoint {
     }
 
     @WebMethod
-    public void removeAllTasksInProject(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws CloneNotSupportedException {
+    public void removeAllTasksInProject(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().removeAllInProject(userId, projectId);
         }
     }
 
     @WebMethod
-    public void removeTaskById(@NotNull Session session, @NotNull String userId, @NotNull String taskId) throws CloneNotSupportedException {
+    public void removeTaskById(@NotNull Session session, @NotNull String userId, @NotNull String taskId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().remove(userId, taskId);
         }
     }
 
     @WebMethod
-    public void removeAllTasks(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public void removeAllTasks(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().removeAll(userId);
         }
@@ -72,7 +72,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Task> findAllTasksSortByDateBegin(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Task> findAllTasksSortByDateBegin(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByDateBegin(userId);
         }
@@ -81,7 +81,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Task> findAllTasksSortByDateEnd(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Task> findAllTasksSortByDateEnd(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByDateEnd(userId);
         }
@@ -89,7 +89,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     }
 
     @NotNull
-    public List<Task> findAllTasksSortByStatus(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Task> findAllTasksSortByStatus(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByStatus(userId);
         }
@@ -98,7 +98,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     @Nullable
-    public Task findTaskByName(@NotNull Session session, @NotNull String userId, String name) throws CloneNotSupportedException {
+    public Task findTaskByName(@NotNull Session session, @NotNull String userId, @NotNull String name) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findOneByName(userId, name);
         }
@@ -107,7 +107,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     @Nullable
-    public Task findTaskByDescription(@NotNull Session session, @NotNull String userId, String description) throws CloneNotSupportedException {
+    public Task findTaskByDescription(@NotNull Session session, @NotNull String userId, String description) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findOneByDescription(userId, description);
         }
@@ -115,8 +115,8 @@ public class TaskEndpoint implements ITaskEndpoint {
     }
 
     @WebMethod
-    @NotNull
-    public List<Task> findAllTasksInProject(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws CloneNotSupportedException {
+    @Nullable
+    public List<Task> findAllTasksInProject(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllInProject(userId, projectId);
         }

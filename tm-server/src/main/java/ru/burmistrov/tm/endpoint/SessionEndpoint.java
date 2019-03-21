@@ -25,7 +25,7 @@ public class SessionEndpoint implements ISessionEndpoint {
 
     @WebMethod
     @Override
-    public Session getNewSession(@NotNull String userId) throws IOException {
+    public Session getNewSession(@NotNull String userId) throws Exception {
 
         return serviceLocator.getSessionService().persist(userId);
     }

@@ -18,44 +18,57 @@ import java.util.List;
 public interface IProjectEndpoint {
 
     @WebMethod
-    void removeProjectById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId) throws CloneNotSupportedException;
+    void removeProjectById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId) throws Exception;
 
     @Nullable
     @WebMethod
-    Project createProject(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String name,
-                    @WebParam @NotNull String description,
-                    @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException;
+    Project createProject
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "name") @NotNull String name, @WebParam(name = "description") @NotNull String description,
+             @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
 
     @WebMethod
-    void updateProjectById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId,
-                           @WebParam @NotNull String name, @WebParam @NotNull String description,
-                           @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException;
+    void updateProjectById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "name") @NotNull String name,
+             @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
 
     @WebMethod
-    void removeAllProjects(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
-
-    @NotNull
-    @WebMethod
-    List<Project> findAllProjects(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
-
-    @NotNull
-    @WebMethod
-    List<Project> findAllProjectsSortByDateBegin(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    void removeAllProjects
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @NotNull
     @WebMethod
-    List<Project> findAllProjectsSortByDateEnd(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    List<Project> findAllProjects
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @NotNull
     @WebMethod
-    List<Project> findAllProjectsSortByStatus(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    List<Project> findAllProjectsSortByDateBegin
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+
+    @NotNull
+    @WebMethod
+    List<Project> findAllProjectsSortByDateEnd
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+
+    @NotNull
+    @WebMethod
+    List<Project> findAllProjectsSortByStatus
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @Nullable
     @WebMethod
-    Project findProjectByName(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String name) throws CloneNotSupportedException;
+    Project findProjectByName
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "name") @NotNull String name) throws Exception;
 
     @Nullable
     @WebMethod
-    Project findProjectByDescription(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String description) throws CloneNotSupportedException;
+    Project findProjectByDescription
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+            @WebParam(name = "description") @NotNull String description) throws Exception;
 
 }

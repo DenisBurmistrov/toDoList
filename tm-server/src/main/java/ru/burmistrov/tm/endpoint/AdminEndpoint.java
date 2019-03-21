@@ -27,7 +27,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByDefault(@NotNull Session session) throws IOException, CloneNotSupportedException {
+    public void saveDataByDefault(@NotNull Session session) throws Exception {
         if(serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByDefault(session);
         }
@@ -35,7 +35,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByFasterXmlJson(@NotNull Session session) throws IOException, CloneNotSupportedException {
+    public void saveDataByFasterXmlJson(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByFasterXmlJson(session);
         }
@@ -43,7 +43,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByFasterXml(@NotNull Session session) throws IOException, CloneNotSupportedException {
+    public void saveDataByFasterXml(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByFasterXml(session);
         }
@@ -51,7 +51,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException, CloneNotSupportedException {
+    public void saveDataByJaxbJson(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByJaxbJson(session);
         }
@@ -59,7 +59,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByJaxbXml(@NotNull Session session) throws IOException, JAXBException, CloneNotSupportedException {
+    public void saveDataByJaxbXml(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByJaxbXml(session);
         }
@@ -67,7 +67,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByDefault(@NotNull Session session) throws IOException, ClassNotFoundException, CloneNotSupportedException {
+    public void loadDataByDefault(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByDefault(session);
         }
@@ -75,7 +75,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByFasterXmlJson(@NotNull Session session) throws IOException, CloneNotSupportedException {
+    public void loadDataByFasterXmlJson(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByFasterXmlJson(session);
         }
@@ -83,7 +83,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByFasterXml(@NotNull Session session) throws IOException, CloneNotSupportedException {
+    public void loadDataByFasterXml(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByFasterXml(session);
         }
@@ -91,7 +91,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException {
+    public void loadDataByJaxbJson(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbJson(session);
         }
@@ -99,7 +99,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException {
+    public void loadDataByJaxbXml(@NotNull Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbXml(session);
         }
@@ -108,7 +108,7 @@ public class AdminEndpoint implements IAdminEndpoint {
     @WebMethod
     @Nullable
     public User createUser(@NotNull Session session, @NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName,
-                           @NotNull String lastName, @NotNull String email, @NotNull Role roleType) throws CloneNotSupportedException {
+                           @NotNull String lastName, @NotNull String email, @NotNull Role roleType) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             return serviceLocator.getAdminService().persist(login, password, firstName, middleName, lastName, email, roleType);
         }
@@ -116,21 +116,21 @@ public class AdminEndpoint implements IAdminEndpoint {
     }
 
     @WebMethod
-    public void updatePasswordById(@NotNull Session session, @NotNull String userId, @NotNull String login, @NotNull String password) throws CloneNotSupportedException {
+    public void updatePasswordById(@NotNull Session session, @NotNull String userId, @NotNull String login, @NotNull String password) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().updatePassword(userId, login, password);
         }
     }
 
     @WebMethod
-    public void removeUserById(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public void removeUserById(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().remove(userId);
         }
     }
 
     @WebMethod
-    public void removeAllUsers(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public void removeAllUsers(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().removeAll(userId);
         }
@@ -138,7 +138,9 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void updateUserById(@NotNull Session session, @NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws CloneNotSupportedException {
+    public void updateUserById
+            (@NotNull Session session, @NotNull String userId, @NotNull String firstName,
+             @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
         }

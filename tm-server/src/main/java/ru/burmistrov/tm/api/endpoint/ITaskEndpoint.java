@@ -18,52 +18,64 @@ import java.util.List;
 public interface ITaskEndpoint {
 
     @WebMethod
-    void updateTaskById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId,
-                        @WebParam @NotNull String taskId, @WebParam @NotNull String newName,
-                        @WebParam @NotNull String description,
-                        @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException;
+    void updateTaskById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "taskId") @NotNull String taskId,
+             @WebParam(name = "newName") @NotNull String newName, @WebParam(name = "description") @NotNull String description,
+             @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
 
     @WebMethod
     @Nullable
-    Task createTask(@WebParam @NotNull Session session, @NotNull @WebParam String userId, @WebParam @NotNull String projectId,
-                 @WebParam @NotNull String name, @WebParam @NotNull String description,
-                 @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException;
+    Task createTask
+            (@WebParam(name = "session") @NotNull Session session, @NotNull @WebParam(name = "userId") String userId,
+             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "name") @NotNull String name,
+             @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
 
     @WebMethod
     @NotNull
-    List<Task> findAllTasks(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    List<Task> findAllTasks
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
-    void removeAllTasksInProject(@WebParam @NotNull Session session, @WebParam @NotNull String userId,
-                                 @WebParam @NotNull String projectId) throws CloneNotSupportedException;
+    void removeAllTasksInProject
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "projectId") @NotNull String projectId) throws Exception;
 
     @WebMethod
-    void removeTaskById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String taskId) throws CloneNotSupportedException;
+    void removeTaskById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "taskId") @NotNull String taskId) throws Exception;
 
     @WebMethod
-    void removeAllTasks(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
-
-    @WebMethod
-    @NotNull
-    List<Task> findAllTasksSortByDateBegin(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
-
-    @WebMethod
-    @NotNull
-    List<Task> findAllTasksSortByDateEnd(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    void removeAllTasks
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
     @NotNull
-    List<Task> findAllTasksSortByStatus(@WebParam @NotNull Session session, @WebParam @NotNull String userId) throws CloneNotSupportedException;
+    List<Task> findAllTasksSortByDateBegin
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+
+    @WebMethod
+    @NotNull
+    List<Task> findAllTasksSortByDateEnd
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+
+    @WebMethod
+    @NotNull
+    List<Task> findAllTasksSortByStatus
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
 
     @WebMethod
     @Nullable
-    Task findTaskByName(@WebParam @NotNull Session session, @WebParam @NotNull String userId, String name) throws CloneNotSupportedException;
+    Task findTaskByName
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "name") @NotNull String name) throws Exception;
 
     @WebMethod
     @Nullable
-    Task findTaskByDescription(@WebParam @NotNull Session session, @WebParam @NotNull String userId, String description) throws CloneNotSupportedException;
+    Task findTaskByDescription(@WebParam(name = "session") @NotNull Session session, @WebParam @NotNull String userId, String description) throws Exception;
 
     @WebMethod
-    @NotNull
-    List<Task> findAllTasksInProject(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId) throws CloneNotSupportedException;
+    @Nullable
+    List<Task> findAllTasksInProject(@WebParam(name = "session") @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId) throws Exception;
 }

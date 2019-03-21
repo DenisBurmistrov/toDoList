@@ -29,7 +29,8 @@ public class UserEndpoint implements IUserEndpoint {
 
     @WebMethod
     @Override
-    public void updateUserById(@NotNull Session session, @NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws CloneNotSupportedException, ValidateAccessException {
+    public void updateUserById
+            (@NotNull Session session, @NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getAdminService().merge(userId, firstName, middleName, lastName, email, role);
         }

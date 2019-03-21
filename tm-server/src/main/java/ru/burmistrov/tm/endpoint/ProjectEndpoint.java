@@ -26,7 +26,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
     }
 
     @WebMethod
-    public void removeProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws CloneNotSupportedException {
+    public void removeProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().remove(userId, projectId);
         }
@@ -35,7 +35,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
     @WebMethod
     @Nullable
     public Project createProject(@NotNull Session session, @NotNull String userId, @NotNull String name,
-                                  @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException {
+                                  @NotNull String description, @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
         }
@@ -44,14 +44,14 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     public void updateProjectById(@NotNull Session session, @NotNull String userId, @NotNull String projectId,
-                                  @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException {
+                                  @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
         }
     }
 
     @WebMethod
-    public void removeAllProjects(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public void removeAllProjects(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getProjectService().removeAll(userId);
         }
@@ -59,7 +59,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjects(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Project> findAllProjects(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAll(userId);
         }
@@ -68,7 +68,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjectsSortByDateBegin(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Project> findAllProjectsSortByDateBegin(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByDateBegin(userId);
         }
@@ -77,7 +77,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjectsSortByDateEnd(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Project> findAllProjectsSortByDateEnd(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByDateEnd(userId);
         }
@@ -86,7 +86,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @NotNull
-    public List<Project> findAllProjectsSortByStatus(@NotNull Session session, @NotNull String userId) throws CloneNotSupportedException {
+    public List<Project> findAllProjectsSortByStatus(@NotNull Session session, @NotNull String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findAllSortByStatus(userId);
         }
@@ -95,7 +95,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    public Project findProjectByName(@NotNull Session session, @NotNull String userId, @NotNull String name) throws CloneNotSupportedException {
+    public Project findProjectByName(@NotNull Session session, @NotNull String userId, @NotNull String name) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findOneByName(userId, name);
         }
@@ -104,7 +104,7 @@ public class ProjectEndpoint implements IProjectEndpoint {
 
     @WebMethod
     @Nullable
-    public Project findProjectByDescription(@NotNull Session session, @NotNull String userId, @NotNull String description) throws CloneNotSupportedException {
+    public Project findProjectByDescription(@NotNull Session session, @NotNull String userId, @NotNull String description) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getProjectService().findOneByDescription(userId, description);
         }

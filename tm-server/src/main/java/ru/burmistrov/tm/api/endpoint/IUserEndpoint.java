@@ -18,11 +18,14 @@ public interface IUserEndpoint {
 
     @WebMethod
     @Nullable
-    User logIn(@WebParam @NotNull String login, @WebParam @NotNull String password);
+    User logIn
+            (@WebParam(name = "session") @NotNull String login, @WebParam(name = "password") @NotNull String password);
 
     @WebMethod
-    void updateUserById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String firstName,
-                        @WebParam @NotNull String middleName, @WebParam @NotNull String lastName,
-                        @WebParam @NotNull String email, @WebParam @NotNull Role role) throws CloneNotSupportedException, ValidateAccessException;
+    void updateUserById
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+             @WebParam(name = "firstName") @NotNull String firstName, @WebParam(name = "middleName") @NotNull String middleName,
+             @WebParam(name = "lastName") @NotNull String lastName, @WebParam(name = "email") @NotNull String email,
+             @WebParam(name = "role") @NotNull Role role) throws Exception;
 
 }
