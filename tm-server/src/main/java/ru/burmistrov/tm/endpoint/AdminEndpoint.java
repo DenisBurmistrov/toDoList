@@ -145,8 +145,9 @@ public class AdminEndpoint implements IAdminEndpoint {
     @WebMethod
     @Override
     public void updateUserById
-            (@NotNull Session session, @NotNull String userId, @NotNull String firstName,
-             @NotNull String middleName, @NotNull String lastName, @NotNull String email, @NotNull Role role) throws Exception {
+            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId, @WebParam(name = "firstName") @NotNull String firstName,
+             @WebParam(name = "middleName") @NotNull String middleName,@WebParam(name = "lastName")  @NotNull String lastName, @WebParam(name = "email")  @NotNull String email,
+             @WebParam(name = "session") @NotNull Role role) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().updateUserById(userId, firstName, middleName, lastName, email, role);
         }

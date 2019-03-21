@@ -2,9 +2,7 @@ package ru.burmistrov.tm.command.admin.serialize;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
-import ru.burmistrov.tm.endpoint.IOException_Exception;
-import ru.burmistrov.tm.endpoint.JAXBException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 
 public class SerializeByJaxbXmlCommand extends AbstractCommand {
 
@@ -21,7 +19,7 @@ public class SerializeByJaxbXmlCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws JAXBException_Exception, IOException_Exception, CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
         getServiceLocator().getAdminEndpoint().saveDataByJaxbXml(getServiceLocator().getSession());
     }
 

@@ -5,9 +5,6 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class PrintListCommand extends AbstractCommand {
 
-    public PrintListCommand() {
-    }
-
     @NotNull
     @Override
     public String getName() {

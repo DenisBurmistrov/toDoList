@@ -2,10 +2,9 @@ package ru.burmistrov.tm.command.admin.serialize;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
-import ru.burmistrov.tm.endpoint.IOException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 
-public class SerializeByFatserXmlCommand extends AbstractCommand {
+public class SerializeByFasterXmlCommand extends AbstractCommand {
     @NotNull
     @Override
     public String getName() {
@@ -19,7 +18,7 @@ public class SerializeByFatserXmlCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws IOException_Exception, CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
 
         getServiceLocator().getAdminEndpoint().saveDataByFasterXml(getServiceLocator().getSession());
     }

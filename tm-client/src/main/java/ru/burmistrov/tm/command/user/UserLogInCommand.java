@@ -3,15 +3,10 @@ package ru.burmistrov.tm.command.user;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.IOException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 import ru.burmistrov.tm.endpoint.User;
 
 public final class UserLogInCommand extends AbstractCommand {
-
-
-    public UserLogInCommand() {
-
-    }
 
     @NotNull
     @Override
@@ -26,7 +21,7 @@ public final class UserLogInCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws IOException_Exception {
+    public void execute() throws Exception_Exception {
         System.out.println("Введите логин:");
         @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");

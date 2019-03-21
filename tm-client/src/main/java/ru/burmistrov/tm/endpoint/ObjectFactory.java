@@ -24,10 +24,7 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ClassNotFoundException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "ClassNotFoundException");
-    private final static QName _CloneNotSupportedException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "CloneNotSupportedException");
-    private final static QName _IOException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "IOException");
-    private final static QName _JAXBException_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "JAXBException");
+    private final static QName _Exception_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "Exception");
     private final static QName _CreateUser_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "createUser");
     private final static QName _CreateUserResponse_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "createUserResponse");
     private final static QName _LoadDataByDefault_QNAME = new QName("http://endpoint.tm.burmistrov.ru/", "loadDataByDefault");
@@ -67,35 +64,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ClassNotFoundException }
+     * Create an instance of {@link Exception }
      * 
      */
-    public ClassNotFoundException createClassNotFoundException() {
-        return new ClassNotFoundException();
-    }
-
-    /**
-     * Create an instance of {@link CloneNotSupportedException }
-     * 
-     */
-    public CloneNotSupportedException createCloneNotSupportedException() {
-        return new CloneNotSupportedException();
-    }
-
-    /**
-     * Create an instance of {@link IOException }
-     * 
-     */
-    public IOException createIOException() {
-        return new IOException();
-    }
-
-    /**
-     * Create an instance of {@link JAXBException }
-     * 
-     */
-    public JAXBException createJAXBException() {
-        return new JAXBException();
+    public Exception createException() {
+        return new Exception();
     }
 
     /**
@@ -347,22 +320,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Throwable }
-     * 
-     */
-    public Throwable createThrowable() {
-        return new Throwable();
-    }
-
-    /**
-     * Create an instance of {@link StackTraceElement }
-     * 
-     */
-    public StackTraceElement createStackTraceElement() {
-        return new StackTraceElement();
-    }
-
-    /**
      * Create an instance of {@link User }
      * 
      */
@@ -371,39 +328,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ClassNotFoundException }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Exception }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "ClassNotFoundException")
-    public JAXBElement<ClassNotFoundException> createClassNotFoundException(ClassNotFoundException value) {
-        return new JAXBElement<ClassNotFoundException>(_ClassNotFoundException_QNAME, ClassNotFoundException.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CloneNotSupportedException }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "CloneNotSupportedException")
-    public JAXBElement<CloneNotSupportedException> createCloneNotSupportedException(CloneNotSupportedException value) {
-        return new JAXBElement<CloneNotSupportedException>(_CloneNotSupportedException_QNAME, CloneNotSupportedException.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link IOException }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "IOException")
-    public JAXBElement<IOException> createIOException(IOException value) {
-        return new JAXBElement<IOException>(_IOException_QNAME, IOException.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link JAXBException }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "JAXBException")
-    public JAXBElement<JAXBException> createJAXBException(JAXBException value) {
-        return new JAXBElement<JAXBException>(_JAXBException_QNAME, JAXBException.class, null, value);
+    @XmlElementDecl(namespace = "http://endpoint.tm.burmistrov.ru/", name = "Exception")
+    public JAXBElement<Exception> createException(Exception value) {
+        return new JAXBElement<Exception>(_Exception_QNAME, Exception.class, null, value);
     }
 
     /**

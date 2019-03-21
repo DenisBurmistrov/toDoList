@@ -5,9 +5,6 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class UserShowCurrentUser extends AbstractCommand {
 
-    public UserShowCurrentUser() {
-    }
-
     @NotNull
     @Override
     public String getName() {

@@ -2,13 +2,11 @@ package ru.burmistrov.tm.command.system;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.utils.ReadManifestUtil;
 
 import java.util.Map;
 
 public class PrintManifestCommand extends AbstractCommand {
-
-    public PrintManifestCommand() {
-    }
 
     @NotNull
     @Override
@@ -24,10 +22,10 @@ public class PrintManifestCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        /*@NotNull final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
+        @NotNull final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
         for(Map.Entry entry : readManifestUtil.getManifest().getMainAttributes().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
-        }*/
+        }
     }
 
     @Override

@@ -2,16 +2,11 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 
 import java.util.Objects;
 
 public final class TaskRemoveCommand extends AbstractCommand {
-
-
-    public TaskRemoveCommand() {
-
-    }
 
     @NotNull
     @Override
@@ -26,7 +21,7 @@ public final class TaskRemoveCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
         System.out.println("Введите ID задачи");
         @NotNull final String taskId = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getTaskEndpoint()

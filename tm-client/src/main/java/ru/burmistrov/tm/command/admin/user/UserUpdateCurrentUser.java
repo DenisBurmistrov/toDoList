@@ -2,7 +2,7 @@ package ru.burmistrov.tm.command.admin.user;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 import ru.burmistrov.tm.endpoint.Role;
 
 import java.util.Objects;
@@ -25,7 +25,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
         System.out.println("Введите новое имя:");
         @NotNull final String firstName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новую фамилию:");

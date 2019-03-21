@@ -14,4 +14,5 @@ public interface ISessionEndpoint {
 
     @WebMethod
     Session getNewSession(@WebParam(name = "userId") @NotNull String userId) throws Exception;
+
 }

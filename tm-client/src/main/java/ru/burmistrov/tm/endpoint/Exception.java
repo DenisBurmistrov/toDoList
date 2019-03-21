@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ValidateAccessException complex type.
+ * <p>Java class for Exception complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ValidateAccessException"&gt;
+ * &lt;complexType name="Exception"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
@@ -26,10 +26,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ValidateAccessException", propOrder = {
+@XmlType(name = "Exception", propOrder = {
     "message"
 })
-public class ValidateAccessException {
+public class Exception {
 
     protected String message;
 

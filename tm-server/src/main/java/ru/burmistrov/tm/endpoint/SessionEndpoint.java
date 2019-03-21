@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.endpoint;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.ISessionEndpoint;
@@ -12,13 +13,11 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.io.IOException;
 
+@NoArgsConstructor
 @WebService
 public class SessionEndpoint implements ISessionEndpoint {
 
     private ServiceLocator serviceLocator;
-
-    public SessionEndpoint() {
-    }
 
     public SessionEndpoint(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
@@ -30,9 +29,4 @@ public class SessionEndpoint implements ISessionEndpoint {
         return serviceLocator.getSessionService().persist(userId);
     }
 
-    @WebMethod
-    @Nullable
-    public User logIn(@WebParam(name = "login") @NotNull String login,@WebParam(name = "password") @NotNull String password) {
-        return serviceLocator.getUserService().logIn(login, password);
-    }
 }

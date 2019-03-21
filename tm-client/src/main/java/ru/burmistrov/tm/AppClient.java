@@ -26,7 +26,7 @@ public class AppClient {
             TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
             UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
             UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class, SerializeByDefaultCommand.class,
-                SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFatserXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
+                SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFasterXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
                 DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class};
 
     public static void main(String[] args) throws MalformedURLException {

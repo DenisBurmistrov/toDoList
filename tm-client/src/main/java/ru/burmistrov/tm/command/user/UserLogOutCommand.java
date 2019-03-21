@@ -5,9 +5,6 @@ import ru.burmistrov.tm.command.AbstractCommand;
 
 public final class UserLogOutCommand extends AbstractCommand {
 
-    public UserLogOutCommand() {
-    }
-
     @NotNull
     @Override
     public String getName() {

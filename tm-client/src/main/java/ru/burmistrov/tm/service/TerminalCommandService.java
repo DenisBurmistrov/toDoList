@@ -31,12 +31,7 @@ public class TerminalCommandService {
             }
             try {
                 serviceLocator.execute(input);
-            } catch (ParseException e) {
-                System.out.println("Неверно введенна дата");
-            } catch (NullPointerException e) {
-                System.out.println("Неверно введены данные");
-                e.printStackTrace();
-            } catch (IOException | JAXBException | ClassNotFoundException | ParseException_Exception | IOException_Exception | JAXBException_Exception | ClassNotFoundException_Exception | CloneNotSupportedException_Exception e) {
+            } catch (Exception_Exception e) {
                 e.printStackTrace();
             }
         }

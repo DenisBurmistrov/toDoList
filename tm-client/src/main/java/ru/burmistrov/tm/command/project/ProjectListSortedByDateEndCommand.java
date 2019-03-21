@@ -3,7 +3,7 @@ package ru.burmistrov.tm.command.project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 import ru.burmistrov.tm.endpoint.Project;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ProjectListSortedByDateEndCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
         System.out.println("Список проектов:");
         @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint()
                 .findAllProjectsSortByDateEnd(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));

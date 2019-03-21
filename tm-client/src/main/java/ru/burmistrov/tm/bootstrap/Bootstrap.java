@@ -10,6 +10,7 @@ import ru.burmistrov.tm.service.TerminalCommandService;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
+import java.lang.Exception;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @Override
-    public void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception, CloneNotSupportedException_Exception {
+    public void execute(@Nullable String command) throws Exception_Exception {
         if (command == null || command.isEmpty()) return;
         @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;

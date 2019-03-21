@@ -2,17 +2,11 @@ package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
-import ru.burmistrov.tm.endpoint.ParseException_Exception;
+import ru.burmistrov.tm.endpoint.Exception_Exception;
 
-import java.text.ParseException;
 import java.util.Objects;
 
 public final class TaskUpdateCommand extends AbstractCommand {
-
-
-    public TaskUpdateCommand() {
-    }
 
     @NotNull
     @Override
@@ -27,7 +21,7 @@ public final class TaskUpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws ParseException_Exception, CloneNotSupportedException_Exception {
+    public void execute() throws Exception_Exception {
         System.out.println("Введите ID проекта:");
         @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите ID задачи:");
