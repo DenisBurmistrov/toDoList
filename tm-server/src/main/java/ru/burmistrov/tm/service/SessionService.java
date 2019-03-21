@@ -7,6 +7,7 @@ import ru.burmistrov.tm.api.service.ISessionService;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.utils.exceptions.ValidateAccessException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -32,12 +33,12 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public boolean validate(Session session) throws CloneNotSupportedException {
+    public boolean validate(Session session) throws CloneNotSupportedException, ValidateAccessException {
         return sessionRepository.validate(session);
     }
 
     @Override
-    public boolean validateAdmin(Session session) throws CloneNotSupportedException {
+    public boolean validateAdmin(Session session) throws CloneNotSupportedException, ValidateAccessException {
         if (validate(session)){
             User user = new User();
             user.setId(session.getUserId());
@@ -46,6 +47,6 @@ public class SessionService implements ISessionService {
                 return Objects.requireNonNull(foundedUser.getRole()).equals(Role.ADMINISTRATOR);
             }
         }
-        return false;
+        throw new ValidateAccessException();
     }
 }

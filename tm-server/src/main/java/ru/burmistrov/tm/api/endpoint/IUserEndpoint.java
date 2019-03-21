@@ -6,6 +6,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.utils.exceptions.ValidateAccessException;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -22,6 +23,6 @@ public interface IUserEndpoint {
     @WebMethod
     void updateUserById(@WebParam @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String firstName,
                         @WebParam @NotNull String middleName, @WebParam @NotNull String lastName,
-                        @WebParam @NotNull String email, @WebParam @NotNull Role role) throws CloneNotSupportedException;
+                        @WebParam @NotNull String email, @WebParam @NotNull Role role) throws CloneNotSupportedException, ValidateAccessException;
 
 }

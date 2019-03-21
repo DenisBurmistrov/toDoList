@@ -6,6 +6,7 @@ import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.utils.PasswordUtil;
 import ru.burmistrov.tm.utils.SignatureUtil;
+import ru.burmistrov.tm.utils.exceptions.ValidateAccessException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,17 +43,17 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     }
 
     @Override
-    public boolean validate(Session session) throws CloneNotSupportedException {
-        if(session == null) return false;
-        else if(session.getSignature() == null) return false;
-        else if(session.getUserId() == null) return false;
-        else if (session.getTimesTemp() == null) return false;
+    public boolean validate(Session session) throws CloneNotSupportedException, ValidateAccessException {
+        if(session == null) throw new ValidateAccessException();
+        else if(session.getSignature() == null) throw new ValidateAccessException();
+        else if(session.getUserId() == null) throw new ValidateAccessException();
+        else if (session.getTimesTemp() == null) throw new ValidateAccessException();
         final Session temp = (Session) session.clone();
-        if(temp == null) return false;
+        if(temp == null) throw new ValidateAccessException();
         String sourceSignature = PasswordUtil.hashPassword(String.valueOf(session.hashCode()));
         String targetSignature = PasswordUtil.hashPassword(String.valueOf(temp.hashCode()));
         boolean check = Objects.requireNonNull(sourceSignature).equals(targetSignature);
-        if(!check) return false;
+        if(!check) throw new ValidateAccessException();
         return sessions.containsKey(session.getId());
     }
 
