@@ -19,16 +19,16 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     private ServiceLocator serviceLocator;
 
-    public TaskEndpoint(ServiceLocator serviceLocator) {
+    public TaskEndpoint(@NotNull final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
     public void updateTaskById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "taskId") @NotNull String taskId,
-             @WebParam(name = "newName") @NotNull String newName, @WebParam(name = "description") @NotNull String description,
-             @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "taskId") @NotNull final String taskId,
+             @WebParam(name = "newName") @NotNull final String newName, @WebParam(name = "description") @NotNull final String description,
+             @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().merge(userId, projectId, taskId, newName, description, dateEnd);
         }
@@ -37,9 +37,9 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public Task createTask
-            (@WebParam(name = "session") @NotNull Session session, @NotNull @WebParam(name = "userId") String userId,
-             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "name") @NotNull String name,
-             @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @NotNull @WebParam(name = "userId") final String userId,
+             @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "name") @NotNull final String name,
+             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().persist(userId, projectId, name, description, dateEnd);
         }
@@ -49,7 +49,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public List<Task> findAllTasks
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAll(userId);
         }
@@ -58,8 +58,8 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     public void removeAllTasksInProject
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "projectId") @NotNull String projectId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "projectId") @NotNull final String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().removeAllInProject(userId, projectId);
         }
@@ -67,8 +67,8 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     public void removeTaskById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "taskId") @NotNull String taskId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "taskId") @NotNull final String taskId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().remove(userId, taskId);
         }
@@ -76,7 +76,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @WebMethod
     public void removeAllTasks
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             serviceLocator.getTaskService().removeAll(userId);
         }
@@ -85,7 +85,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public List<Task> findAllTasksSortByDateBegin
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByDateBegin(userId);
         }
@@ -95,7 +95,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public List<Task> findAllTasksSortByDateEnd
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByDateEnd(userId);
         }
@@ -104,7 +104,7 @@ public class TaskEndpoint implements ITaskEndpoint {
 
     @Nullable
     public List<Task> findAllTasksSortByStatus
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllSortByStatus(userId);
         }
@@ -114,8 +114,8 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public Task findTaskByName
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "name") @NotNull String name) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "name") @NotNull final String name) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findOneByName(userId, name);
         }
@@ -125,7 +125,8 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public Task findTaskByDescription
-            (@WebParam(name = "session") @NotNull Session session, @WebParam @NotNull String userId, String description) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "description") @NotNull final String description) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findOneByDescription(userId, description);
         }
@@ -135,7 +136,8 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public List<Task> findAllTasksInProject
-            (@WebParam(name = "session") @NotNull Session session, @WebParam @NotNull String userId, @WebParam @NotNull String projectId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "projectId") @NotNull final String projectId) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().findAllInProject(userId, projectId);
         }

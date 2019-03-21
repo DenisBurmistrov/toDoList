@@ -7,7 +7,7 @@ import java.util.jar.Manifest;
 
 public class ReadManifestUtil {
 
-    public Manifest getManifest() {
+    public Manifest getManifest() throws IOException {
 
         Enumeration<URL> resources = null;
         try {
@@ -17,12 +17,7 @@ public class ReadManifestUtil {
         }
         if (resources != null) {
             while (resources.hasMoreElements()) {
-                try {
                     return new Manifest(resources.nextElement().openStream());
-                    // check that this is your manifest and do what you need or get the next one
-                } catch (IOException E) {
-                    // handle
-                }
             }
         }
         return null;

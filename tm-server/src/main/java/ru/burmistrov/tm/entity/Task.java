@@ -38,7 +38,7 @@ public final class Task extends AbstractEntity implements Serializable {
         return name;
     }
 
-    public void setName(@NotNull String name) {
+    public void setName(@NotNull final String name) {
         this.name = name;
     }
 

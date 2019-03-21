@@ -20,7 +20,6 @@ public class DeserializeByJaxbXmlCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-
         getServiceLocator().getAdminEndpoint().loadDataByJaxbXml(getServiceLocator().getSession());
     }
 

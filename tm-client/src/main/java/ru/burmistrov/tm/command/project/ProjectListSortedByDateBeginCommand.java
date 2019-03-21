@@ -27,7 +27,8 @@ public class ProjectListSortedByDateBeginCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Список проектов:");
         @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint()
-                .findAllProjectsSortByDateBegin(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+                .findAllProjectsSortByDateBegin(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
         for (Project project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
                     + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getDateEnd());

@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.service.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
 public interface ServiceLocator {
@@ -23,6 +24,6 @@ public interface ServiceLocator {
     @NotNull
     IAdminService getAdminService();
 
-    void init() throws IOException, ParseException;
+    void init() throws IOException, ParseException, NoSuchAlgorithmException;
 
 }

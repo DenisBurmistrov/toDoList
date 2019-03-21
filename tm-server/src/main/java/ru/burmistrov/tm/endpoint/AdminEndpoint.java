@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.endpoint;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IAdminEndpoint;
@@ -12,21 +13,19 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
+@NoArgsConstructor
 @WebService
 public class AdminEndpoint implements IAdminEndpoint {
 
     private ServiceLocator serviceLocator;
 
-    public AdminEndpoint() {
-    }
-
-    public AdminEndpoint(ServiceLocator serviceLocator) {
+    public AdminEndpoint(@NotNull final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
     @Override
-    public void saveDataByDefault(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void saveDataByDefault(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByDefault(session);
         }
@@ -34,7 +33,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByFasterXmlJson(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void saveDataByFasterXmlJson(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByFasterXmlJson(session);
         }
@@ -42,7 +41,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByFasterXml(@NotNull Session session) throws Exception {
+    public void saveDataByFasterXml(@NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByFasterXml(session);
         }
@@ -50,7 +49,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByJaxbJson(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void saveDataByJaxbJson(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByJaxbJson(session);
         }
@@ -58,7 +57,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void saveDataByJaxbXml(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void saveDataByJaxbXml(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().saveDataByJaxbXml(session);
         }
@@ -66,7 +65,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByDefault(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void loadDataByDefault(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByDefault(session);
         }
@@ -74,7 +73,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByFasterXmlJson(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void loadDataByFasterXmlJson(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByFasterXmlJson(session);
         }
@@ -82,7 +81,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByFasterXml(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void loadDataByFasterXml(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByFasterXml(session);
         }
@@ -90,7 +89,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbJson(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void loadDataByJaxbJson(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbJson(session);
         }
@@ -98,7 +97,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbXml(@WebParam(name = "session") @NotNull Session session) throws Exception {
+    public void loadDataByJaxbXml(@WebParam(name = "session") @NotNull final Session session) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbXml(session);
         }
@@ -107,10 +106,10 @@ public class AdminEndpoint implements IAdminEndpoint {
     @WebMethod
     @Nullable
     public User createUser
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "login") @NotNull String login,
-             @WebParam(name = "password") @NotNull String password, @WebParam(name = "firstName") @NotNull String firstName,
-             @WebParam(name = "middleName") @NotNull String middleName, @WebParam(name = "lastName") @NotNull String lastName,
-             @WebParam(name = "email") @NotNull String email, @WebParam(name = "roleType") @NotNull Role roleType) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
+             @WebParam(name = "password") @NotNull final String password, @WebParam(name = "firstName") @NotNull final String firstName,
+             @WebParam(name = "middleName") @NotNull final String middleName, @WebParam(name = "lastName") @NotNull final String lastName,
+             @WebParam(name = "email") @NotNull final String email, @WebParam(name = "roleType") @NotNull final Role roleType) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             return serviceLocator.getAdminService().createUser(login, password, firstName, middleName, lastName, email, roleType);
         }
@@ -119,8 +118,8 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     public void updatePasswordById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "login") @NotNull String login, @WebParam(name = "password") @NotNull String password) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "login") @NotNull final String login, @WebParam(name = "password") @NotNull final String password) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().updatePassword(userId, login, password);
         }
@@ -128,7 +127,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     public void removeUserById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().removeUserById(userId);
         }
@@ -136,7 +135,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     public void removeAllUsers
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().removeAllUsers(userId);
         }
@@ -145,9 +144,10 @@ public class AdminEndpoint implements IAdminEndpoint {
     @WebMethod
     @Override
     public void updateUserById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId, @WebParam(name = "firstName") @NotNull String firstName,
-             @WebParam(name = "middleName") @NotNull String middleName,@WebParam(name = "lastName")  @NotNull String lastName, @WebParam(name = "email")  @NotNull String email,
-             @WebParam(name = "session") @NotNull Role role) throws Exception {
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
+             @WebParam(name = "lastName")  @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
+             @WebParam(name = "session") @NotNull final Role role) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().updateUserById(userId, firstName, middleName, lastName, email, role);
         }

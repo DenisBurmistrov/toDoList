@@ -8,24 +8,26 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.User;
 
+import java.security.NoSuchAlgorithmException;
+
 public final class UserService implements IUserService {
 
     @NotNull
     private final IUserRepository userRepository;
 
-    public UserService(@NotNull IUserRepository userRepository) {
+    public UserService(@NotNull final IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     @Nullable
-    public User logIn(@NotNull String login, @NotNull String password) {
+    public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         return userRepository.logIn(login, password);
     }
 
     @Override
-    public void merge(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                      @NotNull Role role) {
+    public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -33,7 +35,7 @@ public final class UserService implements IUserService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
-        AbstractEntity abstractEntity = userRepository.findOne(currentUser);
+        @Nullable final AbstractEntity abstractEntity = userRepository.findOne(currentUser);
         if(abstractEntity != null)
             userRepository.merge(currentUser);
     }

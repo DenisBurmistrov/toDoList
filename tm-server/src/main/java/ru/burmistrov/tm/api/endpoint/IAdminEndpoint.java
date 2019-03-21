@@ -15,61 +15,61 @@ import javax.jws.WebService;
 public interface IAdminEndpoint {
 
     @WebMethod
-    void saveDataByDefault(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void saveDataByDefault(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void saveDataByFasterXmlJson(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void saveDataByFasterXmlJson(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void saveDataByFasterXml(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void saveDataByFasterXml(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void saveDataByJaxbJson(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void saveDataByJaxbJson(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void saveDataByJaxbXml(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void saveDataByJaxbXml(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void loadDataByDefault(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void loadDataByDefault(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void loadDataByFasterXmlJson(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void loadDataByFasterXmlJson(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void loadDataByFasterXml(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void loadDataByFasterXml(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void loadDataByJaxbJson(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void loadDataByJaxbJson(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
-    void loadDataByJaxbXml(@WebParam(name = "session") @NotNull Session session) throws Exception;
+    void loadDataByJaxbXml(@WebParam(name = "session") @NotNull final Session session) throws Exception;
 
     @WebMethod
     @Nullable
     User createUser
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "login") @NotNull String login,
-             @WebParam(name = "password") @NotNull String password, @WebParam(name = "firstName") @NotNull String firstName,
-             @WebParam(name = "middleName") @NotNull String middleName, @WebParam(name = "lastName") @NotNull String lastName,
-             @WebParam(name = "email") @NotNull String email, @WebParam(name = "roleType") @NotNull Role roleType) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
+             @WebParam(name = "password") @NotNull final String password, @WebParam(name = "firstName") @NotNull final String firstName,
+             @WebParam(name = "middleName") @NotNull final String middleName, @WebParam(name = "lastName") @NotNull final String lastName,
+             @WebParam(name = "email") @NotNull final String email, @WebParam(name = "roleType") @NotNull final Role roleType) throws Exception;
 
     @WebMethod
     void updatePasswordById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "login") @NotNull String login, @WebParam(name = "password") @NotNull String password) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "login") @NotNull final String login, @WebParam(name = "password") @NotNull final String password) throws Exception;
 
     @WebMethod
     void updateUserById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "firstName") @NotNull String firstName, @WebParam(name = "middleName") @NotNull String middleName,
-             @WebParam(name = "lastName") @NotNull String lastName, @WebParam(name = "email") @NotNull String email,
-             @WebParam(name = "role") @NotNull Role role) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
+             @WebParam(name = "lastName") @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
+             @WebParam(name = "role") @NotNull final Role role) throws Exception;
 
     @WebMethod
     void removeUserById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @WebMethod
     void removeAllUsers
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
 }

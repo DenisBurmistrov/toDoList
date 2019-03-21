@@ -3,6 +3,8 @@ package ru.burmistrov.tm.command.user;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 
+import java.util.Objects;
+
 public final class UserShowCurrentUser extends AbstractCommand {
 
     @NotNull
@@ -19,7 +21,7 @@ public final class UserShowCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() {
-            System.out.println(getServiceLocator().getSession().getUserId());
+            System.out.println(Objects.requireNonNull(getServiceLocator().getSession()).getUserId());
     }
 
     @Override

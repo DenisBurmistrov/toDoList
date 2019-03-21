@@ -8,10 +8,6 @@ import java.util.Objects;
 
 public class UserClearCommand extends AbstractCommand {
 
-    public UserClearCommand() {
-
-    }
-
     @NotNull
     @Override
     public String getName() {
@@ -26,7 +22,7 @@ public class UserClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        getServiceLocator().getAdminEndpoint().removeAllUsers(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+        getServiceLocator().getAdminEndpoint().removeAllUsers(getServiceLocator().getSession(), Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
     }
 
     @Override

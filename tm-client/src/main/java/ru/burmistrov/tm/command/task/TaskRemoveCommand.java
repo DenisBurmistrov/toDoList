@@ -25,7 +25,8 @@ public final class TaskRemoveCommand extends AbstractCommand {
         System.out.println("Введите ID задачи");
         @NotNull final String taskId = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getTaskEndpoint()
-                .removeTaskById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()), taskId);
+                .removeTaskById(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), taskId);
     }
 
     @Override

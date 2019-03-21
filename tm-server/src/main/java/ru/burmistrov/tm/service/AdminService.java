@@ -20,21 +20,23 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class AdminService implements IAdminService {
 
-    private IProjectService projectService;
+    private final IProjectService projectService;
 
-    private ITaskService taskService;
+    private final ITaskService taskService;
 
-    private IProjectRepository projectRepository;
+    private final IProjectRepository projectRepository;
 
-    private ITaskRepository taskRepository;
+    private final ITaskRepository taskRepository;
 
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    public AdminService(IProjectService projectService, ITaskService taskService, IProjectRepository projectRepository, ITaskRepository taskRepository, IUserRepository userRepository) {
+    public AdminService(@NotNull final IProjectService projectService, @NotNull final ITaskService taskService, @NotNull final IProjectRepository projectRepository,
+                        @NotNull final ITaskRepository taskRepository, @NotNull final IUserRepository userRepository) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.projectRepository = projectRepository;
@@ -42,7 +44,7 @@ public class AdminService implements IAdminService {
         this.userRepository = userRepository;
     }
 
-    public void saveDataByDefault(@NotNull Session session) throws IOException {
+    public void saveDataByDefault(@NotNull final Session session) throws IOException {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         Domain domain = new Domain();
@@ -54,7 +56,7 @@ public class AdminService implements IAdminService {
     }
 
 
-    public void saveDataByFasterXmlJson(@NotNull Session session) throws IOException {
+    public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException {
 
         User user = new User();
         user.setId(session.getUserId());
@@ -68,7 +70,7 @@ public class AdminService implements IAdminService {
         mapper.writeValue(new File("projects-and-tasks-by-admin.json"), domain);
     }
 
-    public void saveDataByFasterXml(@NotNull Session session) throws IOException {
+    public void saveDataByFasterXml(@NotNull final Session session) throws IOException {
 
         Domain domain = new Domain();
 
@@ -79,7 +81,7 @@ public class AdminService implements IAdminService {
         xmlMapper.writeValue(new File("projects-and-tasks-by-admin.xml"), domain);
     }
 
-    public void saveDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException {
+    public void saveDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException {
 
         System.setProperty("javax.xml.bind.context.factory","org.eclipse.persistence.jaxb.JAXBContextFactory");
         Domain domain = new Domain();
@@ -93,7 +95,7 @@ public class AdminService implements IAdminService {
         marshaller.marshal(domain,  new FileWriter("projects-and-tasks-by-admin.json"));
     }
 
-    public void saveDataByJaxbXml(@NotNull Session session) throws IOException, JAXBException {
+    public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException {
 
         Domain domain = new Domain();
 
@@ -106,7 +108,7 @@ public class AdminService implements IAdminService {
         m.marshal(domain, new FileWriter("projects-and-tasks-by-admin.xml"));
     }
 
-    public void loadDataByDefault(@NotNull Session session) throws IOException, ClassNotFoundException {
+    public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
 
         FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -124,7 +126,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXmlJson(@NotNull Session session) throws IOException {
+    public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
 
         File file = new File("projects-and-tasks-by-admin.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -141,7 +143,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXml(@NotNull Session session) throws IOException {
+    public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
 
         File file = new File("projects-and-tasks-by-admin.xml");
         XmlMapper xmlMapper = new XmlMapper();
@@ -158,7 +160,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException {
+    public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
 
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
@@ -181,7 +183,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, IOException {
+    public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
 
         File file = new File("projects-and-tasks-by-admin.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -201,8 +203,9 @@ public class AdminService implements IAdminService {
 
     @Override
     @Nullable
-    public User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
-                           @NotNull String email, @NotNull Role roleType) {
+    public User createUser(@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
+                           @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
+                           @Nullable Role roleType) throws NoSuchAlgorithmException, IOException {
 
         @NotNull final User user = new User();
         user.setRole(roleType);
@@ -212,7 +215,7 @@ public class AdminService implements IAdminService {
         user.setMiddleName(middleName);
         user.setLastName(lastName);
         user.setEmail(email);
-        User abstractEntity = userRepository.findOne(user);
+        @Nullable final User abstractEntity = userRepository.findOne(user);
         if(abstractEntity == null)
             return userRepository.persist(user);
 
@@ -220,15 +223,15 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password) {
+    public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         if (password.length() > 0) {
             userRepository.updatePassword(userId, login, password);
         }
     }
 
     @Override
-    public void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                               @NotNull Role role) {
+    public void updateUserById(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+                               @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -242,14 +245,14 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void removeUserById(@NotNull String userId) {
+    public void removeUserById(@NotNull final String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.remove(user);
     }
 
     @Override
-    public void removeAllUsers(@Nullable String userId) {
+    public void removeAllUsers(@Nullable final String userId) {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.removeAll(user);

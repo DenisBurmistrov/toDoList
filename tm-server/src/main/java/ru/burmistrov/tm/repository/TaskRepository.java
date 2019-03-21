@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -7,20 +8,15 @@ import ru.burmistrov.tm.entity.Task;
 
 import java.util.*;
 
+@NoArgsConstructor
 public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
-
-    private final Map<String, Task> tasks = getAbstractMap();
-
-    public TaskRepository(LinkedHashMap<String, Task> abstractMap) {
-        super(abstractMap);
-    }
 
     @NotNull
     @Override
-    public List<Task> findAllInProject(@NotNull Task entity) {
+    public List<Task> findAllInProject(@NotNull final Task entity) {
         @NotNull final Task task = entity;
         @NotNull final List<Task> result = new LinkedList<>();
-        tasks.entrySet()
+        map.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().
                 getProjectId()).equals(task.getProjectId())
                 && Objects.requireNonNull(e.getValue().getUserId()).
@@ -30,18 +26,18 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     }
 
     @Override
-    public void removeAllInProject(@NotNull Task entity) {
+    public void removeAllInProject(@NotNull final Task entity) {
         @NotNull final Task task = entity;
-        tasks.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getProjectId()).equals(task.getProjectId()) &&
+        map.entrySet().removeIf((e) -> Objects.requireNonNull(e.getValue().getProjectId()).equals(task.getProjectId()) &&
                 Objects.requireNonNull(task.getUserId()).equals(e.getValue().getUserId()));
     }
 
     @NotNull
     @Override
-    public List<Task> findAllSortByDateBegin(@NotNull Task abstractEntity) {
+    public List<Task> findAllSortByDateBegin(@NotNull final Task abstractEntity) {
         @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new LinkedList<>();
-        tasks.entrySet()
+        map.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
@@ -62,10 +58,10 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public List<Task> findAllSortByDateEnd(@NotNull Task abstractEntity) {
+    public List<Task> findAllSortByDateEnd(@NotNull final Task abstractEntity) {
         @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new LinkedList<>();
-        tasks.entrySet()
+        map.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
@@ -86,10 +82,10 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public List<Task> findAllSortByStatus(@NotNull Task abstractEntity) {
+    public List<Task> findAllSortByStatus(@NotNull final Task abstractEntity) {
         @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new LinkedList<>();
-        tasks.entrySet()
+        map.entrySet()
                 .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
                 equals(task.getUserId()))
                 .forEach(e -> result.add(e.getValue()));
@@ -99,10 +95,10 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @Nullable
     @Override
-    public Task findOneByName(@NotNull Task abstractEntity) {
+    public Task findOneByName(@NotNull final Task abstractEntity) {
         @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
-        tasks.forEach((k, v) -> {
+        map.forEach((k, v) -> {
             if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
                     Objects.requireNonNull(task.getName()).equals(v.getName())) {
                 result.add(v);
@@ -116,10 +112,10 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @Nullable
     @Override
-    public Task findOneByDescription(@NotNull Task abstractEntity) {
+    public Task findOneByDescription(@NotNull final Task abstractEntity) {
         @NotNull final Task task = abstractEntity;
         @NotNull final List<Task> result = new ArrayList<>();
-        tasks.forEach((k, v) -> {
+        map.forEach((k, v) -> {
             if (Objects.requireNonNull(task.getUserId()).equals(v.getUserId()) &&
                     Objects.requireNonNull(task.getDescription()).equals(v.getDescription())) {
                 result.add(v);

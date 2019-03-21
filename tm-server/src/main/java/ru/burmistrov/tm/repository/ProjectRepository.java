@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
@@ -8,18 +9,12 @@ import ru.burmistrov.tm.entity.Project;
 
 import java.util.*;
 
+@NoArgsConstructor
 public final class ProjectRepository extends AbstractRepository<Project> implements IProjectRepository {
 
     @NotNull
-    private final LinkedHashMap<String, Project> projects = getAbstractMap();
-
-    public ProjectRepository(@NotNull LinkedHashMap<String, Project> projects) {
-        super(projects);
-    }
-
-    @NotNull
     @Override
-    public List<Project> findAllSortByDateBegin(@NotNull Project abstractEntity){
+    public List<Project> findAllSortByDateBegin(@NotNull final Project abstractEntity){
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
         result.sort((s1, s2) -> {
             boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
@@ -40,7 +35,7 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public List<Project> findAllSortByDateEnd(@NotNull Project abstractEntity){
+    public List<Project> findAllSortByDateEnd(@NotNull final Project abstractEntity){
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
         result.sort((s1, s2) -> {
             boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
@@ -61,7 +56,7 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public List<Project> findAllSortByStatus(@NotNull Project abstractEntity) {
+    public List<Project> findAllSortByStatus(@NotNull final Project abstractEntity) {
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
         result.sort((s1, s2) -> Integer.compare(0, s1.getStatus().ordinal() - s2.getStatus().ordinal()));
         return result;
@@ -69,10 +64,10 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @Nullable
     @Override
-    public Project findOneByName(@NotNull Project abstractEntity) {
+    public Project findOneByName(@NotNull final Project abstractEntity) {
         @NotNull final Project project = abstractEntity;
         @NotNull final List<Project> result = new ArrayList<>();
-        projects.forEach((k, v) -> {
+        map.forEach((k, v) -> {
             if(Objects.requireNonNull(project.getUserId()).equals(v.getUserId()) &&
                     Objects.requireNonNull(project.getName()).equals(v.getName())){
                 result.add(v);
@@ -86,10 +81,10 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @Nullable
     @Override
-    public Project findOneByDescription(@NotNull Project abstractEntity) {
+    public Project findOneByDescription(@NotNull final Project abstractEntity) {
         @NotNull final Project project = abstractEntity;
         @NotNull final List<Project> result = new ArrayList<>();
-        projects.forEach((k, v) -> {
+        map.forEach((k, v) -> {
             if(Objects.requireNonNull(project.getUserId()).equals(v.getUserId()) &&
                     Objects.requireNonNull(project.getDescription()).equals(v.getDescription())){
                 result.add(v);

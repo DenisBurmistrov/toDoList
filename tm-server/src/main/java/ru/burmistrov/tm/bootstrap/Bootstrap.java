@@ -20,6 +20,7 @@ import ru.burmistrov.tm.service.*;
 
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -28,13 +29,13 @@ import java.util.Objects;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(new LinkedHashMap<>());
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository();
 
-    @NotNull private final ITaskRepository taskRepository = new TaskRepository(new LinkedHashMap<>());
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository();
 
     @NotNull private final IUserRepository userRepository = new UserRepository();
 
-    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(new LinkedHashMap());
+    @NotNull private final ISessionRepository sessionRepository = new SessionRepository();
 
     @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
@@ -46,7 +47,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
-    private void initProjectAndUserAndTask() throws IOException, ParseException {
+    private void initProjectAndUserAndTask() throws IOException, ParseException, NoSuchAlgorithmException {
             AbstractEntity admin = adminService.createUser("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
             AbstractEntity commonUser = adminService.createUser("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
 
@@ -71,7 +72,7 @@ public final class Bootstrap implements ServiceLocator {
 
 
     @Override
-    public void init() throws IOException, ParseException {
+    public void init() throws IOException, ParseException, NoSuchAlgorithmException {
         initProjectAndUserAndTask();
         initEndpoints();
     }

@@ -7,43 +7,44 @@ import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.repository.AbstractRepository;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface ITaskRepository {
 
     @Nullable
-    Task persist(@NotNull Task abstractEntity) throws IOException;
+    Task persist(@NotNull final Task abstractEntity) throws IOException, NoSuchAlgorithmException;
 
-    void merge(@NotNull Task abstractEntity);
+    void merge(@NotNull final Task abstractEntity);
 
-    void remove(@NotNull Task entity);
+    void remove(@NotNull final Task entity);
 
-    void removeAll(@NotNull Task entity);
-
-    @NotNull
-    List<Task> findAll(@NotNull Task entity);
-
-    void removeAllInProject(@NotNull Task entity);
+    void removeAll(@NotNull final Task entity);
 
     @NotNull
-    List<Task> findAllInProject(@NotNull Task entity);
+    List<Task> findAll(@NotNull final Task entity);
+
+    void removeAllInProject(@NotNull final Task entity);
+
+    @NotNull
+    List<Task> findAllInProject(@NotNull final Task entity);
 
     @Nullable
-    Task findOne(@NotNull Task entity);
+    Task findOne(@NotNull final Task entity);
 
     @NotNull
-    List<Task> findAllSortByDateBegin(@NotNull Task abstractEntity);
+    List<Task> findAllSortByDateBegin(@NotNull final Task abstractEntity);
 
     @NotNull
-    List<Task> findAllSortByDateEnd(@NotNull Task abstractEntity);
+    List<Task> findAllSortByDateEnd(@NotNull final Task abstractEntity);
 
     @NotNull
-    List<Task> findAllSortByStatus(@NotNull Task abstractEntity);
+    List<Task> findAllSortByStatus(@NotNull final Task abstractEntity);
 
     @Nullable
-    Task findOneByName(@NotNull Task abstractEntity);
+    Task findOneByName(@NotNull final Task abstractEntity);
 
     @Nullable
-    Task findOneByDescription(@NotNull Task abstractEntity);
+    Task findOneByDescription(@NotNull final Task abstractEntity);
 
 }

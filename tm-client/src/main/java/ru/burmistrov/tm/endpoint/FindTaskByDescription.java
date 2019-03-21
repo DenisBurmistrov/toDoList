@@ -17,8 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="session" type="{http://endpoint.tm.burmistrov.ru/}session" minOccurs="0"/&gt;
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "findTaskByDescription", propOrder = {
     "session",
-    "arg1",
-    "arg2"
+    "userId",
+    "description"
 })
 public class FindTaskByDescription {
 
     protected Session session;
-    protected String arg1;
-    protected String arg2;
+    protected String userId;
+    protected String description;
 
     /**
      * Gets the value of the session property.
@@ -64,51 +64,51 @@ public class FindTaskByDescription {
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Gets the value of the userId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg1() {
-        return arg1;
+    public String getUserId() {
+        return userId;
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Sets the value of the userId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg1(String value) {
-        this.arg1 = value;
+    public void setUserId(String value) {
+        this.userId = value;
     }
 
     /**
-     * Gets the value of the arg2 property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg2() {
-        return arg2;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the arg2 property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg2(String value) {
-        this.arg2 = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
 }

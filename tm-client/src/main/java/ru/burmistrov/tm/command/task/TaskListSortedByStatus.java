@@ -25,7 +25,8 @@ public class TaskListSortedByStatus extends AbstractCommand {
     @Override
     public void execute() throws Exception_Exception {
         @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint()
-                .findAllTasksSortByStatus(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+                .findAllTasksSortByStatus(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
         System.out.println("Нет задач");
         for (Task task : taskList) {
             System.out.println("ID: " + task.getId() +

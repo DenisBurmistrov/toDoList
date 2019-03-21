@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Status;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Data
+@NoArgsConstructor
 public final class Project extends AbstractEntity implements Serializable {
 
     @Nullable
@@ -26,9 +28,6 @@ public final class Project extends AbstractEntity implements Serializable {
 
     @NotNull
     private Status status = Status.SHEDULED;
-
-    public Project() {
-    }
 
     @Override
     public boolean equals(Object o) {

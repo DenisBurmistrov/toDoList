@@ -7,9 +7,6 @@ import ru.burmistrov.tm.endpoint.Role;
 
 public final class UserRegistrateCommand extends AbstractCommand {
 
-    public UserRegistrateCommand() {
-    }
-
     @NotNull
     @Override
     public String getName() {

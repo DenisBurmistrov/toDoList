@@ -22,7 +22,7 @@ public abstract class AbstractCommand {
     @NotNull
     public abstract String getDescription();
 
-    public abstract void execute() throws Exception_Exception;
+    public abstract void execute() throws Exception_Exception, IOException;
 
     @NotNull
     public ServiceLocator getServiceLocator() {

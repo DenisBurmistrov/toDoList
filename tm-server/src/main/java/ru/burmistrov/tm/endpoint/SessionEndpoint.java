@@ -19,13 +19,13 @@ public class SessionEndpoint implements ISessionEndpoint {
 
     private ServiceLocator serviceLocator;
 
-    public SessionEndpoint(ServiceLocator serviceLocator) {
+    public SessionEndpoint(@NotNull final ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     @WebMethod
     @Override
-    public Session getNewSession(@WebParam(name = "userId") @NotNull String userId) throws Exception {
+    public Session getNewSession(@WebParam(name = "userId") @NotNull final String userId) throws Exception {
         return serviceLocator.getSessionService().persist(userId);
     }
 

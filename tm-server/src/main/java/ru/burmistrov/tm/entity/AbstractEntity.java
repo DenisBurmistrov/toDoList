@@ -9,6 +9,9 @@ import java.util.UUID;
 @Data
 public abstract class AbstractEntity {
 
+    public AbstractEntity() {
+    }
+
     @NotNull
     private String id = UUID.randomUUID().toString();
 

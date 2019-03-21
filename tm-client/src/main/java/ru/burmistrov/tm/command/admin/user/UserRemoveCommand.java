@@ -8,9 +8,6 @@ import java.util.Objects;
 
 public class UserRemoveCommand extends AbstractCommand {
 
-    public UserRemoveCommand() {
-    }
-
     @NotNull
     @Override
     public String getName() {
@@ -25,7 +22,8 @@ public class UserRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        getServiceLocator().getAdminEndpoint().removeUserById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+        getServiceLocator().getAdminEndpoint()
+                .removeUserById(getServiceLocator().getSession(), Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
         getServiceLocator().setSession(null);
     }
 

@@ -22,7 +22,8 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        getServiceLocator().getTaskEndpoint().removeAllTasks(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+        getServiceLocator().getTaskEndpoint().removeAllTasks(getServiceLocator().getSession(),
+                Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
     }
 
     @Override

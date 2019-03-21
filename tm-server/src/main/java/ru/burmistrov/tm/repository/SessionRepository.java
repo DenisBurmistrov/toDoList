@@ -1,6 +1,8 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.utils.PasswordUtil;
@@ -9,22 +11,15 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.Properties;
 
+@NoArgsConstructor
 public class SessionRepository extends AbstractRepository<Session> implements ISessionRepository {
 
-
-    public SessionRepository(LinkedHashMap abstractMap) {
-        super(abstractMap);
-    }
-
     @NotNull
-    private final LinkedHashMap<String, Session> sessions = getAbstractMap();
-
-    @NotNull
-    public Session persist(@NotNull Session session) throws IOException {
+    public Session persist(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
 
         InputStream inputStream;
         Properties property = new Properties();
@@ -35,12 +30,12 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         String salt = property.getProperty("salt");
 
         session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
-        sessions.put(session.getId(), session);
+        map.put(session.getId(), session);
         return session;
     }
 
     @Override
-    public boolean validate(Session session) throws CloneNotSupportedException, ValidateAccessException {
+    public boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
         if(session == null) throw new ValidateAccessException();
         else if(session.getSignature() == null) throw new ValidateAccessException();
         else if(session.getUserId() == null) throw new ValidateAccessException();
@@ -51,7 +46,6 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         String targetSignature = PasswordUtil.hashPassword(String.valueOf(temp.hashCode()));
         boolean check = Objects.requireNonNull(sourceSignature).equals(targetSignature);
         if(!check) throw new ValidateAccessException();
-        return sessions.containsKey(session.getId());
+        return map.containsKey(session.getId());
     }
-
 }

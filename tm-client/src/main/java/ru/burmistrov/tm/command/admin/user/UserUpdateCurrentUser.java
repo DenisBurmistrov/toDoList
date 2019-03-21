@@ -9,9 +9,6 @@ import java.util.Objects;
 
 public final class UserUpdateCurrentUser extends AbstractCommand {
 
-    public UserUpdateCurrentUser() {
-    }
-
     @NotNull
     @Override
     public String getName() {
@@ -34,7 +31,8 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         @NotNull final String middleName = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите новую почту:");
         @NotNull final String email = getServiceLocator().getTerminalCommandService().nextLine();
-        getServiceLocator().getAdminEndpoint().updateUserById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()),
+        getServiceLocator().getAdminEndpoint()
+                .updateUserById(getServiceLocator().getSession(), Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()),
                 firstName, middleName, lastName, email, Role.COMMON_USER);
     }
 

@@ -31,7 +31,8 @@ public final class ProjectUpdateCommand extends AbstractCommand {
         System.out.println("Введите новую дату окончания (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getProjectEndpoint()
-                .updateProjectById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()) , projectId, name, description, date);
+                .updateProjectById(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()) , projectId, name, description, date);
     }
 
     @Override

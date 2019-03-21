@@ -31,7 +31,7 @@ public class TerminalCommandService {
             }
             try {
                 serviceLocator.execute(input);
-            } catch (Exception_Exception e) {
+            } catch (Exception_Exception | IOException e) {
                 e.printStackTrace();
             }
         }

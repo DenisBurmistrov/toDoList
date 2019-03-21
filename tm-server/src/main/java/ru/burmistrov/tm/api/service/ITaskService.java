@@ -6,42 +6,45 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.List;
 
 public interface ITaskService {
 
-    void merge(@NotNull String userId, @NotNull String projectId, @NotNull String taskId, @NotNull String newName,
-               @NotNull String description, @NotNull String dateEnd) throws ParseException;
+    void merge
+            (@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId, @NotNull final String newName,
+             @NotNull final String description, @NotNull final String dateEnd) throws ParseException;
 
     @Nullable
-    Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
-                 @NotNull String dateEnd) throws ParseException, IOException;
+    Task persist
+            (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name, @NotNull final String description,
+             @NotNull final String dateEnd) throws ParseException, IOException, NoSuchAlgorithmException;
 
     @NotNull
-    List<Task> findAll(@NotNull String userId);
+    List<Task> findAll(@NotNull final String userId);
 
-    void removeAllInProject(@NotNull String userId, @NotNull String projectId);
+    void removeAllInProject(@NotNull final String userId, @NotNull final String projectId);
 
-    void remove(@NotNull String userId, @NotNull String taskId);
+    void remove(@NotNull final String userId, @NotNull final String taskId);
 
-    void removeAll(@NotNull String userId);
-
-    @NotNull
-    List<Task> findAllSortByDateBegin(@NotNull String userId);
+    void removeAll(@NotNull final String userId);
 
     @NotNull
-    List<Task> findAllSortByDateEnd(@NotNull String userId);
+    List<Task> findAllSortByDateBegin(@NotNull final String userId);
 
     @NotNull
-    List<Task> findAllSortByStatus(@NotNull String userId);
+    List<Task> findAllSortByDateEnd(@NotNull final String userId);
+
+    @NotNull
+    List<Task> findAllSortByStatus(@NotNull final String userId);
 
     @Nullable
-    Task findOneByName(@NotNull String userId, String name);
+    Task findOneByName(@NotNull final String userId, @NotNull final String name);
 
     @Nullable
-    Task findOneByDescription(@NotNull String userId, String description);
+    Task findOneByDescription(@NotNull final String userId, @NotNull final String description);
 
     @NotNull
-    List<Task> findAllInProject(@NotNull String userId, @NotNull String projectId);
+    List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId);
 }

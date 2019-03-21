@@ -1,11 +1,13 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Data
@@ -32,7 +34,7 @@ public final class User extends AbstractEntity implements Serializable {
     @Nullable
     private Role role;
 
-    public void setPassword(String password) {
+    public void setPassword(@NotNull final String password) throws NoSuchAlgorithmException {
         this.password = PasswordUtil.hashPassword(password);
     }
 

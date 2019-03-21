@@ -1,8 +1,13 @@
 package ru.burmistrov.tm.utils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.security.NoSuchAlgorithmException;
+
 public class SignatureUtil {
 
-    public static String sign(String value, int cycle, String salt) {
+    public static String sign(@Nullable final String value, int cycle, @NotNull final String salt) throws NoSuchAlgorithmException {
         if(value == null) return null;
         String result = null;
         for (int i = 0; i < cycle; i++) {

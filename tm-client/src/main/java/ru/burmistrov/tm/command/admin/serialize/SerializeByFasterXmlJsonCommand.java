@@ -5,6 +5,7 @@ import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
 
 public class SerializeByFasterXmlJsonCommand extends AbstractCommand {
+
     @NotNull
     @Override
     public String getName() {

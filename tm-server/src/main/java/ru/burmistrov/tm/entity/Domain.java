@@ -2,6 +2,7 @@ package ru.burmistrov.tm.entity;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class Domain implements Serializable {
 
     @XmlElementWrapper(name="projects")
     @XmlElement(name="project")
+    @NotNull
     private List<Project> projects;
 
     @XmlElementWrapper(name="tasks")
@@ -27,30 +29,35 @@ public class Domain implements Serializable {
     }
 
     @Getter
+    @NotNull
     public List<Project> getProjects() {
         return projects;
     }
 
     @Setter
-    public void setProjects(List<Project> projects) {
+    public void setProjects(@NotNull final List<Project> projects) {
         this.projects = projects;
     }
 
     @Getter
+    @NotNull
     public List<Task> getTasks() {
         return tasks;
     }
 
     @Setter
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(@NotNull final List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    @Getter
+    @NotNull
     public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    @Setter
+    public void setUsers(@NotNull final List<User> users) {
         this.users = users;
     }
 }

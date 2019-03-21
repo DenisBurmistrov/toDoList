@@ -25,7 +25,8 @@ public class TaskListSortedByDateEndCommand extends AbstractCommand {
     @Override
     public void execute() throws Exception_Exception {
         @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint()
-                .findAllTasksSortByDateEnd(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()));
+                .findAllTasksSortByDateEnd(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
         for (Task task : taskList) {
             System.out.println("ID: " + task.getId() +
                     "; Название: " + task.getName() +

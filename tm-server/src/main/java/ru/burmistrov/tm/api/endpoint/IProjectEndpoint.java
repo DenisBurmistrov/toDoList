@@ -19,56 +19,56 @@ public interface IProjectEndpoint {
 
     @WebMethod
     void removeProjectById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "projectId") @NotNull String projectId) throws Exception;
 
     @Nullable
     @WebMethod
     Project createProject
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "name") @NotNull String name, @WebParam(name = "description") @NotNull String description,
-             @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "name") @NotNull final String name, @WebParam(name = "description") @NotNull final String description,
+             @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception;
 
     @WebMethod
     void updateProjectById
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "projectId") @NotNull String projectId, @WebParam(name = "name") @NotNull String name,
-             @WebParam(name = "description") @NotNull String description, @WebParam(name = "dateEnd") @NotNull String dateEnd) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "name") @NotNull final String name,
+             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception;
 
     @WebMethod
     void removeAllProjects
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
     List<Project> findAllProjects
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByDateBegin
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByDateEnd
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
     List<Project> findAllProjectsSortByStatus
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
     Project findProjectByName
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-             @WebParam(name = "name") @NotNull String name) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+             @WebParam(name = "name") @NotNull final String name) throws Exception;
 
     @Nullable
     @WebMethod
     Project findProjectByDescription
-            (@WebParam(name = "session") @NotNull Session session, @WebParam(name = "userId") @NotNull String userId,
-            @WebParam(name = "description") @NotNull String description) throws Exception;
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+            @WebParam(name = "description") @NotNull final String description) throws Exception;
 
 }

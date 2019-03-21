@@ -7,40 +7,43 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 public interface IAdminService {
 
-    void saveDataByDefault(@NotNull Session session) throws IOException;
+    void saveDataByDefault(@NotNull final Session session) throws IOException;
 
-    void saveDataByFasterXmlJson(@NotNull Session session) throws IOException;
+    void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException;
 
-    void saveDataByFasterXml(@NotNull Session session) throws IOException;
+    void saveDataByFasterXml(@NotNull final Session session) throws IOException;
 
-    void saveDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException;
+    void saveDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException;
 
-    void saveDataByJaxbXml(@NotNull Session session) throws IOException, JAXBException;
+    void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException;
 
-    void loadDataByDefault(@NotNull Session session) throws IOException, ClassNotFoundException;
+    void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException;
 
-    void loadDataByFasterXmlJson(@NotNull Session session) throws IOException;
+    void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException;
 
-    void loadDataByFasterXml(@NotNull Session session) throws IOException;
+    void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException;
 
-    void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException;
+    void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException;
 
-    void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, IOException;
+    void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException;
 
     @Nullable
-    User createUser(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,
-                    @NotNull String email, @Nullable Role roleType);
+    User createUser
+            (@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
+             @NotNull final String middleName, @NotNull final String lastName, @NotNull String email, @Nullable Role roleType) throws NoSuchAlgorithmException, IOException;
 
-    void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String password);
+    void updatePassword
+            (@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException;
 
-    void updateUserById(@NotNull String userId, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName, @NotNull String email,
-                        @NotNull Role role);
+    void updateUserById
+            (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+             @NotNull final String lastName, @NotNull final String email, @NotNull final Role role);
 
-    void removeUserById(@NotNull String userId);
+    void removeUserById(@NotNull final String userId);
 
-    void removeAllUsers(@NotNull String userId);
-
+    void removeAllUsers(@NotNull final String userId);
 }

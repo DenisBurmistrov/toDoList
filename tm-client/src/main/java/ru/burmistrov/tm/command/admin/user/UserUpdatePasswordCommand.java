@@ -8,10 +8,6 @@ import java.util.Objects;
 
 public final class UserUpdatePasswordCommand extends AbstractCommand {
 
-    public UserUpdatePasswordCommand() {
-
-    }
-
     @NotNull
     @Override
     public String getName() {
@@ -31,8 +27,9 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
             @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
             System.out.println("Введите новый пароль");
             @NotNull final String newPassword = getServiceLocator().getTerminalCommandService().nextLine();
-            getServiceLocator().getAdminEndpoint().updatePasswordById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()),
-                    login, newPassword);
+            getServiceLocator()
+                    .getAdminEndpoint().updatePasswordById(getServiceLocator().getSession(),
+                    Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), login, newPassword);
         }
     }
 

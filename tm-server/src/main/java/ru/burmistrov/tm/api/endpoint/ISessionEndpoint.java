@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 public interface ISessionEndpoint {
 
     @WebMethod
-    Session getNewSession(@WebParam(name = "userId") @NotNull String userId) throws Exception;
+    @Nullable
+    Session getNewSession(@WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
 }

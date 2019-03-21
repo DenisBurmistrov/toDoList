@@ -5,27 +5,29 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface IUserRepository {
 
     @Nullable
-    User logIn(@NotNull String login, @NotNull String password);
+    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException;
 
-    void updatePassword(@NotNull String userId, @NotNull String login, @NotNull String newPassword);
-
-    @Nullable
-    User persist(@NotNull User entity);
-
-    void merge(@NotNull User abstractEntity);
-
-    void remove(@NotNull User abstractEntity);
-
-    void removeAll(@NotNull User abstractEntity);
+    void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException;
 
     @Nullable
-    List<User> findAll(@NotNull User abstractEntity);
+    User persist(@NotNull final User entity) throws IOException, NoSuchAlgorithmException;
+
+    void merge(@NotNull final User abstractEntity);
+
+    void remove(@NotNull final User abstractEntity);
+
+    void removeAll(@NotNull final User abstractEntity);
 
     @Nullable
-    User findOne(@NotNull User abstractEntity);
+    List<User> findAll(@NotNull final User abstractEntity);
+
+    @Nullable
+    User findOne(@NotNull final User abstractEntity);
 }

@@ -33,7 +33,8 @@ public final class TaskUpdateCommand extends AbstractCommand {
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getTaskEndpoint()
-                .updateTaskById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId, taskId, newName, description, date);
+                .updateTaskById(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), projectId, taskId, newName, description, date);
     }
 
     @Override

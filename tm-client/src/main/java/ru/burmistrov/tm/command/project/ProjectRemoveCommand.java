@@ -25,7 +25,8 @@ public final class ProjectRemoveCommand extends AbstractCommand {
         System.out.println("Введите ID проекта: ");
         @NotNull final String projectId = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getProjectEndpoint()
-                .removeProjectById(getServiceLocator().getSession(), Objects.requireNonNull(getServiceLocator().getSession().getUserId()), projectId);
+                .removeProjectById(getServiceLocator().getSession(),
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), projectId);
     }
 
     @Override
