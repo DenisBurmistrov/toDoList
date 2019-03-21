@@ -25,9 +25,9 @@ public interface IAdminService {
 
     void loadDataByFasterXml(@NotNull Session session) throws IOException;
 
-    void loadDataByJaxbJson(@NotNull Session session) throws JAXBException;
+    void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException;
 
-    void loadDataByJaxbXml(@NotNull Session session) throws JAXBException;
+    void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, IOException;
 
     @Nullable
     User persist(@NotNull String login, @NotNull String password, @NotNull String firstName, @NotNull String middleName, @NotNull String lastName,

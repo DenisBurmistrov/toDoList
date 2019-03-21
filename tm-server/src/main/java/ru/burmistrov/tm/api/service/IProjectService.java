@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface IProjectService {
     void remove(@NotNull String userId, @NotNull String projectId);
 
     @Nullable
-    Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
+    Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException, IOException;
 
     void merge(@NotNull String userId, @NotNull String taskId, @NotNull String name, @NotNull String description, @NotNull String dateEnd) throws ParseException;
 

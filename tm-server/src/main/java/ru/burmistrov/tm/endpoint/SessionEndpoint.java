@@ -9,6 +9,7 @@ import ru.burmistrov.tm.entity.User;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.io.IOException;
 
 @WebService
 public class SessionEndpoint implements ISessionEndpoint {
@@ -24,7 +25,7 @@ public class SessionEndpoint implements ISessionEndpoint {
 
     @WebMethod
     @Override
-    public Session getNewSession(@NotNull String userId) {
+    public Session getNewSession(@NotNull String userId) throws IOException {
 
         return serviceLocator.getSessionService().persist(userId);
     }

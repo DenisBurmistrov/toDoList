@@ -1,6 +1,6 @@
 package ru.burmistrov.tm.api.loader;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
@@ -14,7 +14,7 @@ import java.util.Map;
 public interface ServiceLocator {
 
 
-    void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ClassNotFoundException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception, CloneNotSupportedException_Exception;
+    void execute(@Nullable String command) throws ParseException, IOException, JAXBException, ParseException_Exception, ClassNotFoundException, ClassNotFoundException_Exception, IOException_Exception, JAXBException_Exception, CloneNotSupportedException_Exception;
 
     ProjectEndpoint getProjectEndpoint();
 

@@ -18,6 +18,7 @@ import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.service.*;
 
 import javax.xml.ws.Endpoint;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -44,8 +45,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
-    private void initProjectAndUserAndTask() {
-        try {
+    private void initProjectAndUserAndTask() throws IOException, ParseException {
             AbstractEntity admin = adminService.persist("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
             AbstractEntity commonUser = adminService.persist("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
 
@@ -58,10 +58,6 @@ public final class Bootstrap implements ServiceLocator {
             taskService.persist(admin.getId(), Objects.requireNonNull(project2).getId(), "Вторая задача", "Вторая описание", "15.10.2019");
             taskService.persist(commonUser.getId(), Objects.requireNonNull(project3).getId(), "Третья задача", "Третье описание", "16.10.2019");
             taskService.persist(commonUser.getId(), Objects.requireNonNull(project4).getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
-        }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initEndpoints() {
@@ -74,7 +70,7 @@ public final class Bootstrap implements ServiceLocator {
 
 
     @Override
-    public void init() {
+    public void init() throws IOException, ParseException {
         initProjectAndUserAndTask();
         initEndpoints();
     }

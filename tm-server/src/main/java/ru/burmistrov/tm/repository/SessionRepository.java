@@ -7,8 +7,13 @@ import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.utils.PasswordUtil;
 import ru.burmistrov.tm.utils.SignatureUtil;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Properties;
 
 public class SessionRepository extends AbstractRepository<Session> implements ISessionRepository {
 
@@ -21,8 +26,17 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     private final LinkedHashMap<String, Session> sessions = getAbstractMap();
 
     @NotNull
-    public Session persist(@NotNull Session session) {
-        session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode())));
+    public Session persist(@NotNull Session session) throws IOException {
+
+        InputStream inputStream;
+        Properties property = new Properties();
+
+        inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+        property.load(inputStream);
+        String cycle = property.getProperty("cycle");
+        String salt = property.getProperty("salt");
+
+        session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
         sessions.put(session.getId(), session);
         return session;
     }

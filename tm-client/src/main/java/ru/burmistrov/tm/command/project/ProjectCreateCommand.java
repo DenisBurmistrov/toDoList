@@ -3,6 +3,7 @@ package ru.burmistrov.tm.command.project;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.CloneNotSupportedException_Exception;
+import ru.burmistrov.tm.endpoint.IOException_Exception;
 import ru.burmistrov.tm.endpoint.ParseException_Exception;
 
 import java.text.ParseException;
@@ -26,7 +27,7 @@ public final class ProjectCreateCommand extends AbstractCommand {
     }
 
     @Override
-    public void execute() throws ParseException_Exception, CloneNotSupportedException_Exception {
+    public void execute() throws ParseException_Exception, CloneNotSupportedException_Exception, IOException_Exception {
         System.out.println("Введите имя:");
         @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
         if (name.length() == 0) {

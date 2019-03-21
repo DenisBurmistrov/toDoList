@@ -19,6 +19,10 @@ public class Domain implements Serializable {
     @XmlElement(name="task")
     private List<Task> tasks;
 
+    @XmlElementWrapper(name="users")
+    @XmlElement(name="user")
+    private List<User> users;
+
     public Domain() {
     }
 
@@ -40,5 +44,13 @@ public class Domain implements Serializable {
     @Setter
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

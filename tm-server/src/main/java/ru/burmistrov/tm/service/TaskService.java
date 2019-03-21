@@ -8,6 +8,7 @@ import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,7 +25,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     @Nullable
-    public Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws ParseException {
+    public Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws ParseException, IOException {
         @NotNull final Task task = new Task();
         task.setName(name);
         task.setDescription(description);

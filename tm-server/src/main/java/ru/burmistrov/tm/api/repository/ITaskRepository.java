@@ -6,12 +6,13 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.repository.AbstractRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ITaskRepository {
 
     @Nullable
-    Task persist(@NotNull Task abstractEntity);
+    Task persist(@NotNull Task abstractEntity) throws IOException;
 
     void merge(@NotNull Task abstractEntity);
 

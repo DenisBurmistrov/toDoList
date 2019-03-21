@@ -91,7 +91,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, CloneNotSupportedException {
+    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbJson(session);
         }
@@ -99,7 +99,7 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Override
-    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, CloneNotSupportedException {
+    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
             serviceLocator.getAdminService().loadDataByJaxbXml(session);
         }

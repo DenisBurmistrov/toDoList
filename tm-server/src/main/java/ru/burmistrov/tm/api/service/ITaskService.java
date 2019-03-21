@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface ITaskService {
 
     @Nullable
     Task persist(@NotNull String userId, @NotNull String projectId, @NotNull String name, @NotNull String description,
-                 @NotNull String dateEnd) throws ParseException;
+                 @NotNull String dateEnd) throws ParseException, IOException;
 
     @NotNull
     List<Task> findAll(@NotNull String userId);

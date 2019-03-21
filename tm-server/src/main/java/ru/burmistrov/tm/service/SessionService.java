@@ -8,6 +8,7 @@ import ru.burmistrov.tm.entity.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class SessionService implements ISessionService {
@@ -24,7 +25,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public Session persist(@NotNull String userId) {
+    public Session persist(@NotNull String userId) throws IOException {
         Session session = new Session();
         session.setUserId(userId);
         return sessionRepository.persist(session);

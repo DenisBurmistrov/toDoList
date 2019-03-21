@@ -5,12 +5,13 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IProjectRepository{
 
     @Nullable
-    Project persist(@NotNull Project abstractEntity);
+    Project persist(@NotNull Project abstractEntity) throws IOException;
 
     void merge(@NotNull Project abstractEntity);
 

@@ -10,6 +10,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,7 +45,7 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws NullPointerException, ParseException {
+    public Project persist(@NotNull String userId, @NotNull String name, @NotNull String description, @NotNull String dateEndString) throws NullPointerException, ParseException, IOException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);

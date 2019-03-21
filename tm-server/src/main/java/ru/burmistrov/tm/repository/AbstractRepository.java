@@ -5,6 +5,8 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public abstract class AbstractRepository<T extends AbstractEntity> {
@@ -16,7 +18,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> {
     }
 
     @NotNull
-    public T persist(@NotNull T abstractEntity) {
+    public T persist(@NotNull T abstractEntity) throws IOException {
         abstractMap.put(abstractEntity.getId(), abstractEntity);
         return abstractEntity;
     }

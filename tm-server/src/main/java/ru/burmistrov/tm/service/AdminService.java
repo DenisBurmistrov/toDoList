@@ -47,20 +47,10 @@ public class AdminService implements IAdminService {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         Domain domain = new Domain();
-        List<Project> projects = new LinkedList<>();
-        List<Task> tasks = new LinkedList<>();
 
-        for(AbstractEntity project : projectService.findAll(Objects.requireNonNull(session.getUserId()))){
-            Project receivedProject = (Project) project;
-            projects.add(receivedProject);
-        }
-
-        for (AbstractEntity task : taskService.findAll(session.getUserId())) {
-            Task receivedTask = (Task) task;
-            tasks.add(receivedTask);
-        }
-        domain.setProjects(projects);
-        domain.setTasks(tasks);
+        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setTasks(taskService.findAll(session.getUserId()));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
         oos.writeObject(domain);
     }
 
@@ -70,22 +60,9 @@ public class AdminService implements IAdminService {
         User user = new User();
         user.setId(session.getUserId());
         Domain domain = new Domain();
-        List<Project> projects = new LinkedList<>();
-        List<Task> tasks = new LinkedList<>();
-
-        for(AbstractEntity project : projectService.findAll(Objects.requireNonNull(session.getUserId())))
-        {
-            Project receivedProject = (Project) project;
-            projects.add(receivedProject);
-        }
-
-        for (AbstractEntity task : taskService.findAll(session.getUserId())) {
-            Task receivedTask = (Task) task;
-            tasks.add(receivedTask);
-        }
-
-        domain.setProjects(projects);
-        domain.setTasks(tasks);
+        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setTasks(taskService.findAll(session.getUserId()));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll(user)));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -95,22 +72,10 @@ public class AdminService implements IAdminService {
     public void saveDataByFasterXml(@NotNull Session session) throws IOException {
 
         Domain domain = new Domain();
-        List<Project> projects = new LinkedList<>();
-        List<Task> tasks = new LinkedList<>();
 
-        for(AbstractEntity project : projectService.findAll(Objects.requireNonNull(session.getUserId())))
-        {
-            Project receivedProject = (Project) project;
-            projects.add(receivedProject);
-        }
-
-        for (AbstractEntity task : taskService.findAll(session.getUserId())) {
-            Task receivedTask = (Task) task;
-            tasks.add(receivedTask);
-        }
-
-        domain.setProjects(projects);
-        domain.setTasks(tasks);
+        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setTasks(taskService.findAll(session.getUserId()));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.writeValue(new File("projects-and-tasks-by-admin.xml"), domain);
     }
@@ -119,22 +84,9 @@ public class AdminService implements IAdminService {
 
         System.setProperty("javax.xml.bind.context.factory","org.eclipse.persistence.jaxb.JAXBContextFactory");
         Domain domain = new Domain();
-        List<Project> projects = new LinkedList<>();
-        List<Task> tasks = new LinkedList<>();
-
-        for(AbstractEntity project : projectService.findAll(Objects.requireNonNull(session.getUserId())))
-        {
-            Project receivedProject = (Project) project;
-            projects.add(receivedProject);
-        }
-
-        for (AbstractEntity task : taskService.findAll(session.getUserId())) {
-            Task receivedTask = (Task) task;
-            tasks.add(receivedTask);
-        }
-
-        domain.setProjects(projects);
-        domain.setTasks(tasks);
+        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setTasks(taskService.findAll(session.getUserId()));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
         JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty("eclipselink.media-type", "application/json");
@@ -145,21 +97,10 @@ public class AdminService implements IAdminService {
     public void saveDataByJaxbXml(@NotNull Session session) throws IOException, JAXBException {
 
         Domain domain = new Domain();
-        List<Project> projects = new LinkedList<>();
-        List<Task> tasks = new LinkedList<>();
 
-        for(AbstractEntity project : projectService.findAll(Objects.requireNonNull(session.getUserId())))
-        {
-            Project receivedProject = (Project) project;
-            projects.add(receivedProject);
-        }
-
-        for (AbstractEntity task : taskService.findAll(session.getUserId())) {
-            Task receivedTask = (Task) task;
-            tasks.add(receivedTask);
-        }
-        domain.setProjects(projects);
-        domain.setTasks(tasks);
+        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setTasks(taskService.findAll(session.getUserId()));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
         JAXBContext context = JAXBContext.newInstance(Domain.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -179,6 +120,9 @@ public class AdminService implements IAdminService {
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
         }
+        for (User user : domain.getUsers()) {
+            userRepository.persist(user);
+        }
     }
 
     public void loadDataByFasterXmlJson(@NotNull Session session) throws IOException {
@@ -192,6 +136,9 @@ public class AdminService implements IAdminService {
         }
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
+        }
+        for (User user : domain.getUsers()) {
+            userRepository.persist(user);
         }
     }
 
@@ -207,9 +154,12 @@ public class AdminService implements IAdminService {
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
         }
+        for (User user : domain.getUsers()) {
+            userRepository.persist(user);
+        }
     }
 
-    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException {
+    public void loadDataByJaxbJson(@NotNull Session session) throws JAXBException, IOException {
 
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
@@ -227,9 +177,12 @@ public class AdminService implements IAdminService {
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
         }
+        for (User user : domain.getUsers()) {
+            userRepository.persist(user);
+        }
     }
 
-    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException {
+    public void loadDataByJaxbXml(@NotNull Session session) throws JAXBException, IOException {
 
         File file = new File("projects-and-tasks-by-admin.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -241,6 +194,9 @@ public class AdminService implements IAdminService {
         }
         for (Task task : domain.getTasks()) {
             taskRepository.persist(task);
+        }
+        for (User user : domain.getUsers()) {
+            userRepository.persist(user);
         }
     }
 

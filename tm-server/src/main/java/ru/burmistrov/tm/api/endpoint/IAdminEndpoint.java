@@ -41,10 +41,10 @@ public interface IAdminEndpoint {
     void loadDataByFasterXml(@WebParam @NotNull Session session) throws IOException, CloneNotSupportedException;
 
     @WebMethod
-    void loadDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException;
+    void loadDataByJaxbJson(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException;
 
     @WebMethod
-    void loadDataByJaxbXml(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException;
+    void loadDataByJaxbXml(@WebParam @NotNull Session session) throws JAXBException, CloneNotSupportedException, IOException;
 
     @WebMethod
     @Nullable

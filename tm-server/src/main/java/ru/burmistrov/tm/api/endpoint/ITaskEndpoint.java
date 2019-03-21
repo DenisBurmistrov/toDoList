@@ -10,6 +10,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface ITaskEndpoint {
     @Nullable
     Task createTask(@WebParam @NotNull Session session, @NotNull @WebParam String userId, @WebParam @NotNull String projectId,
                  @WebParam @NotNull String name, @WebParam @NotNull String description,
-                 @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException;
+                 @WebParam @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException;
 
     @WebMethod
     @NotNull

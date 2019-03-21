@@ -9,6 +9,7 @@ import ru.burmistrov.tm.entity.Task;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class TaskEndpoint implements ITaskEndpoint {
     @WebMethod
     @Nullable
     public Task createTask(@NotNull Session session, @NotNull String userId, @NotNull String projectId, @NotNull String name,
-                           @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException {
+                           @NotNull String description, @NotNull String dateEnd) throws ParseException, CloneNotSupportedException, IOException {
         if (serviceLocator.getSessionService().validate(session)) {
             return serviceLocator.getTaskService().persist(userId, projectId, name, description, dateEnd);
         }

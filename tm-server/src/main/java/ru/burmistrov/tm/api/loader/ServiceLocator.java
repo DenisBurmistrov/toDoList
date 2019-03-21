@@ -3,6 +3,9 @@ package ru.burmistrov.tm.api.loader;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.service.*;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 public interface ServiceLocator {
 
     @NotNull
@@ -20,6 +23,6 @@ public interface ServiceLocator {
     @NotNull
     IAdminService getAdminService();
 
-    void init();
+    void init() throws IOException, ParseException;
 
 }
