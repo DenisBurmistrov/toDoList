@@ -24,6 +24,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Properties;
 
 @Getter
 @Setter
@@ -62,12 +63,16 @@ public final class Bootstrap implements ServiceLocator {
             taskService.persist(commonUser.getId(), Objects.requireNonNull(project4).getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
     }
 
-    private void initEndpoints() {
-        Endpoint.publish("http://localhost:8080/ProjectEndpoint", new ProjectEndpoint(this));
-        Endpoint.publish("http://localhost:8080/TaskEndpoint", new TaskEndpoint(this));
-        Endpoint.publish("http://localhost:8080/UserEndpoint", new UserEndpoint(this));
-        Endpoint.publish("http://localhost:8080/SessionEndpoint", new SessionEndpoint(this));
-        Endpoint.publish("http://localhost:8080/AdminEndpoint", new AdminEndpoint(this));
+    private void initEndpoints() throws IOException {
+        @NotNull final Properties property = new Properties();
+        property.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
+        @NotNull final String host = property.getProperty("host");
+        @NotNull final String port = property.getProperty("port");
+        Endpoint.publish("http://" + host+":" + port + "/ProjectEndpoint", new ProjectEndpoint(this));
+        Endpoint.publish("http://" + host+":" + port + "/TaskEndpoint", new TaskEndpoint(this));
+        Endpoint.publish("http://" + host + ":" + port + "/UserEndpoint", new UserEndpoint(this));
+        Endpoint.publish("http://" + host+":" + port + "/SessionEndpoint", new SessionEndpoint(this));
+        Endpoint.publish("http://" + host + ":" + port + "/AdminEndpoint", new AdminEndpoint(this));
     }
 
 
