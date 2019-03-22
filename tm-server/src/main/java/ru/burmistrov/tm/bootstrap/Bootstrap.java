@@ -3,6 +3,7 @@ package ru.burmistrov.tm.bootstrap;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
@@ -21,6 +22,7 @@ import ru.burmistrov.tm.service.*;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -30,13 +32,19 @@ import java.util.Properties;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    @NotNull private final IProjectRepository projectRepository = new ProjectRepository();
+    final String url = "jdbc:mysql://localhost:3306/tm";
+    final String user = "root";
+    final String password = "root";
 
-    @NotNull private final ITaskRepository taskRepository = new TaskRepository();
+    @Nullable private Connection connection = DriverManager.getConnection(url, user, password);
 
-    @NotNull private final IUserRepository userRepository = new UserRepository();
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(connection);
 
-    @NotNull private final ISessionRepository sessionRepository = new SessionRepository();
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository(connection);
+
+    @NotNull private final IUserRepository userRepository = new UserRepository(connection);
+
+    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(connection);
 
     @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
@@ -48,20 +56,9 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
-    private void initProjectAndUserAndTask() throws IOException, ParseException, NoSuchAlgorithmException {
-            AbstractEntity admin = adminService.createUser("admin", "admin", "admin", "admin", "admin", "admin@admin", Role.ADMINISTRATOR);
-            AbstractEntity commonUser = adminService.createUser("user", "user", "user", "user", "user", "user", Role.COMMON_USER);
-
-            AbstractEntity project1 = projectService.persist(Objects.requireNonNull(admin).getId(), "Первый проект", "Первое описание", "10.10.2019");
-            AbstractEntity project2 = projectService.persist(admin.getId(), "Второй проект", "Второе описание","11.10.2019");
-            AbstractEntity project3 = projectService.persist(Objects.requireNonNull(commonUser).getId(), "Третий проект", "Третье описание","12.10.2019");
-            AbstractEntity project4 = projectService.persist(commonUser.getId(), "Четвертый проект", "Четвертое описание", "13.10.2019");
-
-            taskService.persist(admin.getId(), Objects.requireNonNull(project1).getId(), "Первая задача", "Первое описание", "14.10.2019");
-            taskService.persist(admin.getId(), Objects.requireNonNull(project2).getId(), "Вторая задача", "Вторая описание", "15.10.2019");
-            taskService.persist(commonUser.getId(), Objects.requireNonNull(project3).getId(), "Третья задача", "Третье описание", "16.10.2019");
-            taskService.persist(commonUser.getId(), Objects.requireNonNull(project4).getId(), "Четвертая задача", "Четвертое описание", "17.10.2019");
+    public Bootstrap() throws SQLException {
     }
+
 
     private void initEndpoints() throws IOException {
         @NotNull final Properties property = new Properties();
@@ -75,12 +72,12 @@ public final class Bootstrap implements ServiceLocator {
         Endpoint.publish("http://" + host + ":" + port + "/AdminEndpoint", new AdminEndpoint(this));
     }
 
-
     @Override
-    public void init() throws IOException, ParseException, NoSuchAlgorithmException {
-        initProjectAndUserAndTask();
+    public void init() throws IOException {
         initEndpoints();
     }
+
+
 }
 
 

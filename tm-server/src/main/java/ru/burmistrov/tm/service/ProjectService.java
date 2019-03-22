@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
-import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
@@ -12,6 +11,7 @@ import ru.burmistrov.tm.entity.Task;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +31,7 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
+    public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException, SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setId(projectId);
@@ -47,7 +47,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-                           @NotNull final String dateEndString) throws NullPointerException, ParseException, IOException, NoSuchAlgorithmException {
+                           @NotNull final String dateEndString) throws NullPointerException, ParseException, IOException, NoSuchAlgorithmException, SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
@@ -64,7 +64,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                      @NotNull final String description, @NotNull final String dateEndString) throws NullPointerException, ParseException {
+                      @NotNull final String description, @NotNull final String dateEndString) throws NullPointerException, ParseException, SQLException {
         @NotNull final Project project = new Project();
         project.setId(projectId);
         project.setUserId(userId);
@@ -80,18 +80,18 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public void removeAll(@Nullable final String userId) {
+    public void removeAll(@Nullable final String userId) throws SQLException {
         @NotNull final Project project = new Project();
         @NotNull final Task task = new Task();
         task.setUserId(userId);
         project.setUserId(userId);
-        projectRepository.removeAll(project);
         taskRepository.removeAll(task);
+        projectRepository.removeAll(project);
     }
 
     @Override
     @NotNull
-    public List<Project> findAll(@NotNull final String userId) {
+    public List<Project> findAll(@NotNull final String userId) throws SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAll(project);
@@ -99,7 +99,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllSortByDateBegin(@Nullable final String userId) {
+    public List<Project> findAllSortByDateBegin(@Nullable final String userId) throws SQLException {
         Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateBegin(project);
@@ -107,7 +107,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllSortByDateEnd(@Nullable final String userId) {
+    public List<Project> findAllSortByDateEnd(@Nullable final String userId) throws SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByDateEnd(project);
@@ -115,7 +115,7 @@ public final class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllSortByStatus(@NotNull final String userId) {
+    public List<Project> findAllSortByStatus(@NotNull final String userId) throws SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         return projectRepository.findAllSortByStatus(project);
@@ -123,7 +123,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public Project findOneByName(@Nullable final String userId, @NotNull final String name) {
+    public Project findOneByName(@Nullable final String userId, @NotNull final String name) throws SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setName(name);
@@ -132,7 +132,7 @@ public final class ProjectService implements IProjectService {
 
     @Nullable
     @Override
-    public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) {
+    public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setDescription(description);

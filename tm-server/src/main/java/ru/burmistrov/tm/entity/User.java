@@ -55,4 +55,16 @@ public final class User extends AbstractEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(login);
     }
+
+    public void setRole(@Nullable String string) {
+        if ("Администратор".equals(string)) {
+            this.role = Role.ADMINISTRATOR;
+        } else {
+            this.role = Role.COMMON_USER;
+        }
+    }
+
+    public void setRole(@Nullable Role role) {
+        this.role = role;
+    }
 }

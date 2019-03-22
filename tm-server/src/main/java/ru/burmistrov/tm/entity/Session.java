@@ -16,8 +16,7 @@ public class Session extends AbstractEntity implements Cloneable {
     @Nullable
     private String signature;
 
-    @NotNull
-    private Date timesTemp = new Date();
+    private long timesTamp = new Date().getTime();
 
     @Override
     public Object clone() throws CloneNotSupportedException {

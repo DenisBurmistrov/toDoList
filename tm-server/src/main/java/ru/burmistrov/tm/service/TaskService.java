@@ -3,13 +3,13 @@ package ru.burmistrov.tm.service;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
-import ru.burmistrov.tm.api.endpoint.ITaskEndpoint;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +27,7 @@ public final class TaskService implements ITaskService {
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                        @NotNull final String description, @NotNull final String dateEndString) throws ParseException, IOException, NoSuchAlgorithmException {
+                        @NotNull final String description, @NotNull final String dateEndString) throws ParseException, IOException, NoSuchAlgorithmException, SQLException {
         @NotNull final Task task = new Task();
         task.setName(name);
         task.setDescription(description);
@@ -45,7 +45,7 @@ public final class TaskService implements ITaskService {
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId,
-                      @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString) throws ParseException {
+                      @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString) throws ParseException, SQLException {
         @NotNull final Task task = new Task();
         task.setId(taskId);
         task.setName(newName);
@@ -63,14 +63,14 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public List<Task> findAll(@Nullable final String userId) {
+    public List<Task> findAll(@Nullable final String userId) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         return taskRepository.findAll(task);
     }
 
     @Override
-    public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
+    public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         task.setProjectId(projectId);
@@ -78,7 +78,7 @@ public final class TaskService implements ITaskService {
     }
 
     @Override
-    public void remove(@NotNull final String userId, @NotNull final String taskId) {
+    public void remove(@NotNull final String userId, @NotNull final String taskId) throws SQLException {
         Task task = new Task();
         task.setProjectId(userId);
         task.setId(taskId);
@@ -86,7 +86,7 @@ public final class TaskService implements ITaskService {
     }
 
     @Override
-    public void removeAll(@Nullable final String userId) {
+    public void removeAll(@Nullable final String userId) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         taskRepository.removeAll(task);
@@ -111,7 +111,7 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public List<Task> findAllSortByStatus(@NotNull final String userId) {
+    public List<Task> findAllSortByStatus(@NotNull final String userId) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         return taskRepository.findAllSortByStatus(task);
@@ -119,7 +119,7 @@ public final class TaskService implements ITaskService {
 
     @Nullable
     @Override
-    public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
+    public Task findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         task.setName(name);
@@ -128,7 +128,7 @@ public final class TaskService implements ITaskService {
 
     @Nullable
     @Override
-    public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) {
+    public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         task.setDescription(description);
@@ -137,7 +137,7 @@ public final class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) {
+    public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
         Task task = new Task();
         task.setUserId(userId);
         task.setProjectId(projectId);

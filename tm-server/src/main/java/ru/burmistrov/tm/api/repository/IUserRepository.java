@@ -7,27 +7,28 @@ import ru.burmistrov.tm.entity.User;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserRepository {
 
     @Nullable
-    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException;
+    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException;
 
-    void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException;
-
-    @Nullable
-    User persist(@NotNull final User entity) throws IOException, NoSuchAlgorithmException;
-
-    void merge(@NotNull final User abstractEntity);
-
-    void remove(@NotNull final User abstractEntity);
-
-    void removeAll(@NotNull final User abstractEntity);
+    void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException;
 
     @Nullable
-    List<User> findAll(@NotNull final User abstractEntity);
+    User persist(@NotNull final User entity) throws IOException, NoSuchAlgorithmException, SQLException;
+
+    void merge(@NotNull final User abstractEntity) throws SQLException;
+
+    void remove(@NotNull final User abstractEntity) throws SQLException;
+
+    void removeAll(@NotNull final User abstractEntity) throws SQLException;
 
     @Nullable
-    User findOne(@NotNull final User abstractEntity);
+    List<User> findAll(@NotNull final User abstractEntity) throws SQLException;
+
+    @Nullable
+    User findOne(@NotNull final User abstractEntity) throws SQLException;
 }

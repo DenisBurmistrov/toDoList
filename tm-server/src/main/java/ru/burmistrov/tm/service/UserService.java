@@ -9,6 +9,7 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.User;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 public final class UserService implements IUserService {
 
@@ -21,13 +22,13 @@ public final class UserService implements IUserService {
 
     @Override
     @Nullable
-    public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
+    public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
         return userRepository.logIn(login, password);
     }
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
-                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
+                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role) throws SQLException {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);

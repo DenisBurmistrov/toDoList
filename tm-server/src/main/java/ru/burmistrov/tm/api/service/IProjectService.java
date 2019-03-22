@@ -7,38 +7,39 @@ import ru.burmistrov.tm.entity.Project;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
 public interface IProjectService {
 
-    void remove(@NotNull final String userId, @NotNull final String projectId);
+    void remove(@NotNull final String userId, @NotNull final String projectId) throws SQLException;
 
     @Nullable
     Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-                    @NotNull final String dateEnd) throws ParseException, IOException, NoSuchAlgorithmException;
+                    @NotNull final String dateEnd) throws ParseException, IOException, NoSuchAlgorithmException, SQLException;
 
     void merge(@NotNull final String userId, @NotNull final String taskId, @NotNull final String name, @NotNull final String description,
-               @NotNull final String dateEnd) throws ParseException;
+               @NotNull final String dateEnd) throws ParseException, SQLException;
 
-    void removeAll(@NotNull final String userId);
-
-    @NotNull
-    List<Project> findAll(@NotNull final String userId);
+    void removeAll(@NotNull final String userId) throws SQLException;
 
     @NotNull
-    List<Project> findAllSortByDateBegin(@NotNull final String userId);
+    List<Project> findAll(@NotNull final String userId) throws SQLException;
 
     @NotNull
-    List<Project> findAllSortByDateEnd(@NotNull final String userId);
+    List<Project> findAllSortByDateBegin(@NotNull final String userId) throws SQLException;
 
     @NotNull
-    List<Project> findAllSortByStatus(@NotNull final String userId);
+    List<Project> findAllSortByDateEnd(@NotNull final String userId) throws SQLException;
+
+    @NotNull
+    List<Project> findAllSortByStatus(@NotNull final String userId) throws SQLException;
 
     @Nullable
-    Project findOneByName(@NotNull final String userId, @NotNull final String name);
+    Project findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException;
 
     @Nullable
-    Project findOneByDescription(@NotNull final String userId, @NotNull final String description);
+    Project findOneByDescription(@NotNull final String userId, @NotNull final String description) throws SQLException;
 
 }

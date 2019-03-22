@@ -21,6 +21,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class AdminService implements IAdminService {
@@ -44,7 +45,7 @@ public class AdminService implements IAdminService {
         this.userRepository = userRepository;
     }
 
-    public void saveDataByDefault(@NotNull final Session session) throws IOException {
+    public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         Domain domain = new Domain();
@@ -56,7 +57,7 @@ public class AdminService implements IAdminService {
     }
 
 
-    public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException {
+    public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
 
         User user = new User();
         user.setId(session.getUserId());
@@ -70,7 +71,7 @@ public class AdminService implements IAdminService {
         mapper.writeValue(new File("projects-and-tasks-by-admin.json"), domain);
     }
 
-    public void saveDataByFasterXml(@NotNull final Session session) throws IOException {
+    public void saveDataByFasterXml(@NotNull final Session session) throws IOException, SQLException {
 
         Domain domain = new Domain();
 
@@ -81,7 +82,7 @@ public class AdminService implements IAdminService {
         xmlMapper.writeValue(new File("projects-and-tasks-by-admin.xml"), domain);
     }
 
-    public void saveDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException {
+    public void saveDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, SQLException {
 
         System.setProperty("javax.xml.bind.context.factory","org.eclipse.persistence.jaxb.JAXBContextFactory");
         Domain domain = new Domain();
@@ -95,7 +96,7 @@ public class AdminService implements IAdminService {
         marshaller.marshal(domain,  new FileWriter("projects-and-tasks-by-admin.json"));
     }
 
-    public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException {
+    public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException, SQLException {
 
         Domain domain = new Domain();
 
@@ -108,7 +109,7 @@ public class AdminService implements IAdminService {
         m.marshal(domain, new FileWriter("projects-and-tasks-by-admin.xml"));
     }
 
-    public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 
         FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -126,7 +127,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
+    public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
 
         File file = new File("projects-and-tasks-by-admin.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -143,7 +144,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
+    public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
 
         File file = new File("projects-and-tasks-by-admin.xml");
         XmlMapper xmlMapper = new XmlMapper();
@@ -160,7 +161,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
+    public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException, SQLException {
 
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
@@ -183,7 +184,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
+    public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException, SQLException {
 
         File file = new File("projects-and-tasks-by-admin.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -205,7 +206,7 @@ public class AdminService implements IAdminService {
     @Nullable
     public User createUser(@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
                            @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
-                           @Nullable Role roleType) throws NoSuchAlgorithmException, IOException {
+                           @Nullable Role roleType) throws NoSuchAlgorithmException, IOException, SQLException {
 
         @NotNull final User user = new User();
         user.setRole(roleType);
@@ -223,7 +224,7 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
+    public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
         if (password.length() > 0) {
             userRepository.updatePassword(userId, login, password);
         }
@@ -231,7 +232,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public void updateUserById(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
-                               @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) {
+                               @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) throws SQLException {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -245,14 +246,14 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void removeUserById(@NotNull final String userId) {
+    public void removeUserById(@NotNull final String userId) throws SQLException {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.remove(user);
     }
 
     @Override
-    public void removeAllUsers(@Nullable final String userId) {
+    public void removeAllUsers(@Nullable final String userId) throws SQLException {
         @NotNull final User user = new User();
         user.setId(userId);
         userRepository.removeAll(user);

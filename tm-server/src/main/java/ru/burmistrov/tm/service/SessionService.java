@@ -12,6 +12,7 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class SessionService implements ISessionService {
@@ -28,7 +29,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
+    public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException {
         Session session = new Session();
         session.setUserId(userId);
         return sessionRepository.persist(session);
@@ -40,7 +41,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+    public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException {
         if (validate(session)){
             User user = new User();
             user.setId(Objects.requireNonNull(session).getUserId());

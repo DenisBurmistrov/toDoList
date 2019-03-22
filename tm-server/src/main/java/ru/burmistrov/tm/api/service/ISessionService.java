@@ -7,12 +7,13 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 public interface ISessionService {
 
-    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException;
+    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException;
 
     boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
 
-    boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
+    boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
 }
