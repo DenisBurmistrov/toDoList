@@ -51,7 +51,7 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     }
 
     @Override
-    public boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+    public boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException {
         if(session == null) throw new ValidateAccessException();
         else if(session.getSignature() == null) throw new ValidateAccessException();
         else if(session.getUserId() == null) throw new ValidateAccessException();
@@ -63,20 +63,23 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         boolean check = Objects.requireNonNull(sourceSignature).equals(targetSignature);
         if(!check) throw new ValidateAccessException();
 
-
-        return map.containsKey(session.getId());
+        return findOne(session) != null;/*map.containsKey(session.getId())*/
     }
 
-    public Session findOne(@NotNull Project abstractEntity) throws SQLException {
+    @Nullable
+    public Session findOne(@NotNull Session abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_session WHERE id = ?";
+                "SELECT * FROM tm.app_session WHERE id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getId());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Session session = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return session;
+        if(resultSet.next()) {
+            @NotNull final Session session = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return session;
+        }
+        return null;
     }
 
     @Nullable
@@ -84,9 +87,11 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     private Session fetch(@Nullable final ResultSet row) {
         if (row == null) return null;
         @NotNull final Session session = new Session();
-        session.setId(row.getString(FieldConst.ID));
-        session.setSignature(row.getString(FieldConst.SIGNATURE));
-        session.setTimesTamp(row.getLong(FieldConst.TIMESTAMP));
+        if(row.next()) {
+            session.setId(row.getString(FieldConst.ID));
+            session.setSignature(row.getString(FieldConst.SIGNATURE));
+            session.setTimesTamp(row.getLong(FieldConst.TIMESTAMP));
+        }
         return session;
     }
 }

@@ -71,7 +71,7 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
     @Override
     public List<Project> findAll(@NotNull Project abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_project WHERE user_id = ?";
+                "SELECT * FROM tm.app_project WHERE user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getUserId());
@@ -82,18 +82,21 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
         return result;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Project findOne(@NotNull Project abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_project WHERE id = ?";
+                "SELECT * FROM tm.app_project WHERE id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getId());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return project;
+        if(resultSet.next()) {
+            @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return project;
+        }
+        return null;
     }
 
     @Nullable
@@ -157,33 +160,39 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
         return result;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Project findOneByName(@NotNull final Project abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_project WHERE user_id = ? AND name = ?";
+                "SELECT * FROM tm.app_project WHERE user_id = ? AND name = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getUserId());
         statement.setString(2, abstractEntity.getName());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return project;
+        if (resultSet.next()) {
+            @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return project;
+        }
+        return null;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Project findOneByDescription(@NotNull final Project abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_project WHERE user_id = ? AND description = ?";
+                "SELECT * FROM tm.app_project WHERE user_id = ? AND description = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getUserId());
         statement.setString(2, abstractEntity.getDescription());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return project;
+        if (resultSet.next()) {
+            @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return project;
+        }
+        return null;
     }
 }

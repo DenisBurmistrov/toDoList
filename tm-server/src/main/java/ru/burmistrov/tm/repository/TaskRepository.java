@@ -45,7 +45,7 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     @Override
     public List<Task> findAllInProject(@NotNull final Task entity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_task WHERE user_id = ? AND WHERE project_id = ?";
+                "SELECT * FROM tm.app_task WHERE user_id = ? AND project_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, entity.getUserId());
@@ -57,18 +57,21 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
         return result;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Task findOne(@NotNull Task entity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_task WHERE id = ?";
+                "SELECT * FROM tm.app_task WHERE id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, entity.getId());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return task;
+        if(resultSet.next()) {
+            @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return task;
+        }
+        return null;
     }
 
     @NotNull
@@ -118,7 +121,7 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     @Override
     public List<Task> findAll(@NotNull Task entity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_task WHERE user_id = ?";
+                "SELECT * FROM tm.app_task WHERE user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, entity.getUserId());
@@ -198,33 +201,39 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
         return result;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Task findOneByName(@NotNull final Task abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_task WHERE user_id = ? AND name = ?";
+                "SELECT * FROM tm.app_task WHERE user_id = ? AND name = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getUserId());
         statement.setString(2, abstractEntity.getName());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return task;
+        if (resultSet.next()) {
+            @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return task;
+        }
+        return null;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Task findOneByDescription(@NotNull final Task abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_task WHERE user_id = ? AND description = ?";
+                "SELECT * FROM tm.app_task WHERE user_id = ? AND description = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, abstractEntity.getUserId());
         statement.setString(2, abstractEntity.getDescription());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return task;
+        if (resultSet.next()) {
+            @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return task;
+        }
+        return null;
     }
 }

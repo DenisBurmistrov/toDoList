@@ -34,8 +34,12 @@ public final class User extends AbstractEntity implements Serializable {
     @Nullable
     private Role role;
 
-    public void setPassword(@NotNull final String password) throws NoSuchAlgorithmException {
+    public void setHashPassword(@NotNull final String password) throws NoSuchAlgorithmException {
         this.password = PasswordUtil.hashPassword(password);
+    }
+
+    public void setPassword(@Nullable String password) {
+        this.password = password;
     }
 
     @Override

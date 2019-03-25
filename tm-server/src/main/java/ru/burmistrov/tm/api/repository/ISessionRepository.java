@@ -15,6 +15,6 @@ public interface ISessionRepository {
     @Nullable
     Session persist(@NotNull final Session abstractEntity) throws IOException, NoSuchAlgorithmException, SQLException;
 
-    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
+    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
 
 }

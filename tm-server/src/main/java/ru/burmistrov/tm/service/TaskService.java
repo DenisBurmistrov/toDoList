@@ -36,7 +36,7 @@ public final class TaskService implements ITaskService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = taskRepository.findOne(task);
+        @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(task);
         if(abstractEntity == null)
             return taskRepository.persist(task);
 

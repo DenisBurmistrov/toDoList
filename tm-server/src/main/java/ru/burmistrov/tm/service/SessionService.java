@@ -36,7 +36,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+    public boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException {
         return sessionRepository.validate(session);
     }
 

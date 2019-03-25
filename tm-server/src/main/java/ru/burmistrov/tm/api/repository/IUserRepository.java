@@ -31,4 +31,7 @@ public interface IUserRepository {
 
     @Nullable
     User findOne(@NotNull final User abstractEntity) throws SQLException;
+
+    @Nullable
+    User findOneByLogin(@Nullable final User abstractEntity) throws SQLException;
 }

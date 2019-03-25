@@ -55,7 +55,7 @@ public final class ProjectService implements IProjectService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(project);
+        @Nullable final AbstractEntity abstractEntity = projectRepository.findOneByName(project);
         if (abstractEntity == null)
             return projectRepository.persist(project);
         return null;

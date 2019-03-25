@@ -211,7 +211,7 @@ public class AdminService implements IAdminService {
         @NotNull final User user = new User();
         user.setRole(roleType);
         user.setLogin(login);
-        user.setPassword(password);
+        user.setHashPassword(password);
         user.setFirstName(firstName);
         user.setMiddleName(middleName);
         user.setLastName(lastName);

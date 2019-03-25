@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
-import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.FieldConst;
 import ru.burmistrov.tm.utils.PasswordUtil;
@@ -43,12 +42,9 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Nullable
     @Override
     public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
-
         for (User user : findAll(new User())) {
-            System.out.println(user.getPassword());
-            System.out.println(password);
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&
-                    Objects.requireNonNull(PasswordUtil.hashPassword(Objects.requireNonNull(user.getPassword())))
+                    Objects.requireNonNull(Objects.requireNonNull(user.getPassword()))
                             .equals(PasswordUtil.hashPassword(password))) {
                 return user;
             }
@@ -59,7 +55,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Override
     public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException {
         User user = new User();
-        user.setPassword(newPassword);
+        user.setHashPassword(newPassword);
         user.setLogin(login);
         user.setId(userId);
         String query =  "UPDATE tm.app_user SET " +
@@ -123,17 +119,36 @@ public final class UserRepository extends AbstractRepository<User> implements IU
 
     }
 
-    @NotNull
+    @Nullable
     @Override
     public User findOne(@Nullable final User abstractEntity) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM app_user WHERE id = ?";
+                "SELECT * FROM tm.app_user WHERE id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, Objects.requireNonNull(abstractEntity).getId());
         @NotNull final ResultSet resultSet = statement.executeQuery();
-        @NotNull final User user = Objects.requireNonNull(fetch(resultSet));
-        statement.close();
-        return user;
+        if(resultSet.next()) {
+            @NotNull final User user = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return user;
+        }
+        return null;
+    }
+
+    @Nullable
+    public User findOneByLogin(@Nullable final User abstractEntity) throws SQLException {
+        @NotNull final String query =
+                "SELECT * FROM tm.app_user WHERE login = ?";
+        @NotNull final PreparedStatement statement =
+                Objects.requireNonNull(connection).prepareStatement(query);
+        statement.setString(1, Objects.requireNonNull(abstractEntity).getId());
+        @NotNull final ResultSet resultSet = statement.executeQuery();
+        if(resultSet.next()) {
+            @NotNull final User user = Objects.requireNonNull(fetch(resultSet));
+            statement.close();
+            return user;
+        }
+        return null;
     }
 }

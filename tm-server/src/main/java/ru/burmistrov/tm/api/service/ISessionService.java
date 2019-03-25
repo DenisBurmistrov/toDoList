@@ -13,7 +13,7 @@ public interface ISessionService {
 
     Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException;
 
-    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
+    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
 
     boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
 }
