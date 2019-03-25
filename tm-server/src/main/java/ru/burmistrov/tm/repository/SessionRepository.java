@@ -78,7 +78,7 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
         statement.setString(1, id);
-        statement.setString(1, userId);
+        statement.setString(2, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final Session session = Objects.requireNonNull(fetch(resultSet));

@@ -121,7 +121,7 @@ public class AdminEndpoint implements IAdminEndpoint {
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "login") @NotNull final String login, @WebParam(name = "password") @NotNull final String password) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            serviceLocator.getAdminService().updatePassword(userId, login, password);
+            serviceLocator.getAdminService().updatePassword(login, password);
         }
     }
 
@@ -137,7 +137,7 @@ public class AdminEndpoint implements IAdminEndpoint {
     public void removeAllUsers
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            serviceLocator.getAdminService().removeAllUsers(userId);
+            serviceLocator.getAdminService().removeAllUsers();
         }
     }
 
