@@ -18,6 +18,7 @@ import ru.burmistrov.tm.repository.SessionRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.service.*;
+import ru.burmistrov.tm.utils.ConnectionUtil;
 
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
@@ -32,11 +33,9 @@ import java.util.Properties;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    final String url = "jdbc:mysql://localhost:3306/tm";
-    final String user = "root";
-    final String password = "root";
 
-    @Nullable private Connection connection = DriverManager.getConnection(url, user, password);
+
+    @Nullable private Connection connection = ConnectionUtil.getConnection();
 
     @NotNull private final IProjectRepository projectRepository = new ProjectRepository(connection);
 
@@ -56,7 +55,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
-    public Bootstrap() throws SQLException {
+    public Bootstrap() throws SQLException, IOException {
     }
 
 
