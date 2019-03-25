@@ -55,7 +55,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Override
     public void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException {
         String query =  "UPDATE tm.app_user SET " +
-                "passwordHash = '" + PasswordUtil.hashPassword(newPassword) +"', " +
+                "passwordHash = '" + PasswordUtil.hashPassword(newPassword) +"' " +
                 "WHERE login = '" + login + "'";
         Statement statement = Objects.requireNonNull(connection).createStatement();
         statement.executeUpdate(query);

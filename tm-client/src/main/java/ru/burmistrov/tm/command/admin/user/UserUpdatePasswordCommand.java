@@ -25,7 +25,7 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
         if (isSecure()) {
             System.out.println("Введите логин:");
             @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
-            System.out.println("Введите новый пароль");
+            System.out.println("Введите новый пароль:");
             @NotNull final String newPassword = getServiceLocator().getTerminalCommandService().nextLine();
             getServiceLocator()
                     .getAdminEndpoint().updatePasswordById(getServiceLocator().getSession(),
