@@ -32,10 +32,10 @@ public interface ITaskService {
     void removeAll(@NotNull final String userId) throws SQLException;
 
     @NotNull
-    List<Task> findAllSortByDateBegin(@NotNull final String userId);
+    List<Task> findAllSortByDateBegin(@NotNull final String userId) throws SQLException;
 
     @NotNull
-    List<Task> findAllSortByDateEnd(@NotNull final String userId);
+    List<Task> findAllSortByDateEnd(@NotNull final String userId) throws SQLException;
 
     @NotNull
     List<Task> findAllSortByStatus(@NotNull final String userId) throws SQLException;

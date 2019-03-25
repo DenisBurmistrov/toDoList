@@ -13,8 +13,7 @@ import java.sql.SQLException;
 public interface ISessionRepository {
 
     @Nullable
-    Session persist(@NotNull final String signature,
-                    long timesTamp, @NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException;
+    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException;
 
     boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
 

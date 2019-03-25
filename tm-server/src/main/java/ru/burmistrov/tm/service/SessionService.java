@@ -30,9 +30,7 @@ public class SessionService implements ISessionService {
 
     @Override
     public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException {
-        Session session = new Session();
-        session.setUserId(userId);
-        return sessionRepository.persist(session);
+        return sessionRepository.persist(userId);
     }
 
     @Override
@@ -43,9 +41,7 @@ public class SessionService implements ISessionService {
     @Override
     public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException {
         if (validate(session)){
-            User user = new User();
-            user.setId(Objects.requireNonNull(session).getUserId());
-            User foundedUser = userRepository.findOne(user);
+            User foundedUser = userRepository.findOne((Objects.requireNonNull(Objects.requireNonNull(session).getUserId())));
             if (foundedUser != null) {
                 return Objects.requireNonNull(foundedUser.getRole()).equals(Role.ADMINISTRATOR);
             }

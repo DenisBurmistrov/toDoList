@@ -7,7 +7,6 @@ import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.Task;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public final class ProjectService implements IProjectService {
 
@@ -32,32 +32,21 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException, SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        project.setId(projectId);
-        @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(project);
+        @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
         if(abstractEntity != null) {
-            projectRepository.remove(project);
-            Task task = new Task();
-            task.setUserId(userId);
-            task.setProjectId(projectId);
-            taskRepository.removeAllInProject(task);
+            projectRepository.remove(projectId, userId);
+            taskRepository.removeAllInProject(userId, projectId);
         }
     }
 
     @Override
     public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
                            @NotNull final String dateEndString) throws NullPointerException, ParseException, IOException, NoSuchAlgorithmException, SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        project.setName(name);
-        project.setDescription(description);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-        project.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = projectRepository.findOneByName(project);
+        @Nullable final AbstractEntity abstractEntity = projectRepository.findOneByName(userId, name);
         if (abstractEntity == null)
-            return projectRepository.persist(project);
+            return projectRepository.persist(userId, new Date(), dateEnd, description, name);
         return null;
 
     }
@@ -73,7 +62,8 @@ public final class ProjectService implements IProjectService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(project);
+        @Nullable final AbstractEntity abstractEntity =
+                projectRepository.findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
         if(abstractEntity != null) {
             projectRepository.merge(project);
         }
@@ -81,61 +71,43 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public void removeAll(@Nullable final String userId) throws SQLException {
-        @NotNull final Project project = new Project();
-        @NotNull final Task task = new Task();
-        task.setUserId(userId);
-        project.setUserId(userId);
-        taskRepository.removeAll(task);
-        projectRepository.removeAll(project);
+        taskRepository.removeAll(Objects.requireNonNull(userId));
+        projectRepository.removeAll(userId);
     }
 
     @Override
     @NotNull
     public List<Project> findAll(@NotNull final String userId) throws SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        return projectRepository.findAll(project);
+        return projectRepository.findAll(userId);
     }
 
     @NotNull
     @Override
     public List<Project> findAllSortByDateBegin(@Nullable final String userId) throws SQLException {
-        Project project = new Project();
-        project.setUserId(userId);
-        return projectRepository.findAllSortByDateBegin(project);
+        return projectRepository.findAllSortByDateBegin(Objects.requireNonNull(userId));
     }
 
     @NotNull
     @Override
     public List<Project> findAllSortByDateEnd(@Nullable final String userId) throws SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        return projectRepository.findAllSortByDateEnd(project);
+        return projectRepository.findAllSortByDateEnd(Objects.requireNonNull(userId));
     }
 
     @NotNull
     @Override
     public List<Project> findAllSortByStatus(@NotNull final String userId) throws SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        return projectRepository.findAllSortByStatus(project);
+        return projectRepository.findAllSortByStatus(userId);
     }
 
     @Nullable
     @Override
     public Project findOneByName(@Nullable final String userId, @NotNull final String name) throws SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        project.setName(name);
-        return projectRepository.findOneByName(project);
+        return projectRepository.findOneByName(Objects.requireNonNull(userId), name);
     }
 
     @Nullable
     @Override
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
-        @NotNull final Project project = new Project();
-        project.setUserId(userId);
-        project.setDescription(description);
-        return projectRepository.findOneByDescription(project);
+        return projectRepository.findOneByDescription(Objects.requireNonNull(userId), description);
     }
 }

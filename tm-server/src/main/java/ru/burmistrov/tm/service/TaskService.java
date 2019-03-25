@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public final class TaskService implements ITaskService {
 
@@ -28,17 +29,11 @@ public final class TaskService implements ITaskService {
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                         @NotNull final String description, @NotNull final String dateEndString) throws ParseException, IOException, NoSuchAlgorithmException, SQLException {
-        @NotNull final Task task = new Task();
-        task.setName(name);
-        task.setDescription(description);
-        task.setProjectId(projectId);
-        task.setUserId(userId);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-        task.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(task);
+        @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(userId, name);
         if(abstractEntity == null)
-            return taskRepository.persist(task);
+            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId);
 
         return null;
     }
@@ -55,7 +50,7 @@ public final class TaskService implements ITaskService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
-        @Nullable final AbstractEntity abstractEntity = taskRepository.findOne(task);
+        @Nullable final AbstractEntity abstractEntity = taskRepository.findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
         if (newName.length() != 0 && abstractEntity != null) {
             taskRepository.merge(task);
         }
@@ -64,83 +59,58 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     public List<Task> findAll(@Nullable final String userId) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        return taskRepository.findAll(task);
+        return taskRepository.findAll(userId);
     }
 
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        task.setProjectId(projectId);
-        taskRepository.removeAllInProject(task);
+        taskRepository.removeAllInProject(userId, projectId);
     }
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String taskId) throws SQLException {
-        Task task = new Task();
-        task.setProjectId(userId);
-        task.setId(taskId);
-        taskRepository.remove(task);
+        taskRepository.remove(taskId, userId);
     }
 
     @Override
     public void removeAll(@Nullable final String userId) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        taskRepository.removeAll(task);
+        taskRepository.removeAll(Objects.requireNonNull(userId));
     }
 
     @NotNull
 
     @Override
-    public List<Task> findAllSortByDateBegin(@Nullable final String userId) {
-        Task task = new Task();
-        task.setUserId(userId);
-        return taskRepository.findAllSortByDateBegin(task);
+    public List<Task> findAllSortByDateBegin(@Nullable final String userId) throws SQLException {
+        return taskRepository.findAllSortByDateBegin(Objects.requireNonNull(userId));
     }
 
     @NotNull
     @Override
-    public List<Task> findAllSortByDateEnd(@Nullable final String userId) {
-        Task task = new Task();
-        task.setUserId(userId);
-        return taskRepository.findAllSortByDateEnd(task);
+    public List<Task> findAllSortByDateEnd(@Nullable final String userId) throws SQLException {
+        return taskRepository.findAllSortByDateEnd(Objects.requireNonNull(userId));
     }
 
     @NotNull
     @Override
     public List<Task> findAllSortByStatus(@NotNull final String userId) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        return taskRepository.findAllSortByStatus(task);
+        return taskRepository.findAllSortByStatus(userId);
     }
 
     @Nullable
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        task.setName(name);
-        return taskRepository.findOneByName(task);
+        return taskRepository.findOneByName(userId, name);
     }
 
     @Nullable
     @Override
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        task.setDescription(description);
-        return taskRepository.findOneByDescription(task);
+        return taskRepository.findOneByDescription(Objects.requireNonNull(userId), description);
     }
 
     @NotNull
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
-        Task task = new Task();
-        task.setUserId(userId);
-        task.setProjectId(projectId);
-        return taskRepository.findAllInProject(task);
+        return taskRepository.findAllInProject(userId, projectId);
     }
 }

@@ -47,24 +47,22 @@ public class AdminService implements IAdminService {
 
     public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
 
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
-        Domain domain = new Domain();
+        @NotNull final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
+        @NotNull final Domain domain = new Domain();
 
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(taskService.findAll(session.getUserId()));
-        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
         oos.writeObject(domain);
     }
 
 
     public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
 
-        User user = new User();
-        user.setId(session.getUserId());
-        Domain domain = new Domain();
+        @NotNull final Domain domain = new Domain();
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(taskService.findAll(session.getUserId()));
-        domain.setUsers(Objects.requireNonNull(userRepository.findAll(user)));
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -73,24 +71,24 @@ public class AdminService implements IAdminService {
 
     public void saveDataByFasterXml(@NotNull final Session session) throws IOException, SQLException {
 
-        Domain domain = new Domain();
+        @NotNull final Domain domain = new Domain();
 
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(taskService.findAll(session.getUserId()));
-        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
-        XmlMapper xmlMapper = new XmlMapper();
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
+        @NotNull final XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.writeValue(new File("projects-and-tasks-by-admin.xml"), domain);
     }
 
     public void saveDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, SQLException {
 
         System.setProperty("javax.xml.bind.context.factory","org.eclipse.persistence.jaxb.JAXBContextFactory");
-        Domain domain = new Domain();
+        @NotNull final Domain domain = new Domain();
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(taskService.findAll(session.getUserId()));
-        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
-        JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        Marshaller marshaller = jaxbContext.createMarshaller();
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
+        @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
+        @NotNull final Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty("eclipselink.media-type", "application/json");
 
         marshaller.marshal(domain,  new FileWriter("projects-and-tasks-by-admin.json"));
@@ -98,66 +96,84 @@ public class AdminService implements IAdminService {
 
     public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException, SQLException {
 
-        Domain domain = new Domain();
+        @NotNull final Domain domain = new Domain();
 
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(taskService.findAll(session.getUserId()));
-        domain.setUsers(Objects.requireNonNull(userRepository.findAll(new User())));
-        JAXBContext context = JAXBContext.newInstance(Domain.class);
-        Marshaller m = context.createMarshaller();
+        domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
+        @NotNull final JAXBContext context = JAXBContext.newInstance(Domain.class);
+        @NotNull final Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         m.marshal(domain, new FileWriter("projects-and-tasks-by-admin.xml"));
     }
 
     public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
 
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        @NotNull final FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
+        @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-        Domain domain = (Domain) objectInputStream.readObject();
+        @NotNull final Domain domain = (Domain) objectInputStream.readObject();
 
-        for (Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+        for (@NotNull final Project project : domain.getProjects()) {
+            projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
+                    Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
+                    Objects.requireNonNull(project.getName()));
         }
-        for (Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+        for (@NotNull final Task task : domain.getTasks()) {
+            taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
+                    Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
         }
-        for (User user : domain.getUsers()) {
-            userRepository.persist(user);
+        for (@NotNull final User user : domain.getUsers()) {
+            userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
+                    Objects.requireNonNull(user.getLastName()), Objects.requireNonNull(user.getLogin()),
+                    Objects.requireNonNull(user.getMiddleName()), Objects.requireNonNull(user.getPassword()), String.valueOf(user.getRole()));
         }
     }
 
     public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
 
-        File file = new File("projects-and-tasks-by-admin.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        Domain domain = objectMapper.readValue(file, Domain.class);
+        @NotNull final File file = new File("projects-and-tasks-by-admin.json");
+        @NotNull final ObjectMapper objectMapper = new ObjectMapper();
+        @NotNull final Domain domain = objectMapper.readValue(file, Domain.class);
 
-        for (Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+        for (@NotNull final Project project : domain.getProjects()) {
+            projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
+                    Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
+                    Objects.requireNonNull(project.getName()));
         }
-        for (Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+        for (@NotNull final Task task : domain.getTasks()) {
+            taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
+                    Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
         }
-        for (User user : domain.getUsers()) {
-            userRepository.persist(user);
+        for (@NotNull final User user : domain.getUsers()) {
+            userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
+                    Objects.requireNonNull(user.getLastName()), Objects.requireNonNull(user.getLogin()),
+                    Objects.requireNonNull(user.getMiddleName()), Objects.requireNonNull(user.getPassword()), String.valueOf(user.getRole()));
         }
     }
 
     public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
 
-        File file = new File("projects-and-tasks-by-admin.xml");
-        XmlMapper xmlMapper = new XmlMapper();
-        Domain domain = xmlMapper.readValue(file, Domain.class);
+        @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
+        @NotNull final XmlMapper xmlMapper = new XmlMapper();
+        @NotNull final Domain domain = xmlMapper.readValue(file, Domain.class);
 
-        for (Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+        for (@NotNull final Project project : domain.getProjects()) {
+            projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
+                    Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
+                    Objects.requireNonNull(project.getName()));
         }
-        for (Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+        for (@NotNull final Task task : domain.getTasks()) {
+            taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
+                    Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
         }
-        for (User user : domain.getUsers()) {
-            userRepository.persist(user);
+        for (@NotNull final User user : domain.getUsers()) {
+            userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
+                    Objects.requireNonNull(user.getLastName()), Objects.requireNonNull(user.getLogin()),
+                    Objects.requireNonNull(user.getMiddleName()), Objects.requireNonNull(user.getPassword()), String.valueOf(user.getRole()));
         }
     }
 
@@ -165,40 +181,51 @@ public class AdminService implements IAdminService {
 
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
+        @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-        //Set JSON type
         unmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, "application/json");
         unmarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT, true);
-        Domain domain = (Domain) unmarshaller.unmarshal(new File("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\projects-and-tasks-by-admin.json"));
+        @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(new File("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\projects-and-tasks-by-admin.json"));
 
-        for (Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+        for (@NotNull final Project project : domain.getProjects()) {
+            projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
+                    Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
+                    Objects.requireNonNull(project.getName()));
         }
-        for (Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+        for (@NotNull final Task task : domain.getTasks()) {
+            taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
+                    Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
         }
-        for (User user : domain.getUsers()) {
-            userRepository.persist(user);
+        for (@NotNull final User user : domain.getUsers()) {
+            userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
+                    Objects.requireNonNull(user.getLastName()), Objects.requireNonNull(user.getLogin()),
+                    Objects.requireNonNull(user.getMiddleName()), Objects.requireNonNull(user.getPassword()), String.valueOf(user.getRole()));
         }
     }
 
     public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException, SQLException {
 
-        File file = new File("projects-and-tasks-by-admin.xml");
-        JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        Domain domain = (Domain) unmarshaller.unmarshal(file);
+        @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
+        @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
+        @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
 
-        for (Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+        for (@NotNull final Project project : domain.getProjects()) {
+            projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
+                    Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
+                    Objects.requireNonNull(project.getName()));
         }
-        for (Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+        for (@NotNull final Task task : domain.getTasks()) {
+            taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
+                    Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
         }
-        for (User user : domain.getUsers()) {
-            userRepository.persist(user);
+        for (@NotNull final User user : domain.getUsers()) {
+            userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
+                    Objects.requireNonNull(user.getLastName()), Objects.requireNonNull(user.getLogin()),
+                    Objects.requireNonNull(user.getMiddleName()), Objects.requireNonNull(user.getPassword()), String.valueOf(user.getRole()));
         }
     }
 
@@ -208,30 +235,23 @@ public class AdminService implements IAdminService {
                            @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
                            @Nullable Role roleType) throws NoSuchAlgorithmException, IOException, SQLException {
 
-        @NotNull final User user = new User();
-        user.setRole(roleType);
-        user.setLogin(login);
-        user.setHashPassword(password);
-        user.setFirstName(firstName);
-        user.setMiddleName(middleName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        @Nullable final User abstractEntity = userRepository.findOne(user);
+        @Nullable final User abstractEntity = userRepository.findOneByLogin(login);
         if(abstractEntity == null)
-            return userRepository.persist(user);
+            return userRepository.persist(email, firstName, lastName, login,
+                    middleName, password, Objects.requireNonNull(roleType).toString());
 
         return null;
     }
 
     @Override
-    public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
+    public void updatePassword(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
         if (password.length() > 0) {
-            userRepository.updatePassword(userId, login, password);
+            userRepository.updatePassword(login, password);
         }
     }
 
     @Override
-    public void updateUserById(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+    public void updateUserById(@NotNull final String userId,  @NotNull final String firstName, @NotNull final String middleName,
                                @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) throws SQLException {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
@@ -240,23 +260,19 @@ public class AdminService implements IAdminService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
-        AbstractEntity abstractEntity = userRepository.findOne(currentUser);
+        @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if(abstractEntity != null)
             userRepository.merge(currentUser);
     }
 
     @Override
     public void removeUserById(@NotNull final String userId) throws SQLException {
-        @NotNull final User user = new User();
-        user.setId(userId);
-        userRepository.remove(user);
+        userRepository.remove(userId);
     }
 
     @Override
-    public void removeAllUsers(@Nullable final String userId) throws SQLException {
-        @NotNull final User user = new User();
-        user.setId(userId);
-        userRepository.removeAll(user);
+    public void removeAllUsers() throws SQLException {
+        userRepository.removeAll();
     }
 
 }

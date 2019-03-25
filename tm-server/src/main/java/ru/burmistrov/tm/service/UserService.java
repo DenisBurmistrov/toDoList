@@ -36,7 +36,7 @@ public final class UserService implements IUserService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
-        @Nullable final AbstractEntity abstractEntity = userRepository.findOneByLogin(currentUser);
+        @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if (abstractEntity != null)
             userRepository.merge(currentUser);
     }

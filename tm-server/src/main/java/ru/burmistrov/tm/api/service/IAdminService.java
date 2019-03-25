@@ -38,7 +38,7 @@ public interface IAdminService {
              @NotNull final String middleName, @NotNull final String lastName, @NotNull String email, @Nullable Role roleType) throws NoSuchAlgorithmException, IOException, SQLException;
 
     void updatePassword
-            (@NotNull final String userId, @NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException;
+            (@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException;
 
     void updateUserById
             (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
@@ -46,5 +46,5 @@ public interface IAdminService {
 
     void removeUserById(@NotNull final String userId) throws SQLException;
 
-    void removeAllUsers(@NotNull final String userId) throws SQLException;
+    void removeAllUsers() throws SQLException;
 }

@@ -31,8 +31,7 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     }
 
     @NotNull
-    public Session persist(@NotNull final String signature,
-                           long timesTamp, @NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException {
+    public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException {
 
         InputStream inputStream;
         Properties property = new Properties();
