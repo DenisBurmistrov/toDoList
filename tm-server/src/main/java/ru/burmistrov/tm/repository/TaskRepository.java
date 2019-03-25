@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 @NoArgsConstructor
 public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
@@ -43,13 +44,13 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public List<Task> findAllInProject(@NotNull final Task entity) throws SQLException {
+    public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_task WHERE user_id = ? AND project_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, entity.getUserId());
-        statement.setString(2, entity.getProjectId());
+        statement.setString(1, userId);
+        statement.setString(2, projectId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         @NotNull final List<Task> result = new ArrayList<>();
         while (resultSet.next()) result.add(fetch(resultSet));
@@ -59,12 +60,13 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @Nullable
     @Override
-    public Task findOne(@NotNull Task entity) throws SQLException {
+    public Task findOne(@NotNull final String id, @NotNull final String userId) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM tm.app_task WHERE id = ?";
+                "SELECT * FROM tm.app_task WHERE id = ? AND user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, entity.getId());
+        statement.setString(1, id);
+        statement.setString(1, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
@@ -76,55 +78,65 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public Task persist(@NotNull Task abstractEntity) throws SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String query = "INSERT INTO tm.app_task (id, dateBegin, dateEnd, description, name, project_id, user_id) \n" +
-                " VALUES ('" + abstractEntity.getId() + "', '" + sdf.format(abstractEntity.getDateBegin()) + "', '" + sdf.format(abstractEntity.getDateEnd()) + "', '" +
-                abstractEntity.getDescription() + "', '" + abstractEntity.getName() + "', '" + abstractEntity.getProjectId() +
-                "', '" + abstractEntity.getUserId() + "');";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public Task persist(@NotNull final String userId, @NotNull final Date dateBegin,
+                        @NotNull final Date dateEnd, @NotNull final String description,
+                        @NotNull final String name, @NotNull final String projectId) throws SQLException {
 
-        return abstractEntity;
+        @NotNull final Task task = new Task();
+        task.setUserId(userId);
+        task.setDateBegin(dateBegin);
+        task.setDateEnd(dateEnd);
+        task.setDescription(description);
+        task.setName(name);
+        task.setProjectId(projectId);
+        @NotNull final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @NotNull final String query = "INSERT INTO tm.app_task (id, dateBegin, dateEnd, description, name, project_id, user_id) \n" +
+                " VALUES ('" + task.getId() + "', '" + sdf.format(dateBegin) + "', '" + sdf.format(dateEnd) + "', '" +
+                description + "', '" + name + "', '" + projectId +
+                "', '" + userId + "');";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
+
+        return task;
     }
 
     @Override
     public void merge(@NotNull Task abstractEntity) throws SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String query = "UPDATE tm.app_task SET " +
+        @NotNull final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @NotNull final String query = "UPDATE tm.app_task SET " +
                 "name = '" + abstractEntity.getName() + "', " +
                 "description = '" + abstractEntity.getDescription() + "', " +
                 "dateBegin = '" + sdf.format(abstractEntity.getDateBegin()) + "', " +
                 "dateEnd = '" + sdf.format(abstractEntity.getDateEnd()) + "'  " +
                 "WHERE id = '" + abstractEntity.getId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void remove(@NotNull Task entity) throws SQLException {
-        String query = "DELETE FROM tm.app_task " +
-                "WHERE id = '" + entity.getId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void remove(@NotNull final String id, @NotNull final String userId) throws SQLException {
+        @NotNull final String query = "DELETE FROM tm.app_task " +
+                "WHERE id = '" + id + "' AND user_id = '" + userId + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void removeAll(@NotNull Task entity) throws SQLException {
-        String query = "DELETE FROM tm.app_task " +
-                "WHERE user_id = '" + entity.getUserId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void removeAll(@NotNull final String userId) throws SQLException {
+        @NotNull final String query = "DELETE FROM tm.app_task " +
+                "WHERE user_id = '" + userId + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @NotNull
     @Override
-    public List<Task> findAll(@NotNull Task entity) throws SQLException {
+    public List<Task> findAll(@NotNull final String userId) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_task WHERE user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, entity.getUserId());
+        statement.setString(1, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         @NotNull final List<Task> result = new ArrayList<>();
         while (resultSet.next()) result.add(fetch(resultSet));
@@ -133,25 +145,20 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     }
 
     @Override
-    public void removeAllInProject(@NotNull final Task entity) throws SQLException {
-        String query = "DELETE FROM tm.app_task " +
-                "WHERE user_id = '" + entity.getUserId() + "' AND project_id ='" + entity.getProjectId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
+        @NotNull final String query = "DELETE FROM tm.app_task " +
+                "WHERE user_id = '" + userId + "' AND project_id ='" + projectId + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @NotNull
     @Override
-    public List<Task> findAllSortByDateBegin(@NotNull final Task abstractEntity) {
-        @NotNull final Task task = abstractEntity;
-        @NotNull final List<Task> result = new LinkedList<>();
-        map.entrySet()
-                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
-                equals(task.getUserId()))
-                .forEach(e -> result.add(e.getValue()));
+    public List<Task> findAllSortByDateBegin(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Task> result = findAll(userId);
         result.sort((s1, s2) -> {
-            boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
-            boolean secondDateMoreThaFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
+            @NotNull final boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
+            @NotNull final boolean secondDateMoreThaFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
 
             if (firstDateMoreThanSecond) {
                 return 1;
@@ -166,13 +173,8 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public List<Task> findAllSortByDateEnd(@NotNull final Task abstractEntity) {
-        @NotNull final Task task = abstractEntity;
-        @NotNull final List<Task> result = new LinkedList<>();
-        map.entrySet()
-                .stream().filter(e -> Objects.requireNonNull(e.getValue().getUserId()).
-                equals(task.getUserId()))
-                .forEach(e -> result.add(e.getValue()));
+    public List<Task> findAllSortByDateEnd(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Task> result = findAll(userId);
         result.sort((s1, s2) -> {
             boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
             boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
@@ -190,12 +192,10 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @NotNull
     @Override
-    public List<Task> findAllSortByStatus(@NotNull final Task abstractEntity) throws SQLException {
-        @NotNull final Task task = abstractEntity;
-        @NotNull final List<Task> result = new LinkedList<>();
-        findAll(abstractEntity)
-                .stream().filter(e -> Objects.requireNonNull(e.getUserId()).
-                equals(task.getUserId()))
+    public List<Task> findAllSortByStatus(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Task> result = findAll(userId);
+                result.stream().filter(e -> Objects.requireNonNull(e.getUserId()).
+                equals(userId))
                 .forEach(result::add);
         result.sort((s1, s2) -> Integer.compare(0, s1.getStatus().ordinal() - s2.getStatus().ordinal()));
         return result;
@@ -203,13 +203,13 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @Nullable
     @Override
-    public Task findOneByName(@NotNull final Task abstractEntity) throws SQLException {
+    public Task findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_task WHERE user_id = ? AND name = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getUserId());
-        statement.setString(2, abstractEntity.getName());
+        statement.setString(1, userId);
+        statement.setString(2, name);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));
@@ -221,13 +221,13 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
 
     @Nullable
     @Override
-    public Task findOneByDescription(@NotNull final Task abstractEntity) throws SQLException {
+    public Task findOneByDescription(@NotNull final String userId, @NotNull final String description) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_task WHERE user_id = ? AND description = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getUserId());
-        statement.setString(2, abstractEntity.getDescription());
+        statement.setString(1, userId);
+        statement.setString(2, description);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             @NotNull final Task task = Objects.requireNonNull(fetch(resultSet));

@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 @NoArgsConstructor
 public final class ProjectRepository extends AbstractRepository<Project> implements IProjectRepository {
@@ -27,54 +28,62 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public Project persist(@NotNull final Project abstractEntity) throws IOException, NoSuchAlgorithmException, SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String query = "INSERT INTO tm.app_project (id, dateBegin, dateEnd, description, name, user_id) \n" +
-                " VALUES ('" + Objects.requireNonNull(abstractEntity).getId() + "', '" + sdf.format(abstractEntity.getDateBegin()) + "', '"
-                + sdf.format(abstractEntity.getDateEnd()) + "', '" + abstractEntity.getDescription() + "', '" + abstractEntity.getName() + "', '" + abstractEntity.getUserId() + "');";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public Project persist(@NotNull final String userId, @NotNull final Date dateBegin,
+                           @NotNull final Date dateEnd, @NotNull final String description,
+                           @NotNull final String name) throws IOException, NoSuchAlgorithmException, SQLException {
+        @NotNull final Project project = new Project();
+        project.setUserId(userId);
+        project.setDateBegin(dateBegin);
+        project.setDateEnd(dateEnd);
+        project.setName(name);
+        project.setDescription(description);
+        @NotNull final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @NotNull final String query = "INSERT INTO tm.app_project (id, dateBegin, dateEnd, description, name, user_id) \n" +
+                " VALUES ('" + project.getId() + "', '" + sdf.format(dateBegin) + "', '"
+                + sdf.format(dateEnd) + "', '" + description + "', '" + name + "', '" + userId + "');";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
 
-        return abstractEntity;
+        return project;
     }
 
     @Override
-    public void merge(@NotNull Project abstractEntity) throws SQLException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String query = "UPDATE tm.app_project SET " +
-                "name = '" + abstractEntity.getName() + "', " +
-                "description = '" + abstractEntity.getDescription() + "', " +
-                "dateBegin = '" + sdf.format(abstractEntity.getDateBegin()) + "', " +
-                "dateEnd = '" + sdf.format(abstractEntity.getDateEnd()) + "'  " +
-                "WHERE id = '" + abstractEntity.getId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void merge(@NotNull final Project project) throws SQLException {
+        @NotNull final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @NotNull final String query = "UPDATE tm.app_project SET " +
+                "name = '" + project.getName() + "', " +
+                "description = '" + project.getDescription() + "', " +
+                "dateBegin = '" + sdf.format(project.getDateBegin()) + "', " +
+                "dateEnd = '" + sdf.format(project.getDateEnd()) + "'  " +
+                "WHERE id = '" + project.getId() + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void remove(@NotNull Project abstractEntity) throws SQLException {
-        String query = "DELETE FROM tm.app_project " +
-                "WHERE id = '" + abstractEntity.getId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void remove(@NotNull final String id, @NotNull final String userId) throws SQLException {
+        @NotNull final String query = "DELETE FROM tm.app_project " +
+                "WHERE id = '" + id + "' AND user_id = '" + userId + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void removeAll(@NotNull Project abstractEntity) throws SQLException {
-        String query = "DELETE FROM tm.app_project " +
-                "WHERE user_id = '" + abstractEntity.getUserId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void removeAll(@NotNull final String userId) throws SQLException {
+        @NotNull final String query = "DELETE FROM tm.app_project " +
+                "WHERE user_id = '" + userId + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @NotNull
     @Override
-    public List<Project> findAll(@NotNull Project abstractEntity) throws SQLException {
+    public List<Project> findAll(@NotNull final String userId) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_project WHERE user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getUserId());
+        statement.setString(1, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         @NotNull final List<Project> result = new ArrayList<>();
         while (resultSet.next()) result.add(fetch(resultSet));
@@ -84,12 +93,13 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @Nullable
     @Override
-    public Project findOne(@NotNull Project abstractEntity) throws SQLException {
+    public Project findOne(@NotNull final String id, @NotNull final String userId) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM tm.app_project WHERE id = ?";
+                "SELECT * FROM tm.app_project WHERE id = ? AND user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getId());
+        statement.setString(1, id);
+        statement.setString(2, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
@@ -116,11 +126,11 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public List<Project> findAllSortByDateBegin(@NotNull final Project abstractEntity) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
+    public List<Project> findAllSortByDateBegin(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
         result.sort((s1, s2) -> {
-            boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
-            boolean secondDateMareFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
+            @NotNull final boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
+            @NotNull final boolean secondDateMareFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
 
             if (firstDateMoreThanSecond) {
                 return 1;
@@ -135,8 +145,8 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public List<Project> findAllSortByDateEnd(@NotNull final Project abstractEntity) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
+    public List<Project> findAllSortByDateEnd(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
         result.sort((s1, s2) -> {
             boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
             boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
@@ -154,21 +164,21 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @NotNull
     @Override
-    public List<Project> findAllSortByStatus(@NotNull final Project abstractEntity) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(abstractEntity));
+    public List<Project> findAllSortByStatus(@NotNull final String userId) throws SQLException {
+        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
         result.sort((s1, s2) -> Integer.compare(0, s1.getStatus().ordinal() - s2.getStatus().ordinal()));
         return result;
     }
 
     @Nullable
     @Override
-    public Project findOneByName(@NotNull final Project abstractEntity) throws SQLException {
+    public Project findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_project WHERE user_id = ? AND name = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getUserId());
-        statement.setString(2, abstractEntity.getName());
+        statement.setString(1, userId);
+        statement.setString(2, name);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));
@@ -180,13 +190,13 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
 
     @Nullable
     @Override
-    public Project findOneByDescription(@NotNull final Project abstractEntity) throws SQLException {
+    public Project findOneByDescription(@NotNull final String userId, @NotNull final String description) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_project WHERE user_id = ? AND description = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getUserId());
-        statement.setString(2, abstractEntity.getDescription());
+        statement.setString(1, userId);
+        statement.setString(2, description);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             @NotNull final Project project = Objects.requireNonNull(fetch(resultSet));

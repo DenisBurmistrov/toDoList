@@ -42,7 +42,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Nullable
     @Override
     public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
-        for (User user : findAll(new User())) {
+        for (User user : findAll()) {
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&
                     Objects.requireNonNull(Objects.requireNonNull(user.getPassword()))
                             .equals(PasswordUtil.hashPassword(password))) {
@@ -53,60 +53,68 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     }
 
     @Override
-    public void updatePassword(@NotNull final String userId, @NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException {
-        User user = new User();
-        user.setHashPassword(newPassword);
-        user.setLogin(login);
-        user.setId(userId);
+    public void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException {
         String query =  "UPDATE tm.app_user SET " +
-                "passwordHash = '" + Objects.requireNonNull(user).getPassword() +"', " +
-                "WHERE login = '" + user.getLogin() + "'";
+                "passwordHash = '" + PasswordUtil.hashPassword(newPassword) +"', " +
+                "WHERE login = '" + login + "'";
         Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+        statement.executeUpdate(query);
     }
 
     @NotNull
     @Override
-    public User persist(@Nullable final User entity) throws SQLException {
+    public User persist(@NotNull final String email,
+                        @NotNull final String firstName, @NotNull final String lastName,
+                        @NotNull final String login, @NotNull final String middleName,
+                        @NotNull final String passwordHash, @NotNull final String role) throws SQLException, NoSuchAlgorithmException {
 
-        String query = "INSERT INTO tm.app_user (id, email, firstName, lastName, login, middleName, passwordHash, role) \n" +
-                " VALUES ('" + Objects.requireNonNull(entity).getId() + "', '" + entity.getEmail() + "', '" + entity.getFirstName() + "', '" +
-               entity.getLastName()  + "', '" + entity.getLogin() + "', '" + entity.getMiddleName()  + "', '" +entity.getPassword() + "', '" + entity.getRole() + "');";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
-        return entity;
+        @NotNull final User user = new User();
+        user.setLogin(login);
+        user.setHashPassword(passwordHash);
+        user.setFirstName(firstName);
+        user.setMiddleName(middleName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setRole(role);
+
+        @NotNull final String query = "INSERT INTO tm.app_user (id, email, firstName, lastName, login, middleName, passwordHash, role) \n" +
+                " VALUES ('" + user.getId() + "', '" + user.getEmail() + "', '" + user.getFirstName() + "', '" +
+               user.getLastName()  + "', '" + user.getLogin() + "', '" + user.getMiddleName()  + "', '" + user.getPassword() + "', '" + user.getRole() + "');";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
+        return user;
     }
 
     @Override
     public void merge(@Nullable final User entity) throws SQLException {
-        String query =  "UPDATE tm.app_user SET " +
+        @NotNull final String query =  "UPDATE tm.app_user SET " +
                 "firstName = '" + Objects.requireNonNull(entity).getFirstName() +"', " +
                 "lastName = '" + entity.getLastName() + "', " +
                 "middleName = '" + entity.getMiddleName() + "', " +
                 "email = '" + entity.getEmail() + "'  " +
                 "WHERE id = '" + entity.getId() + "'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void remove(@Nullable final User abstractEntity) throws SQLException {
-        String query =  "DELETE FROM tm.app_user " +
-                "WHERE id = '"+ Objects.requireNonNull(abstractEntity).getId() +"'";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+    public void remove(@Nullable final String id) throws SQLException {
+        @NotNull final String query =  "DELETE FROM tm.app_user " +
+                "WHERE id = '" + id + "'";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
+        statement.executeUpdate(query);
     }
 
     @Override
-    public void removeAll(@Nullable final User abstractEntity) throws SQLException {
-        String query =  "DELETE FROM tm.app_user";
-        Statement statement = Objects.requireNonNull(connection).createStatement();
+    public void removeAll() throws SQLException {
+        @NotNull final String query =  "DELETE FROM tm.app_user";
+        @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
         int resultSet = statement.executeUpdate(query);
     }
 
     @NotNull
     @Override
-    public List<User> findAll(@Nullable final User abstractEntity) throws SQLException {
+    public List<User> findAll() throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_user";
         @NotNull final PreparedStatement statement =
@@ -121,12 +129,12 @@ public final class UserRepository extends AbstractRepository<User> implements IU
 
     @Nullable
     @Override
-    public User findOne(@Nullable final User abstractEntity) throws SQLException {
+    public User findOne(@NotNull final String id) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_user WHERE id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, Objects.requireNonNull(abstractEntity).getId());
+        statement.setString(1, id);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final User user = Objects.requireNonNull(fetch(resultSet));
@@ -137,12 +145,12 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     }
 
     @Nullable
-    public User findOneByLogin(@Nullable final User abstractEntity) throws SQLException {
+    public User findOneByLogin(@NotNull final String login) throws SQLException {
         @NotNull final String query =
                 "SELECT * FROM tm.app_user WHERE login = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, Objects.requireNonNull(abstractEntity).getId());
+        statement.setString(1, login);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final User user = Objects.requireNonNull(fetch(resultSet));

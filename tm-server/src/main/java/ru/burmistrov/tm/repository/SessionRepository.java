@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -30,7 +31,8 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
     }
 
     @NotNull
-    public Session persist(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
+    public Session persist(@NotNull final String signature,
+                           long timesTamp, @NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException {
 
         InputStream inputStream;
         Properties property = new Properties();
@@ -39,6 +41,10 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         property.load(inputStream);
         String cycle = property.getProperty("cycle");
         String salt = property.getProperty("salt");
+
+        Session session = new Session();
+        session.setTimesTamp(new Date().getTime());
+        session.setUserId(userId);
 
         session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
 
@@ -63,16 +69,17 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
         boolean check = Objects.requireNonNull(sourceSignature).equals(targetSignature);
         if(!check) throw new ValidateAccessException();
 
-        return findOne(session) != null;/*map.containsKey(session.getId())*/
+        return findOne(session.getId(), session.getUserId()) != null;/*map.containsKey(session.getId())*/
     }
 
     @Nullable
-    public Session findOne(@NotNull Session abstractEntity) throws SQLException {
+    public Session findOne(@NotNull final String id, @NotNull final String userId) throws SQLException {
         @NotNull final String query =
-                "SELECT * FROM tm.app_session WHERE id = ?";
+                "SELECT * FROM tm.app_session WHERE id = ? AND user_id = ?";
         @NotNull final PreparedStatement statement =
                 Objects.requireNonNull(connection).prepareStatement(query);
-        statement.setString(1, abstractEntity.getId());
+        statement.setString(1, id);
+        statement.setString(1, userId);
         @NotNull final ResultSet resultSet = statement.executeQuery();
         if(resultSet.next()) {
             @NotNull final Session session = Objects.requireNonNull(fetch(resultSet));
