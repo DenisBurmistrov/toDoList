@@ -109,7 +109,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     public void removeAll() throws SQLException {
         @NotNull final String query =  "DELETE FROM tm.app_user";
         @NotNull final Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+        statement.executeUpdate(query);
     }
 
     @NotNull

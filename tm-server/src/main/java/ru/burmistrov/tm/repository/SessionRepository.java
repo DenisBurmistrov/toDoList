@@ -51,7 +51,7 @@ public class SessionRepository extends AbstractRepository<Session> implements IS
                 " VALUES ('" + session.getId() + "', '" + session.getSignature() + "', '"
                 + session.getTimesTamp() + "', '" + session.getUserId() + "');";
         Statement statement = Objects.requireNonNull(connection).createStatement();
-        int resultSet = statement.executeUpdate(query);
+        statement.executeUpdate(query);
         return session;
     }
 

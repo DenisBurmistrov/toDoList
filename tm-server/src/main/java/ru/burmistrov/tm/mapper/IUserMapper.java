@@ -3,6 +3,8 @@ package ru.burmistrov.tm.mapper;
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -11,57 +13,60 @@ public interface IUserMapper {
 
     @NotNull
     String persist = "INSERT INTO tm.app_user " +
-            "(id, dateBegin, dateEnd, description, name, project_id, user_id) VALUES (#{id}, #{dateBegin}, #{dateEnd}, #{description}, #{name}, #{projectId}, #{userId})";
+            "(id, email, firstName, lastName, login, middleName, passwordHash, role) VALUES (#{id}, #{email}, #{firstName}, #{lastName}, #{login}, #{middleName}, #{passwordHash}, #{role})";
 
     @NotNull String merge = "UPDATE tm.app_task SET firstName = #{firstName}, lastName = #{lastName}," +
             " middleName = #{middleName}, email = #{email} WHERE id = #{id} ";
 
-    @NotNull String deleteById = "DELETE from tm.app_task WHERE id = #{id} AND user_id = #{userId}";
+    @NotNull String deleteById = "DELETE from tm.app_user WHERE id = #{id}";
 
-    @NotNull String deleteAllByUserId = "DELETE from tm.app_task WHERE user_id = #{userId}";
+    @NotNull String deleteAll = "DELETE from tm.app_user";
 
-    @NotNull String deleteAllByProjectId = "DELETE from tm.app_task WHERE user_id = #{userId} AND project_id = #{projectId}";
+    @NotNull String findAll = "SELECT * FROM tm.app_user";
 
-    @NotNull String findAllByUserId = "SELECT * FROM tm.app_task WHERE user_id = #{userId}";
+    @NotNull String updatePasswordByLogin = "UPDATE tm.app_user SET " +
+            "passwordHash = #{passwordHash}, login = #{login}";
 
-    @NotNull String findOneById = "SELECT * FROM tm.app_task WHERE id = #{id} AND user_id = #{userId}";
+    @NotNull String findOneById = "SELECT * FROM tm.app_user WHERE id = #{id}";
 
-    @NotNull String findOneByName = "SELECT * FROM tm.app_task WHERE user_id = #{userId} AND name = #{name}";
+    @NotNull String findOneByLogin = "SELECT * FROM tm.app_user WHERE login = #{login}";
 
-    @NotNull String findOneByDescription = "SELECT * FROM tm.app_task WHERE user_id = #{userId} AND description = #{description}";
 
     @Insert(persist)
     @Results(value = {
             @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")
     })
-    Task persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
-                 @NotNull @Param("projectId") final String projectId, @NotNull @Param("dateBegin") final Date dateBegin, @NotNull @Param("dateEnd") final Date dateEnd,
-                 @NotNull @Param("description") final String description, @NotNull @Param("name") final String name);
+    Task persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
+                 @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
+                 @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
+                 @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final String role);
 
     @Update(merge)
-    void merge(@NotNull final Task task);
+    void merge(@NotNull final User user);
 
     @Delete(deleteById)
-    int remove(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
+    int remove(@NotNull @Param("id") final String id);
 
-    @Delete(deleteAllByUserId)
-    void removeAll(@NotNull @Param("userId") final String userId);
+    @Delete(deleteAll)
+    void removeAll();
 
-    @Select(findAllByUserId)
+    @Select(findAll)
     @Results(value = {
             @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")
     })
     List<Task> findAll(@NotNull final String userId);
 
@@ -69,37 +74,28 @@ public interface IUserMapper {
     @Select(findOneById)
     @Results(value = {
             @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
-    Task findOne(@NotNull final String id, @NotNull final String userId);
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")})
+    Task findOne(@NotNull final String id);
 
-    @Select(findOneByName)
+    @Select(findOneByLogin)
     @Results(value = {
             @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
-    Task findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")})
+    Task findOneByLogin(@NotNull @Param("login") final String login);
 
-    @Select(findOneByDescription)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
-    Task findOneByDescription(@NotNull final String userId, @NotNull final String description);
+    @Update(updatePasswordByLogin)
+    void updatePassword(@NotNull final String login, @NotNull final String newPassword);
 
-    @Delete(deleteAllByProjectId)
-    void removeAllInProject(@NotNull @Param("userId") final String userId,
-                            @NotNull @Param("projectId") final String projectId);
 }

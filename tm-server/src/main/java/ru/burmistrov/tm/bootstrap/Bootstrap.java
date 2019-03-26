@@ -22,6 +22,7 @@ import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.mapper.IProjectMapper;
+import ru.burmistrov.tm.mapper.ITaskMapper;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.SessionRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
@@ -32,11 +33,7 @@ import ru.burmistrov.tm.utils.ConnectionUtil;
 import javax.sql.DataSource;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -44,13 +41,13 @@ import java.util.Properties;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
+    @Nullable private final Connection connection = ConnectionUtil.getConnection();
 
+    @NotNull private final SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
-    @Nullable private Connection connection = ConnectionUtil.getConnection();
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(sqlSessionFactory.openSession().getMapper(IProjectMapper.class));
 
-    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(connection);
-
-    @NotNull private final ITaskRepository taskRepository = new TaskRepository(connection);
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository(sqlSessionFactory.openSession().getMapper(ITaskMapper.class));
 
     @NotNull private final IUserRepository userRepository = new UserRepository(connection);
 
@@ -88,15 +85,13 @@ public final class Bootstrap implements ServiceLocator {
     public void init() throws IOException {
         initEndpoints();
         SqlSessionFactory sessionFactory = getSqlSessionFactory();
-        IProjectMapper projectMapper;
-
-        projectMapper = sessionFactory.openSession().getMapper(IProjectMapper.class);
+        IProjectMapper projectMapper = sessionFactory.openSession().getMapper(IProjectMapper.class);
         System.out.println(projectMapper.remove("1", "b7801a28-00ec-4b21-92f5-940c9376488a"));
     }
 
-    public SqlSessionFactory getSqlSessionFactory() {
+    private SqlSessionFactory getSqlSessionFactory() {
 
-        @Nullable final String user = propertyService.getJdbcUsername();
+        @Nullable final String user = Objects.requireNonNull(propertyService).getJdbcUsername();
         @Nullable final String password = propertyService.getJdbcPassword();
         @Nullable final String url = propertyService.getJdbcUrl();
         @Nullable final String driver = propertyService.getJdbcDriver();

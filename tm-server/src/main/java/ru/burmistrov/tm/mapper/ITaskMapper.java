@@ -25,6 +25,8 @@ public interface ITaskMapper {
 
     @NotNull String findAllByUserId = "SELECT * FROM tm.app_task WHERE user_id = #{userId}";
 
+    @NotNull String findAllByProjectId = "SELECT * FROM tm.app_task WHERE user_id = #{userId} AND project_id = #{projectId}";
+
     @NotNull String findOneById = "SELECT * FROM tm.app_task WHERE id = #{id} AND user_id = #{userId}";
 
     @NotNull String findOneByName = "SELECT * FROM tm.app_task WHERE user_id = #{userId} AND name = #{name}";
@@ -39,7 +41,7 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "userId", column = "user_id"),
-            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "projectId", column = "project_id")
     })
     Task persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
                  @NotNull @Param("projectId") final String projectId, @NotNull @Param("dateBegin") final Date dateBegin, @NotNull @Param("dateEnd") final Date dateEnd,
@@ -64,7 +66,7 @@ public interface ITaskMapper {
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "userId", column = "user_id")
             })
-    List<Task> findAll(@NotNull final String userId);
+    List<Task> findAll(@NotNull @Param("userId") final String userId);
 
 
     @Select(findOneById)
@@ -76,7 +78,7 @@ public interface ITaskMapper {
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "userId", column = "user_id")})
-    Task findOne(@NotNull final String id, @NotNull final String userId);
+    Task findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
     @Results(value = {
@@ -98,9 +100,21 @@ public interface ITaskMapper {
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
             @Result(property = "userId", column = "user_id")})
-    Task findOneByDescription(@NotNull final String userId, @NotNull final String description);
+    Task findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
     @Delete(deleteAllByProjectId)
     void removeAllInProject(@NotNull @Param("userId") final String userId,
                             @NotNull @Param("projectId") final String projectId);
+
+    @Select(findAllByProjectId)
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "dateBegin", column = "dateBegin"),
+            @Result(property = "dateEnd", column = "dateEnd"),
+            @Result(property = "description", column = "description"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id")
+    })
+    List<Task> findAllByProjectId(@NotNull @Param("userId") final String userId, @NotNull @Param("projectId") final String projectId);
 }

@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.Project;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public interface IProjectMapper {
             @Result(property = "dateEnd", column = "dateEnd"),
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
+            @Result(property = "userId", column = "user_id")
             })
     Project persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
                     @NotNull @Param("dateBegin") final Date dateBegin, @NotNull @Param("dateEnd") final Date dateEnd,
@@ -91,51 +90,5 @@ public interface IProjectMapper {
             @Result(property = "userId", column = "user_id")})
     Project findOneByDescription(@NotNull final String userId, @NotNull final String description);
 
- /*
-    @NotNull
-    @Override
-    public List<Project> findAllSortByDateBegin(@NotNull final String userId) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
-        result.sort((s1, s2) -> {
-            @NotNull final boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
-            @NotNull final boolean secondDateMareFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
 
-            if (firstDateMoreThanSecond) {
-                return 1;
-            } else if (secondDateMareFirst) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-        return result;
-    }
-
-    @NotNull
-    @Override
-    public List<Project> findAllSortByDateEnd(@NotNull final String userId) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
-        result.sort((s1, s2) -> {
-            boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
-            boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
-
-            if (firstDateMoreThanSecond) {
-                return 1;
-            } else if (secondDateMoreThanFirst) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-        return result;
-    }
-
-    @NotNull
-    @Override
-    public List<Project> findAllSortByStatus(@NotNull final String userId) throws SQLException {
-        @NotNull final List<Project> result = Objects.requireNonNull(findAll(userId));
-        result.sort((s1, s2) -> Integer.compare(0, s1.getStatus().ordinal() - s2.getStatus().ordinal()));
-        return result;
-    }
-*/
 }
