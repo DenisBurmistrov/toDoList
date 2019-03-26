@@ -1,8 +1,11 @@
 package ru.burmistrov.tm.mapper;
 
+import jdk.internal.instrumentation.TypeMapping;
 import org.apache.ibatis.annotations.*;
+import org.eclipse.persistence.annotations.TypeConverter;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.entity.enumerated.Role;
 
 import java.util.List;
 
@@ -49,7 +52,7 @@ public interface IUserMapper {
     void merge(@NotNull final User user);
 
     @Delete(deleteById)
-    int remove(@NotNull @Param("id") final String id);
+    void remove(@NotNull @Param("id") final String id);
 
     @Delete(deleteAll)
     void removeAll();
@@ -62,7 +65,7 @@ public interface IUserMapper {
             @Result(property = "lastName", column = "lastName"),
             @Result(property = "login", column = "login"),
             @Result(property = "middleName", column = "middleName"),
-            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "password", column = "passwordHash"),
             @Result(property = "role", column = "role")
     })
     List<User> findAll();

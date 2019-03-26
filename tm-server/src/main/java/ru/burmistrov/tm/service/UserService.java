@@ -22,20 +22,20 @@ public final class UserService implements IUserService {
 
     @Override
     @Nullable
-    public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
+    public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         return userRepository.logIn(login, password);
     }
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
-                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role) throws SQLException {
+                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role){
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
         currentUser.setLastName(lastName);
         currentUser.setEmail(email);
         currentUser.setId(userId);
-        currentUser.setRole(role);
+        currentUser.setRole(role.toString());
         @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if (abstractEntity != null)
             userRepository.merge(currentUser);

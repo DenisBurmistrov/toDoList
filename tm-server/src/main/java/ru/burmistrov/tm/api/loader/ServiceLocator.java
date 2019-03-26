@@ -26,9 +26,6 @@ public interface ServiceLocator {
     @NotNull
     IAdminService getAdminService();
 
-    @NotNull
-    Connection getConnection();
-
     void init() throws IOException, ParseException, NoSuchAlgorithmException, SQLException;
 
 }

@@ -107,7 +107,7 @@ public class AdminService implements IAdminService {
         m.marshal(domain, new FileWriter("projects-and-tasks-by-admin.xml"));
     }
 
-    public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException, SQLException {
+    public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
 
         @NotNull final FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
         @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -131,7 +131,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
+    public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
 
         @NotNull final File file = new File("projects-and-tasks-by-admin.json");
         @NotNull final ObjectMapper objectMapper = new ObjectMapper();
@@ -154,7 +154,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException, SQLException {
+    public void loadDataByFasterXml(@NotNull final Session session) throws IOException, NoSuchAlgorithmException {
 
         @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
         @NotNull final XmlMapper xmlMapper = new XmlMapper();
@@ -177,7 +177,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException, SQLException {
+    public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
 
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
@@ -205,7 +205,7 @@ public class AdminService implements IAdminService {
         }
     }
 
-    public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException, SQLException {
+    public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException, IOException, NoSuchAlgorithmException {
 
         @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
         @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -233,7 +233,7 @@ public class AdminService implements IAdminService {
     @Nullable
     public User createUser(@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
                            @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
-                           @Nullable Role roleType) throws NoSuchAlgorithmException, IOException, SQLException {
+                           @Nullable Role roleType) throws NoSuchAlgorithmException, IOException {
 
         @Nullable final User abstractEntity = userRepository.findOneByLogin(login);
         if(abstractEntity == null)
@@ -244,7 +244,7 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void updatePassword(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException {
+    public void updatePassword(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         if (password.length() > 0) {
             userRepository.updatePassword(login, password);
         }
@@ -252,14 +252,14 @@ public class AdminService implements IAdminService {
 
     @Override
     public void updateUserById(@NotNull final String userId,  @NotNull final String firstName, @NotNull final String middleName,
-                               @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) throws SQLException {
+                               @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
         currentUser.setLastName(lastName);
         currentUser.setEmail(email);
         currentUser.setId(userId);
-        currentUser.setRole(role);
+        currentUser.setRole(role.toString());
         @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if(abstractEntity != null)
             userRepository.merge(currentUser);

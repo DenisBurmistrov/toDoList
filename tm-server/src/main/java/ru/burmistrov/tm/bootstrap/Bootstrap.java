@@ -43,7 +43,7 @@ import java.util.Properties;
 @Setter
 public final class Bootstrap implements ServiceLocator {
 
-    @Nullable private final Connection connection = ConnectionUtil.getConnection();
+    @NotNull private final PropertyService propertyService = new PropertyService();
 
     @NotNull private final SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
@@ -65,8 +65,6 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, projectRepository, taskRepository, userRepository);
 
-    @NotNull private final PropertyService propertyService = new PropertyService();
-
     public Bootstrap() throws SQLException, IOException {
     }
 
@@ -86,10 +84,8 @@ public final class Bootstrap implements ServiceLocator {
     @Override
     public void init() throws IOException {
         initEndpoints();
-        SqlSessionFactory sessionFactory = getSqlSessionFactory();
-        IProjectMapper projectMapper = sessionFactory.openSession().getMapper(IProjectMapper.class);
-        System.out.println(projectMapper.remove("1", "b7801a28-00ec-4b21-92f5-940c9376488a"));
     }
+
 
     private SqlSessionFactory getSqlSessionFactory() {
 
@@ -102,9 +98,9 @@ public final class Bootstrap implements ServiceLocator {
         final Environment environment = new Environment("development", transactionFactory, dataSource);
         final Configuration configuration = new Configuration(environment);
         configuration.addMapper(IProjectMapper.class);
-        configuration.addMapper(ProjectRepository.class);
-        configuration.addMapper(SessionRepository.class);
-        configuration.addMapper(TaskRepository.class);
+        configuration.addMapper(ITaskMapper.class);
+        configuration.addMapper(IUserMapper.class);
+        configuration.addMapper(ISessionMapper.class);
         return new SqlSessionFactoryBuilder().build(configuration);
     }
 
