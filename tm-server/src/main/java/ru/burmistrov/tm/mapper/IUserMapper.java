@@ -2,11 +2,8 @@ package ru.burmistrov.tm.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
-import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
-import ru.burmistrov.tm.utils.PasswordUtil;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IUserMapper {
@@ -43,7 +40,7 @@ public interface IUserMapper {
             @Result(property = "passwordHash", column = "passwordHash"),
             @Result(property = "role", column = "role")
     })
-    Task persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
+    User persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
                  @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
                  @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
                  @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final String role);
@@ -68,7 +65,7 @@ public interface IUserMapper {
             @Result(property = "passwordHash", column = "passwordHash"),
             @Result(property = "role", column = "role")
     })
-    List<Task> findAll(@NotNull final String userId);
+    List<User> findAll();
 
 
     @Select(findOneById)
@@ -81,7 +78,7 @@ public interface IUserMapper {
             @Result(property = "middleName", column = "middleName"),
             @Result(property = "passwordHash", column = "passwordHash"),
             @Result(property = "role", column = "role")})
-    Task findOne(@NotNull final String id);
+    User findOne(@NotNull final String id);
 
     @Select(findOneByLogin)
     @Results(value = {
@@ -93,7 +90,7 @@ public interface IUserMapper {
             @Result(property = "middleName", column = "middleName"),
             @Result(property = "passwordHash", column = "passwordHash"),
             @Result(property = "role", column = "role")})
-    Task findOneByLogin(@NotNull @Param("login") final String login);
+    User findOneByLogin(@NotNull @Param("login") final String login);
 
     @Update(updatePasswordByLogin)
     void updatePassword(@NotNull final String login, @NotNull final String newPassword);

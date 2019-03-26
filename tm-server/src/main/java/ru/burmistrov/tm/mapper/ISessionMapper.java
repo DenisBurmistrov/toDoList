@@ -26,6 +26,6 @@ public interface ISessionMapper {
     @Insert(persist)
     Session persist(@NotNull @Param("id") final String id,
                     @NotNull @Param("signature") final String signature,
-                    @NotNull @Param("timesTamp") final String timesTamp,
+                    @NotNull @Param("timesTamp") final long timesTamp,
                     @NotNull @Param("userId") final String userId);
 }

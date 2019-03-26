@@ -13,28 +13,28 @@ import java.util.List;
 public interface IUserRepository {
 
     @Nullable
-    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException;
+    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException;
 
-    void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException, SQLException;
+    void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException;
 
     @Nullable
     User persist(@NotNull final String email,
                  @NotNull final String firstName, @NotNull final String lastName,
                  @NotNull final String login, @NotNull final String middleName,
-                 @NotNull final String passwordHash, @NotNull final String role) throws IOException, NoSuchAlgorithmException, SQLException;
+                 @NotNull final String passwordHash, @NotNull final String role) throws IOException, NoSuchAlgorithmException;
 
-    void merge(@NotNull final User abstractEntity) throws SQLException;
+    void merge(@NotNull final User abstractEntity);
 
-    void remove(@NotNull final String id) throws SQLException;
+    void remove(@NotNull final String id);
 
-    void removeAll() throws SQLException;
-
-    @Nullable
-    List<User> findAll() throws SQLException;
+    void removeAll();
 
     @Nullable
-    User findOne(@NotNull final String id) throws SQLException;
+    List<User> findAll();
 
     @Nullable
-    User findOneByLogin(@NotNull final String login) throws SQLException;
+    User findOne(@NotNull final String id);
+
+    @Nullable
+    User findOneByLogin(@NotNull final String login) ;
 }

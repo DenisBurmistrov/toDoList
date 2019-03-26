@@ -13,10 +13,10 @@ import java.sql.SQLException;
 public interface ISessionRepository {
 
     @Nullable
-    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException, SQLException;
+    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException;
 
-    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException, SQLException;
+    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
 
     @Nullable
-    Session findOne(@NotNull final String id, @NotNull final String userId) throws SQLException;
+    Session findOne(@NotNull final String id, @NotNull final String userId);
 }

@@ -22,7 +22,9 @@ import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.mapper.IProjectMapper;
+import ru.burmistrov.tm.mapper.ISessionMapper;
 import ru.burmistrov.tm.mapper.ITaskMapper;
+import ru.burmistrov.tm.mapper.IUserMapper;
 import ru.burmistrov.tm.repository.ProjectRepository;
 import ru.burmistrov.tm.repository.SessionRepository;
 import ru.burmistrov.tm.repository.TaskRepository;
@@ -49,9 +51,9 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final ITaskRepository taskRepository = new TaskRepository(sqlSessionFactory.openSession().getMapper(ITaskMapper.class));
 
-    @NotNull private final IUserRepository userRepository = new UserRepository(connection);
+    @NotNull private final IUserRepository userRepository = new UserRepository(sqlSessionFactory.openSession().getMapper(IUserMapper.class));
 
-    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(connection);
+    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(sqlSessionFactory.openSession().getMapper(ISessionMapper.class));
 
     @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 
