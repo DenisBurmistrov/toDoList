@@ -6,9 +6,8 @@ import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.enumerated.Status;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,12 +27,12 @@ public final class TaskService implements ITaskService {
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException, IOException, NoSuchAlgorithmException, SQLException {
+                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(userId, name);
         if(abstractEntity == null)
-            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId, status);
+            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId, Objects.requireNonNull(createStatus(status)));
 
         return null;
     }
@@ -48,7 +47,7 @@ public final class TaskService implements ITaskService {
         task.setDescription(description);
         task.setProjectId(projectId);
         task.setUserId(userId);
-        task.setStatus(status);
+        task.setStatus(createStatus(status));
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);
@@ -61,7 +60,7 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     public List<Task> findAll(@Nullable final String userId) throws SQLException {
-        return taskRepository.findAll(userId);
+        return taskRepository.findAll(Objects.requireNonNull(userId));
     }
 
     @Override
@@ -114,5 +113,18 @@ public final class TaskService implements ITaskService {
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
         return taskRepository.findAllInProject(userId, projectId);
+    }
+
+    @Nullable
+    private Status createStatus(String string) {
+        switch (string) {
+            case "Запланировано":
+                return Status.SCHEDULED;
+            case "В процессе":
+                return Status.IN_PROCESS;
+            case "Готово":
+                return Status.COMPLETE;
+        }
+        return null;
     }
 }

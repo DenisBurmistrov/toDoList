@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.entity.enumerated.Role;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -21,7 +22,7 @@ public interface IUserRepository {
     User persist(@NotNull final String email,
                  @NotNull final String firstName, @NotNull final String lastName,
                  @NotNull final String login, @NotNull final String middleName,
-                 @NotNull final String passwordHash, @NotNull final String role) throws IOException, NoSuchAlgorithmException;
+                 @NotNull final String passwordHash, @NotNull final Role role) throws IOException, NoSuchAlgorithmException;
 
     void merge(@NotNull final User abstractEntity);
 

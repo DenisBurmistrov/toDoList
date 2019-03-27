@@ -34,7 +34,7 @@ public final class TaskListCommand extends AbstractCommand {
                     "; Название: " + task.getName() +
                     "; Описание: " + task.getDescription() +
                     "; ID проекта: " + task.getProjectId() +
-                    "; Статус" );
+                    "; Статус" + task.getStatus());
         }
     }
 

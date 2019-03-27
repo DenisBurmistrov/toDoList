@@ -4,6 +4,7 @@ package ru.burmistrov.tm.mapper;
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.enumerated.Status;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public interface IProjectMapper {
     void persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
                  @NotNull @Param("dateBegin") final Date dateBegin, @NotNull @Param("dateEnd") final Date dateEnd,
                  @NotNull @Param("description") final String description, @NotNull @Param("name") final String name,
-                 @NotNull @Param("status") final String status);
+                 @NotNull @Param("status") final Status status);
 
     @Update(merge)
     void merge(@NotNull final Project project);

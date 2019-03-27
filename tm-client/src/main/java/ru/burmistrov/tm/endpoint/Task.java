@@ -23,6 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="projectId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="status" type="{http://endpoint.tm.burmistrov.ru/}status" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
@@ -37,7 +38,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "dateEnd",
     "description",
     "name",
-    "projectId"
+    "projectId",
+    "status"
 })
 public class Task
     extends AbstractEntity
@@ -50,6 +52,8 @@ public class Task
     protected String description;
     protected String name;
     protected String projectId;
+    @XmlSchemaType(name = "string")
+    protected Status status;
 
     /**
      * Gets the value of the dateBegin property.
@@ -169,6 +173,30 @@ public class Task
      */
     public void setProjectId(String value) {
         this.projectId = value;
+    }
+
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Status }
+     *     
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Status }
+     *     
+     */
+    public void setStatus(Status value) {
+        this.status = value;
     }
 
 }

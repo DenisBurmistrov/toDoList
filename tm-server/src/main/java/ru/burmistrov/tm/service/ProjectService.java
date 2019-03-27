@@ -7,9 +7,8 @@ import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.enumerated.Status;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +45,7 @@ public final class ProjectService implements IProjectService {
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable final AbstractEntity abstractEntity = projectRepository.findOneByName(userId, name);
         if (abstractEntity == null)
-            return projectRepository.persist(userId, new Date(), dateEnd, description, name, status);
+            return projectRepository.persist(userId, new Date(), dateEnd, description, name, Objects.requireNonNull(createStatus(status)));
         return null;
 
     }
@@ -59,7 +58,8 @@ public final class ProjectService implements IProjectService {
         project.setUserId(userId);
         project.setName(name);
         project.setDescription(description);
-        project.setStatus(status);
+        project.setStatus(createStatus(status));
+
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);
@@ -110,5 +110,18 @@ public final class ProjectService implements IProjectService {
     @Override
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
         return projectRepository.findOneByDescription(Objects.requireNonNull(userId), description);
+    }
+
+    @Nullable
+    private Status createStatus(String string) {
+        switch (string) {
+            case "Запланировано":
+                return Status.SCHEDULED;
+            case "В процессе":
+                return Status.IN_PROCESS;
+            case "Готово":
+                return Status.COMPLETE;
+        }
+        return null;
     }
 }

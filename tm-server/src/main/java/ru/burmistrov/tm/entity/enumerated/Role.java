@@ -6,21 +6,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 
-@NoArgsConstructor
+//@NoArgsConstructor
 public enum Role implements Serializable {
 
-    ADMINISTRATOR("Администратор"),
-    COMMON_USER("Обычный пользователь");
+    ADMINISTRATOR(),
+    COMMON_USER()
 
-    @Nullable
-    private String displayName;
-
-    Role(@NotNull String displayName) {
-        this.displayName = displayName;
-    }
-
-    @Override
-    public String toString() {
-        return displayName;
-    }
 }

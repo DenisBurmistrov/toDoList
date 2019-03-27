@@ -11,6 +11,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.enumerated.FieldConst;
+import ru.burmistrov.tm.entity.enumerated.Status;
 import ru.burmistrov.tm.mapper.IProjectMapper;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public final class ProjectRepository extends AbstractRepository<Project> impleme
     @Override
     public Project persist(@NotNull final String userId, @NotNull final Date dateBegin,
                            @NotNull final Date dateEnd, @NotNull final String description,
-                           @NotNull final String name, @NotNull final String status) {
+                           @NotNull final String name, @NotNull final Status status) {
         @NotNull final Project project = new Project();
         project.setUserId(userId);
         project.setDateBegin(dateBegin);

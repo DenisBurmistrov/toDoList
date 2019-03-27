@@ -36,7 +36,7 @@ public interface IUserMapper {
     void persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
                  @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
                  @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
-                 @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final String role);
+                 @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final Role role);
 
     @Update(merge)
     void merge(@NotNull final User user);

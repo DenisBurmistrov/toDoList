@@ -32,7 +32,8 @@ public class TaskListSortedByStatus extends AbstractCommand {
             System.out.println("ID: " + task.getId() +
                     "; Название: " + task.getName() +
                     "; Описание: " + task.getDescription() +
-                    "; ID проекта: " + task.getProjectId());
+                    "; ID проекта: " + task.getProjectId() +
+                    "; Статус: " + task.getStatus());
         }
     }
 

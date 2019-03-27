@@ -68,4 +68,9 @@ public final class Task extends AbstractEntity implements Serializable {
                 "; Статус: " + status;
 
     }
+
+    @Nullable
+    public Status getStatus() {
+        return status;
+    }
 }

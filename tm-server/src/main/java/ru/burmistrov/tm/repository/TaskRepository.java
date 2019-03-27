@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.enumerated.Status;
 import ru.burmistrov.tm.mapper.ITaskMapper;
 
 import java.util.*;
@@ -43,7 +44,7 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     public Task persist(@NotNull final String userId, @NotNull final Date dateBegin,
                         @NotNull final Date dateEnd, @NotNull final String description,
                         @NotNull final String name, @NotNull final String projectId,
-                        @NotNull final String status) {
+                        @NotNull final Status status) {
 
         @NotNull final Task task = new Task();
         task.setUserId(userId);

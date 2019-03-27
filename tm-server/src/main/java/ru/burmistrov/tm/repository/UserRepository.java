@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.mapper.IUserMapper;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
@@ -50,7 +51,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     public User persist(@NotNull final String email,
                         @NotNull final String firstName, @NotNull final String lastName,
                         @NotNull final String login, @NotNull final String middleName,
-                        @NotNull final String passwordHash, @NotNull final String role) throws NoSuchAlgorithmException {
+                        @NotNull final String passwordHash, @NotNull final Role role) throws NoSuchAlgorithmException {
 
         @NotNull final User user = new User();
         user.setLogin(login);
