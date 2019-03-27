@@ -1,6 +1,8 @@
 package ru.burmistrov.tm.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Status;
@@ -9,7 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 public final class Task extends AbstractEntity implements Serializable {
 
     @Nullable
@@ -27,8 +30,8 @@ public final class Task extends AbstractEntity implements Serializable {
     @Nullable
     private Date dateEnd;
 
-    @NotNull
-    private Status status = Status.SHEDULED;
+    @Nullable
+    private Status status;
 
     public Task() {
     }
@@ -61,6 +64,8 @@ public final class Task extends AbstractEntity implements Serializable {
         return "ID: " + getId() +
                 "; Название: " + name +
                 "; Описание: " + description +
-                "; ID проекта: " + projectId;
+                "; ID проекта: " + projectId +
+                "; Статус: " + status;
+
     }
 }

@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.repository;
 
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
@@ -9,7 +10,6 @@ import ru.burmistrov.tm.mapper.IUserMapper;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
 import java.util.*;
 
 @NoArgsConstructor
@@ -18,8 +18,12 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Nullable
     private IUserMapper userMapper;
 
-    public UserRepository(@Nullable IUserMapper userMapper) {
-        this.userMapper = userMapper;
+    @Nullable
+    private SqlSession session;
+
+    public UserRepository(@Nullable SqlSession session) {
+        this.session = session;
+        userMapper = Objects.requireNonNull(session).getMapper(IUserMapper.class);
     }
 
     @Nullable
@@ -38,6 +42,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Override
     public void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException {
         Objects.requireNonNull(userMapper).updatePassword(login, PasswordUtil.hashPassword(newPassword));
+        Objects.requireNonNull(session).commit();
     }
 
     @NotNull
@@ -56,22 +61,27 @@ public final class UserRepository extends AbstractRepository<User> implements IU
         user.setEmail(email);
         user.setRole(role);
 
-        return Objects.requireNonNull(userMapper).persist(user.getId(), email, firstName, lastName, login, middleName, Objects.requireNonNull(user.getPassword()), role);
+        Objects.requireNonNull(userMapper).persist(user.getId(), email, firstName, lastName, login, middleName, Objects.requireNonNull(user.getPassword()), role);
+        Objects.requireNonNull(session).commit();
+        return user;
     }
 
     @Override
     public void merge(@NotNull final User user) {
         Objects.requireNonNull(userMapper).merge(user);
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
     public void remove(@NotNull final String id) {
         Objects.requireNonNull(userMapper).remove(Objects.requireNonNull(id));
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
     public void removeAll() {
         Objects.requireNonNull(userMapper).removeAll();
+        Objects.requireNonNull(session).commit();
     }
 
     @NotNull

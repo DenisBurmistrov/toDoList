@@ -28,25 +28,27 @@ public final class TaskService implements ITaskService {
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                        @NotNull final String description, @NotNull final String dateEndString) throws ParseException, IOException, NoSuchAlgorithmException, SQLException {
+                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException, IOException, NoSuchAlgorithmException, SQLException {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(userId, name);
         if(abstractEntity == null)
-            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId);
+            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId, status);
 
         return null;
     }
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId,
-                      @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString) throws ParseException, SQLException {
+                      @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString,
+                      @NotNull final String status) throws ParseException {
         @NotNull final Task task = new Task();
         task.setId(taskId);
         task.setName(newName);
         task.setDescription(description);
         task.setProjectId(projectId);
         task.setUserId(userId);
+        task.setStatus(status);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         task.setDateEnd(dateEnd);

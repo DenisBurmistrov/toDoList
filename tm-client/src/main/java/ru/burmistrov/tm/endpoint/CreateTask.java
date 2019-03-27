@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="dateEnd" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
     "projectId",
     "name",
     "description",
-    "dateEnd"
+    "dateEnd",
+    "status"
 })
 public class CreateTask {
 
@@ -47,6 +49,7 @@ public class CreateTask {
     protected String name;
     protected String description;
     protected String dateEnd;
+    protected String status;
 
     /**
      * Gets the value of the session property.
@@ -190,6 +193,30 @@ public class CreateTask {
      */
     public void setDateEnd(String value) {
         this.dateEnd = value;
+    }
+
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStatus(String value) {
+        this.status = value;
     }
 
 }

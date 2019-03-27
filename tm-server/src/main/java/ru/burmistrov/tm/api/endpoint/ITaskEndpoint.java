@@ -22,14 +22,15 @@ public interface ITaskEndpoint {
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "taskId") @NotNull final String taskId,
              @WebParam(name = "newName") @NotNull final String newName, @WebParam(name = "description") @NotNull final String description,
-             @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception;
+             @WebParam(name = "dateEnd") @NotNull final String dateEnd, @WebParam(name = "status") @NotNull final String status) throws Exception;
 
     @WebMethod
     @Nullable
     Task createTask
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "name") @NotNull final String name,
-             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception;
+             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd,
+             @WebParam(name = "status") @NotNull final String status) throws Exception;
 
     @WebMethod
     @Nullable

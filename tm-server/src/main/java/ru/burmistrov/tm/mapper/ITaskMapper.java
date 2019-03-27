@@ -2,7 +2,6 @@ package ru.burmistrov.tm.mapper;
 
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
-import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.Date;
@@ -12,7 +11,8 @@ public interface ITaskMapper {
 
     @NotNull
     String persist = "INSERT INTO tm.app_task " +
-            "(id, dateBegin, dateEnd, description, name, project_id, user_id) VALUES (#{id}, #{dateBegin}, #{dateEnd}, #{description}, #{name}, #{projectId}, #{userId})";
+            "(id, dateBegin, dateEnd, description, name, project_id, user_id, status)" +
+            " VALUES (#{id}, #{dateBegin}, #{dateEnd}, #{description}, #{name}, #{projectId}, #{userId}, #{status})";
 
     @NotNull String merge = "UPDATE tm.app_task SET name = #{name}, description = #{description}," +
             " dateBegin = #{dateBegin}, dateEnd = #{dateEnd} WHERE id = #{id} ";
@@ -34,18 +34,10 @@ public interface ITaskMapper {
     @NotNull String findOneByDescription = "SELECT * FROM tm.app_task WHERE user_id = #{userId} AND description = #{description}";
 
     @Insert(persist)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "projectId", column = "project_id")
-    })
-    Task persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
-                 @NotNull @Param("projectId") final String projectId, @NotNull @Param("dateBegin") final Date dateBegin, @NotNull @Param("dateEnd") final Date dateEnd,
-                 @NotNull @Param("description") final String description, @NotNull @Param("name") final String name);
+    void persist(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId,
+                 @NotNull @Param("projectId") final String projectId, @NotNull @Param("dateBegin") final Date dateBegin,
+                 @NotNull @Param("dateEnd") final Date dateEnd, @NotNull @Param("description") final String description,
+                 @NotNull @Param("name") final String name, @NotNull @Param("status") final String status);
 
     @Update(merge)
     void merge(@NotNull final Task task);
@@ -64,7 +56,8 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "status", column = "status")
             })
     List<Task> findAll(@NotNull @Param("userId") final String userId);
 
@@ -77,7 +70,8 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "status", column = "status")})
     Task findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
@@ -88,7 +82,8 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "status", column = "status")})
     Task findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
 
     @Select(findOneByDescription)
@@ -99,7 +94,8 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")})
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "status", column = "status")})
     Task findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
     @Delete(deleteAllByProjectId)
@@ -114,7 +110,8 @@ public interface ITaskMapper {
             @Result(property = "description", column = "description"),
             @Result(property = "name", column = "name"),
             @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id")
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "status", column = "status")
     })
     List<Task> findAllByProjectId(@NotNull @Param("userId") final String userId, @NotNull @Param("projectId") final String projectId);
 }

@@ -33,17 +33,7 @@ public interface IUserMapper {
 
 
     @Insert(persist)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "email", column = "email"),
-            @Result(property = "firstName", column = "firstName"),
-            @Result(property = "lastName", column = "lastName"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "middleName", column = "middleName"),
-            @Result(property = "passwordHash", column = "passwordHash"),
-            @Result(property = "role", column = "role")
-    })
-    User persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
+    void persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
                  @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
                  @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
                  @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final String role);

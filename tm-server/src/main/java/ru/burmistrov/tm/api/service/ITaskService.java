@@ -15,12 +15,12 @@ public interface ITaskService {
 
     void merge
             (@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId, @NotNull final String newName,
-             @NotNull final String description, @NotNull final String dateEnd) throws ParseException, SQLException;
+             @NotNull final String description, @NotNull final String dateEnd, @NotNull final String status) throws ParseException, SQLException;
 
     @Nullable
     Task persist
             (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name, @NotNull final String description,
-             @NotNull final String dateEnd) throws ParseException, IOException, NoSuchAlgorithmException, SQLException;
+             @NotNull final String dateEnd, @NotNull final String status) throws ParseException, IOException, NoSuchAlgorithmException, SQLException;
 
     @NotNull
     List<Task> findAll(@NotNull final String userId) throws SQLException;

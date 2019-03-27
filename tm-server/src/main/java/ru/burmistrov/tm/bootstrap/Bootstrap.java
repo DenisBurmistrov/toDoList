@@ -47,13 +47,13 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
 
-    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(sqlSessionFactory.openSession().getMapper(IProjectMapper.class));
+    @NotNull private final IProjectRepository projectRepository = new ProjectRepository(sqlSessionFactory.openSession());
 
-    @NotNull private final ITaskRepository taskRepository = new TaskRepository(sqlSessionFactory.openSession().getMapper(ITaskMapper.class));
+    @NotNull private final ITaskRepository taskRepository = new TaskRepository(sqlSessionFactory.openSession());
 
-    @NotNull private final IUserRepository userRepository = new UserRepository(sqlSessionFactory.openSession().getMapper(IUserMapper.class));
+    @NotNull private final IUserRepository userRepository = new UserRepository(sqlSessionFactory.openSession());
 
-    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(sqlSessionFactory.openSession().getMapper(ISessionMapper.class));
+    @NotNull private final ISessionRepository sessionRepository = new SessionRepository(sqlSessionFactory.openSession());
 
     @NotNull private final IProjectService projectService = new ProjectService(projectRepository, taskRepository);
 

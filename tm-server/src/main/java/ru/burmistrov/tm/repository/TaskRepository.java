@@ -1,14 +1,13 @@
 package ru.burmistrov.tm.repository;
 
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.mapper.ITaskMapper;
 
-import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -18,8 +17,13 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     @Nullable
     private ITaskMapper taskMapper;
 
-    public TaskRepository(@Nullable ITaskMapper taskMapper) {
-        this.taskMapper = taskMapper;
+    @Nullable
+    private SqlSession session;
+
+
+    public TaskRepository(@Nullable SqlSession session) {
+        this.session = session;
+        taskMapper = Objects.requireNonNull(session).getMapper(ITaskMapper.class);
     }
 
     @NotNull
@@ -38,7 +42,8 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     @Override
     public Task persist(@NotNull final String userId, @NotNull final Date dateBegin,
                         @NotNull final Date dateEnd, @NotNull final String description,
-                        @NotNull final String name, @NotNull final String projectId) {
+                        @NotNull final String name, @NotNull final String projectId,
+                        @NotNull final String status) {
 
         @NotNull final Task task = new Task();
         task.setUserId(userId);
@@ -47,22 +52,28 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
         task.setDescription(description);
         task.setName(name);
         task.setProjectId(projectId);
-        return Objects.requireNonNull(taskMapper).persist(task.getId(), userId, projectId, dateBegin, dateEnd, description, name);
+        task.setStatus(status);
+        Objects.requireNonNull(taskMapper).persist(task.getId(), userId, projectId, dateBegin, dateEnd, description, name, status);
+        Objects.requireNonNull(session).commit();
+        return task;
     }
 
     @Override
     public void merge(@NotNull Task task) {
         Objects.requireNonNull(taskMapper).merge(task);
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
     public void remove(@NotNull final String id, @NotNull final String userId) {
         Objects.requireNonNull(taskMapper).remove(id, userId);
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
     public void removeAll(@NotNull final String userId) {
         Objects.requireNonNull(taskMapper).removeAll(userId);
+        Objects.requireNonNull(session).commit();
     }
 
     @NotNull
@@ -74,6 +85,7 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId)  {
         Objects.requireNonNull(taskMapper).removeAllInProject(userId, projectId);
+        Objects.requireNonNull(session).commit();
     }
 
     @NotNull

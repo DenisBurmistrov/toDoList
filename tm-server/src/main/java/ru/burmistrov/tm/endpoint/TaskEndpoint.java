@@ -28,9 +28,9 @@ public class TaskEndpoint implements ITaskEndpoint {
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "taskId") @NotNull final String taskId,
              @WebParam(name = "newName") @NotNull final String newName, @WebParam(name = "description") @NotNull final String description,
-             @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
+             @WebParam(name = "dateEnd") @NotNull final String dateEnd, @WebParam(name = "status") @NotNull final String status) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
-            serviceLocator.getTaskService().merge(userId, projectId, taskId, newName, description, dateEnd);
+            serviceLocator.getTaskService().merge(userId, projectId, taskId, newName, description, dateEnd, status);
         }
     }
 
@@ -39,9 +39,10 @@ public class TaskEndpoint implements ITaskEndpoint {
     public Task createTask
             (@WebParam(name = "session") @NotNull final Session session, @NotNull @WebParam(name = "userId") final String userId,
              @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "name") @NotNull final String name,
-             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
+             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd,
+             @WebParam(name = "status") @NotNull final String status) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
-            return serviceLocator.getTaskService().persist(userId, projectId, name, description, dateEnd);
+            return serviceLocator.getTaskService().persist(userId, projectId, name, description, dateEnd, status);
         }
         return null;
     }

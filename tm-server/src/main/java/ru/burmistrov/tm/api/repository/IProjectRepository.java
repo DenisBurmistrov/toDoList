@@ -17,7 +17,7 @@ public interface IProjectRepository{
     Project persist
             (@NotNull final String userId, @NotNull final Date dateBegin,
              @NotNull final Date dateEnd, @NotNull final String description,
-             @NotNull final String name);
+             @NotNull final String name, @NotNull final String status);
 
     void merge(@NotNull final Project project);
 

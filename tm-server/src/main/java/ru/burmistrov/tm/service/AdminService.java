@@ -117,12 +117,12 @@ public class AdminService implements IAdminService {
         for (@NotNull final Project project : domain.getProjects()) {
             projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
                     Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                    Objects.requireNonNull(project.getName()));
+                    Objects.requireNonNull(project.getName()), project.getStatus().toString());
         }
         for (@NotNull final Task task : domain.getTasks()) {
             taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
                     Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()), task.getStatus().toString());
         }
         for (@NotNull final User user : domain.getUsers()) {
             userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
@@ -140,12 +140,12 @@ public class AdminService implements IAdminService {
         for (@NotNull final Project project : domain.getProjects()) {
             projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
                     Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                    Objects.requireNonNull(project.getName()));
+                    Objects.requireNonNull(project.getName()), project.getStatus().toString());
         }
         for (@NotNull final Task task : domain.getTasks()) {
             taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
                     Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()), task.getStatus().toString());
         }
         for (@NotNull final User user : domain.getUsers()) {
             userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
@@ -163,12 +163,13 @@ public class AdminService implements IAdminService {
         for (@NotNull final Project project : domain.getProjects()) {
             projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
                     Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                    Objects.requireNonNull(project.getName()));
+                    Objects.requireNonNull(project.getName()), project.getStatus().toString());
         }
         for (@NotNull final Task task : domain.getTasks()) {
             taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
                     Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()),
+                    task.getStatus().toString());
         }
         for (@NotNull final User user : domain.getUsers()) {
             userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
@@ -191,12 +192,13 @@ public class AdminService implements IAdminService {
         for (@NotNull final Project project : domain.getProjects()) {
             projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
                     Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                    Objects.requireNonNull(project.getName()));
+                    Objects.requireNonNull(project.getName()), project.getStatus().toString());
         }
         for (@NotNull final Task task : domain.getTasks()) {
             taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
                     Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()),
+                    task.getStatus().toString());
         }
         for (@NotNull final User user : domain.getUsers()) {
             userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
@@ -215,12 +217,13 @@ public class AdminService implements IAdminService {
         for (@NotNull final Project project : domain.getProjects()) {
             projectRepository.persist(Objects.requireNonNull(project.getUserId()), project.getDateBegin(),
                     Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                    Objects.requireNonNull(project.getName()));
+                    Objects.requireNonNull(project.getName()), project.getStatus().toString());
         }
         for (@NotNull final Task task : domain.getTasks()) {
             taskRepository.persist(Objects.requireNonNull(task.getUserId()), task.getDateBegin(),
                     Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()));
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getProjectId()),
+                    task.getStatus().toString());
         }
         for (@NotNull final User user : domain.getUsers()) {
             userRepository.persist(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(user.getFirstName()),
@@ -266,12 +269,12 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void removeUserById(@NotNull final String userId) throws SQLException {
+    public void removeUserById(@NotNull final String userId) {
         userRepository.remove(userId);
     }
 
     @Override
-    public void removeAllUsers() throws SQLException {
+    public void removeAllUsers() {
         userRepository.removeAll();
     }
 

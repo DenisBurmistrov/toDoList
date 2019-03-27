@@ -31,34 +31,35 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException, SQLException {
+    public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
         @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
         if(abstractEntity != null) {
-            projectRepository.remove(projectId, userId);
             taskRepository.removeAllInProject(userId, projectId);
+            projectRepository.remove(userId, projectId);
         }
     }
 
     @Override
     public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-                           @NotNull final String dateEndString) throws NullPointerException, ParseException, IOException, NoSuchAlgorithmException, SQLException {
+                           @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException, ParseException {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable final AbstractEntity abstractEntity = projectRepository.findOneByName(userId, name);
         if (abstractEntity == null)
-            return projectRepository.persist(userId, new Date(), dateEnd, description, name);
+            return projectRepository.persist(userId, new Date(), dateEnd, description, name, status);
         return null;
 
     }
 
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                      @NotNull final String description, @NotNull final String dateEndString) throws NullPointerException, ParseException, SQLException {
+                      @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException, ParseException {
         @NotNull final Project project = new Project();
         project.setId(projectId);
         project.setUserId(userId);
         project.setName(name);
         project.setDescription(description);
+        project.setStatus(status);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         project.setDateEnd(dateEnd);

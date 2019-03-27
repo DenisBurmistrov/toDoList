@@ -30,9 +30,11 @@ public final class TaskCreateCommand extends AbstractCommand {
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончание (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
+        System.out.println("Введите статус(Запланировано || В процессе || Готово)");
+        @NotNull final String status = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getTaskEndpoint()
                 .createTask(getServiceLocator().getSession(),
-                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), id, oldName, description, date);
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), id, oldName, description, date, status);
     }
 
     @Override
