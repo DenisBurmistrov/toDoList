@@ -8,13 +8,17 @@ import java.util.Properties;
 
 public class PropertyService {
 
-    @NotNull private final String jdbcUrl;
+    @NotNull
+    private final String jdbcUrl;
 
-    @NotNull private final String jdbcUsername;
+    @NotNull
+    private final String jdbcUsername;
 
-    @NotNull private final String jdbcPassword;
+    @NotNull
+    private final String jdbcPassword;
 
-    @NotNull private final String jdbcDriver;
+    @NotNull
+    private final String jdbcDriver;
 
 
     public PropertyService() throws IOException {

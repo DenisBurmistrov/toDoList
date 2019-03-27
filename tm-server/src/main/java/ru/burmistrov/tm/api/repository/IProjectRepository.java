@@ -46,48 +46,15 @@ public interface IProjectRepository {
     void removeAll(@NotNull @Param("userId") final String userId);
 
     @Select(findAllByUserId)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     List<Project> findAll(@NotNull @Param("userId") final String userId);
 
-
     @Select(findOneById)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Project findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Project findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
 
     @Select(findOneByDescription)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Project findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
 

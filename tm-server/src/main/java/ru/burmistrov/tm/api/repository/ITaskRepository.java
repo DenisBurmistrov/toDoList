@@ -50,53 +50,16 @@ public interface ITaskRepository {
     void removeAll(@NotNull @Param("userId") final String userId);
 
     @Select(findAllByUserId)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")
-            })
     List<Task> findAll(@NotNull @Param("userId") final String userId);
 
 
     @Select(findOneById)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Task findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Task findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
 
     @Select(findOneByDescription)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")})
     Task findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
     @Delete(deleteAllByProjectId)
@@ -104,15 +67,5 @@ public interface ITaskRepository {
                             @NotNull @Param("projectId") final String projectId);
 
     @Select(findAllByProjectId)
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "dateBegin", column = "dateBegin"),
-            @Result(property = "dateEnd", column = "dateEnd"),
-            @Result(property = "description", column = "description"),
-            @Result(property = "name", column = "name"),
-            @Result(property = "projectId", column = "project_id"),
-            @Result(property = "userId", column = "user_id"),
-            @Result(property = "status", column = "status")
-    })
     List<Task> findAllByProjectId(@NotNull @Param("userId") final String userId, @NotNull @Param("projectId") final String projectId);
 }

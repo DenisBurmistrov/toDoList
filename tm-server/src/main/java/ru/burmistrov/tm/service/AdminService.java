@@ -278,31 +278,45 @@ public class AdminService implements IAdminService {
     @Override
     public void updateUserById(@NotNull final String userId,  @NotNull final String firstName, @NotNull final String middleName,
                                @NotNull final String lastName, final @NotNull String email,final @NotNull Role role) {
-        @NotNull final User currentUser = new User();
-        currentUser.setFirstName(firstName);
-        currentUser.setMiddleName(middleName);
-        currentUser.setLastName(lastName);
-        currentUser.setEmail(email);
-        currentUser.setId(userId);
-        currentUser.setRole(role);
-        @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
-        if (abstractEntity != null) {
-            Objects.requireNonNull(userRepository).merge(currentUser);
-            Objects.requireNonNull(session).commit();
+        try {
+            @NotNull final User currentUser = new User();
+            currentUser.setFirstName(firstName);
+            currentUser.setMiddleName(middleName);
+            currentUser.setLastName(lastName);
+            currentUser.setEmail(email);
+            currentUser.setId(userId);
+            currentUser.setRole(role);
+            @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
+            if (abstractEntity != null) {
+                Objects.requireNonNull(userRepository).merge(currentUser);
+                Objects.requireNonNull(session).commit();
+            }
+        }
+        catch (Exception e) {
+            session.rollback();
         }
     }
 
     @Override
     public void removeUserById(@NotNull final String userId) {
-        Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
-        Objects.requireNonNull(session).commit();
+        try {
+            Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
+            Objects.requireNonNull(session).commit();
+        }
+        catch (Exception e) {
+            session.rollback();
+        }
     }
 
     @Override
     public void removeAllUsers() {
-
-        Objects.requireNonNull(userRepository).removeAll();
-        Objects.requireNonNull(session).commit();
+        try {
+            Objects.requireNonNull(userRepository).removeAll();
+            Objects.requireNonNull(session).commit();
+        }
+        catch (Exception e) {
+            session.rollback();
+        }
     }
 
     @NotNull

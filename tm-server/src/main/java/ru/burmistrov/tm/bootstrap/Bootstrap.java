@@ -19,6 +19,7 @@ import ru.burmistrov.tm.api.repository.ISessionRepository;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.service.*;
+import ru.burmistrov.tm.utils.SqlSessionFactoryUtil;
 
 import javax.sql.DataSource;
 import javax.xml.ws.Endpoint;
@@ -33,7 +34,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final PropertyService propertyService = new PropertyService();
 
-    @NotNull private final SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+    @NotNull private final SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtil.getSqlSessionFactory();
 
     @NotNull private final IProjectService projectService = new ProjectService(sqlSessionFactory.openSession());
 
@@ -45,7 +46,7 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, sqlSessionFactory.openSession());
 
-    public Bootstrap() throws SQLException, IOException {
+    public Bootstrap() throws IOException {
     }
 
 
@@ -65,25 +66,6 @@ public final class Bootstrap implements ServiceLocator {
     public void init() throws IOException {
         initEndpoints();
     }
-
-
-    private SqlSessionFactory getSqlSessionFactory() {
-
-        @Nullable final String user = Objects.requireNonNull(propertyService).getJdbcUsername();
-        @Nullable final String password = propertyService.getJdbcPassword();
-        @Nullable final String url = propertyService.getJdbcUrl();
-        @Nullable final String driver = propertyService.getJdbcDriver();
-        final DataSource dataSource = new PooledDataSource(driver, url, user, password);
-        final TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        final Environment environment = new Environment("development", transactionFactory, dataSource);
-        final Configuration configuration = new Configuration(environment);
-        configuration.addMapper(IProjectRepository.class);
-        configuration.addMapper(ITaskRepository.class);
-        configuration.addMapper(IUserRepository.class);
-        configuration.addMapper(ISessionRepository.class);
-        return new SqlSessionFactoryBuilder().build(configuration);
-    }
-
 }
 
 
