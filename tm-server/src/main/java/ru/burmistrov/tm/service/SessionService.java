@@ -14,7 +14,6 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 import ru.burmistrov.tm.utils.PasswordUtil;
 import ru.burmistrov.tm.utils.SignatureUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class SessionService implements ISessionService {
     }
 
     @Override
-    public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+    public boolean validateAdmin(@Nullable final Session session) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
                 sessionRepository = sqlSession.getMapper(ISessionRepository.class);

@@ -7,11 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.enumerated.Status;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

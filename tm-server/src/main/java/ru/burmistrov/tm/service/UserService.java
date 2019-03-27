@@ -7,11 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
-import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public final class UserService implements IUserService {

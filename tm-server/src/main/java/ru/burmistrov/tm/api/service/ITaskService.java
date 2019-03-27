@@ -22,7 +22,7 @@ public interface ITaskService {
             (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name, @NotNull final String description,
              @NotNull final String dateEnd, @NotNull final String status) throws ParseException, IOException, NoSuchAlgorithmException, SQLException;
 
-    @NotNull
+    @Nullable
     List<Task> findAll(@NotNull final String userId) throws SQLException;
 
     void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException;
@@ -46,6 +46,6 @@ public interface ITaskService {
     @Nullable
     Task findOneByDescription(@NotNull final String userId, @NotNull final String description) throws SQLException;
 
-    @NotNull
+    @Nullable
     List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException;
 }

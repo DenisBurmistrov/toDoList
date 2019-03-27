@@ -24,7 +24,7 @@ public interface IProjectService {
 
     void removeAll(@NotNull final String userId) throws SQLException;
 
-    @NotNull
+    @Nullable
     List<Project> findAll(@NotNull final String userId) throws SQLException;
 
     @NotNull

@@ -1,11 +1,13 @@
 package ru.burmistrov.tm.service;
 
+import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Data
 public class PropertyService {
 
     @NotNull
@@ -19,7 +21,6 @@ public class PropertyService {
 
     @NotNull
     private final String jdbcDriver;
-
 
     public PropertyService() throws IOException {
 
@@ -36,25 +37,5 @@ public class PropertyService {
         jdbcUsername = user;
         jdbcPassword = password;
         jdbcDriver = driver;
-    }
-
-    @NotNull
-    public String getJdbcUrl() {
-        return jdbcUrl;
-    }
-
-    @NotNull
-    public String getJdbcUsername() {
-        return jdbcUsername;
-    }
-
-    @NotNull
-    public String getJdbcPassword() {
-        return jdbcPassword;
-    }
-
-    @NotNull
-    public String getJdbcDriver() {
-        return jdbcDriver;
     }
 }
