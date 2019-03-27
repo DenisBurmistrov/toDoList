@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -20,8 +21,12 @@ public final class TaskService implements ITaskService {
     @NotNull
     private final ITaskRepository taskRepository;
 
-    public TaskService(@NotNull final ITaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    @NotNull
+    private final SqlSession session;
+
+    public TaskService(@NotNull final SqlSession session) {
+        this.session = session;
+        this.taskRepository = session.getMapper(ITaskRepository.class);
     }
 
     @Override
@@ -31,9 +36,21 @@ public final class TaskService implements ITaskService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable final AbstractEntity abstractEntity = taskRepository.findOneByName(userId, name);
-        if(abstractEntity == null)
-            return taskRepository.persist(userId, new Date(), dateEnd, description, name, projectId, Objects.requireNonNull(createStatus(status)));
-
+        if(abstractEntity == null) {
+            @NotNull final Task task = new Task();
+            task.setUserId(userId);
+            task.setDateBegin(new Date());
+            task.setDateEnd(dateEnd);
+            task.setDescription(description);
+            task.setName(name);
+            task.setProjectId(projectId);
+            task.setStatus(createStatus(status));
+            Objects.requireNonNull(taskRepository).persist(task.getId(), Objects.requireNonNull(task.getUserId()), Objects.requireNonNull(task.getProjectId()),
+                    task.getDateBegin(), Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
+                    Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getStatus()));
+            Objects.requireNonNull(session).commit();
+            return task;
+        }
         return null;
     }
 
@@ -53,67 +70,109 @@ public final class TaskService implements ITaskService {
         task.setDateEnd(dateEnd);
         @Nullable final AbstractEntity abstractEntity = taskRepository.findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
         if (newName.length() != 0 && abstractEntity != null) {
-            taskRepository.merge(task);
+            Objects.requireNonNull(taskRepository).merge(task);
+            Objects.requireNonNull(session).commit();
         }
     }
 
     @NotNull
     @Override
-    public List<Task> findAll(@Nullable final String userId) throws SQLException {
-        return taskRepository.findAll(Objects.requireNonNull(userId));
+    public List<Task> findAll(@Nullable final String userId) {
+        return Objects.requireNonNull(taskRepository).findAll(Objects.requireNonNull(userId));
     }
 
     @Override
-    public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
-        taskRepository.removeAllInProject(userId, projectId);
+    public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
+        Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
-    public void remove(@NotNull final String userId, @NotNull final String taskId) throws SQLException {
-        taskRepository.remove(taskId, userId);
+    public void remove(@NotNull final String userId, @NotNull final String taskId) {
+        Objects.requireNonNull(taskRepository).remove(taskId, userId);
+        Objects.requireNonNull(session).commit();
     }
 
     @Override
-    public void removeAll(@Nullable final String userId) throws SQLException {
-        taskRepository.removeAll(Objects.requireNonNull(userId));
+    public void removeAll(@Nullable final String userId) {
+        Objects.requireNonNull(taskRepository).removeAll(userId);
+        Objects.requireNonNull(session).commit();
     }
 
     @NotNull
 
     @Override
     public List<Task> findAllSortByDateBegin(@Nullable final String userId) throws SQLException {
-        return taskRepository.findAllSortByDateBegin(Objects.requireNonNull(userId));
+        @NotNull final List<Task> result = findAll(userId);
+        result.sort((s1, s2) -> {
+            @NotNull final boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
+            @NotNull final boolean secondDateMoreThaFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
+
+            if (firstDateMoreThanSecond) {
+                return 1;
+            } else if (secondDateMoreThaFirst) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        return result;
     }
 
     @NotNull
     @Override
     public List<Task> findAllSortByDateEnd(@Nullable final String userId) throws SQLException {
-        return taskRepository.findAllSortByDateEnd(Objects.requireNonNull(userId));
+        @NotNull final List<Task> result = findAll(userId);
+        result.sort((s1, s2) -> {
+            boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
+            boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
+
+            if (firstDateMoreThanSecond) {
+                return 1;
+            } else if (secondDateMoreThanFirst) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        return result;
     }
 
     @NotNull
     @Override
     public List<Task> findAllSortByStatus(@NotNull final String userId) throws SQLException {
-        return taskRepository.findAllSortByStatus(userId);
+        @NotNull final List<Task> result = findAll(userId);
+        result.stream().filter(e -> Objects.requireNonNull(e.getUserId()).
+                equals(userId))
+                .forEach(result::add);
+        result.sort((s1, s2) -> Integer.compare(0, Objects.requireNonNull(s1.getStatus()).ordinal() - Objects.requireNonNull(s2.getStatus()).ordinal()));
+        return result;
     }
 
     @Nullable
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) throws SQLException {
-        return taskRepository.findOneByName(userId, name);
+        return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
+
     }
 
     @Nullable
     @Override
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) throws SQLException {
-        return taskRepository.findOneByDescription(Objects.requireNonNull(userId), description);
+        return Objects.requireNonNull(taskRepository).findOneByDescription(userId, description);
     }
 
     @NotNull
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) throws SQLException {
-        return taskRepository.findAllInProject(userId, projectId);
+        return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
     }
+
+    @Nullable
+    public Task findOne(@NotNull final String id, @NotNull final String userId) {
+        return Objects.requireNonNull(taskRepository).findOne(id, userId);
+    }
+
 
     @Nullable
     private Status createStatus(String string) {

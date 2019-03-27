@@ -32,7 +32,7 @@ public class TaskListSortedByDateEndCommand extends AbstractCommand {
                     "; Название: " + task.getName() +
                     "; Описание: " + task.getDescription() +
                     "; ID проекта: " + task.getProjectId() +
-                    "; Статус" + task.getStatus());
+                    "; Статус: " + task.getStatus());
         }
     }
 

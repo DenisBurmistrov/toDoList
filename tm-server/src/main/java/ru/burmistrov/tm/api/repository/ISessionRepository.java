@@ -1,22 +1,28 @@
 package ru.burmistrov.tm.api.repository;
 
-
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.Session;
-import ru.burmistrov.tm.exception.ValidateAccessException;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 public interface ISessionRepository {
 
-    @Nullable
-    Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException;
+    @NotNull String persist = "INSERT INTO tm.app_session " +
+            "(id, signature, timesTamp, user_id) VALUES (#{id}, #{signature}," +
+            " #{timesTamp}, #{userId})";
 
-    boolean validate(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
+    @NotNull String findOneById = "SELECT * FROM tm.app_session WHERE id = #{id} AND user_id = #{userId}";
+
+    @Insert(persist)
+    void persist(@NotNull @Param("id") final String id,
+                    @NotNull @Param("signature") final String signature,
+                    @Param("timesTamp") final long timesTamp,
+                    @NotNull @Param("userId") final String userId);
 
     @Nullable
-    Session findOne(@NotNull final String id, @NotNull final String userId);
+    @Select(findOneById)
+    Session findOne(@NotNull @Param("id") final String id,
+                    @NotNull @Param("userId") final String userId);
 }

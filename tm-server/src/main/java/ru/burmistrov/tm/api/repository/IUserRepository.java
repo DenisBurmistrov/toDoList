@@ -1,41 +1,89 @@
 package ru.burmistrov.tm.api.repository;
 
+import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.Role;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserRepository {
 
-    @Nullable
-    User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException;
+    @NotNull
+    String persist = "INSERT INTO tm.app_user " +
+            "(id, email, firstName, lastName, login, middleName, passwordHash, role) VALUES (#{id}, #{email}, #{firstName}, #{lastName}, #{login}, #{middleName}, #{passwordHash}, #{role})";
 
-    void updatePassword(@NotNull final String login, @NotNull final String newPassword) throws NoSuchAlgorithmException;
+    @NotNull String merge = "UPDATE tm.app_task SET firstName = #{firstName}, lastName = #{lastName}," +
+            " middleName = #{middleName}, email = #{email} WHERE id = #{id} ";
 
-    @Nullable
-    User persist(@NotNull final String email,
-                 @NotNull final String firstName, @NotNull final String lastName,
-                 @NotNull final String login, @NotNull final String middleName,
-                 @NotNull final String passwordHash, @NotNull final Role role) throws IOException, NoSuchAlgorithmException;
+    @NotNull String deleteById = "DELETE from tm.app_user WHERE id = #{id}";
 
-    void merge(@NotNull final User abstractEntity);
+    @NotNull String deleteAll = "DELETE from tm.app_user";
 
-    void remove(@NotNull final String id);
+    @NotNull String findAll = "SELECT * FROM tm.app_user";
 
+    @NotNull String updatePasswordByLogin = "UPDATE tm.app_user SET " +
+            "passwordHash = #{passwordHash}, login = #{login}";
+
+    @NotNull String findOneById = "SELECT * FROM tm.app_user WHERE id = #{id}";
+
+    @NotNull String findOneByLogin = "SELECT * FROM tm.app_user WHERE login = #{login}";
+
+
+    @Insert(persist)
+    void persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
+                 @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
+                 @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
+                 @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final Role role);
+
+    @Update(merge)
+    void merge(@NotNull final User user);
+
+    @Delete(deleteById)
+    void remove(@NotNull @Param("id") final String id);
+
+    @Delete(deleteAll)
     void removeAll();
 
-    @Nullable
+    @Select(findAll)
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "password", column = "passwordHash"),
+            @Result(property = "role", column = "role")
+    })
     List<User> findAll();
 
-    @Nullable
+
+    @Select(findOneById)
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")})
     User findOne(@NotNull final String id);
 
-    @Nullable
-    User findOneByLogin(@NotNull final String login) ;
+    @Select(findOneByLogin)
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "firstName", column = "firstName"),
+            @Result(property = "lastName", column = "lastName"),
+            @Result(property = "login", column = "login"),
+            @Result(property = "middleName", column = "middleName"),
+            @Result(property = "passwordHash", column = "passwordHash"),
+            @Result(property = "role", column = "role")})
+    User findOneByLogin(@NotNull @Param("login") final String login);
+
+    @Update(updatePasswordByLogin)
+    void updatePassword(@NotNull final String login, @NotNull final String newPassword);
+
 }
