@@ -36,15 +36,15 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtil.getSqlSessionFactory();
 
-    @NotNull private final IProjectService projectService = new ProjectService(sqlSessionFactory.openSession());
+    @NotNull private final IProjectService projectService = new ProjectService(sqlSessionFactory);
 
-    @NotNull private final ITaskService taskService = new TaskService(sqlSessionFactory.openSession());
+    @NotNull private final ITaskService taskService = new TaskService(sqlSessionFactory);
 
-    @NotNull private final IUserService userService = new UserService(sqlSessionFactory.openSession());
+    @NotNull private final IUserService userService = new UserService(sqlSessionFactory);
 
-    @NotNull private final ISessionService sessionService = new SessionService(sqlSessionFactory.openSession());
+    @NotNull private final ISessionService sessionService = new SessionService(sqlSessionFactory);
 
-    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, sqlSessionFactory.openSession());
+    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, sqlSessionFactory);
 
     public Bootstrap() throws IOException {
     }

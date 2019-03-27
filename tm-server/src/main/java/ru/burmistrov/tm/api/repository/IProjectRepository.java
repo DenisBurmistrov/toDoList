@@ -46,15 +46,23 @@ public interface IProjectRepository {
     void removeAll(@NotNull @Param("userId") final String userId);
 
     @Select(findAllByUserId)
+    @Results(value = {
+            @Result(property = "userId", column = "user_id")})
     List<Project> findAll(@NotNull @Param("userId") final String userId);
 
     @Select(findOneById)
+    @Results(value = {
+            @Result(property = "userId", column = "user_id")})
     Project findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
+    @Results(value = {
+            @Result(property = "userId", column = "user_id")})
     Project findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
 
     @Select(findOneByDescription)
+    @Results(value = {
+            @Result(property = "userId", column = "user_id")})
     Project findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
 

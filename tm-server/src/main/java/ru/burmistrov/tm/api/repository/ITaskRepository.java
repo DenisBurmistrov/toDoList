@@ -50,16 +50,32 @@ public interface ITaskRepository {
     void removeAll(@NotNull @Param("userId") final String userId);
 
     @Select(findAllByUserId)
+    @Results(value = {
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id"),
+    })
     List<Task> findAll(@NotNull @Param("userId") final String userId);
 
 
     @Select(findOneById)
+    @Results(value = {
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id"),
+    })
     Task findOne(@NotNull @Param("id") final String id, @NotNull @Param("userId") final String userId);
 
     @Select(findOneByName)
+    @Results(value = {
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id"),
+    })
     Task findOneByName(@NotNull @Param("userId") final String userId, @NotNull @Param("name") final String name);
 
     @Select(findOneByDescription)
+    @Results(value = {
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id"),
+    })
     Task findOneByDescription(@NotNull @Param("userId") final String userId, @NotNull @Param("description") final String description);
 
     @Delete(deleteAllByProjectId)
@@ -67,5 +83,9 @@ public interface ITaskRepository {
                             @NotNull @Param("projectId") final String projectId);
 
     @Select(findAllByProjectId)
+    @Results(value = {
+            @Result(property = "projectId", column = "project_id"),
+            @Result(property = "userId", column = "user_id"),
+    })
     List<Task> findAllByProjectId(@NotNull @Param("userId") final String userId, @NotNull @Param("projectId") final String projectId);
 }
