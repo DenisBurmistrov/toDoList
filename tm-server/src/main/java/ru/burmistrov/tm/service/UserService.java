@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.repository.IUserRepository;
+import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
@@ -16,7 +16,7 @@ import java.util.Objects;
 public final class UserService implements IUserService {
 
     @Nullable
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @NotNull
     private final SqlSessionFactory sqlSessionFactory;
@@ -30,7 +30,7 @@ public final class UserService implements IUserService {
     public User logIn(@NotNull final String login, @NotNull final String password) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlSession.getMapper(IUserRepository.class);
+                userRepository = sqlSession.getMapper(UserRepository.class);
                 for (User user : userRepository.findAll()) {
                     if (Objects.requireNonNull(user.getLogin()).equals(login) &&
                             Objects.requireNonNull(Objects.requireNonNull(user.getPassword()))
@@ -51,7 +51,7 @@ public final class UserService implements IUserService {
                       @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlSession.getMapper(IUserRepository.class);
+                userRepository = sqlSession.getMapper(UserRepository.class);
                 @NotNull final User currentUser = new User();
                 currentUser.setFirstName(firstName);
                 currentUser.setMiddleName(middleName);

@@ -2,30 +2,16 @@ package ru.burmistrov.tm.bootstrap;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.*;
 import ru.burmistrov.tm.endpoint.*;
-import ru.burmistrov.tm.api.repository.IProjectRepository;
-import ru.burmistrov.tm.api.repository.ISessionRepository;
-import ru.burmistrov.tm.api.repository.ITaskRepository;
-import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.service.*;
 import ru.burmistrov.tm.utils.SqlSessionFactoryUtil;
 
-import javax.sql.DataSource;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
-import java.sql.*;
-import java.util.Objects;
 import java.util.Properties;
 
 @Getter

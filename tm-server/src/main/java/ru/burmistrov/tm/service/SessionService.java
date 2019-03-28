@@ -4,8 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.repository.ISessionRepository;
-import ru.burmistrov.tm.api.repository.IUserRepository;
+import ru.burmistrov.tm.repository.SessionRepository;
+import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.api.service.ISessionService;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
@@ -23,7 +23,7 @@ import java.util.Properties;
 public class SessionService implements ISessionService {
 
     @Nullable
-    private ISessionRepository sessionRepository;
+    private SessionRepository sessionRepository;
 
     @NotNull
     private final SqlSessionFactory sqlSessionFactory;
@@ -36,7 +36,7 @@ public class SessionService implements ISessionService {
     public Session persist(@NotNull final String userId) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
-                sessionRepository = sqlSession.getMapper(ISessionRepository.class);
+                sessionRepository = sqlSession.getMapper(SessionRepository.class);
                 @Nullable final InputStream inputStream;
                 Properties property = new Properties();
 
@@ -82,8 +82,8 @@ public class SessionService implements ISessionService {
     public boolean validateAdmin(@Nullable final Session session) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
-                sessionRepository = sqlSession.getMapper(ISessionRepository.class);
-                IUserRepository userRepository = sqlSession.getMapper(IUserRepository.class);
+                sessionRepository = sqlSession.getMapper(SessionRepository.class);
+                UserRepository userRepository = sqlSession.getMapper(UserRepository.class);
                 if (validate(session)) {
                     User foundedUser = Objects.requireNonNull(userRepository).findOne((Objects.requireNonNull(Objects.requireNonNull(session).getUserId())));
                     if (foundedUser != null) {
@@ -102,7 +102,7 @@ public class SessionService implements ISessionService {
     private Session findOne(@NotNull final String id, @NotNull final String userId) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             try {
-                sessionRepository = sqlSession.getMapper(ISessionRepository.class);
+                sessionRepository = sqlSession.getMapper(SessionRepository.class);
                 return Objects.requireNonNull(sessionRepository).findOne(id, userId);
             } catch (Exception e) {
                 sqlSession.rollback();

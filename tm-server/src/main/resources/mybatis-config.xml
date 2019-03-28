@@ -18,9 +18,9 @@
         </environment>
     </environments>
     <mappers>
-        <mapper class = "ru.burmistrov.tm.api.repository.ITaskRepository"/>
-        <mapper class = "ru.burmistrov.tm.api.repository.IProjectRepository"/>
-        <mapper class = "ru.burmistrov.tm.api.repository.IUserRepository"/>
-        <mapper class = "ru.burmistrov.tm.api.repository.ISessionRepository"/>
+        <mapper class = "ru.burmistrov.tm.repository.TaskRepository"/>
+        <mapper class = "ru.burmistrov.tm.repository.ProjectRepository"/>
+        <mapper class = "ru.burmistrov.tm.repository.UserRepository"/>
+        <mapper class = "ru.burmistrov.tm.repository.SessionRepository"/>
     </mappers>
 </configuration>

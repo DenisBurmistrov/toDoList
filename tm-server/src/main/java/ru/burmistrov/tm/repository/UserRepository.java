@@ -1,4 +1,4 @@
-package ru.burmistrov.tm.api.repository;
+package ru.burmistrov.tm.repository;
 
 import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
@@ -7,45 +7,26 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 
 import java.util.List;
 
-public interface IUserRepository {
+public interface UserRepository {
 
-    @NotNull
-    String persist = "INSERT INTO tm.app_user " +
-            "(id, email, firstName, lastName, login, middleName, passwordHash, role) VALUES (#{id}, #{email}, #{firstName}, #{lastName}, #{login}, #{middleName}, #{passwordHash}, #{role})";
-
-    @NotNull String merge = "UPDATE tm.app_task SET firstName = #{firstName}, lastName = #{lastName}," +
-            " middleName = #{middleName}, email = #{email} WHERE id = #{id} ";
-
-    @NotNull String deleteById = "DELETE from tm.app_user WHERE id = #{id}";
-
-    @NotNull String deleteAll = "DELETE from tm.app_user";
-
-    @NotNull String findAll = "SELECT * FROM tm.app_user";
-
-    @NotNull String updatePasswordByLogin = "UPDATE tm.app_user SET " +
-            "passwordHash = #{passwordHash}, login = #{login}";
-
-    @NotNull String findOneById = "SELECT * FROM tm.app_user WHERE id = #{id}";
-
-    @NotNull String findOneByLogin = "SELECT * FROM tm.app_user WHERE login = #{login}";
-
-
-    @Insert(persist)
+    @Insert("INSERT INTO tm.app_user " +
+            "(id, email, firstName, lastName, login, middleName, passwordHash, role) VALUES (#{id}, #{email}, #{firstName}, #{lastName}, #{login}, #{middleName}, #{passwordHash}, #{role})")
     void persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
                  @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
                  @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
                  @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final Role role);
 
-    @Update(merge)
+    @Update("UPDATE tm.app_task SET firstName = #{firstName}, lastName = #{lastName}," +
+            " middleName = #{middleName}, email = #{email} WHERE id = #{id}")
     void merge(@NotNull final User user);
 
-    @Delete(deleteById)
+    @Delete("DELETE from tm.app_user WHERE id = #{id}")
     void remove(@NotNull @Param("id") final String id);
 
-    @Delete(deleteAll)
+    @Delete("DELETE from tm.app_user")
     void removeAll();
 
-    @Select(findAll)
+    @Select("SELECT * FROM tm.app_user")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "email", column = "email"),
@@ -59,7 +40,7 @@ public interface IUserRepository {
     List<User> findAll();
 
 
-    @Select(findOneById)
+    @Select("SELECT * FROM tm.app_user WHERE id = #{id}")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "email", column = "email"),
@@ -71,7 +52,7 @@ public interface IUserRepository {
             @Result(property = "role", column = "role")})
     User findOne(@NotNull final String id);
 
-    @Select(findOneByLogin)
+    @Select("SELECT * FROM tm.app_user WHERE login = #{login}")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "email", column = "email"),
@@ -83,7 +64,8 @@ public interface IUserRepository {
             @Result(property = "role", column = "role")})
     User findOneByLogin(@NotNull @Param("login") final String login);
 
-    @Update(updatePasswordByLogin)
+    @Update("UPDATE tm.app_user SET " +
+            "passwordHash = #{passwordHash}, login = #{login}")
     void updatePassword(@NotNull final String login, @NotNull final String newPassword);
 
 }

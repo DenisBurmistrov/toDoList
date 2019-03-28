@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.repository.ITaskRepository;
+import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
@@ -18,7 +18,7 @@ import java.util.Objects;
 public final class TaskService implements ITaskService {
 
     @Nullable
-    private ITaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @NotNull
     private final SqlSessionFactory sqlSessionFactory;
@@ -33,7 +33,7 @@ public final class TaskService implements ITaskService {
                         @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
                 @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
                 @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOneByName(userId, name);
@@ -65,7 +65,7 @@ public final class TaskService implements ITaskService {
                       @NotNull final String status) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 @NotNull final Task task = new Task();
                 task.setId(taskId);
                 task.setName(newName);
@@ -93,7 +93,7 @@ public final class TaskService implements ITaskService {
     public List<Task> findAll(@Nullable final String userId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 return Objects.requireNonNull(taskRepository).findAll(Objects.requireNonNull(userId));
             } catch (Exception e) {
                 session.rollback();
@@ -106,7 +106,7 @@ public final class TaskService implements ITaskService {
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
                 Objects.requireNonNull(session).commit();
             } catch (Exception e) {
@@ -119,7 +119,7 @@ public final class TaskService implements ITaskService {
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 Objects.requireNonNull(taskRepository).remove(taskId, userId);
                 Objects.requireNonNull(session).commit();
             } catch (Exception e) {
@@ -132,7 +132,7 @@ public final class TaskService implements ITaskService {
     public void removeAll(@Nullable final String userId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
                 Objects.requireNonNull(session).commit();
             } catch (Exception e) {
@@ -196,7 +196,7 @@ public final class TaskService implements ITaskService {
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
             } catch (Exception e) {
                 session.rollback();
@@ -210,7 +210,7 @@ public final class TaskService implements ITaskService {
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 return Objects.requireNonNull(taskRepository).findOneByDescription(Objects.requireNonNull(userId), description);
             } catch (Exception e) {
                 session.rollback();
@@ -224,7 +224,7 @@ public final class TaskService implements ITaskService {
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
             } catch (Exception e) {
                 session.rollback();
@@ -237,7 +237,7 @@ public final class TaskService implements ITaskService {
     public Task findOne(@NotNull final String id, @NotNull final String userId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 return Objects.requireNonNull(taskRepository).findOne(id, userId);
             } catch (Exception e) {
                 session.rollback();

@@ -4,8 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.repository.IProjectRepository;
-import ru.burmistrov.tm.api.repository.ITaskRepository;
+import ru.burmistrov.tm.repository.ProjectRepository;
+import ru.burmistrov.tm.repository.TaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
@@ -19,10 +19,10 @@ import java.util.Objects;
 public final class ProjectService implements IProjectService {
 
     @Nullable
-    private IProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @Nullable
-    private ITaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @NotNull
     private final SqlSessionFactory sqlSessionFactory;
@@ -35,7 +35,7 @@ public final class ProjectService implements IProjectService {
     public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
                 if (abstractEntity != null) {
                     Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
@@ -53,7 +53,7 @@ public final class ProjectService implements IProjectService {
                            @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
                 @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
                 @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(projectRepository).findOneByName(userId, name);
@@ -84,7 +84,7 @@ public final class ProjectService implements IProjectService {
                       @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 @NotNull final Project project = new Project();
                 project.setId(projectId);
                 project.setUserId(userId);
@@ -112,8 +112,8 @@ public final class ProjectService implements IProjectService {
     public void removeAll(@Nullable final String userId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
-                taskRepository = session.getMapper(ITaskRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
+                taskRepository = session.getMapper(TaskRepository.class);
                 Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
                 Objects.requireNonNull(projectRepository).removeAll(userId);
                 Objects.requireNonNull(session).commit();
@@ -128,7 +128,7 @@ public final class ProjectService implements IProjectService {
     public List<Project> findAll(@NotNull final String userId) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 return Objects.requireNonNull(projectRepository).findAll(userId);
             }
             catch (Exception e) {
@@ -189,7 +189,7 @@ public final class ProjectService implements IProjectService {
     public Project findOneByName(@Nullable final String userId, @NotNull final String name) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
             } catch (Exception e) {
                 session.rollback();
@@ -203,7 +203,7 @@ public final class ProjectService implements IProjectService {
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             try {
-                projectRepository = session.getMapper(IProjectRepository.class);
+                projectRepository = session.getMapper(ProjectRepository.class);
                 return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
             } catch (Exception e) {
                 session.rollback();

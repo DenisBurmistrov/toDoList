@@ -8,9 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.api.repository.IProjectRepository;
-import ru.burmistrov.tm.api.repository.ITaskRepository;
-import ru.burmistrov.tm.api.repository.IUserRepository;
+import ru.burmistrov.tm.repository.ProjectRepository;
+import ru.burmistrov.tm.repository.TaskRepository;
+import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
@@ -39,13 +39,13 @@ public class AdminService implements IAdminService {
     private final ITaskService taskService;
 
     @NotNull
-    private IProjectRepository projectRepository;
+    private ProjectRepository projectRepository;
 
     @NotNull
-    private ITaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @NotNull
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
 
     public AdminService(@NotNull final IProjectService projectService, @NotNull final ITaskService taskService, @NotNull final SqlSessionFactory sqlSessionFactory) {
@@ -57,7 +57,7 @@ public class AdminService implements IAdminService {
     public void saveDataByDefault(@NotNull final Session session) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @NotNull final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
                 @NotNull final Domain domain = new Domain();
 
@@ -75,7 +75,7 @@ public class AdminService implements IAdminService {
     public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @NotNull final Domain domain = new Domain();
                 domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
                 domain.setTasks(taskService.findAll(session.getUserId()));
@@ -94,7 +94,7 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @NotNull final Domain domain = new Domain();
 
                 domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
@@ -112,7 +112,7 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
                 @NotNull final Domain domain = new Domain();
                 domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
@@ -133,7 +133,7 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @NotNull final Domain domain = new Domain();
 
                 domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
@@ -153,9 +153,9 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
-                taskRepository = sqlsession.getMapper(ITaskRepository.class);
-                projectRepository = sqlsession.getMapper(IProjectRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
+                taskRepository = sqlsession.getMapper(TaskRepository.class);
+                projectRepository = sqlsession.getMapper(ProjectRepository.class);
                 @NotNull final FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
                 @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -186,9 +186,9 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
-                taskRepository = sqlsession.getMapper(ITaskRepository.class);
-                projectRepository = sqlsession.getMapper(IProjectRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
+                taskRepository = sqlsession.getMapper(TaskRepository.class);
+                projectRepository = sqlsession.getMapper(ProjectRepository.class);
                 @NotNull final File file = new File("projects-and-tasks-by-admin.json");
                 @NotNull final ObjectMapper objectMapper = new ObjectMapper();
                 @NotNull final Domain domain = objectMapper.readValue(file, Domain.class);
@@ -218,9 +218,9 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
-                taskRepository = sqlsession.getMapper(ITaskRepository.class);
-                projectRepository = sqlsession.getMapper(IProjectRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
+                taskRepository = sqlsession.getMapper(TaskRepository.class);
+                projectRepository = sqlsession.getMapper(ProjectRepository.class);
                 @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
                 @NotNull final XmlMapper xmlMapper = new XmlMapper();
                 @NotNull final Domain domain = xmlMapper.readValue(file, Domain.class);
@@ -250,9 +250,9 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
-                taskRepository = sqlsession.getMapper(ITaskRepository.class);
-                projectRepository = sqlsession.getMapper(IProjectRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
+                taskRepository = sqlsession.getMapper(TaskRepository.class);
+                projectRepository = sqlsession.getMapper(ProjectRepository.class);
                 System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
                 @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -287,9 +287,9 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
-                taskRepository = sqlsession.getMapper(ITaskRepository.class);
-                projectRepository = sqlsession.getMapper(IProjectRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
+                taskRepository = sqlsession.getMapper(TaskRepository.class);
+                projectRepository = sqlsession.getMapper(ProjectRepository.class);
                 @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
                 @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
                 @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -324,7 +324,7 @@ public class AdminService implements IAdminService {
 
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @Nullable final User abstractEntity = userRepository.findOneByLogin(login);
                 if (abstractEntity == null) {
                     @NotNull final User user = new User();
@@ -352,7 +352,7 @@ public class AdminService implements IAdminService {
     public void updatePassword(@NotNull final String login, @NotNull final String password) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 if (password.length() > 0) {
                     Objects.requireNonNull(userRepository).updatePassword(login, PasswordUtil.hashPassword(password));
                     Objects.requireNonNull(sqlsession).commit();
@@ -368,7 +368,7 @@ public class AdminService implements IAdminService {
                                @NotNull final String lastName, final @NotNull String email, final @NotNull Role role) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 @NotNull final User currentUser = new User();
                 currentUser.setFirstName(firstName);
                 currentUser.setMiddleName(middleName);
@@ -391,7 +391,7 @@ public class AdminService implements IAdminService {
     public void removeUserById(@NotNull final String userId) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
                 Objects.requireNonNull(sqlsession).commit();
             } catch (Exception e) {
@@ -404,7 +404,7 @@ public class AdminService implements IAdminService {
     public void removeAllUsers() {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 Objects.requireNonNull(userRepository).removeAll();
                 Objects.requireNonNull(sqlsession).commit();
             } catch (Exception e) {
@@ -417,7 +417,7 @@ public class AdminService implements IAdminService {
     public List<User> findAll() {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 return Objects.requireNonNull(userRepository).findAll();
             } catch (Exception e) {
                 sqlsession.rollback();
@@ -430,7 +430,7 @@ public class AdminService implements IAdminService {
     public User findOne(@NotNull final String id) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 return Objects.requireNonNull(userRepository).findOne(id);
             } catch (Exception e) {
                 sqlsession.rollback();
@@ -443,7 +443,7 @@ public class AdminService implements IAdminService {
     public User findOneByLogin(@NotNull final String login) {
         try (SqlSession sqlsession = sqlSessionFactory.openSession()) {
             try {
-                userRepository = sqlsession.getMapper(IUserRepository.class);
+                userRepository = sqlsession.getMapper(UserRepository.class);
                 return Objects.requireNonNull(userRepository).findOneByLogin(login);
             } catch (Exception e) {
                 sqlsession.rollback();
