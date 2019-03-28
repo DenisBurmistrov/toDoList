@@ -9,7 +9,11 @@ import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.enumerated.Status;
+import ru.burmistrov.tm.repository.TaskRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,39 +25,37 @@ public final class TaskService implements ITaskService {
     private ITaskRepository taskRepository;
 
     @NotNull
-    private final SqlSessionFactory sqlSessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public TaskService(@NotNull final SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
+    public TaskService(@NotNull final EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
+                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
+        @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOneByName(userId, name);
+        if (abstractEntity == null) {
+            @NotNull final Task task = new Task();
+            task.setUserId(userId);
+            task.setDateBegin(new Date());
+            task.setDateEnd(dateEnd);
+            task.setDescription(description);
+            task.setName(name);
+            task.setProjectId(projectId);
+            task.setStatus(createStatus(status));
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-                @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-                @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOneByName(userId, name);
-                if (abstractEntity == null) {
-                    @NotNull final Task task = new Task();
-                    task.setUserId(userId);
-                    task.setDateBegin(new Date());
-                    task.setDateEnd(dateEnd);
-                    task.setDescription(description);
-                    task.setName(name);
-                    task.setProjectId(projectId);
-                    task.setStatus(createStatus(status));
-                    Objects.requireNonNull(taskRepository).persist(task.getId(), Objects.requireNonNull(task.getUserId()), Objects.requireNonNull(task.getProjectId()),
-                            task.getDateBegin(), Objects.requireNonNull(task.getDateEnd()), Objects.requireNonNull(task.getDescription()),
-                            Objects.requireNonNull(task.getName()), Objects.requireNonNull(task.getStatus()));
-                    Objects.requireNonNull(session).commit();
-                    return task;
-                }
+                entityManager.getTransaction().begin();
+                Objects.requireNonNull(taskRepository).persist(task);
+                entityManager.getTransaction().commit();
+                return task;
             } catch (Exception e) {
-                session.rollback();
+                entityManager.getTransaction().rollback();
             }
         }
         return null;
@@ -62,82 +64,78 @@ public final class TaskService implements ITaskService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId,
                       @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString,
-                      @NotNull final String status) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
+                      @NotNull final String status) throws ParseException {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        @NotNull final Task task = new Task();
+        task.setId(taskId);
+        task.setName(newName);
+        task.setDescription(description);
+        System.out.println(projectId);
+        task.setProjectId(projectId);
+        task.setUserId(userId);
+        task.setStatus(createStatus(status));
+        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
+        task.setDateEnd(dateEnd);
+        @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
+        if (newName.length() != 0 && abstractEntity != null) {
             try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                @NotNull final Task task = new Task();
-                task.setId(taskId);
-                task.setName(newName);
-                task.setDescription(description);
-                System.out.println(projectId);
-                task.setProjectId(projectId);
-                task.setUserId(userId);
-                task.setStatus(createStatus(status));
-                @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-                @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-                task.setDateEnd(dateEnd);
-                @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
-                if (newName.length() != 0 && abstractEntity != null) {
-                    Objects.requireNonNull(taskRepository).merge(task);
-                    Objects.requireNonNull(session).commit();
-                }
+                entityManager.getTransaction().begin();
+                Objects.requireNonNull(taskRepository).merge(task);
+
+                entityManager.getTransaction().commit();
             } catch (Exception e) {
-                session.rollback();
+                entityManager.getTransaction().rollback();
             }
         }
     }
 
-    @Nullable
+    @NotNull
     @Override
     public List<Task> findAll(@Nullable final String userId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                return Objects.requireNonNull(taskRepository).findAll(Objects.requireNonNull(userId));
-            } catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        return Objects.requireNonNull(taskRepository).findAll(Objects.requireNonNull(userId));
     }
 
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
-                Objects.requireNonNull(session).commit();
-            } catch (Exception e) {
-                session.rollback();
-            }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        try {
+            entityManager.getTransaction().begin();
+            Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
     }
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                Objects.requireNonNull(taskRepository).remove(taskId, userId);
-                Objects.requireNonNull(session).commit();
-            } catch (Exception e) {
-                session.rollback();
-            }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        try {
+            entityManager.getTransaction().begin();
+            Objects.requireNonNull(taskRepository).remove(taskId, userId);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
     }
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
-                Objects.requireNonNull(session).commit();
-            } catch (Exception e) {
-                session.rollback();
-            }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        try {
+            entityManager.getTransaction().begin();
+            Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
     }
 
@@ -194,56 +192,32 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
-            } catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
     }
 
     @Nullable
     @Override
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                return Objects.requireNonNull(taskRepository).findOneByDescription(Objects.requireNonNull(userId), description);
-            } catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        return Objects.requireNonNull(taskRepository).findOneByDescription(Objects.requireNonNull(userId), description);
     }
 
     @Nullable
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
-            } catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
     }
 
     @Nullable
     public Task findOne(@NotNull final String id, @NotNull final String userId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                taskRepository = session.getMapper(ITaskRepository.class);
-                return Objects.requireNonNull(taskRepository).findOne(id, userId);
-            } catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        taskRepository = new TaskRepository(entityManager);
+        return Objects.requireNonNull(taskRepository).findOne(id, userId);
     }
 
     @Nullable
