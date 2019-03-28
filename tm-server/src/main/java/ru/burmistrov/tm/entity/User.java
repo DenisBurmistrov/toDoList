@@ -7,33 +7,44 @@ import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "app_user")
 public final class User extends AbstractEntity implements Serializable {
 
     @Nullable
+    @Column(name = "firstName")
     private String firstName;
 
     @Nullable
+    @Column(name = "middleName")
     private String middleName;
 
     @Nullable
+    @Column(name = "lastName")
     private String lastName;
 
     @Nullable
+    @Column(name = "login")
     private String login;
 
     @Nullable
+    @Column(name = "passwordHash")
     private String password;
 
     @Nullable
+    @Column(name = "email")
     private String email;
 
     @Nullable
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     public void setHashPassword(@NotNull final String password) throws NoSuchAlgorithmException {

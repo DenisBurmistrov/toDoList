@@ -14,7 +14,6 @@ public class Domain implements Serializable {
 
     @XmlElementWrapper(name="projects")
     @XmlElement(name="project")
-    @NotNull
     private List<Project> projects;
 
     @XmlElementWrapper(name="tasks")

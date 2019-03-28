@@ -1,71 +1,59 @@
 package ru.burmistrov.tm.repository;
 
-import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
+import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.Role;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
-public interface UserRepository {
+public class UserRepository implements IUserRepository {
 
-    @Insert("INSERT INTO tm.app_user " +
-            "(id, email, firstName, lastName, login, middleName, passwordHash, role) VALUES (#{id}, #{email}, #{firstName}, #{lastName}, #{login}, #{middleName}, #{passwordHash}, #{role})")
-    void persist(@NotNull @Param("id") final String id, @NotNull @Param("email") final String email,
-                 @NotNull @Param("firstName") final String firstName, @NotNull @Param("lastName") final String lastName,
-                 @NotNull @Param("login") final String login, @NotNull @Param("middleName") final String middleName,
-                 @NotNull @Param("passwordHash") final String passwordHash, @NotNull @Param("role") final Role role);
+    @NotNull final private EntityManager entityManager;
 
-    @Update("UPDATE tm.app_task SET firstName = #{firstName}, lastName = #{lastName}," +
-            " middleName = #{middleName}, email = #{email} WHERE id = #{id}")
-    void merge(@NotNull final User user);
+    public UserRepository(@NotNull EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
-    @Delete("DELETE from tm.app_user WHERE id = #{id}")
-    void remove(@NotNull @Param("id") final String id);
+    @Override
+    public void persist(@NotNull final User user) {
+        entityManager.persist(user);
+    }
 
-    @Delete("DELETE from tm.app_user")
-    void removeAll();
+    @Override
+    public void merge(@NotNull User user) {
+        entityManager.merge(user);
+    }
 
-    @Select("SELECT * FROM tm.app_user")
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "email", column = "email"),
-            @Result(property = "firstName", column = "firstName"),
-            @Result(property = "lastName", column = "lastName"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "middleName", column = "middleName"),
-            @Result(property = "password", column = "passwordHash"),
-            @Result(property = "role", column = "role")
-    })
-    List<User> findAll();
+    @Override
+    public void remove(@NotNull String id) {
+        entityManager.createQuery("DELETE from tm.app_user WHERE id = " + id);
+    }
 
+    @Override
+    public void removeAll() {
+        entityManager.createQuery("DELETE from tm.app_user");
+    }
 
-    @Select("SELECT * FROM tm.app_user WHERE id = #{id}")
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "email", column = "email"),
-            @Result(property = "firstName", column = "firstName"),
-            @Result(property = "lastName", column = "lastName"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "middleName", column = "middleName"),
-            @Result(property = "passwordHash", column = "passwordHash"),
-            @Result(property = "role", column = "role")})
-    User findOne(@NotNull final String id);
+    @Override
+    public List<User> findAll() {
+        return entityManager.createQuery("SELECT * FROM tm.app_user").getResultList();
+    }
 
-    @Select("SELECT * FROM tm.app_user WHERE login = #{login}")
-    @Results(value = {
-            @Result(property = "id", column = "id"),
-            @Result(property = "email", column = "email"),
-            @Result(property = "firstName", column = "firstName"),
-            @Result(property = "lastName", column = "lastName"),
-            @Result(property = "login", column = "login"),
-            @Result(property = "middleName", column = "middleName"),
-            @Result(property = "passwordHash", column = "passwordHash"),
-            @Result(property = "role", column = "role")})
-    User findOneByLogin(@NotNull @Param("login") final String login);
+    @Override
+    public User findOne(@NotNull String id) {
+        return (User) entityManager.createQuery("SELECT * FROM tm.app_user WHERE id = " + id).getSingleResult();
+    }
 
-    @Update("UPDATE tm.app_user SET " +
-            "passwordHash = #{passwordHash}, login = #{login}")
-    void updatePassword(@NotNull final String login, @NotNull final String newPassword);
+    @Override
+    public User findOneByLogin(@NotNull String login) {
+        return (User) entityManager.createQuery("SELECT * FROM tm.app_user WHERE login = " + login).getSingleResult();
+    }
 
+    @Override
+    public void updatePassword(@NotNull String login, @NotNull String newPassword) {
+        entityManager.createQuery("UPDATE tm.app_user SET " +
+                "passwordHash = " + newPassword + ", login = " + login);
+    }
 }

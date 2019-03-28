@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Status;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -15,21 +16,29 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "app_project")
 public final class Project extends AbstractEntity implements Serializable {
 
     @Nullable
+    @Column(name = "name")
     private String name;
 
     @Nullable
+    @Column(name = "description")
     private String description;
 
     @NotNull
+    @Column(name = "dateBegin")
     private Date dateBegin = new Date();
 
     @Nullable
+    @Column(name = "dateEnd")
     private Date dateEnd;
 
     @Nullable
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Override

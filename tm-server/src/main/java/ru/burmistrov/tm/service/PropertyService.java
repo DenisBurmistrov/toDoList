@@ -23,16 +23,13 @@ public class PropertyService {
     private final String jdbcDriver;
 
     public PropertyService() throws IOException {
-
         Properties property = new Properties();
-
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
         property.load(inputStream);
         String url = property.getProperty("urlDB");
         String password = property.getProperty("passwordDB");
         String user = property.getProperty("userDB");
         String driver = property.getProperty("driverDB");
-
         jdbcUrl = url;
         jdbcUsername = user;
         jdbcPassword = password;
