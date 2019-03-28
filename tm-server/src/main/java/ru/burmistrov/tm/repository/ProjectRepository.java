@@ -28,32 +28,32 @@ public class ProjectRepository implements IProjectRepository {
 
     @Override
     public void remove(@NotNull String userId, @NotNull String projectId) {
-        entityManager.createQuery("DELETE from tm.app_project WHERE id = "+ projectId +" AND user_id = "+ userId);
+        entityManager.createQuery("DELETE FROM Project project WHERE project.id = "+ projectId +" AND project.user_id = "+ userId);
     }
 
     @Override
     public void removeAll(@NotNull String userId) {
-        entityManager.createQuery("DELETE from tm.app_project WHERE user_id = " + userId);
+        entityManager.createQuery("DELETE FROM Project project WHERE project.user_id = " + userId);
     }
 
     @Override
     public List<Project> findAll(@NotNull String userId) {
-        return entityManager.createQuery("SELECT * FROM tm.app_project WHERE user_id = #{userId}").getResultList();
+        return entityManager.createQuery("SELECT project FROM Project project WHERE project.user_id = #{userId}").getResultList();
     }
 
     @Override
     public Project findOne(@NotNull String id, @NotNull String userId) {
-        return (Project) entityManager.createQuery("SELECT * FROM tm.app_project WHERE id = " + id +" AND user_id = " + userId).getSingleResult();
+        return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE project.id = " + id +" AND project.user_id = " + userId).getSingleResult();
     }
 
 
     @Override
     public Project findOneByName(@NotNull String userId, @NotNull String name) {
-        return (Project) entityManager.createQuery("SELECT * FROM tm.app_project WHERE user_id = " + userId +" AND name = " + name).getSingleResult();
+        return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE project.user_id = " + userId +" AND project.name = " + name).getSingleResult();
     }
 
     @Override
     public Project findOneByDescription(@NotNull String userId, @NotNull String description) {
-        return (Project) entityManager.createQuery("SELECT * FROM tm.app_project WHERE user_id = " + userId +" AND description = " + description).getSingleResult();
+        return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE project.user_id = " + userId +" AND project.description = " + description).getSingleResult();
     }
 }

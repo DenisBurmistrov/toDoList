@@ -15,7 +15,7 @@ public interface IUserRepository {
 
     void removeAll();
 
-    List findAll();
+    List<User> findAll();
 
     User findOne(@NotNull final String id);
 

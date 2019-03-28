@@ -29,42 +29,42 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public void remove(@NotNull String id, @NotNull String userId) {
-        entityManager.createQuery("DELETE from tm.app_task WHERE id = " + id + " AND user_id = " + userId);
+        entityManager.createQuery("DELETE FROM Task task WHERE task.id = " + id + " AND task.user_id = " + userId);
     }
 
     @Override
     public void removeAll(@NotNull String userId) {
-        entityManager.createQuery("DELETE from tm.app_task WHERE user_id = " + userId);
+        entityManager.createQuery("DELETE FROM Task task WHERE task.user_id = " + userId);
     }
 
     @NotNull
     @Override
     public List<Task> findAll(@NotNull String userId) {
-        return (List<Task>) entityManager.createQuery("SELECT * FROM tm.app_task WHERE user_id = " + userId).getSingleResult();
+        return (List<Task>) entityManager.createQuery("SELECT task FROM Task task WHERE task.user_id = " + userId).getSingleResult();
     }
 
     @Override
     public Task findOne(@NotNull String id, @NotNull String userId) {
-        return (Task) entityManager.createQuery("SELECT * FROM tm.app_task WHERE id = " + id + " AND user_id = " + userId).getSingleResult();
+        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.id = " + id + " AND task.user_id = " + userId).getSingleResult();
     }
 
     @Override
     public Task findOneByName(@NotNull String userId, @NotNull String name) {
-        return (Task) entityManager.createQuery("SELECT * FROM tm.app_task WHERE user_id = " + userId + " AND name = " + name).getSingleResult();
+        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.user_id = " + userId + " AND task.name = " + name).getSingleResult();
     }
 
     @Override
     public Task findOneByDescription(@NotNull String userId, @NotNull String description) {
-        return (Task) entityManager.createQuery("SELECT * FROM tm.app_task WHERE user_id = " + userId + " AND description = " + description).getSingleResult();
+        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.user_id = " + userId + " AND task.description = " + description).getSingleResult();
     }
 
     @Override
     public void removeAllInProject(@NotNull String userId, @NotNull String projectId) {
-        entityManager.createQuery("DELETE from tm.app_task WHERE user_id = " + userId + " AND project_id = " + projectId);
+        entityManager.createQuery("DELETE from Task task WHERE task.user_id = " + userId + " AND task.project_id = " + projectId);
     }
 
     @Override
     public List<Task> findAllByProjectId(@NotNull String userId, @NotNull String projectId) {
-        return entityManager.createQuery("SELECT * FROM tm.app_task WHERE user_id = " + userId + " AND project_id = " + projectId).getResultList();
+        return entityManager.createQuery("SELECT task FROM Task task WHERE task.user_id = " + userId + " AND task.project_id = " + projectId).getResultList();
     }
 }

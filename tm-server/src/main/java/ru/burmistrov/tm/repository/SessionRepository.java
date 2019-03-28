@@ -23,6 +23,6 @@ public class SessionRepository implements ISessionRepository {
     @Nullable
     @Override
     public Session findOne(@NotNull String id, @NotNull String userId) {
-        return (Session) entityManager.createQuery("SELECT * FROM tm.app_session WHERE id = " + id + " AND user_id = " + userId).getSingleResult();
+        return (Session) entityManager.createQuery("SELECT session FROM Session session WHERE session.id = " + id + " AND session.user_id = " + userId).getSingleResult();
     }
 }
