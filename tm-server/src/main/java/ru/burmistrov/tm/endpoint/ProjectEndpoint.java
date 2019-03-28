@@ -39,9 +39,9 @@ public class ProjectEndpoint implements IProjectEndpoint {
     public Project createProject
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "name") @NotNull final String name, @WebParam(name = "description") @NotNull final String description,
-             @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
+             @WebParam(name = "dateEnd") @NotNull final String dateEnd, @WebParam(name = "status") @NotNull final String status) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
-            return serviceLocator.getProjectService().persist(userId, name, description, dateEnd);
+            return serviceLocator.getProjectService().persist(userId, name, description, dateEnd, status);
         }
         return null;
     }
@@ -50,9 +50,10 @@ public class ProjectEndpoint implements IProjectEndpoint {
     public void updateProjectById
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "projectId") @NotNull final String projectId, @WebParam(name = "name") @NotNull final String name,
-             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd) throws Exception {
+             @WebParam(name = "description") @NotNull final String description, @WebParam(name = "dateEnd") @NotNull final String dateEnd,
+             @WebParam(name = "status") @NotNull final String status) throws Exception {
         if (serviceLocator.getSessionService().validate(session)) {
-            serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd);
+            serviceLocator.getProjectService().merge(userId, projectId, name, description, dateEnd, status);
         }
     }
 

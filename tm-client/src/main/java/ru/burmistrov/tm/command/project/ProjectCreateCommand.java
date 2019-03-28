@@ -31,9 +31,11 @@ public final class ProjectCreateCommand extends AbstractCommand {
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите дату окончания (Пример: 27.10.2019):");
         @NotNull final String date = getServiceLocator().getTerminalCommandService().nextLine();
+        System.out.println("Введите статус(Запланировано || В процессе || Готово): ");
+        @NotNull final String status = getServiceLocator().getTerminalCommandService().nextLine();
         getServiceLocator().getProjectEndpoint()
                 .createProject(getServiceLocator().getSession(),
-                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), name, description, date);
+                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), name, description, date, status);
     }
 
     @Override

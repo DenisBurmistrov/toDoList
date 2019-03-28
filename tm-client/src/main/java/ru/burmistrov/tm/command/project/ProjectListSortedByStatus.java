@@ -31,7 +31,7 @@ public class ProjectListSortedByStatus extends AbstractCommand {
                         Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
         for (Project project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
-                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getDateEnd());
+                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getDateEnd() + "; Статус: " + project.getStatus());
         }
     }
 

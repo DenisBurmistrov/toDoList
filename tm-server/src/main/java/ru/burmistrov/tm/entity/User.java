@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Role;
@@ -10,7 +11,8 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 public final class User extends AbstractEntity implements Serializable {
 
     @Nullable
@@ -58,17 +60,5 @@ public final class User extends AbstractEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(login);
-    }
-
-    public void setRole(@Nullable String string) {
-        if ("Администратор".equals(string)) {
-            this.role = Role.ADMINISTRATOR;
-        } else {
-            this.role = Role.COMMON_USER;
-        }
-    }
-
-    public void setRole(@Nullable Role role) {
-        this.role = role;
     }
 }

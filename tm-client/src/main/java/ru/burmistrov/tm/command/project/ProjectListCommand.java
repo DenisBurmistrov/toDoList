@@ -31,7 +31,8 @@ public final class ProjectListCommand extends AbstractCommand {
                         Objects.requireNonNull(getServiceLocator().getSession()).getUserId());
         for (Project project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
-                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getUserId());
+                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getUserId()
+                    + "; Статус: " + project.getStatus());
         }
     }
 
