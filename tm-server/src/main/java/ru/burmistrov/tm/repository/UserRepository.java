@@ -1,20 +1,22 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.Role;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class UserRepository implements IUserRepository {
 
-    @NotNull final private EntityManager entityManager;
-
-    public UserRepository(@NotNull EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @Inject
+    @NotNull private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final User user) {
@@ -29,7 +31,7 @@ public class UserRepository implements IUserRepository {
     @Override
     public void remove(@NotNull final String id) {
         entityManager.createQuery("DELETE from User user WHERE user.id = '" + id + "'");
-    }//SELECT x FROM User x WHERE x.login = ?1 AND x.password = ?2
+    }
 
     @Override
     public void removeAll() {

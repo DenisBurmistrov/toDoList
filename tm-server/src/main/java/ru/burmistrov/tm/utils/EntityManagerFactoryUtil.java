@@ -12,6 +12,8 @@ import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.service.PropertyService;
 
+import javax.enterprise.inject.Produces;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import java.util.Map;
 public class EntityManagerFactoryUtil {
 
     @NotNull
-    public static EntityManagerFactory getEntityManagerFactory() throws IOException {
+    public EntityManagerFactory getEntityManagerFactory() throws IOException {
 
         @NotNull final PropertyService propertyService = new PropertyService();
         @NotNull final Map<String, String> settings = new HashMap<>();
@@ -43,6 +45,11 @@ public class EntityManagerFactoryUtil {
         sources.addAnnotatedClass(Session.class);
         @NotNull final Metadata metadata = sources.getMetadataBuilder().build();
         return metadata.getSessionFactoryBuilder().build();
+    }
+
+    @Produces
+    public EntityManager createEntityManager() throws IOException {
+        return getEntityManagerFactory().createEntityManager();
     }
 
 }

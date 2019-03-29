@@ -3,6 +3,7 @@ package ru.burmistrov.tm.api.repository;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.User;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IUserRepository {
@@ -22,5 +23,7 @@ public interface IUserRepository {
     User findOneByLogin(@NotNull final String login);
 
     void updatePassword(@NotNull final String login, @NotNull final String newPassword);
+
+    EntityManager getEntityManager();
 
 }

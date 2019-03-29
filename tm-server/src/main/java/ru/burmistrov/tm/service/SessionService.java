@@ -17,6 +17,7 @@ import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.utils.PasswordUtil;
 import ru.burmistrov.tm.utils.SignatureUtil;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -29,23 +30,18 @@ import java.util.Properties;
 
 public class SessionService implements ISessionService {
 
-    @Nullable
+    @Inject
     private ISessionRepository sessionRepository;
 
-    @Nullable
+    @Inject
     private IUserRepository userRepository;
 
-    @NotNull
-    private final EntityManagerFactory entityManagerFactory;
+    @Inject
+    private EntityManager entityManager;
 
-    public SessionService(@NotNull final EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-    }
 
     @Override
     public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        sessionRepository = new SessionRepository(entityManager);
         @Nullable final InputStream inputStream;
         @NotNull final Properties property = new Properties();
         inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
@@ -90,9 +86,6 @@ public class SessionService implements ISessionService {
 
     @Override
     public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        sessionRepository = new SessionRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
                 if (validate(session)) {
                     User foundedUser = Objects.requireNonNull(userRepository).findOne((Objects.requireNonNull(Objects.requireNonNull(session).getUserId())));
                     if (foundedUser != null) {
@@ -104,8 +97,6 @@ public class SessionService implements ISessionService {
 
     @Nullable
     private Session findOne(@NotNull final String id, @NotNull final String userId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        sessionRepository = new SessionRepository(entityManager);
         try {
             return Objects.requireNonNull(sessionRepository).findOne(id, userId);
         } catch (NoResultException e) {

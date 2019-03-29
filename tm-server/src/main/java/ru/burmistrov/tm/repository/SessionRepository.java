@@ -1,19 +1,21 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
 import ru.burmistrov.tm.entity.Session;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+@Getter
+@NoArgsConstructor
 public class SessionRepository implements ISessionRepository {
 
-    @NotNull final private EntityManager entityManager;
-
-    public SessionRepository(@NotNull EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @Inject
+    @NotNull private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final Session session) {

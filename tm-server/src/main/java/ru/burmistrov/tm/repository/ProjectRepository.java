@@ -1,20 +1,22 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class ProjectRepository implements IProjectRepository {
 
-    @NotNull final private EntityManager entityManager;
-
-    public ProjectRepository(@NotNull final EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @Inject
+    @NotNull private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final AbstractEntity project) {

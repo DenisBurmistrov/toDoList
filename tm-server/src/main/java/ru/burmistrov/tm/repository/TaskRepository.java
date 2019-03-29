@@ -1,21 +1,23 @@
 package ru.burmistrov.tm.repository;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.enumerated.Status;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class TaskRepository implements ITaskRepository {
 
-    @NotNull final private EntityManager entityManager;
-
-    public TaskRepository(@NotNull EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @Inject
+    @NotNull private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final Task task) {

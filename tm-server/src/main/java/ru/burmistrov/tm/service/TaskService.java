@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,7 @@ import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.enumerated.Status;
 import ru.burmistrov.tm.repository.TaskRepository;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -20,24 +22,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@NoArgsConstructor
 public final class TaskService implements ITaskService {
 
-    @Nullable
+    @Inject
     private ITaskRepository taskRepository;
 
-    @NotNull
-    private final EntityManagerFactory entityManagerFactory;
-
-    public TaskService(@NotNull final EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-    }
+    @Inject
+    private EntityManager entityManager;
 
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                         @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         @Nullable AbstractEntity abstractEntity;
@@ -72,8 +69,6 @@ public final class TaskService implements ITaskService {
                       @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString,
                       @NotNull final String status) throws ParseException {
 
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         @NotNull final Task task = new Task();
         task.setId(taskId);
         task.setName(newName);
@@ -100,15 +95,11 @@ public final class TaskService implements ITaskService {
     @NotNull
     @Override
     public List<Task> findAll(@Nullable final String userId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         return Objects.requireNonNull(taskRepository).findAll(Objects.requireNonNull(userId));
     }
 
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             entityManager.getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
@@ -120,8 +111,6 @@ public final class TaskService implements ITaskService {
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         Task task = taskRepository.findOne(taskId, userId);
         if(task != null) {
             try {
@@ -136,14 +125,12 @@ public final class TaskService implements ITaskService {
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             entityManager.getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            taskRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
@@ -200,8 +187,6 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
         }catch (NoResultException e) {
@@ -212,8 +197,6 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             return Objects.requireNonNull(taskRepository).findOneByDescription(Objects.requireNonNull(userId), description);
         }catch (NoResultException e) {
@@ -224,8 +207,6 @@ public final class TaskService implements ITaskService {
     @Nullable
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
         }catch (NoResultException e) {
@@ -235,8 +216,6 @@ public final class TaskService implements ITaskService {
 
     @Nullable
     public Task findOne(@NotNull final String id, @NotNull final String userId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        taskRepository = new TaskRepository(entityManager);
         try {
             return Objects.requireNonNull(taskRepository).findOne(id, userId);
         }catch (NoResultException e) {

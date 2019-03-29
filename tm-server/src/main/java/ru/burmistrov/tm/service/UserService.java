@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
@@ -12,28 +13,24 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
+@NoArgsConstructor
 public final class UserService implements IUserService {
 
-    @Nullable
+    @Inject
     private IUserRepository userRepository;
 
-    @NotNull
-    private final EntityManagerFactory entityManagerFactory;
-
-    public UserService(@NotNull final EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-    }
+    @Inject
+    private EntityManager entityManager;
 
     @Override
     @Nullable
     public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         for (User user : userRepository.findAll()) {
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&
                     Objects.requireNonNull(Objects.requireNonNull(user.getPassword()))
@@ -47,8 +44,6 @@ public final class UserService implements IUserService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
                       @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
 
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
