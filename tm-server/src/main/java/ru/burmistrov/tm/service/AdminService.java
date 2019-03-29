@@ -12,6 +12,7 @@ import ru.burmistrov.tm.api.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.api.service.ITaskService;
+import ru.burmistrov.tm.dto.Domain;
 import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.repository.ProjectRepository;

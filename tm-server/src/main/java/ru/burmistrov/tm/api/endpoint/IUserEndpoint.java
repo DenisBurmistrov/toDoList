@@ -2,6 +2,7 @@ package ru.burmistrov.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.dto.UserDto;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
@@ -16,7 +17,7 @@ public interface IUserEndpoint {
 
     @WebMethod
     @Nullable
-    User logIn
+    UserDto logIn
             (@WebParam(name = "session") @NotNull final String login, @WebParam(name = "password") @NotNull final String password) throws Exception;
 
     @WebMethod

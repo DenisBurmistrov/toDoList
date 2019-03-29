@@ -13,7 +13,7 @@ public interface IProjectRepository<T extends AbstractEntity> {
 
     void merge(@NotNull final T project);
 
-    void remove(@NotNull final String userId, @NotNull final  String projectId);
+    void remove(@NotNull final Project project);
 
     void removeAll(@NotNull final String userId);
 

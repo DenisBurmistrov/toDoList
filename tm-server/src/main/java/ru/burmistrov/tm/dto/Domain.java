@@ -1,8 +1,11 @@
-package ru.burmistrov.tm.entity;
+package ru.burmistrov.tm.dto;
 
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import org.jetbrains.annotations.NotNull;
+import ru.burmistrov.tm.entity.Project;
+import ru.burmistrov.tm.entity.Task;
+import ru.burmistrov.tm.entity.User;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;

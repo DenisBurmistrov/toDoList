@@ -15,7 +15,7 @@ public interface ITaskRepository {
 
     void merge(@NotNull final Task task);
 
-    void remove(@NotNull final String id, @NotNull final String userId);
+    void remove(@NotNull final Task task);
 
     void removeAll(@NotNull final String userId);
 

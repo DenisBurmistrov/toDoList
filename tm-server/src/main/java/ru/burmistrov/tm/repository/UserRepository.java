@@ -22,12 +22,12 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public void merge(@NotNull User user) {
+    public void merge(@NotNull final User user) {
         entityManager.merge(user);
     }
 
     @Override
-    public void remove(@NotNull String id) {
+    public void remove(@NotNull final String id) {
         entityManager.createQuery("DELETE from User user WHERE user.id = '" + id + "'");
     }//SELECT x FROM User x WHERE x.login = ?1 AND x.password = ?2
 
@@ -42,17 +42,17 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User findOne(@NotNull String id) {
+    public User findOne(@NotNull final String id) {
         return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.id = '" + id + "'").getSingleResult();
     }
 
     @Override
-    public User findOneByLogin(@NotNull String login) {
+    public User findOneByLogin(@NotNull final String login) {
         return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.login = '" + login + "'").getSingleResult();
     }
 
     @Override
-    public void updatePassword(@NotNull String login, @NotNull String newPassword) {
+    public void updatePassword(@NotNull final String login, @NotNull String newPassword) {
         entityManager.createQuery("UPDATE user SET " +
                 "user.password = '" + newPassword + "', user.login = '" + login + "'");
     }

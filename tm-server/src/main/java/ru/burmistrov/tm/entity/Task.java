@@ -45,15 +45,6 @@ public final class Task extends AbstractEntity implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    @Nullable
-    public String getName() {
-        return name;
-    }
-
-    public void setName(@NotNull final String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

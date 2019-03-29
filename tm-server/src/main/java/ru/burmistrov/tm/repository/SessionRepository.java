@@ -22,7 +22,7 @@ public class SessionRepository implements ISessionRepository {
 
     @Nullable
     @Override
-    public Session findOne(@NotNull String id, @NotNull String userId) {
+    public Session findOne(@NotNull final String id, @NotNull final String userId) {
         return (Session) entityManager.createQuery("SELECT session FROM Session session WHERE session.id = '" + id + "' AND session.userId = '" + userId + "'").getSingleResult();
     }
 }

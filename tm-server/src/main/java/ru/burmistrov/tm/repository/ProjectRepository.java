@@ -17,38 +17,38 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     @Override
-    public void persist(@NotNull AbstractEntity project) {
+    public void persist(@NotNull final AbstractEntity project) {
         entityManager.persist(project);
     }
 
     @Override
-    public void merge(@NotNull AbstractEntity project) {
+    public void merge(@NotNull final AbstractEntity project) {
         entityManager.merge(project);
     }
 
     @Override
-    public void remove(@NotNull String userId, @NotNull String projectId) {
-        entityManager.createQuery("DELETE FROM Project project WHERE project.id = '"+ projectId +"' AND project.userId = '" + userId + "'");
+    public void remove(@NotNull final Project project) {
+        entityManager.remove(project);
     }
 
     @Override
-    public void removeAll(@NotNull String userId) {
+    public void removeAll(@NotNull final String userId) {
         entityManager.createQuery("DELETE FROM Project project WHERE project.user_id = '" + userId + "'");
     }
 
     @Override
-    public List<Project> findAll(@NotNull String userId) {
+    public List<Project> findAll(@NotNull final String userId) {
         return entityManager.createQuery("SELECT project FROM Project project WHERE project.userId = '" + userId + "'").getResultList();
     }
 
     @Override
-    public Project findOne(@NotNull String id, @NotNull String userId) {
+    public Project findOne(@NotNull final String id, @NotNull final String userId) {
         return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE project.id = '" + id +"' AND project.userId = '" + userId + "'").getSingleResult();
     }
 
 
     @Override
-    public Project findOneByName(@NotNull String userId, @NotNull String name) {
+    public Project findOneByName(@NotNull final String userId, @NotNull final String name) {
         return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE project.userId = '" + userId +"' AND project.name = '" + name + "'").getSingleResult();
     }
 

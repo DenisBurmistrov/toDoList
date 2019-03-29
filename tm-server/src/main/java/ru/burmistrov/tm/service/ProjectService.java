@@ -41,12 +41,11 @@ public final class ProjectService implements IProjectService {
 
         @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
-        @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
-        if (abstractEntity != null) {
+        @Nullable final Project project = projectRepository.findOne(projectId, userId);
+        if (project != null) {
             try {
                 entityManager.getTransaction().begin();
-                Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
-                Objects.requireNonNull(projectRepository).remove(userId, projectId);
+                Objects.requireNonNull(projectRepository).remove(project);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();

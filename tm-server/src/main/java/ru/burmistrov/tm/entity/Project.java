@@ -11,6 +11,7 @@ import ru.burmistrov.tm.entity.enumerated.Status;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,6 +41,10 @@ public final class Project extends AbstractEntity implements Serializable {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Nullable
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "projectId", orphanRemoval = true)
+    private List<Task> tasks;
 
     @Override
     public boolean equals(Object o) {

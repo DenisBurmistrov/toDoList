@@ -117,12 +117,15 @@ public final class TaskService implements ITaskService {
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
         @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         taskRepository = new TaskRepository(entityManager);
-        try {
-            entityManager.getTransaction().begin();
-            Objects.requireNonNull(taskRepository).remove(taskId, userId);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+        Task task = taskRepository.findOne(taskId, userId);
+        if(task != null) {
+            try {
+                entityManager.getTransaction().begin();
+                Objects.requireNonNull(taskRepository).remove(task);
+                entityManager.getTransaction().commit();
+            } catch (Exception e) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
