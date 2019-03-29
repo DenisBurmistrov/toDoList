@@ -3,7 +3,7 @@ package ru.burmistrov.tm.command.task;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
-import ru.burmistrov.tm.endpoint.Task;
+import ru.burmistrov.tm.endpoint.TaskDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +24,10 @@ public class TaskListSortedByDateEndCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        @NotNull final List<Task> taskList = getServiceLocator().getTaskEndpoint()
+        @NotNull final List<TaskDto> taskList = getServiceLocator().getTaskEndpoint()
                 .findAllTasksSortByDateEnd(getServiceLocator().getSession(),
                         Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()));
-        for (Task task : taskList) {
+        for (TaskDto task : taskList) {
             System.out.println("ID: " + task.getId() +
                     "; Название: " + task.getName() +
                     "; Описание: " + task.getDescription() +

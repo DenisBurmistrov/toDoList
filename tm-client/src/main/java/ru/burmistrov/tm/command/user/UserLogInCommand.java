@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
-import ru.burmistrov.tm.endpoint.User;
+import ru.burmistrov.tm.endpoint.UserDto;
 
 public final class UserLogInCommand extends AbstractCommand {
 
@@ -26,7 +26,7 @@ public final class UserLogInCommand extends AbstractCommand {
         @NotNull final String login = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");
         @NotNull final String password = getServiceLocator().getTerminalCommandService().nextLine();
-        @Nullable final User user = getServiceLocator().getUserEndpoint().logIn(login, password);
+        @Nullable final UserDto user = getServiceLocator().getUserEndpoint().logIn(login, password);
         if (user == null) {
             System.out.println("Неверно введены данные");
         } else {

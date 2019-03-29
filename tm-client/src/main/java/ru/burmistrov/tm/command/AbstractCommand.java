@@ -4,10 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.endpoint.*;
 
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.lang.ClassNotFoundException;
-import java.text.ParseException;
 
 public abstract class AbstractCommand {
 

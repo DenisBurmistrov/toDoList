@@ -31,8 +31,14 @@ public class UserEndpoint implements IUserEndpoint {
         UserDto userDto = null;
         if (user != null) {
             userDto = new UserDto();
+            userDto.setId(Objects.requireNonNull(user).getId());
             userDto.setLogin(user.getLogin());
             userDto.setPassword(user.getPassword());
+            userDto.setFirstName(user.getFirstName());
+            userDto.setMiddleName(user.getMiddleName());
+            userDto.setLastName(user.getLastName());
+            userDto.setEmail(user.getEmail());
+            userDto.setRole(user.getRole());
         }
         return userDto;
     }

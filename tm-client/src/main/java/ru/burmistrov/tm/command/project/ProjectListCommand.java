@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
-import ru.burmistrov.tm.endpoint.Project;
+import ru.burmistrov.tm.endpoint.ProjectDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,12 +26,12 @@ public final class ProjectListCommand extends AbstractCommand {
     @Override
     public void execute() throws Exception_Exception {
         System.out.println("Список проектов:");
-        @Nullable final List<Project> projects = getServiceLocator().getProjectEndpoint()
+        @Nullable final List<ProjectDto> projects = getServiceLocator().getProjectEndpoint()
                 .findAllProjects(getServiceLocator().getSession(),
                         Objects.requireNonNull(getServiceLocator().getSession()).getUserId());
-        for (Project project : Objects.requireNonNull(projects)) {
+        for (ProjectDto project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()
-                    + "; Дата создания: " + project.getDateBegin()+ "; ID назначенного пользователя: " + project.getUserId()
+                    + "; Дата создания: " + project.getDateBegin()
                     + "; Статус: " + project.getStatus());
         }
     }
