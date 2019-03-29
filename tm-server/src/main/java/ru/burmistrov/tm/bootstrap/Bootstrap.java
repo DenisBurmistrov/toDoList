@@ -2,14 +2,14 @@ package ru.burmistrov.tm.bootstrap;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.*;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.*;
-import ru.burmistrov.tm.utils.SqlSessionFactoryUtil;
+import ru.burmistrov.tm.utils.EntityManagerFactoryUtil;
 
+import javax.persistence.EntityManagerFactory;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
 import java.util.Properties;
@@ -20,17 +20,17 @@ public final class Bootstrap implements ServiceLocator {
 
     @NotNull private final PropertyService propertyService = new PropertyService();
 
-    @NotNull private final SqlSessionFactory sqlSessionFactory = SqlSessionFactoryUtil.getSqlSessionFactory();
+    @NotNull private final EntityManagerFactory entityManagerFactory = EntityManagerFactoryUtil.getEntityManagerFactory();
 
-    @NotNull private final IProjectService projectService = new ProjectService(sqlSessionFactory);
+    @NotNull private final IProjectService projectService = new ProjectService(entityManagerFactory);
 
-    @NotNull private final ITaskService taskService = new TaskService(sqlSessionFactory);
+    @NotNull private final ITaskService taskService = new TaskService(entityManagerFactory);
 
-    @NotNull private final IUserService userService = new UserService(sqlSessionFactory);
+    @NotNull private final IUserService userService = new UserService(entityManagerFactory);
 
-    @NotNull private final ISessionService sessionService = new SessionService(sqlSessionFactory);
+    @NotNull private final ISessionService sessionService = new SessionService(entityManagerFactory);
 
-    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, sqlSessionFactory);
+    @NotNull private final IAdminService adminService = new AdminService(projectService, taskService, entityManagerFactory);
 
     public Bootstrap() throws IOException {
     }

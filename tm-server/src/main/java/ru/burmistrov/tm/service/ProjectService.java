@@ -1,16 +1,21 @@
 package ru.burmistrov.tm.service;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.burmistrov.tm.repository.ProjectRepository;
-import ru.burmistrov.tm.repository.TaskRepository;
+import ru.burmistrov.tm.api.repository.IProjectRepository;
+import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.enumerated.Status;
+import ru.burmistrov.tm.repository.ProjectRepository;
+import ru.burmistrov.tm.repository.TaskRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,62 +24,60 @@ import java.util.Objects;
 public final class ProjectService implements IProjectService {
 
     @Nullable
-    private ProjectRepository projectRepository;
+    private IProjectRepository projectRepository;
 
     @Nullable
-    private TaskRepository taskRepository;
+    private ITaskRepository taskRepository;
 
     @NotNull
-    private final SqlSessionFactory sqlSessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public ProjectService(@NotNull final SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
+    public ProjectService(@NotNull final EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
+
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        @Nullable final Project project = projectRepository.findOne(projectId, userId);
+        if (project != null) {
             try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
-                if (abstractEntity != null) {
-                    Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
-                    Objects.requireNonNull(projectRepository).remove(userId, projectId);
-                    Objects.requireNonNull(session).commit();
-                }
+                entityManager.getTransaction().begin();
+                Objects.requireNonNull(projectRepository).remove(project);
+                entityManager.getTransaction().commit();
             } catch (Exception e) {
-                session.rollback();
+                entityManager.getTransaction().rollback();
             }
         }
     }
 
     @Override
     public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-                           @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-                @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-                @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(projectRepository).findOneByName(userId, name);
-                if (abstractEntity == null) {
-                    @NotNull final Project project = new Project();
-                    project.setUserId(userId);
-                    project.setDateBegin(new Date());
-                    project.setDateEnd(dateEnd);
-                    project.setName(name);
-                    project.setDescription(description);
-                    project.setStatus(createStatus(status));
+                           @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException, ParseException {
 
-                    Objects.requireNonNull(projectRepository).persist(project.getId(), Objects.requireNonNull(project.getUserId()),
-                            project.getDateBegin(), Objects.requireNonNull(project.getDateEnd()), Objects.requireNonNull(project.getDescription()),
-                            Objects.requireNonNull(project.getName()), Objects.requireNonNull(project.getStatus()));
-                    Objects.requireNonNull(session).commit();
-                    return project;
-                }
-            } catch (Exception e) {
-                session.rollback();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
+        @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(projectRepository).findOneByName(userId, name);
+        try {
+            if (abstractEntity == null) {
+                @NotNull final Project project = new Project();
+                project.setUserId(userId);
+                project.setDateBegin(new Date());
+                project.setDateEnd(dateEnd);
+                project.setName(name);
+                project.setDescription(description);
+                project.setStatus(createStatus(status));
+                entityManager.getTransaction().begin();
+                projectRepository.persist(project);
+                entityManager.getTransaction().commit();
+                return project;
             }
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
         return null;
     }
@@ -82,60 +85,53 @@ public final class ProjectService implements IProjectService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                       @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                @NotNull final Project project = new Project();
-                project.setId(projectId);
-                project.setUserId(userId);
-                project.setName(name);
-                project.setDescription(description);
-                project.setStatus(createStatus(status));
 
-                @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-                @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-                project.setDateEnd(dateEnd);
-                @Nullable final AbstractEntity abstractEntity =
-                        Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
-                if (abstractEntity != null) {
-                    Objects.requireNonNull(projectRepository).merge(project);
-                    Objects.requireNonNull(session).commit();
-                }
-            } catch (Exception e) {
-                session.rollback();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        try {
+            @NotNull final Project project = new Project();
+            project.setId(projectId);
+            project.setUserId(userId);
+            project.setName(name);
+            project.setDescription(description);
+            project.setStatus(createStatus(status));
+
+            @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
+            @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
+            project.setDateEnd(dateEnd);
+            @Nullable final AbstractEntity abstractEntity =
+                    Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
+            if (abstractEntity != null) {
+                entityManager.getTransaction().begin();
+                Objects.requireNonNull(projectRepository).merge(project);
+                entityManager.getTransaction().commit();
             }
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
-
     }
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                taskRepository = session.getMapper(TaskRepository.class);
-                Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
-                Objects.requireNonNull(projectRepository).removeAll(userId);
-                Objects.requireNonNull(session).commit();
-            } catch (Exception e) {
-                session.rollback();
-            }
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        taskRepository = new TaskRepository(entityManager);
+        try {
+            entityManager.getTransaction().begin();
+            Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
+            Objects.requireNonNull(projectRepository).removeAll(userId);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
         }
     }
 
     @Override
     @Nullable
     public List<Project> findAll(@NotNull final String userId) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                return Objects.requireNonNull(projectRepository).findAll(userId);
-            }
-            catch (Exception e) {
-                session.rollback();
-            }
-        }
-        return null;
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        return Objects.requireNonNull(projectRepository).findAll(userId);
     }
 
     @NotNull
@@ -187,29 +183,25 @@ public final class ProjectService implements IProjectService {
     @Nullable
     @Override
     public Project findOneByName(@Nullable final String userId, @NotNull final String name) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
-            } catch (Exception e) {
-                session.rollback();
-            }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        try {
+            return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
+        }catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
     @Nullable
     @Override
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            try {
-                projectRepository = session.getMapper(ProjectRepository.class);
-                return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
-            } catch (Exception e) {
-                session.rollback();
-            }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        projectRepository = new ProjectRepository(entityManager);
+        try {
+            return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
+        }catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
     @Nullable

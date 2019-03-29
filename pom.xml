@@ -190,6 +190,21 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.0.Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>5.4.0.Final</version>
+            <scope>compile</scope>
+        </dependency>
+
+
 
     </dependencies>
 </project>

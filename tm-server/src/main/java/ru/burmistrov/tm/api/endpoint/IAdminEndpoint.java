@@ -3,6 +3,7 @@ package ru.burmistrov.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.dto.UserDto;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
@@ -46,7 +47,7 @@ public interface IAdminEndpoint {
 
     @WebMethod
     @Nullable
-    User createUser
+    UserDto createUser
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
              @WebParam(name = "password") @NotNull final String password, @WebParam(name = "firstName") @NotNull final String firstName,
              @WebParam(name = "middleName") @NotNull final String middleName, @WebParam(name = "lastName") @NotNull final String lastName,

@@ -2,6 +2,7 @@ package ru.burmistrov.tm.api.endpoint;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.dto.ProjectDto;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Session;
@@ -24,7 +25,7 @@ public interface IProjectEndpoint {
 
     @Nullable
     @WebMethod
-    Project createProject
+    ProjectDto createProject
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "name") @NotNull final String name, @WebParam(name = "description") @NotNull final String description,
              @WebParam(name = "dateEnd") @NotNull final String dateEnd, @WebParam(name = "status") @NotNull final String status) throws Exception;
@@ -42,33 +43,33 @@ public interface IProjectEndpoint {
 
     @Nullable
     @WebMethod
-    List<Project> findAllProjects
+    List<ProjectDto> findAllProjects
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
-    List<Project> findAllProjectsSortByDateBegin
+    List<ProjectDto> findAllProjectsSortByDateBegin
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
-    List<Project> findAllProjectsSortByDateEnd
+    List<ProjectDto> findAllProjectsSortByDateEnd
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
-    List<Project> findAllProjectsSortByStatus
+    List<ProjectDto> findAllProjectsSortByStatus
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @Nullable
     @WebMethod
-    Project findProjectByName
+    ProjectDto findProjectByName
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
              @WebParam(name = "name") @NotNull final String name) throws Exception;
 
     @Nullable
     @WebMethod
-    Project findProjectByDescription
+    ProjectDto findProjectByDescription
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
             @WebParam(name = "description") @NotNull final String description) throws Exception;
 

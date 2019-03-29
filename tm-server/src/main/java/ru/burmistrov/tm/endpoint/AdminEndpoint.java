@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IAdminEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.dto.UserDto;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
@@ -12,6 +13,8 @@ import ru.burmistrov.tm.entity.User;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @WebService
@@ -105,13 +108,24 @@ public class AdminEndpoint implements IAdminEndpoint {
 
     @WebMethod
     @Nullable
-    public User createUser
+    public UserDto createUser
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
              @WebParam(name = "password") @NotNull final String password, @WebParam(name = "firstName") @NotNull final String firstName,
              @WebParam(name = "middleName") @NotNull final String middleName, @WebParam(name = "lastName") @NotNull final String lastName,
              @WebParam(name = "email") @NotNull final String email, @WebParam(name = "roleType") @NotNull final Role roleType) throws Exception {
         if (serviceLocator.getSessionService().validateAdmin(session)) {
-            return serviceLocator.getAdminService().createUser(login, password, firstName, middleName, lastName, email, roleType);
+            User user = serviceLocator.getAdminService().createUser(login, password, firstName, middleName, lastName, email, roleType);
+
+            UserDto userDto = new UserDto();
+            userDto.setId(Objects.requireNonNull(user).getId());
+            userDto.setLogin(user.getLogin());
+            userDto.setFirstName(user.getFirstName());
+            userDto.setMiddleName(user.getMiddleName());
+            userDto.setLastName(user.getLastName());
+            userDto.setEmail(user.getEmail());
+            userDto.setRole(user.getRole());
+
+            return userDto;
         }
         return null;
     }

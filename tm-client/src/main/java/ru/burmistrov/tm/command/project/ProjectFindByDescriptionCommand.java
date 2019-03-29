@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
-import ru.burmistrov.tm.endpoint.Project;
+import ru.burmistrov.tm.endpoint.ProjectDto;
 
 import java.util.Objects;
 
@@ -27,7 +27,7 @@ public class ProjectFindByDescriptionCommand extends AbstractCommand {
         System.out.println("Введите описание проекта:");
         @NotNull final String description = getServiceLocator().getTerminalCommandService().nextLine();
         System.out.println("Проект:");
-        @Nullable final Project project = getServiceLocator().getProjectEndpoint().findProjectByDescription(getServiceLocator().getSession(),
+        @Nullable final ProjectDto project = getServiceLocator().getProjectEndpoint().findProjectByDescription(getServiceLocator().getSession(),
                 Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), description);
         if (project == null) {
             System.out.println("Нет проекта с таким описанием");
