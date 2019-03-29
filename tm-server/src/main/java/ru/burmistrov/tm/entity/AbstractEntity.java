@@ -20,6 +20,5 @@ public abstract class AbstractEntity {
 
     @Nullable
     @Column(name = "user_id")
-    @ManyToOne(cascade = CascadeType.ALL)
     private String userId;
 }

@@ -14,6 +14,7 @@ import ru.burmistrov.tm.repository.TaskRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,7 @@ public final class ProjectService implements IProjectService {
     @Override
     public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
         @Nullable final AbstractEntity abstractEntity = projectRepository.findOne(projectId, userId);
         if (abstractEntity != null) {
@@ -57,7 +58,7 @@ public final class ProjectService implements IProjectService {
     public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
                            @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException, ParseException {
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
@@ -86,7 +87,7 @@ public final class ProjectService implements IProjectService {
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                       @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
         try {
             @NotNull final Project project = new Project();
@@ -113,7 +114,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
         taskRepository = new TaskRepository(entityManager);
         try {
@@ -129,7 +130,7 @@ public final class ProjectService implements IProjectService {
     @Override
     @Nullable
     public List<Project> findAll(@NotNull final String userId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
         return Objects.requireNonNull(projectRepository).findAll(userId);
     }
@@ -185,7 +186,11 @@ public final class ProjectService implements IProjectService {
     public Project findOneByName(@Nullable final String userId, @NotNull final String name) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
-        return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
+        try {
+            return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
+        }catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Nullable
@@ -193,7 +198,11 @@ public final class ProjectService implements IProjectService {
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         projectRepository = new ProjectRepository(entityManager);
-        return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
+        try {
+            return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
+        }catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Nullable

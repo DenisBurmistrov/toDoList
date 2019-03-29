@@ -28,7 +28,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public void remove(@NotNull String id) {
-        entityManager.createQuery("DELETE from User user WHERE user.id = " + id);
+        entityManager.createQuery("DELETE from User user WHERE user.id = '" + id + "'");
     }//SELECT x FROM User x WHERE x.login = ?1 AND x.password = ?2
 
     @Override
@@ -43,17 +43,17 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User findOne(@NotNull String id) {
-        return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.id = " + id).getSingleResult();
+        return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.id = '" + id + "'").getSingleResult();
     }
 
     @Override
     public User findOneByLogin(@NotNull String login) {
-        return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.login = " + login).getSingleResult();
+        return (User) entityManager.createQuery("SELECT user FROM User user WHERE user.login = '" + login + "'").getSingleResult();
     }
 
     @Override
     public void updatePassword(@NotNull String login, @NotNull String newPassword) {
         entityManager.createQuery("UPDATE user SET " +
-                "user.passwordHash = " + newPassword + ", user.login = " + login);
+                "user.password = '" + newPassword + "', user.login = '" + login + "'");
     }
 }

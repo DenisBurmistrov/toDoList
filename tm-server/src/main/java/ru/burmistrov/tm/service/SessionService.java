@@ -19,6 +19,7 @@ import ru.burmistrov.tm.utils.SignatureUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
@@ -43,21 +44,21 @@ public class SessionService implements ISessionService {
 
     @Override
     public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            sessionRepository = new SessionRepository(entityManager);
-            @Nullable final InputStream inputStream;
-            Properties property = new Properties();
-            inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
-            property.load(inputStream);
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
+        sessionRepository = new SessionRepository(entityManager);
+        @Nullable final InputStream inputStream;
+        @NotNull final Properties property = new Properties();
+        inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+        property.load(inputStream);
 
-            @NotNull final String cycle = property.getProperty("cycle");
-            @NotNull final String salt = property.getProperty("salt");
+        @NotNull final String cycle = property.getProperty("cycle");
+        @NotNull final String salt = property.getProperty("salt");
 
-            @NotNull final Session session = new Session();
-            session.setTimesTamp(new Date().getTime());
-            session.setUserId(userId);
+        @NotNull final Session session = new Session();
+        session.setTimesTamp(new Date().getTime());
+        session.setUserId(userId);
 
-            session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
+        session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
 
         try {
             entityManager.getTransaction().begin();
@@ -89,7 +90,7 @@ public class SessionService implements ISessionService {
 
     @Override
     public boolean validateAdmin(@Nullable final Session session) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         sessionRepository = new SessionRepository(entityManager);
         userRepository = new UserRepository(entityManager);
                 if (validate(session)) {
@@ -103,8 +104,12 @@ public class SessionService implements ISessionService {
 
     @Nullable
     private Session findOne(@NotNull final String id, @NotNull final String userId) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         sessionRepository = new SessionRepository(entityManager);
-                return Objects.requireNonNull(sessionRepository).findOne(id, userId);
+        try {
+            return Objects.requireNonNull(sessionRepository).findOne(id, userId);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

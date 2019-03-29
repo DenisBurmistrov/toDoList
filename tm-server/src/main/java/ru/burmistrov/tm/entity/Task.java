@@ -22,7 +22,6 @@ public final class Task extends AbstractEntity implements Serializable {
 
     @Nullable
     @Column(name = "project_id")
-    @ManyToOne(cascade = CascadeType.ALL)
     private String projectId;
 
     @Nullable

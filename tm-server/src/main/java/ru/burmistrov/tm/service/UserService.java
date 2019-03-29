@@ -32,7 +32,7 @@ public final class UserService implements IUserService {
     @Override
     @Nullable
     public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         userRepository = new UserRepository(entityManager);
         for (User user : userRepository.findAll()) {
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&
@@ -47,7 +47,7 @@ public final class UserService implements IUserService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
                       @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
         userRepository = new UserRepository(entityManager);
 
         @NotNull final User currentUser = new User();
