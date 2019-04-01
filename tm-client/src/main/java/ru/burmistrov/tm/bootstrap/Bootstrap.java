@@ -6,6 +6,7 @@ import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
+import ru.burmistrov.tm.utils.InitCommandUtil;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -33,31 +34,17 @@ public class Bootstrap implements ServiceLocator {
     @Inject
     private AdminEndpointService adminEndpointService;
 
-    @NotNull
-    private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
-
     @Inject
     private TerminalCommandService terminalCommandService;
+
+    @Inject
+    private Map<String, AbstractCommand> commands;
 
     @Nullable
     private Session session;
 
-    private void registry(Class... classes) {
-        for (Class commandClass : classes) {
-            try {
-                if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
-                    AbstractCommand abstractCommand = (AbstractCommand) commandClass.newInstance();
-                    commands.put(abstractCommand.getName(), abstractCommand);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-        }
-    }
-
-    public void init(Class... classes) {
-        registry(classes);
+    public void init() {
         start();
     }
 
