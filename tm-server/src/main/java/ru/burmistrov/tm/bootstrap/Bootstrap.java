@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.burmistrov.tm.api.endpoint.*;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.*;
 import ru.burmistrov.tm.endpoint.*;
@@ -23,16 +24,31 @@ import java.util.Properties;
 @NoArgsConstructor
 public final class Bootstrap implements ServiceLocator {
 
+    @Inject
+    private IProjectEndpoint projectEndpoint;
+
+    @Inject
+    private ITaskEndpoint taskEndpoint;
+
+    @Inject
+    private IAdminEndpoint adminEndpoint;
+
+    @Inject
+    private ISessionEndpoint sessionEndpoint;
+
+    @Inject
+    private IUserEndpoint userEndpoint;
+
     private void initEndpoints() throws IOException {
         @NotNull final Properties property = new Properties();
         property.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
         @NotNull final String host = property.getProperty("host");
         @NotNull final String port = property.getProperty("port");
-        Endpoint.publish("http://" + host+":" + port + "/ProjectEndpoint", new ProjectEndpoint());
-        Endpoint.publish("http://" + host+":" + port + "/TaskEndpoint", new TaskEndpoint());
-        Endpoint.publish("http://" + host + ":" + port + "/UserEndpoint", new UserEndpoint());
-        Endpoint.publish("http://" + host+":" + port + "/SessionEndpoint", new SessionEndpoint());
-        Endpoint.publish("http://" + host + ":" + port + "/AdminEndpoint", new AdminEndpoint());
+        Endpoint.publish("http://" + host+":" + port + "/ProjectEndpoint", projectEndpoint);
+        Endpoint.publish("http://" + host+":" + port + "/TaskEndpoint", taskEndpoint);
+        Endpoint.publish("http://" + host + ":" + port + "/UserEndpoint", userEndpoint);
+        Endpoint.publish("http://" + host+":" + port + "/SessionEndpoint", sessionEndpoint);
+        Endpoint.publish("http://" + host + ":" + port + "/AdminEndpoint", adminEndpoint);
     }
 
     @Override

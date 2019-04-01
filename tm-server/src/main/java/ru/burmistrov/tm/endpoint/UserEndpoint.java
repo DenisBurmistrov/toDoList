@@ -12,6 +12,7 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

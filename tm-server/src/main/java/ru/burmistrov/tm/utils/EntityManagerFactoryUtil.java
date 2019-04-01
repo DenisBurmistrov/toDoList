@@ -13,6 +13,7 @@ import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.service.PropertyService;
 
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
@@ -21,10 +22,12 @@ import java.util.Map;
 
 public class EntityManagerFactoryUtil {
 
+    @Inject
+    private PropertyService propertyService;
+
     @NotNull
     public EntityManagerFactory getEntityManagerFactory() throws IOException {
 
-        @NotNull final PropertyService propertyService = new PropertyService();
         @NotNull final Map<String, String> settings = new HashMap<>();
         settings.put(Environment.DRIVER, propertyService.getJdbcDriver());
         settings.put(Environment.URL, propertyService.getJdbcUrl());
@@ -48,7 +51,7 @@ public class EntityManagerFactoryUtil {
     }
 
     @Produces
-    public EntityManager createEntityManager() throws IOException {
+    public EntityManager getEntityManager() throws IOException {
         return getEntityManagerFactory().createEntityManager();
     }
 

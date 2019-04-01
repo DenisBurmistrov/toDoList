@@ -1,7 +1,5 @@
 package ru.burmistrov.tm.service;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
@@ -36,9 +34,6 @@ public class SessionService implements ISessionService {
     @Inject
     private IUserRepository userRepository;
 
-    @Inject
-    private EntityManager entityManager;
-
 
     @Override
     public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
@@ -57,12 +52,12 @@ public class SessionService implements ISessionService {
         session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
 
         try {
-            entityManager.getTransaction().begin();
+            sessionRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(sessionRepository).persist(session);
-            entityManager.getTransaction().commit();
+            sessionRepository.getEntityManager().getTransaction().commit();
             return session;
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            sessionRepository.getEntityManager().getTransaction().rollback();
         }
         return null;
     }

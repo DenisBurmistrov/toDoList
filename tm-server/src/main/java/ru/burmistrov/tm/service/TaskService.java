@@ -1,8 +1,6 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -28,9 +26,6 @@ public final class TaskService implements ITaskService {
     @Inject
     private ITaskRepository taskRepository;
 
-    @Inject
-    private EntityManager entityManager;
-
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
@@ -53,12 +48,12 @@ public final class TaskService implements ITaskService {
             task.setProjectId(projectId);
             task.setStatus(createStatus(status));
             try {
-                entityManager.getTransaction().begin();
+                taskRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(taskRepository).persist(task);
-                entityManager.getTransaction().commit();
+                taskRepository.getEntityManager().getTransaction().commit();
                 return task;
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                taskRepository.getEntityManager().getTransaction().rollback();
             }
         }
         return null;
@@ -82,12 +77,12 @@ public final class TaskService implements ITaskService {
         @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
         if (newName.length() != 0 && abstractEntity != null) {
             try {
-                entityManager.getTransaction().begin();
+                taskRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(taskRepository).merge(task);
 
-                entityManager.getTransaction().commit();
+                taskRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                taskRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
@@ -101,11 +96,11 @@ public final class TaskService implements ITaskService {
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
         try {
-            entityManager.getTransaction().begin();
+            taskRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
-            entityManager.getTransaction().commit();
+            taskRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            taskRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
@@ -114,11 +109,11 @@ public final class TaskService implements ITaskService {
         Task task = taskRepository.findOne(taskId, userId);
         if(task != null) {
             try {
-                entityManager.getTransaction().begin();
+                taskRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(taskRepository).remove(task);
-                entityManager.getTransaction().commit();
+                taskRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                taskRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
@@ -126,9 +121,9 @@ public final class TaskService implements ITaskService {
     @Override
     public void removeAll(@Nullable final String userId) {
         try {
-            entityManager.getTransaction().begin();
+            taskRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
-            entityManager.getTransaction().commit();
+            taskRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
             taskRepository.getEntityManager().getTransaction().rollback();
         }

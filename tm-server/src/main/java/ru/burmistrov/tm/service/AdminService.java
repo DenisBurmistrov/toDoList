@@ -53,9 +53,6 @@ public class AdminService implements IAdminService {
     @Inject
     private IUserRepository userRepository;
 
-    @Inject
-    private EntityManager entityManager;
-
     public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
         @NotNull final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         @NotNull final Domain domain = new Domain();
@@ -222,12 +219,12 @@ public class AdminService implements IAdminService {
             user.setEmail(email);
             user.setRole(roleType);
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).persist(user);
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
                 return user;
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
         return null;
@@ -237,11 +234,11 @@ public class AdminService implements IAdminService {
     public void updatePassword(@NotNull final String login, @NotNull final String password) {
         if (password.length() > 0) {
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).updatePassword(login, PasswordUtil.hashPassword(password));
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
@@ -260,11 +257,11 @@ public class AdminService implements IAdminService {
         @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if (abstractEntity != null) {
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).merge(currentUser);
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
@@ -272,11 +269,11 @@ public class AdminService implements IAdminService {
     @Override
     public void removeUserById(@NotNull final String userId) {
         try {
-            entityManager.getTransaction().begin();
+            userRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
-            entityManager.getTransaction().commit();
+            userRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            userRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
@@ -284,11 +281,11 @@ public class AdminService implements IAdminService {
     public void removeAllUsers() {
 
         try {
-            entityManager.getTransaction().begin();
+            userRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(userRepository).removeAll();
-            entityManager.getTransaction().commit();
+            userRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            userRepository.getEntityManager().getTransaction().rollback();
         }
     }
 

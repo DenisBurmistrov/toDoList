@@ -1,8 +1,6 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
@@ -10,12 +8,10 @@ import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.Role;
-import ru.burmistrov.tm.repository.UserRepository;
 import ru.burmistrov.tm.utils.PasswordUtil;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
@@ -24,9 +20,6 @@ public final class UserService implements IUserService {
 
     @Inject
     private IUserRepository userRepository;
-
-    @Inject
-    private EntityManager entityManager;
 
     @Override
     @Nullable
@@ -55,11 +48,11 @@ public final class UserService implements IUserService {
         @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(userRepository).findOne(userId);
         if (abstractEntity != null) {
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).merge(currentUser);
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
 

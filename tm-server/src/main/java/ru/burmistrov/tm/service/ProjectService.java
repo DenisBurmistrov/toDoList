@@ -1,7 +1,6 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
@@ -29,21 +28,17 @@ public final class ProjectService implements IProjectService {
     @Inject
     private ITaskRepository taskRepository;
 
-    @Inject
-    private EntityManager entityManager;
-
-
     @Override
     public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
 
         @Nullable final Project project = projectRepository.findOne(projectId, userId);
         if (project != null) {
             try {
-                entityManager.getTransaction().begin();
+                projectRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(projectRepository).remove(project);
-                entityManager.getTransaction().commit();
+                projectRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                projectRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
@@ -64,13 +59,13 @@ public final class ProjectService implements IProjectService {
                 project.setName(name);
                 project.setDescription(description);
                 project.setStatus(createStatus(status));
-                entityManager.getTransaction().begin();
+                projectRepository.getEntityManager().getTransaction().begin();
                 projectRepository.persist(project);
-                entityManager.getTransaction().commit();
+                projectRepository.getEntityManager().getTransaction().commit();
                 return project;
             }
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            projectRepository.getEntityManager().getTransaction().rollback();
         }
         return null;
     }
@@ -93,24 +88,24 @@ public final class ProjectService implements IProjectService {
             @Nullable final AbstractEntity abstractEntity =
                     Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
             if (abstractEntity != null) {
-                entityManager.getTransaction().begin();
+                projectRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(projectRepository).merge(project);
-                entityManager.getTransaction().commit();
+                projectRepository.getEntityManager().getTransaction().commit();
             }
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            projectRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
     @Override
     public void removeAll(@Nullable final String userId) {
         try {
-            entityManager.getTransaction().begin();
+            projectRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
             Objects.requireNonNull(projectRepository).removeAll(userId);
-            entityManager.getTransaction().commit();
+            projectRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            projectRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
