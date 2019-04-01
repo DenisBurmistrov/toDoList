@@ -13,6 +13,7 @@ import ru.burmistrov.tm.command.user.UserLogInCommand;
 import ru.burmistrov.tm.command.user.UserLogOutCommand;
 import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 
+import javax.enterprise.inject.se.SeContainerInitializer;
 import java.net.MalformedURLException;
 
 public class AppClient {
@@ -29,9 +30,10 @@ public class AppClient {
                 SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFasterXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
                 DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class};
 
-    public static void main(String[] args) throws MalformedURLException {
-
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.init(CLASSES);
+    public static void main(final String[] args) {
+        SeContainerInitializer.newInstance()
+                .addPackages(AppClient.class).initialize()
+                .select(Bootstrap.class).get().init(CLASSES);
     }
+
 }

@@ -7,6 +7,8 @@ import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.lang.ClassNotFoundException;
@@ -16,41 +18,26 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 public class Bootstrap implements ServiceLocator {
 
-    @NotNull
-    private final ProjectEndpointService projectEndpointService = new ProjectEndpointService();
+    @Inject
+    private ProjectEndpointService projectEndpointService;
 
-    @NotNull
-    private final TaskEndpointService taskEndpointService = new TaskEndpointService();
+    @Inject
+    private TaskEndpointService taskEndpointService;
 
-    @NotNull
-    private final UserEndpointService userEndpointService = new UserEndpointService();
+    @Inject
+    private UserEndpointService userEndpointService;
 
-    @NotNull
-    private final SessionEndpointService sessionEndpointService = new SessionEndpointService();
+    @Inject
+    private SessionEndpointService sessionEndpointService;
 
-    @NotNull
-    private final AdminEndpointService adminEndpointService = new AdminEndpointService();
-
-    @NotNull
-    private final SessionEndpoint sessionEndpoint = sessionEndpointService.getSessionEndpointPort();
-
-    @NotNull
-    private final ProjectEndpoint projectEndpoint = projectEndpointService.getProjectEndpointPort();
-
-    @NotNull
-    private final TaskEndpoint taskEndpoint = taskEndpointService.getTaskEndpointPort();
-
-    @NotNull
-    private final UserEndpoint userEndpoint = userEndpointService.getUserEndpointPort();
-
-    @NotNull
-    private final AdminEndpoint adminEndpoint = adminEndpointService.getAdminEndpointPort();
+    @Inject
+    private AdminEndpointService adminEndpointService;
 
     @NotNull
     private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
 
-    @NotNull
-    private final TerminalCommandService terminalCommandService = new TerminalCommandService(this);
+    @Inject
+    private TerminalCommandService terminalCommandService;
 
     @Nullable
     private Session session;
@@ -60,7 +47,6 @@ public class Bootstrap implements ServiceLocator {
             try {
                 if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
                     AbstractCommand abstractCommand = (AbstractCommand) commandClass.newInstance();
-                    abstractCommand.setServiceLocator(this);
                     commands.put(abstractCommand.getName(), abstractCommand);
                 }
             } catch (Exception e) {
@@ -72,7 +58,22 @@ public class Bootstrap implements ServiceLocator {
 
     public void init(Class... classes) {
         registry(classes);
-        terminalCommandService.start();
+        start();
+    }
+
+    public void start() {
+        System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
+        while (true) {
+            @NotNull final String input = terminalCommandService.nextLine();
+            if ("-exit".equals(input)) {
+                System.exit(0);
+            }
+            try {
+                execute(input);
+            } catch (Exception_Exception | IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -90,21 +91,6 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @NotNull
-    public ProjectEndpoint getProjectEndpoint() {
-        return projectEndpoint;
-    }
-
-    @NotNull
-    public TaskEndpoint getTaskEndpoint() {
-        return taskEndpoint;
-    }
-
-    @NotNull
-    public UserEndpoint getUserEndpoint() {
-        return userEndpoint;
-    }
-
-    @NotNull
     public TerminalCommandService getTerminalCommandService() {
         return terminalCommandService;
     }
@@ -115,6 +101,7 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @Nullable
+    @Produces
     public Session getSession() {
         return session;
     }
@@ -127,14 +114,29 @@ public class Bootstrap implements ServiceLocator {
         return session != null;
     }
 
-    @NotNull
-    public SessionEndpoint getSessionEndpoint() {
-        return sessionEndpoint;
+    @Produces
+    public ProjectEndpoint getProjectEndpoint() {
+        return projectEndpointService.getProjectEndpointPort();
     }
 
-    @NotNull
-    @Override
-    public AdminEndpoint getAdminEndpoint() {
-        return adminEndpoint;
+    @Produces
+    public TaskEndpoint getTaskEndpoint() {
+        return taskEndpointService.getTaskEndpointPort();
     }
+
+    @Produces
+    public AdminEndpoint getAdminEndpoint() {
+        return adminEndpointService.getAdminEndpointPort();
+    }
+
+    @Produces
+    public UserEndpoint getUserEndpoint() {
+        return userEndpointService.getUserEndpointPort();
+    }
+
+    @Produces
+    public SessionEndpoint getSessionEndpoint() {
+        return sessionEndpointService.getSessionEndpointPort();
+    }
+
 }

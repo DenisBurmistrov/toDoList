@@ -1,9 +1,17 @@
 package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.Session;
+import ru.burmistrov.tm.service.TerminalCommandService;
+
+import javax.inject.Inject;
 
 public final class UserLogOutCommand extends AbstractCommand {
+
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @NotNull
     @Override
@@ -19,7 +27,7 @@ public final class UserLogOutCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        getServiceLocator().setSession(null);
+        serviceLocator.setSession(null);
     }
 
     @Override

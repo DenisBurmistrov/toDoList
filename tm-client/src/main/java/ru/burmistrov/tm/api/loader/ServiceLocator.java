@@ -15,15 +15,6 @@ public interface ServiceLocator {
     void execute(@Nullable String command) throws Exception_Exception, IOException;
 
     @NotNull
-    ProjectEndpoint getProjectEndpoint();
-
-    @NotNull
-    TaskEndpoint getTaskEndpoint();
-
-    @NotNull
-    UserEndpoint getUserEndpoint();
-
-    @NotNull
     TerminalCommandService getTerminalCommandService();
 
     @NotNull
@@ -34,9 +25,13 @@ public interface ServiceLocator {
     @Nullable
     Session getSession();
 
-    @NotNull
-    SessionEndpoint getSessionEndpoint();
+    ProjectEndpoint getProjectEndpoint();
 
-    @NotNull
+    TaskEndpoint getTaskEndpoint();
+
     AdminEndpoint getAdminEndpoint();
+
+    UserEndpoint getUserEndpoint();
+
+    SessionEndpoint getSessionEndpoint();
 }

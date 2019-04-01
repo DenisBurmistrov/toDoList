@@ -1,10 +1,18 @@
 package ru.burmistrov.tm.command.admin.deserialize;
 
 import org.jetbrains.annotations.NotNull;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.endpoint.AdminEndpoint;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
+import ru.burmistrov.tm.endpoint.Session;
+
+import javax.inject.Inject;
 
 public class DeserializeByJaxbJsonCommand extends AbstractCommand {
+
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @NotNull
     @Override
@@ -20,7 +28,7 @@ public class DeserializeByJaxbJsonCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        getServiceLocator().getAdminEndpoint().loadDataByJaxbJson(getServiceLocator().getSession());
+        serviceLocator.getAdminEndpoint().loadDataByJaxbJson(serviceLocator.getSession());
     }
 
     @Override

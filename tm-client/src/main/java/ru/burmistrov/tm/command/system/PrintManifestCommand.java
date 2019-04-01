@@ -4,10 +4,14 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.utils.ReadManifestUtil;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
 
 public class PrintManifestCommand extends AbstractCommand {
+
+    @Inject
+    private ReadManifestUtil readManifestUtil;
 
     @NotNull
     @Override
@@ -23,7 +27,6 @@ public class PrintManifestCommand extends AbstractCommand {
 
     @Override
     public void execute() throws IOException {
-        @NotNull final ReadManifestUtil readManifestUtil = new ReadManifestUtil();
         for(Map.Entry entry : readManifestUtil.getManifest().getMainAttributes().entrySet()){
             System.out.println(entry.getKey() + " : " + entry.getValue());
         }
