@@ -40,7 +40,8 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public List<User> findAll() {
-        return entityManager.createQuery("SELECT user FROM User user").getResultList();
+        return entityManager.createQuery
+                ("SELECT user FROM User user", User.class).getResultList();
     }
 
     @Override

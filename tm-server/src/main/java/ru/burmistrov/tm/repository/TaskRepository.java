@@ -17,7 +17,7 @@ import java.util.List;
 public class TaskRepository implements ITaskRepository {
 
     @Inject
-    @NotNull private EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final Task task) {
@@ -42,22 +42,31 @@ public class TaskRepository implements ITaskRepository {
     @NotNull
     @Override
     public List<Task> findAll(@NotNull final String userId) {
-        return (List<Task>) entityManager.createQuery("SELECT task FROM Task task WHERE task.userId = '" + userId + "'").getSingleResult();
+        return entityManager.createQuery
+                ("SELECT task FROM Task task WHERE task.userId =: userId", Task.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 
     @Override
     public Task findOne(@NotNull final String id, @NotNull final String userId) {
-        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.id = '" + id + "' AND task.userId = '" + userId + "'").getSingleResult();
+        return entityManager.createQuery
+                ("SELECT task FROM Task task WHERE task.id =: taskId AND task.userId =: userId", Task.class)
+                .setParameter("userId", userId)
+                .setParameter("taskId", id)
+                .getSingleResult();
     }
 
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
-        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.name = '" + name + "'").getSingleResult();
+        return entityManager.createQuery
+                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.name = '" + name + "'", Task.class).getSingleResult();
     }
 
     @Override
     public Task findOneByDescription(@NotNull final String userId, @NotNull final String description) {
-        return (Task) entityManager.createQuery("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.description = '" + description + "'").getSingleResult();
+        return entityManager.createQuery
+                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.description = '" + description + "'", Task.class).getSingleResult();
     }
 
     @Override
@@ -67,6 +76,7 @@ public class TaskRepository implements ITaskRepository {
 
     @Override
     public List<Task> findAllByProjectId(@NotNull final String userId, @NotNull final String projectId) {
-        return entityManager.createQuery("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.projectId = '" + projectId + "'").getResultList();
+        return entityManager.createQuery
+                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.projectId = '" + projectId + "'", Task.class).getResultList();
     }
 }

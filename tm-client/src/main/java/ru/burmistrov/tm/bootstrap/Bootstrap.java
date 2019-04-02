@@ -4,19 +4,26 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.command.admin.deserialize.*;
+import ru.burmistrov.tm.command.admin.serialize.*;
+import ru.burmistrov.tm.command.admin.user.*;
+import ru.burmistrov.tm.command.project.*;
+import ru.burmistrov.tm.command.system.PrintListCommand;
+import ru.burmistrov.tm.command.system.PrintManifestCommand;
+import ru.burmistrov.tm.command.task.*;
+import ru.burmistrov.tm.command.user.UserLogInCommand;
+import ru.burmistrov.tm.command.user.UserLogOutCommand;
+import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
-import ru.burmistrov.tm.utils.InitCommandUtil;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.lang.ClassNotFoundException;
 import java.lang.Exception;
-import java.text.ParseException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
@@ -40,17 +47,27 @@ public class Bootstrap implements ServiceLocator {
     @Inject
     private TerminalCommandService terminalCommandService;
 
-    @Inject
-    private InitCommandUtil initCommandUtil;
-
     @Nullable
     private Session session;
 
-    @Inject
-    private Map<String ,AbstractCommand> commands;
+    private Map<String ,AbstractCommand> commands = new HashMap<>();
+
+
+    @NotNull
+    private static final  Class[] CLASSES = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
+            ProjectUpdateCommand.class, PrintListCommand.class, ProjectListSortedByDateBeginCommand.class, ProjectListSortedByDateEndCommand.class,
+            ProjectFindByNameCommand.class, ProjectFindByDescriptionCommand.class,
+            ProjectListSortedByStatus.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskListSortedByDateBeginCommand.class,
+            TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class,
+            TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
+            UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
+            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class, SerializeByDefaultCommand.class,
+            SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFasterXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
+            DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class};
 
 
     public void init() {
+        registry(CLASSES);
         start();
     }
 
@@ -66,6 +83,22 @@ public class Bootstrap implements ServiceLocator {
             } catch (Exception_Exception | IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void registry(Class... classes) {
+        for (Class commandClass : classes) {
+            try {
+                if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
+                    AbstractCommand abstractCommand = (AbstractCommand) CDI.current().select(commandClass).get();
+                    if(abstractCommand != null) {
+                        commands.put(abstractCommand.getName(), abstractCommand);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -89,9 +122,11 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @NotNull
+    @Override
     public Map<String, AbstractCommand> getCommands() {
-        return initCommandUtil.getCommands();
+        return commands;
     }
+
 
     @Nullable
     public Session getSession() {

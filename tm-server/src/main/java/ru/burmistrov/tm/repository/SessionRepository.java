@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 public class SessionRepository implements ISessionRepository {
 
     @Inject
-    @NotNull private EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public void persist(@NotNull final Session session) {
@@ -25,6 +25,10 @@ public class SessionRepository implements ISessionRepository {
     @Nullable
     @Override
     public Session findOne(@NotNull final String id, @NotNull final String userId) {
-        return (Session) entityManager.createQuery("SELECT session FROM Session session WHERE session.id = '" + id + "' AND session.userId = '" + userId + "'").getSingleResult();
+        return entityManager.createQuery
+                ("SELECT session FROM Session session WHERE session.id =: sessionId AND session.userId =: userId", Session.class)
+                .setParameter("sessionId", id)
+                .setParameter("userId", userId)
+                .getSingleResult();
     }
 }

@@ -10,6 +10,7 @@ import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.enumerated.Status;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -51,7 +52,7 @@ public final class ProjectService implements IProjectService {
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
         try {
-            Objects.requireNonNull(projectRepository).findOneByName(userId, name);
+            projectRepository.findOneByName(userId, name);
         }
         catch (NoResultException e) {
             try {
