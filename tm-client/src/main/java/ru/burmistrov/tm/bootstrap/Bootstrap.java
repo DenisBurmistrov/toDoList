@@ -8,6 +8,7 @@ import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 import ru.burmistrov.tm.utils.InitCommandUtil;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.xml.bind.JAXBException;
@@ -17,6 +18,8 @@ import java.lang.Exception;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+@ApplicationScoped
 public class Bootstrap implements ServiceLocator {
 
     @Inject
@@ -43,6 +46,9 @@ public class Bootstrap implements ServiceLocator {
     @Nullable
     private Session session;
 
+    @Inject
+    private Map<String ,AbstractCommand> commands;
+
 
     public void init() {
         start();
@@ -66,7 +72,7 @@ public class Bootstrap implements ServiceLocator {
     @Override
     public void execute(@Nullable String command) throws Exception_Exception, IOException {
         if (command == null || command.isEmpty()) return;
-        @Nullable final AbstractCommand abstractCommand = initCommandUtil.getCommands().get(command);
+        @Nullable final AbstractCommand abstractCommand = commands.get(command);
         if (abstractCommand == null) return;
         if (abstractCommand.isSecure()) {
             if (isAuth()) {
