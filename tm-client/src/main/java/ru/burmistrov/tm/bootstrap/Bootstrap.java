@@ -38,7 +38,7 @@ public class Bootstrap implements ServiceLocator {
     private TerminalCommandService terminalCommandService;
 
     @Inject
-    private Map<String, AbstractCommand> commands;
+    private InitCommandUtil initCommandUtil;
 
     @Nullable
     private Session session;
@@ -66,7 +66,7 @@ public class Bootstrap implements ServiceLocator {
     @Override
     public void execute(@Nullable String command) throws Exception_Exception, IOException {
         if (command == null || command.isEmpty()) return;
-        @Nullable final AbstractCommand abstractCommand = commands.get(command);
+        @Nullable final AbstractCommand abstractCommand = initCommandUtil.getCommands().get(command);
         if (abstractCommand == null) return;
         if (abstractCommand.isSecure()) {
             if (isAuth()) {
@@ -84,11 +84,10 @@ public class Bootstrap implements ServiceLocator {
 
     @NotNull
     public Map<String, AbstractCommand> getCommands() {
-        return commands;
+        return initCommandUtil.getCommands();
     }
 
     @Nullable
-    @Produces
     public Session getSession() {
         return session;
     }

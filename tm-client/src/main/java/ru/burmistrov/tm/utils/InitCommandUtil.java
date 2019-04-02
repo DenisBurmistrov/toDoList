@@ -12,6 +12,7 @@ import ru.burmistrov.tm.command.user.UserLogInCommand;
 import ru.burmistrov.tm.command.user.UserLogOutCommand;
 import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -104,6 +105,7 @@ public class InitCommandUtil {
 
     private Map<String ,AbstractCommand> commands = new HashMap<>();
 
+    @PostConstruct
     public void initCommands(){
         commands.put(deserializeByDefaultCommand.getName() ,deserializeByDefaultCommand);
         commands.put(deserializeByFasterXmlJsonCommand.getName() ,deserializeByFasterXmlJsonCommand);
