@@ -36,7 +36,8 @@ public final class UserLogInCommand extends AbstractCommand {
         if (user == null) {
             System.out.println("Неверно введены данные");
         } else {
-            serviceLocator.getSessionEndpoint().getNewSession(user.getId());
+            Session session = serviceLocator.getSessionEndpoint().getNewSession(user.getId());
+            serviceLocator.setSession(session);
         }
     }
 
