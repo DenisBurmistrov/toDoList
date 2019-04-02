@@ -13,6 +13,7 @@ import ru.burmistrov.tm.entity.enumerated.Status;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,23 +50,25 @@ public final class ProjectService implements IProjectService {
 
         @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-        @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(projectRepository).findOneByName(userId, name);
         try {
-            if (abstractEntity == null) {
-                @NotNull final Project project = new Project();
-                project.setUserId(userId);
-                project.setDateBegin(new Date());
-                project.setDateEnd(dateEnd);
-                project.setName(name);
-                project.setDescription(description);
-                project.setStatus(createStatus(status));
-                projectRepository.getEntityManager().getTransaction().begin();
-                projectRepository.persist(project);
-                projectRepository.getEntityManager().getTransaction().commit();
-                return project;
+            Objects.requireNonNull(projectRepository).findOneByName(userId, name);
+        }
+        catch (NoResultException e) {
+            try {
+                    @NotNull final Project project = new Project();
+                    project.setUserId(userId);
+                    project.setDateBegin(new Date());
+                    project.setDateEnd(dateEnd);
+                    project.setName(name);
+                    project.setDescription(description);
+                    project.setStatus(createStatus(status));
+                    projectRepository.getEntityManager().getTransaction().begin();
+                    projectRepository.persist(project);
+                    projectRepository.getEntityManager().getTransaction().commit();
+                    return project;
+            } catch (Exception ex) {
+                projectRepository.getEntityManager().getTransaction().rollback();
             }
-        } catch (Exception e) {
-            projectRepository.getEntityManager().getTransaction().rollback();
         }
         return null;
     }

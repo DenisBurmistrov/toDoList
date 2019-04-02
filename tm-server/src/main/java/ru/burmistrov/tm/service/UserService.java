@@ -45,15 +45,16 @@ public final class UserService implements IUserService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
+        try {
         @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(userRepository).findOne(userId);
         if (abstractEntity != null) {
-            try {
                 userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).merge(currentUser);
                 userRepository.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                userRepository.getEntityManager().getTransaction().rollback();
             }
+        }
+        catch (Exception e) {
+            userRepository.getEntityManager().getTransaction().rollback();
         }
 
     }
