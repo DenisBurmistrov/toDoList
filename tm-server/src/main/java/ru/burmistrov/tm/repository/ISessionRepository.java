@@ -16,7 +16,7 @@ public interface ISessionRepository extends FullEntityRepository<Session, Long> 
     void persist(@NotNull final Session session);
 
     @Nullable
-    @Query(value = "SELECT session FROM Session session WHERE session.id =: sessionId AND session.userId =: userId", max = 1)
+    @Query(value = "SELECT session FROM Session session WHERE session.id = :sessionId AND session.userId = :userId", max = 1)
     Session findOne(@NotNull @QueryParam(value = "sessionId") final String id,
                     @NotNull @QueryParam(value = "userId") final String userId);
 }

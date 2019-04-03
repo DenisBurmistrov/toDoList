@@ -23,13 +23,13 @@ public interface IUserRepository extends FullEntityRepository<User, Long> {
     @Query(value = "SELECT user FROM User user")
     List<User> findAll();
 
-    @Query(value = "SELECT user FROM User user WHERE user.id =: id", max = 1)
+    @Query(value = "SELECT user FROM User user WHERE user.id = :id", max = 1)
     User findOne(@NotNull @QueryParam(value = "id") final String id);
 
-    @Query(value = "SELECT user FROM User user WHERE user.login =: login")
+    @Query(value = "SELECT user FROM User user WHERE user.login = :login")
     User findOneByLogin(@NotNull @QueryParam(value = "login") final String login);
 
     @Modifying
-    @Query(value = "UPDATE user SET user.password =: password, user.login =: login")
+    @Query(value = "UPDATE user SET user.password = :password, user.login = :login")
     void updatePassword(@NotNull @QueryParam(value = "login") final String login, @NotNull @QueryParam(value = "password") final String newPassword);
 }
