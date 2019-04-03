@@ -16,6 +16,10 @@ public final class ProjectUpdateCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
+
     @NotNull
     @Override
     public String getName() {
@@ -40,7 +44,7 @@ public final class ProjectUpdateCommand extends AbstractCommand {
         @NotNull final String date = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите новый статус(Запланировано || В процессе || Готово):");
         @NotNull final String status = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getProjectEndpoint().updateProjectById(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
+        projectEndpoint.updateProjectById(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
                 projectId, name, description, date, status);
     }
 

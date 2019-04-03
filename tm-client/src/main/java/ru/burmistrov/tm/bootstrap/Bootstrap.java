@@ -30,21 +30,6 @@ import java.util.Map;
 public class Bootstrap implements ServiceLocator {
 
     @Inject
-    private ProjectEndpointService projectEndpointService;
-
-    @Inject
-    private TaskEndpointService taskEndpointService;
-
-    @Inject
-    private UserEndpointService userEndpointService;
-
-    @Inject
-    private SessionEndpointService sessionEndpointService;
-
-    @Inject
-    private AdminEndpointService adminEndpointService;
-
-    @Inject
     private TerminalCommandService terminalCommandService;
 
     @Nullable
@@ -140,30 +125,4 @@ public class Bootstrap implements ServiceLocator {
     private boolean isAuth() {
         return session != null;
     }
-
-    @Produces
-    public ProjectEndpoint getProjectEndpoint() {
-        return projectEndpointService.getProjectEndpointPort();
-    }
-
-    @Produces
-    public TaskEndpoint getTaskEndpoint() {
-        return taskEndpointService.getTaskEndpointPort();
-    }
-
-    @Produces
-    public AdminEndpoint getAdminEndpoint() {
-        return adminEndpointService.getAdminEndpointPort();
-    }
-
-    @Produces
-    public UserEndpoint getUserEndpoint() {
-        return userEndpointService.getUserEndpointPort();
-    }
-
-    @Produces
-    public SessionEndpoint getSessionEndpoint() {
-        return sessionEndpointService.getSessionEndpointPort();
-    }
-
 }

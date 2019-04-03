@@ -18,6 +18,10 @@ public class ProjectFindByNameCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
+
     @NotNull
     @Override
     public String getName() {
@@ -35,7 +39,7 @@ public class ProjectFindByNameCommand extends AbstractCommand {
         System.out.println("Введите имя проекта:");
         @NotNull final String name = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Проект:");
-        @Nullable final ProjectDto project = serviceLocator.getProjectEndpoint()
+        @Nullable final ProjectDto project = projectEndpoint
                 .findProjectByName(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(), name);
         System.out.println(project);
     }

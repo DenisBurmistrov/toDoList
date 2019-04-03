@@ -15,6 +15,9 @@ public class UserRemoveCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private AdminEndpoint adminEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -29,7 +32,7 @@ public class UserRemoveCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getAdminEndpoint().removeUserById
+        adminEndpoint.removeUserById
                 (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
         serviceLocator.setSession(null);
     }

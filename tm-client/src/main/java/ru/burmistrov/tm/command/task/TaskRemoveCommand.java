@@ -16,6 +16,9 @@ public final class TaskRemoveCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private TaskEndpoint taskEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -32,7 +35,7 @@ public final class TaskRemoveCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Введите ID задачи");
         @NotNull final String taskId = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getTaskEndpoint().removeTaskById(serviceLocator.getSession(),
+        taskEndpoint.removeTaskById(serviceLocator.getSession(),
                 Objects.requireNonNull(serviceLocator.getSession()).getUserId(), taskId);
     }
 

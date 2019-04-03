@@ -16,6 +16,10 @@ public final class ProjectCreateCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
+
     @NotNull
     @Override
     public String getName() {
@@ -41,7 +45,7 @@ public final class ProjectCreateCommand extends AbstractCommand {
         @NotNull final String date = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите статус(Запланировано || В процессе || Готово): ");
         @NotNull final String status = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getProjectEndpoint().createProject
+        projectEndpoint.createProject
                 (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
                 name, description, date, status);
     }

@@ -15,6 +15,9 @@ public final class ProjectClearCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -29,7 +32,7 @@ public final class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getProjectEndpoint().removeAllProjects
+        projectEndpoint.removeAllProjects
                 (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
     }
 

@@ -16,6 +16,9 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private AdminEndpoint adminEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -35,7 +38,7 @@ public final class UserUpdatePasswordCommand extends AbstractCommand {
             @NotNull final String login = serviceLocator.getTerminalCommandService().nextLine();
             System.out.println("Введите новый пароль:");
             @NotNull final String newPassword = serviceLocator.getTerminalCommandService().nextLine();
-            serviceLocator.getAdminEndpoint().updatePasswordById(serviceLocator.getSession(),
+            adminEndpoint.updatePasswordById(serviceLocator.getSession(),
                     Objects.requireNonNull(serviceLocator.getSession()).getUserId(), login, newPassword);
         }
     }

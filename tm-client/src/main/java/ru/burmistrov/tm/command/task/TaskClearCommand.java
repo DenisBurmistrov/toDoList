@@ -16,6 +16,9 @@ public final class TaskClearCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private TaskEndpoint taskEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -30,7 +33,7 @@ public final class TaskClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getTaskEndpoint().removeAllTasks(serviceLocator.getSession(),
+        taskEndpoint.removeAllTasks(serviceLocator.getSession(),
                 Objects.requireNonNull(serviceLocator.getSession()).getUserId());
     }
 

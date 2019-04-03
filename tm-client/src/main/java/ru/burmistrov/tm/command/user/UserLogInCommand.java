@@ -14,6 +14,12 @@ public final class UserLogInCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private UserEndpoint userEndpoint;
+
+    @Inject
+    private SessionEndpoint sessionEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -32,11 +38,11 @@ public final class UserLogInCommand extends AbstractCommand {
         @NotNull final String login = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите пароль:");
         @NotNull final String password = serviceLocator.getTerminalCommandService().nextLine();
-        @Nullable final UserDto user = serviceLocator.getUserEndpoint().logIn(login, password);
+        @Nullable final UserDto user = userEndpoint.logIn(login, password);
         if (user == null) {
             System.out.println("Неверно введены данные");
         } else {
-            Session session = serviceLocator.getSessionEndpoint().getNewSession(user.getId());
+            Session session = sessionEndpoint.getNewSession(user.getId());
             serviceLocator.setSession(session);
         }
     }

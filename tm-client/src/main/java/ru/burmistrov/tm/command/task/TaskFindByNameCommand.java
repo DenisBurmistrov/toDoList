@@ -16,6 +16,9 @@ public class TaskFindByNameCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private TaskEndpoint taskEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -32,7 +35,7 @@ public class TaskFindByNameCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Введите имя задачи:");
         @NotNull final String name = serviceLocator.getTerminalCommandService().nextLine();
-        System.out.println(serviceLocator.getTaskEndpoint().findTaskByName(serviceLocator.getSession(),
+        System.out.println(taskEndpoint.findTaskByName(serviceLocator.getSession(),
                 Objects.requireNonNull(serviceLocator.getSession()).getUserId(), name));
     }
 

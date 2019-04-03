@@ -16,6 +16,10 @@ public final class ProjectRemoveCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
+
     @NotNull
     @Override
     public String getName() {
@@ -32,7 +36,7 @@ public final class ProjectRemoveCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Введите ID проекта: ");
         @NotNull final String projectId = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getProjectEndpoint()
+        projectEndpoint
                 .removeProjectById(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(), projectId);
     }
 

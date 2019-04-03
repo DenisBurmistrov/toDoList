@@ -17,6 +17,9 @@ public class TaskListSortedByDateBeginCommand extends AbstractCommand {
 
     @Inject
     private ServiceLocator serviceLocator;
+
+    @Inject
+    private TaskEndpoint taskEndpoint;
     @NotNull
     @Override
     public String getName() {
@@ -31,7 +34,7 @@ public class TaskListSortedByDateBeginCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        @NotNull final List<TaskDto> taskList = serviceLocator.getTaskEndpoint()
+        @NotNull final List<TaskDto> taskList = taskEndpoint
                 .findAllTasksSortByDateBegin(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
         for (TaskDto task : taskList) {
             System.out.println("ID: " + task.getId() +

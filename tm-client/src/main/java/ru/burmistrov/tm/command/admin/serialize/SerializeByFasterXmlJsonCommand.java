@@ -14,6 +14,9 @@ public class SerializeByFasterXmlJsonCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private AdminEndpoint adminEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -28,7 +31,7 @@ public class SerializeByFasterXmlJsonCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getAdminEndpoint().saveDataByFasterXmlJson(serviceLocator.getSession());
+        adminEndpoint.saveDataByFasterXmlJson(serviceLocator.getSession());
     }
 
     @Override

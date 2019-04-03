@@ -16,6 +16,9 @@ public final class UserRegistrateCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private AdminEndpoint adminEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -42,7 +45,7 @@ public final class UserRegistrateCommand extends AbstractCommand {
         @NotNull final String middleName = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите почту:");
         @NotNull final String email = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getAdminEndpoint().createUser
+        adminEndpoint.createUser
                 (serviceLocator.getSession(), login, password, firstName, lastName, middleName,
                 email, Role.COMMON_USER);
     }

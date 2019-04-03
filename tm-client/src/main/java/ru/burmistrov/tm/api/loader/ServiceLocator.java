@@ -7,6 +7,7 @@ import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 public interface ServiceLocator {
@@ -23,14 +24,6 @@ public interface ServiceLocator {
 
     @Nullable
     Session getSession();
-
-    ProjectEndpoint getProjectEndpoint();
-
-    TaskEndpoint getTaskEndpoint();
-
-    AdminEndpoint getAdminEndpoint();
-
-    UserEndpoint getUserEndpoint();
-
-    SessionEndpoint getSessionEndpoint();
 }
+
+

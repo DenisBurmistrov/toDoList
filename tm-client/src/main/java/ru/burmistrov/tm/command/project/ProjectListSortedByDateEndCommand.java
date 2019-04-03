@@ -19,6 +19,10 @@ public class ProjectListSortedByDateEndCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private ProjectEndpoint projectEndpoint;
+
+
     @NotNull
     @Override
     public String getName() {
@@ -34,7 +38,7 @@ public class ProjectListSortedByDateEndCommand extends AbstractCommand {
     @Override
     public void execute() throws Exception_Exception {
         System.out.println("Список проектов:");
-        @Nullable final List<ProjectDto> projects = serviceLocator.getProjectEndpoint()
+        @Nullable final List<ProjectDto> projects = projectEndpoint
                 .findAllProjectsSortByDateEnd(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
         for (ProjectDto project : Objects.requireNonNull(projects)) {
             System.out.println("ID: " + project.getId() + "; Название: " + project.getName() + "; Описание: " + project.getDescription()

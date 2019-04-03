@@ -16,6 +16,9 @@ public class TaskFindByDescriptionCommand extends AbstractCommand {
     @Inject
     private ServiceLocator serviceLocator;
 
+    @Inject
+    private TaskEndpoint taskEndpoint;
+
     @NotNull
     @Override
     public String getName() {
@@ -32,7 +35,7 @@ public class TaskFindByDescriptionCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Введите описание задачи:");
         @NotNull final String description = serviceLocator.getTerminalCommandService().nextLine();
-        System.out.println(serviceLocator.getTaskEndpoint().findTaskByDescription(serviceLocator.getSession(),
+        System.out.println(taskEndpoint.findTaskByDescription(serviceLocator.getSession(),
                 Objects.requireNonNull(serviceLocator.getSession()).getUserId(), description));
     }
 
