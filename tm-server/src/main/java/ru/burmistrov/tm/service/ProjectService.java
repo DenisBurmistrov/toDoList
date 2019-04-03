@@ -8,18 +8,16 @@ import ru.burmistrov.tm.api.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
-import ru.burmistrov.tm.entity.enumerated.Status;
+import ru.burmistrov.tm.util.DateUtil;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @NoArgsConstructor
 public final class ProjectService implements IProjectService {
@@ -31,7 +29,7 @@ public final class ProjectService implements IProjectService {
     private ITaskRepository taskRepository;
 
     @Override
-    public void remove(@NotNull final String userId, @NotNull final String projectId) throws NullPointerException {
+    public void remove(@NotNull final String userId, @NotNull final String projectId) {
 
         @Nullable final Project project = projectRepository.findOne(projectId, userId);
         if (project != null) {
@@ -46,27 +44,24 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-                           @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException, ParseException {
-
-        @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
+    public Project persist
+            (@NotNull final String userId, @NotNull final String name, @NotNull final String description,
+             @NotNull final String dateEndString, @NotNull final String status) {
         try {
             projectRepository.findOneByName(userId, name);
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             try {
-                    @NotNull final Project project = new Project();
-                    project.setUserId(userId);
-                    project.setDateBegin(new Date());
-                    project.setDateEnd(dateEnd);
-                    project.setName(name);
-                    project.setDescription(description);
-                    project.setStatus(createStatus(status));
-                    projectRepository.getEntityManager().getTransaction().begin();
-                    projectRepository.persist(project);
-                    projectRepository.getEntityManager().getTransaction().commit();
-                    return project;
+                @NotNull final Project project = new Project();
+                project.setUserId(userId);
+                project.setDateBegin(new Date());
+                project.setDateEnd(DateUtil.parseDate(dateEndString));
+                project.setName(name);
+                project.setDescription(description);
+                project.setStatus(createStatus(status));
+                projectRepository.getEntityManager().getTransaction().begin();
+                projectRepository.persist(project);
+                projectRepository.getEntityManager().getTransaction().commit();
+                return project;
             } catch (Exception ex) {
                 projectRepository.getEntityManager().getTransaction().rollback();
             }
@@ -75,9 +70,9 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
-    public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                      @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws NullPointerException {
-
+    public void merge
+            (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
+             @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) {
         try {
             @NotNull final Project project = new Project();
             project.setId(projectId);
@@ -85,10 +80,7 @@ public final class ProjectService implements IProjectService {
             project.setName(name);
             project.setDescription(description);
             project.setStatus(createStatus(status));
-
-            @NotNull final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy"); //dd-MM-yyyy
-            @NotNull final Date dateEnd = simpleDateFormat.parse(dateEndString);
-            project.setDateEnd(dateEnd);
+            project.setDateEnd(DateUtil.parseDate(dateEndString));
             @Nullable final AbstractEntity abstractEntity =
                     Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
             if (abstractEntity != null) {
@@ -170,7 +162,7 @@ public final class ProjectService implements IProjectService {
     public Project findOneByName(@Nullable final String userId, @NotNull final String name) {
         try {
             return Objects.requireNonNull(projectRepository).findOneByName(Objects.requireNonNull(userId), name);
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
     }
@@ -180,21 +172,8 @@ public final class ProjectService implements IProjectService {
     public Project findOneByDescription(@Nullable final String userId, @NotNull final String description) {
         try {
             return Objects.requireNonNull(projectRepository).findOneByDescription(Objects.requireNonNull(userId), description);
-        }catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
-    }
-
-    @Nullable
-    private Status createStatus(String string) {
-        switch (string) {
-            case "Запланировано":
-                return Status.SCHEDULED;
-            case "В процессе":
-                return Status.IN_PROCESS;
-            case "Готово":
-                return Status.COMPLETE;
-        }
-        return null;
     }
 }

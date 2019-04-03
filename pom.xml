@@ -140,7 +140,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>../bin/</classpathPrefix>
-                                <mainClass>ru.burmistrov.tm.AppServ</mainClass>
+                                <mainClass>ru.burmistrov.tm.AppServer</mainClass>
                             </manifest>
                             <manifestEntries>
                                 <Implementation-Build>${buildNumber}</Implementation-Build>

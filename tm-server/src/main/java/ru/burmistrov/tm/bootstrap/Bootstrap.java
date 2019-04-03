@@ -4,17 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.*;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.api.service.*;
-import ru.burmistrov.tm.endpoint.*;
-import ru.burmistrov.tm.service.*;
-import ru.burmistrov.tm.utils.EntityManagerFactoryUtil;
 
-import javax.annotation.Priority;
 import javax.inject.Inject;
-import javax.persistence.EntityManagerFactory;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
 import java.util.Properties;

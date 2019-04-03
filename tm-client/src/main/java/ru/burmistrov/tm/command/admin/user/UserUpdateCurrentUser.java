@@ -39,8 +39,8 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         @NotNull final String middleName = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите новую почту:");
         @NotNull final String email = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getAdminEndpoint().updateUserById(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
+        serviceLocator.getAdminEndpoint().updateUserById
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
                 firstName, middleName, lastName, email, Role.COMMON_USER);
     }
 

@@ -28,7 +28,6 @@ public class SerializeByFasterXmlCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-
         serviceLocator.getAdminEndpoint().saveDataByFasterXml(serviceLocator.getSession());
     }
 

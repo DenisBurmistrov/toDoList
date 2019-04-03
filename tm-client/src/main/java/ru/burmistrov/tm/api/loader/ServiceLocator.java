@@ -11,7 +11,6 @@ import java.util.Map;
 
 public interface ServiceLocator {
 
-
     void execute(@Nullable String command) throws Exception_Exception, IOException;
 
     @NotNull

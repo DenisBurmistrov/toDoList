@@ -41,7 +41,8 @@ public final class TaskCreateCommand extends AbstractCommand {
         System.out.println("Введите статус(Запланировано || В процессе || Готово)");
         @NotNull final String status = serviceLocator.getTerminalCommandService().nextLine();
         serviceLocator.getTaskEndpoint().createTask(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId(), id, oldName, description, date, status);
+                Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
+                id, oldName, description, date, status);
     }
 
     @Override

@@ -29,8 +29,8 @@ public class UserClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getAdminEndpoint().removeAllUsers(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId());
+        serviceLocator.getAdminEndpoint().removeAllUsers
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
     }
 
     @Override

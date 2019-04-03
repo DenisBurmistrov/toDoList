@@ -25,7 +25,6 @@ import java.util.Objects;
 @NoArgsConstructor
 public class TaskEndpoint implements ITaskEndpoint {
 
-
     @Inject
     private ISessionService sessionService;
 

@@ -35,8 +35,8 @@ public class ProjectFindByDescriptionCommand extends AbstractCommand {
         System.out.println("Введите описание проекта:");
         @NotNull final String description = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Проект:");
-        @Nullable final ProjectDto project = serviceLocator.getProjectEndpoint().findProjectByDescription(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId(), description);
+        @Nullable final ProjectDto project = serviceLocator.getProjectEndpoint().findProjectByDescription
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(), description);
         if (project == null) {
             System.out.println("Нет проекта с таким описанием");
         } else {

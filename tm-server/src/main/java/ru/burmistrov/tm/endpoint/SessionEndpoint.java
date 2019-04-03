@@ -19,7 +19,6 @@ import java.io.IOException;
 @WebService
 public class SessionEndpoint implements ISessionEndpoint {
 
-
     @Inject
     private ISessionService sessionService;
 

@@ -8,10 +8,9 @@ import ru.burmistrov.tm.api.service.IUserService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.entity.enumerated.Role;
-import ru.burmistrov.tm.utils.PasswordUtil;
+import ru.burmistrov.tm.util.PasswordUtil;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 

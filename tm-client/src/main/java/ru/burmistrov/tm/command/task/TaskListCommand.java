@@ -34,8 +34,8 @@ public final class TaskListCommand extends AbstractCommand {
     public void execute() throws Exception_Exception {
         System.out.println("Введите ID проекта:");
         @NotNull final String id = serviceLocator.getTerminalCommandService().nextLine();
-        @NotNull final List<TaskDto> taskList = serviceLocator.getTaskEndpoint().findAllTasksInProject(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId(), id);
+        @NotNull final List<TaskDto> taskList = serviceLocator.getTaskEndpoint().findAllTasksInProject
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(), id);
         for (TaskDto task : taskList) {
             System.out.println("ID: " + task.getId() +
                     "; Название: " + task.getName() +

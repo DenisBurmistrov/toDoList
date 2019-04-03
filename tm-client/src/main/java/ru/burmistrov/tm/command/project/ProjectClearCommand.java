@@ -29,8 +29,8 @@ public final class ProjectClearCommand extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
-        serviceLocator.getProjectEndpoint().removeAllProjects(serviceLocator.getSession(),
-                Objects.requireNonNull(serviceLocator.getSession()).getUserId());
+        serviceLocator.getProjectEndpoint().removeAllProjects
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId());
     }
 
     @Override

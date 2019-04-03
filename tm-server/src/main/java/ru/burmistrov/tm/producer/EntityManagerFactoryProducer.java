@@ -1,4 +1,4 @@
-package ru.burmistrov.tm.utils;
+package ru.burmistrov.tm.producer;
 
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityManagerFactoryUtil {
+public class EntityManagerFactoryProducer {
 
     @Inject
     private PropertyService propertyService;

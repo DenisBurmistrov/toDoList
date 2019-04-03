@@ -41,7 +41,8 @@ public final class ProjectCreateCommand extends AbstractCommand {
         @NotNull final String date = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите статус(Запланировано || В процессе || Готово): ");
         @NotNull final String status = serviceLocator.getTerminalCommandService().nextLine();
-        serviceLocator.getProjectEndpoint().createProject(serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
+        serviceLocator.getProjectEndpoint().createProject
+                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
                 name, description, date, status);
     }
 

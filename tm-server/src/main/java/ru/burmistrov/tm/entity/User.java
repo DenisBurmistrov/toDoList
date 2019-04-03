@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.enumerated.Role;
-import ru.burmistrov.tm.utils.PasswordUtil;
+import ru.burmistrov.tm.util.PasswordUtil;
 
 import javax.persistence.*;
 import java.io.Serializable;

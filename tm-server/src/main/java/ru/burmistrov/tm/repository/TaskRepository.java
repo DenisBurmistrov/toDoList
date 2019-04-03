@@ -60,23 +60,35 @@ public class TaskRepository implements ITaskRepository {
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
         return entityManager.createQuery
-                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.name = '" + name + "'", Task.class).getSingleResult();
+                ("SELECT task FROM Task task WHERE task.userId =: userId AND task.name =: name", Task.class)
+                .setParameter("userId", userId)
+                .setParameter("name", name)
+                .getSingleResult();
     }
 
     @Override
     public Task findOneByDescription(@NotNull final String userId, @NotNull final String description) {
         return entityManager.createQuery
-                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.description = '" + description + "'", Task.class).getSingleResult();
+                ("SELECT task FROM Task task WHERE task.userId =: userId AND task.description =: description", Task.class)
+                .setParameter("userId", userId)
+                .setParameter("description", description)
+                .getSingleResult();
     }
 
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        entityManager.createQuery("DELETE from Task task WHERE task.userId = '" + userId + "' AND task.projectId = '" + projectId + "'");
+        entityManager.createQuery
+                ("DELETE from Task task WHERE task.userId =: userId AND task.projectId =: projectId")
+                .setParameter("userId", userId)
+                .setParameter("projectId", projectId);
     }
 
     @Override
     public List<Task> findAllByProjectId(@NotNull final String userId, @NotNull final String projectId) {
         return entityManager.createQuery
-                ("SELECT task FROM Task task WHERE task.userId = '" + userId + "' AND task.projectId = '" + projectId + "'", Task.class).getResultList();
+                ("SELECT task FROM Task task WHERE task.userId =: userId AND task.projectId =: projectId", Task.class)
+                .setParameter("userId", userId)
+                .setParameter("projectId", projectId)
+                .getResultList();
     }
 }
