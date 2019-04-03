@@ -23,8 +23,8 @@ public class UserService implements IUserService {
     @Inject
     private IUserRepository userRepository;
 
-    @Override
     @Nullable
+    @Override
     public User logIn(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         for (User user : userRepository.findAll()) {
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&

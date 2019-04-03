@@ -21,8 +21,9 @@ import java.util.Objects;
 
 import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
-@NoArgsConstructor
+
 @Transactional
+@NoArgsConstructor
 public class ProjectService implements IProjectService {
 
     @Inject
@@ -90,8 +91,8 @@ public class ProjectService implements IProjectService {
             Objects.requireNonNull(projectRepository).removeAll(userId);
     }
 
-    @Override
     @Nullable
+    @Override
     public List<Project> findAll(@NotNull final String userId) {
         return projectRepository.findAll(userId);
     }

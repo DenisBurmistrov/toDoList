@@ -20,15 +20,15 @@ import java.util.Objects;
 
 import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
-@NoArgsConstructor
 @Transactional
+@NoArgsConstructor
 public class TaskService implements ITaskService {
 
     @Inject
     private ITaskRepository taskRepository;
 
-    @Override
     @Nullable
+    @Override
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                         @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
         try {

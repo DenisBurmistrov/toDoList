@@ -31,8 +31,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Transactional
+@NoArgsConstructor
 public class AdminService implements IAdminService {
 
     @Inject
@@ -270,3 +270,4 @@ public class AdminService implements IAdminService {
         }
     }
 }
+
