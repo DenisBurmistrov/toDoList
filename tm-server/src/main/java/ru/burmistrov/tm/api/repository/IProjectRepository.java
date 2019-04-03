@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface IProjectRepository<T extends AbstractEntity> {
@@ -24,4 +25,6 @@ public interface IProjectRepository<T extends AbstractEntity> {
     Project findOneByName(@NotNull final String userId, @NotNull final String name);
 
     Project findOneByDescription(@NotNull final String userId, @NotNull final String description);
+
+    EntityManager getEntityManager();
 }

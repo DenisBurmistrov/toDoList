@@ -1,11 +1,10 @@
 package ru.burmistrov.tm.api.repository;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.Session;
+
+import javax.persistence.EntityManager;
 
 public interface ISessionRepository {
 
@@ -14,4 +13,6 @@ public interface ISessionRepository {
     @Nullable
     Session findOne(@NotNull final String id,
                     @NotNull final String userId);
+
+    EntityManager getEntityManager();
 }

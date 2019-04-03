@@ -1,4 +1,4 @@
-package ru.burmistrov.tm.utils;
+package ru.burmistrov.tm.util;
 
 import java.io.IOException;
 import java.net.URL;

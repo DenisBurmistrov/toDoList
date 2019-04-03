@@ -1,11 +1,11 @@
 package ru.burmistrov.tm.api.repository;
 
-import org.apache.ibatis.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.enumerated.Status;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
@@ -36,4 +36,6 @@ public interface ITaskRepository {
 
     @Nullable
     List<Task> findAllByProjectId(@NotNull final String userId, @NotNull final String projectId);
+
+    EntityManager getEntityManager();
 }

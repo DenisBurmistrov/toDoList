@@ -4,75 +4,102 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
+import ru.burmistrov.tm.command.admin.deserialize.*;
+import ru.burmistrov.tm.command.admin.serialize.*;
+import ru.burmistrov.tm.command.admin.user.*;
+import ru.burmistrov.tm.command.project.*;
+import ru.burmistrov.tm.command.system.PrintListCommand;
+import ru.burmistrov.tm.command.system.PrintManifestCommand;
+import ru.burmistrov.tm.command.task.*;
+import ru.burmistrov.tm.command.user.UserLogInCommand;
+import ru.burmistrov.tm.command.user.UserLogOutCommand;
+import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.xml.bind.JAXBException;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.CDI;
+import javax.inject.Inject;
 import java.io.IOException;
-import java.lang.ClassNotFoundException;
 import java.lang.Exception;
-import java.text.ParseException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
+
+@ApplicationScoped
 public class Bootstrap implements ServiceLocator {
 
-    @NotNull
-    private final ProjectEndpointService projectEndpointService = new ProjectEndpointService();
+    @Inject
+    private ProjectEndpointService projectEndpointService;
 
-    @NotNull
-    private final TaskEndpointService taskEndpointService = new TaskEndpointService();
+    @Inject
+    private TaskEndpointService taskEndpointService;
 
-    @NotNull
-    private final UserEndpointService userEndpointService = new UserEndpointService();
+    @Inject
+    private UserEndpointService userEndpointService;
 
-    @NotNull
-    private final SessionEndpointService sessionEndpointService = new SessionEndpointService();
+    @Inject
+    private SessionEndpointService sessionEndpointService;
 
-    @NotNull
-    private final AdminEndpointService adminEndpointService = new AdminEndpointService();
+    @Inject
+    private AdminEndpointService adminEndpointService;
 
-    @NotNull
-    private final SessionEndpoint sessionEndpoint = sessionEndpointService.getSessionEndpointPort();
-
-    @NotNull
-    private final ProjectEndpoint projectEndpoint = projectEndpointService.getProjectEndpointPort();
-
-    @NotNull
-    private final TaskEndpoint taskEndpoint = taskEndpointService.getTaskEndpointPort();
-
-    @NotNull
-    private final UserEndpoint userEndpoint = userEndpointService.getUserEndpointPort();
-
-    @NotNull
-    private final AdminEndpoint adminEndpoint = adminEndpointService.getAdminEndpointPort();
-
-    @NotNull
-    private final Map<String, AbstractCommand> commands = new LinkedHashMap<>();
-
-    @NotNull
-    private final TerminalCommandService terminalCommandService = new TerminalCommandService(this);
+    @Inject
+    private TerminalCommandService terminalCommandService;
 
     @Nullable
     private Session session;
+
+    private Map<String ,AbstractCommand> commands = new HashMap<>();
+
+
+    @NotNull
+    private static final  Class[] CLASSES = new Class[]{ProjectClearCommand.class, ProjectCreateCommand.class, ProjectListCommand.class, ProjectRemoveCommand.class,
+            ProjectUpdateCommand.class, PrintListCommand.class, ProjectListSortedByDateBeginCommand.class, ProjectListSortedByDateEndCommand.class,
+            ProjectFindByNameCommand.class, ProjectFindByDescriptionCommand.class,
+            ProjectListSortedByStatus.class, TaskClearCommand.class, TaskCreateCommand.class, TaskListCommand.class, TaskListSortedByDateBeginCommand.class,
+            TaskListSortedByDateEndCommand.class, TaskListSortedByStatus.class, TaskRemoveCommand.class, TaskUpdateCommand.class,
+            TaskFindByNameCommand.class, TaskFindByDescriptionCommand.class, UserClearCommand.class,
+            UserLogInCommand.class, UserLogOutCommand.class, UserRegistrateCommand.class, UserRemoveCommand.class,
+            UserShowCurrentUser.class, UserUpdateCurrentUser.class, UserUpdatePasswordCommand.class, PrintManifestCommand.class, SerializeByDefaultCommand.class,
+            SerializeByJaxbXmlCommand.class, SerializeByJaxbJsonCommand.class, SerializeByFasterXmlCommand.class, SerializeByFasterXmlJsonCommand.class, DeserializeByDefaultCommand.class,
+            DeserializeByJaxbXmlCommand.class, DeserializeByJaxbJsonCommand.class, DeserializeByFasterXmlJsonCommand.class, DeserializeByFatserXmlCommand.class};
+
+
+    public void init() {
+        registry(CLASSES);
+        start();
+    }
+
+    public void start() {
+        System.out.println("    [ToDoList]\nВведите -logIn авторизоваться");
+        while (true) {
+            @NotNull final String input = terminalCommandService.nextLine();
+            if ("-exit".equals(input)) {
+                System.exit(0);
+            }
+            try {
+                execute(input);
+            } catch (Exception_Exception | IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private void registry(Class... classes) {
         for (Class commandClass : classes) {
             try {
                 if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
-                    AbstractCommand abstractCommand = (AbstractCommand) commandClass.newInstance();
-                    abstractCommand.setServiceLocator(this);
-                    commands.put(abstractCommand.getName(), abstractCommand);
+                    AbstractCommand abstractCommand = (AbstractCommand) CDI.current().select(commandClass).get();
+                    if(abstractCommand != null) {
+                        commands.put(abstractCommand.getName(), abstractCommand);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
-    }
-
-    public void init(Class... classes) {
-        registry(classes);
-        terminalCommandService.start();
     }
 
     @Override
@@ -90,29 +117,16 @@ public class Bootstrap implements ServiceLocator {
     }
 
     @NotNull
-    public ProjectEndpoint getProjectEndpoint() {
-        return projectEndpoint;
-    }
-
-    @NotNull
-    public TaskEndpoint getTaskEndpoint() {
-        return taskEndpoint;
-    }
-
-    @NotNull
-    public UserEndpoint getUserEndpoint() {
-        return userEndpoint;
-    }
-
-    @NotNull
     public TerminalCommandService getTerminalCommandService() {
         return terminalCommandService;
     }
 
     @NotNull
+    @Override
     public Map<String, AbstractCommand> getCommands() {
         return commands;
     }
+
 
     @Nullable
     public Session getSession() {
@@ -127,14 +141,29 @@ public class Bootstrap implements ServiceLocator {
         return session != null;
     }
 
-    @NotNull
-    public SessionEndpoint getSessionEndpoint() {
-        return sessionEndpoint;
+    @Produces
+    public ProjectEndpoint getProjectEndpoint() {
+        return projectEndpointService.getProjectEndpointPort();
     }
 
-    @NotNull
-    @Override
-    public AdminEndpoint getAdminEndpoint() {
-        return adminEndpoint;
+    @Produces
+    public TaskEndpoint getTaskEndpoint() {
+        return taskEndpointService.getTaskEndpointPort();
     }
+
+    @Produces
+    public AdminEndpoint getAdminEndpoint() {
+        return adminEndpointService.getAdminEndpointPort();
+    }
+
+    @Produces
+    public UserEndpoint getUserEndpoint() {
+        return userEndpointService.getUserEndpointPort();
+    }
+
+    @Produces
+    public SessionEndpoint getSessionEndpoint() {
+        return sessionEndpointService.getSessionEndpointPort();
+    }
+
 }

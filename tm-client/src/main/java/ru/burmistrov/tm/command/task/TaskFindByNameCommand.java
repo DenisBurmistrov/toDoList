@@ -1,12 +1,20 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
+import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
+import ru.burmistrov.tm.endpoint.Session;
+import ru.burmistrov.tm.endpoint.TaskEndpoint;
+import ru.burmistrov.tm.service.TerminalCommandService;
 
+import javax.inject.Inject;
 import java.util.Objects;
 
 public class TaskFindByNameCommand extends AbstractCommand {
+
+    @Inject
+    private ServiceLocator serviceLocator;
 
     @NotNull
     @Override
@@ -23,10 +31,9 @@ public class TaskFindByNameCommand extends AbstractCommand {
     @Override
     public void execute() throws Exception_Exception {
         System.out.println("Введите имя задачи:");
-        @NotNull final String name = getServiceLocator().getTerminalCommandService().nextLine();
-        System.out.println(getServiceLocator().getTaskEndpoint()
-                .findTaskByName(getServiceLocator().getSession(),
-                        Objects.requireNonNull(Objects.requireNonNull(getServiceLocator().getSession()).getUserId()), name));
+        @NotNull final String name = serviceLocator.getTerminalCommandService().nextLine();
+        System.out.println(serviceLocator.getTaskEndpoint().findTaskByName(serviceLocator.getSession(),
+                Objects.requireNonNull(serviceLocator.getSession()).getUserId(), name));
     }
 
     @Override

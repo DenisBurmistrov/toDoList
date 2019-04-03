@@ -11,21 +11,6 @@ import java.text.ParseException;
 
 public interface ServiceLocator {
 
-    @NotNull
-    IProjectService getProjectService();
-
-    @NotNull
-    ITaskService getTaskService();
-
-    @NotNull
-    IUserService getUserService();
-
-    @NotNull
-    ISessionService getSessionService();
-
-    @NotNull
-    IAdminService getAdminService();
-
     void init() throws IOException, ParseException, NoSuchAlgorithmException, SQLException;
 
 }

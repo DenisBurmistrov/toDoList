@@ -26,5 +26,4 @@ public interface IUserEndpoint {
              @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
              @WebParam(name = "lastName") @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
              @WebParam(name = "role") @NotNull final Role role) throws Exception;
-
 }

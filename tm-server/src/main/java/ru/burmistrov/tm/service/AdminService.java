@@ -3,6 +3,7 @@ package ru.burmistrov.tm.service;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.NoArgsConstructor;
 import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,13 +16,9 @@ import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.dto.Domain;
 import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.entity.enumerated.Role;
-import ru.burmistrov.tm.repository.ProjectRepository;
-import ru.burmistrov.tm.repository.TaskRepository;
-import ru.burmistrov.tm.repository.UserRepository;
-import ru.burmistrov.tm.utils.PasswordUtil;
+import ru.burmistrov.tm.util.PasswordUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,39 +30,25 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
+@NoArgsConstructor
 public class AdminService implements IAdminService {
 
-    @NotNull
-    private final IProjectService projectService;
+    @Inject
+    private IProjectService projectService;
 
-    @NotNull
-    private final ITaskService taskService;
+    @Inject
+    private ITaskService taskService;
 
-    @NotNull
+    @Inject
     private IProjectRepository projectRepository;
 
-    @NotNull
+    @Inject
     private ITaskRepository taskRepository;
 
-    @NotNull
+    @Inject
     private IUserRepository userRepository;
 
-    @NotNull
-    private final EntityManagerFactory entityManagerFactory;
-
-
-    public AdminService(@NotNull final IProjectService projectService,
-                        @NotNull final ITaskService taskService, @NotNull final EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-        this.projectService = projectService;
-        this.taskService = taskService;
-    }
-
     public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         @NotNull final Domain domain = new Domain();
 
@@ -77,10 +60,6 @@ public class AdminService implements IAdminService {
 
 
     public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final Domain domain = new Domain();
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
@@ -92,11 +71,6 @@ public class AdminService implements IAdminService {
     }
 
     public void saveDataByFasterXml(@NotNull final Session session) throws IOException, SQLException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final Domain domain = new Domain();
 
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
@@ -107,10 +81,6 @@ public class AdminService implements IAdminService {
     }
 
     public void saveDataByJaxbJson(@NotNull final Session session) throws SQLException, JAXBException, IOException {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
         @NotNull final Domain domain = new Domain();
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
@@ -124,11 +94,6 @@ public class AdminService implements IAdminService {
     }
 
     public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException, SQLException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final Domain domain = new Domain();
 
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
@@ -141,14 +106,8 @@ public class AdminService implements IAdminService {
     }
 
     public void loadDataByDefault(@NotNull final Session session) throws IOException, ClassNotFoundException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final FileInputStream fileInputStream = new FileInputStream("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\" + "projects-and-tasks-by-admin.dat");
         @NotNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
         @NotNull final Domain domain = (Domain) objectInputStream.readObject();
 
         for (@NotNull final Project project : domain.getProjects()) {
@@ -163,11 +122,6 @@ public class AdminService implements IAdminService {
     }
 
     public void loadDataByFasterXmlJson(@NotNull final Session session) throws IOException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final File file = new File("projects-and-tasks-by-admin.json");
         @NotNull final ObjectMapper objectMapper = new ObjectMapper();
         @NotNull final Domain domain = objectMapper.readValue(file, Domain.class);
@@ -184,11 +138,6 @@ public class AdminService implements IAdminService {
     }
 
     public void loadDataByFasterXml(@NotNull final Session session) throws IOException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
         @NotNull final XmlMapper xmlMapper = new XmlMapper();
         @NotNull final Domain domain = xmlMapper.readValue(file, Domain.class);
@@ -205,11 +154,6 @@ public class AdminService implements IAdminService {
     }
 
     public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 
         @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
@@ -231,11 +175,6 @@ public class AdminService implements IAdminService {
     }
 
     public void loadDataByJaxbXml(@NotNull final Session session) throws JAXBException {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        projectRepository = new ProjectRepository(entityManager);
-        taskRepository = new TaskRepository(entityManager);
-        userRepository = new UserRepository(entityManager);
         @NotNull final File file = new File("projects-and-tasks-by-admin.xml");
         @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
         @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -254,13 +193,11 @@ public class AdminService implements IAdminService {
 
     @Override
     @Nullable
-    public User createUser(@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
-                           @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
-                           @Nullable Role roleType) throws NoSuchAlgorithmException {
-
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
+    public User createUser
+            (@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
+             @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
+             @Nullable Role roleType) {
+        try {
         @Nullable final User abstractEntity = userRepository.findOneByLogin(login);
         if (abstractEntity == null) {
             @NotNull final User user = new User();
@@ -271,39 +208,36 @@ public class AdminService implements IAdminService {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setRole(roleType);
-            try {
-                entityManager.getTransaction().begin();
+
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).persist(user);
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
                 return user;
-            } catch (Exception e) {
-                entityManager.getTransaction().rollback();
             }
+            }
+        catch (Exception e) {
+            userRepository.getEntityManager().getTransaction().rollback();
         }
         return null;
     }
 
     @Override
     public void updatePassword(@NotNull final String login, @NotNull final String password) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         if (password.length() > 0) {
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).updatePassword(login, PasswordUtil.hashPassword(password));
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
 
     @Override
-    public void updateUserById(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
-                               @NotNull final String lastName, final @NotNull String email, final @NotNull Role role) {
-
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
+    public void updateUserById
+            (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+             @NotNull final String lastName, final @NotNull String email, final @NotNull Role role) {
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -314,53 +248,45 @@ public class AdminService implements IAdminService {
         @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
         if (abstractEntity != null) {
             try {
-                entityManager.getTransaction().begin();
+                userRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(userRepository).merge(currentUser);
-                entityManager.getTransaction().commit();
+                userRepository.getEntityManager().getTransaction().commit();
             } catch (Exception e) {
-                entityManager.getTransaction().rollback();
+                userRepository.getEntityManager().getTransaction().rollback();
             }
         }
     }
 
     @Override
     public void removeUserById(@NotNull final String userId) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         try {
-            entityManager.getTransaction().begin();
+            userRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
-            entityManager.getTransaction().commit();
+            userRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            userRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
     @Override
     public void removeAllUsers() {
 
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         try {
-            entityManager.getTransaction().begin();
+            userRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(userRepository).removeAll();
-            entityManager.getTransaction().commit();
+            userRepository.getEntityManager().getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            userRepository.getEntityManager().getTransaction().rollback();
         }
     }
 
     @Nullable
     public List<User> findAll() {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         return Objects.requireNonNull(userRepository).findAll();
     }
 
     @Nullable
     public User findOne(@NotNull final String id) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         try {
             return Objects.requireNonNull(userRepository).findOne(id);
         } catch (NoResultException e) {
@@ -370,8 +296,6 @@ public class AdminService implements IAdminService {
 
     @Nullable
     public User findOneByLogin(@NotNull final String login) {
-        @NotNull final EntityManager entityManager = entityManagerFactory.createEntityManager();
-        userRepository = new UserRepository(entityManager);
         try {
             return Objects.requireNonNull(userRepository).findOneByLogin(login);
         } catch (NoResultException e) {
