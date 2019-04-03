@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IUserRepository;
@@ -11,11 +12,13 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.util.PasswordUtil;
 
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @NoArgsConstructor
-public final class UserService implements IUserService {
+@Transactional
+public class UserService implements IUserService {
 
     @Inject
     private IUserRepository userRepository;
@@ -36,7 +39,6 @@ public final class UserService implements IUserService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
                       @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
-
         @NotNull final User currentUser = new User();
         currentUser.setFirstName(firstName);
         currentUser.setMiddleName(middleName);
@@ -45,15 +47,12 @@ public final class UserService implements IUserService {
         currentUser.setId(userId);
         currentUser.setRole(role);
         try {
-        @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(userRepository).findOne(userId);
-        if (abstractEntity != null) {
-                userRepository.getEntityManager().getTransaction().begin();
+            @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(userRepository).findOne(userId);
+            if (abstractEntity != null) {
                 Objects.requireNonNull(userRepository).merge(currentUser);
-                userRepository.getEntityManager().getTransaction().commit();
             }
-        }
-        catch (Exception e) {
-            userRepository.getEntityManager().getTransaction().rollback();
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
 
     }

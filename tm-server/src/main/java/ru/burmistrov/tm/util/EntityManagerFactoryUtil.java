@@ -1,4 +1,4 @@
-package ru.burmistrov.tm.producer;
+package ru.burmistrov.tm.util;
 
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -12,22 +12,21 @@ import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.entity.User;
 import ru.burmistrov.tm.service.PropertyService;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityManagerFactoryProducer {
+public class EntityManagerFactoryUtil {
 
     @Inject
     private PropertyService propertyService;
 
-    @NotNull
+    @Produces
     public EntityManagerFactory getEntityManagerFactory() throws IOException {
-
         @NotNull final Map<String, String> settings = new HashMap<>();
         settings.put(Environment.DRIVER, propertyService.getJdbcDriver());
         settings.put(Environment.URL, propertyService.getJdbcUrl());
@@ -49,10 +48,4 @@ public class EntityManagerFactoryProducer {
         @NotNull final Metadata metadata = sources.getMetadataBuilder().build();
         return metadata.getSessionFactoryBuilder().build();
     }
-
-    @Produces
-    public EntityManager getEntityManager() throws IOException {
-        return getEntityManagerFactory().createEntityManager();
-    }
-
 }

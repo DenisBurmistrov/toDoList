@@ -1,5 +1,6 @@
 package ru.burmistrov.tm.service;
 
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ISessionRepository;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Properties;
 
+@Transactional
 public class SessionService implements ISessionService {
 
     @Inject
@@ -31,31 +33,19 @@ public class SessionService implements ISessionService {
 
 
     @Override
-    public Session persist(@NotNull final String userId) {
-        try {
-            @Nullable final InputStream inputStream;
-            @NotNull final Properties property = new Properties();
-            inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
-            property.load(inputStream);
-
-            @NotNull final String cycle = property.getProperty("cycle");
-            @NotNull final String salt = property.getProperty("salt");
-
-            @NotNull final Session session = new Session();
-            session.setTimesTamp(new Date().getTime());
-            session.setUserId(userId);
-
-            session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
-
-
-            sessionRepository.getEntityManager().getTransaction().begin();
-            Objects.requireNonNull(sessionRepository).persist(session);
-            sessionRepository.getEntityManager().getTransaction().commit();
-            return session;
-        } catch (Exception e) {
-            sessionRepository.getEntityManager().getTransaction().rollback();
-        }
-        return null;
+    public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
+        @Nullable final InputStream inputStream;
+        @NotNull final Properties property = new Properties();
+        inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
+        property.load(inputStream);
+        @NotNull final String cycle = property.getProperty("cycle");
+        @NotNull final String salt = property.getProperty("salt");
+        @NotNull final Session session = new Session();
+        session.setTimesTamp(new Date().getTime());
+        session.setUserId(userId);
+        session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
+        Objects.requireNonNull(sessionRepository).persist(session);
+        return session;
     }
 
     @Override

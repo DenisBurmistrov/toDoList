@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.ITaskRepository;
@@ -20,7 +21,8 @@ import java.util.Objects;
 import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @NoArgsConstructor
-public final class TaskService implements ITaskService {
+@Transactional
+public class TaskService implements ITaskService {
 
     @Inject
     private ITaskRepository taskRepository;
@@ -28,31 +30,20 @@ public final class TaskService implements ITaskService {
     @Override
     @Nullable
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) {
-        @Nullable AbstractEntity abstractEntity;
+                        @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
         try {
-            abstractEntity = Objects.requireNonNull(taskRepository).findOneByName(userId, name);
+            Objects.requireNonNull(taskRepository).findOneByName(userId, name);
         } catch (NoResultException e) {
-            abstractEntity = null;
-        }
-        try {
-            if (abstractEntity == null) {
-                @NotNull final Task task = new Task();
-                task.setUserId(userId);
-                task.setDateBegin(new Date());
-                task.setDateEnd(DateUtil.parseDate(dateEndString));
-                task.setDescription(description);
-                task.setName(name);
-                task.setProjectId(projectId);
-                task.setStatus(createStatus(status));
-
-                taskRepository.getEntityManager().getTransaction().begin();
-                Objects.requireNonNull(taskRepository).persist(task);
-                taskRepository.getEntityManager().getTransaction().commit();
-                return task;
-            }
-        } catch (Exception e) {
-            taskRepository.getEntityManager().getTransaction().rollback();
+            @NotNull final Task task = new Task();
+            task.setUserId(userId);
+            task.setDateBegin(new Date());
+            task.setDateEnd(DateUtil.parseDate(dateEndString));
+            task.setDescription(description);
+            task.setName(name);
+            task.setProjectId(projectId);
+            task.setStatus(createStatus(status));
+            Objects.requireNonNull(taskRepository).persist(task);
+            return task;
         }
         return null;
     }
@@ -60,8 +51,7 @@ public final class TaskService implements ITaskService {
     @Override
     public void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String taskId,
                       @NotNull final String newName, @NotNull final String description, @NotNull final String dateEndString,
-                      @NotNull final String status) {
-        try {
+                      @NotNull final String status) throws ParseException {
             @NotNull final Task task = new Task();
             task.setId(taskId);
             task.setName(newName);
@@ -70,17 +60,11 @@ public final class TaskService implements ITaskService {
             task.setUserId(userId);
             task.setStatus(createStatus(status));
             task.setDateEnd(DateUtil.parseDate(dateEndString));
-
             @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
             if (newName.length() != 0 && abstractEntity != null) {
-                taskRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(taskRepository).merge(task);
-                taskRepository.getEntityManager().getTransaction().commit();
             }
-        } catch (Exception e) {
-            taskRepository.getEntityManager().getTransaction().rollback();
         }
-    }
 
     @NotNull
     @Override
@@ -90,42 +74,28 @@ public final class TaskService implements ITaskService {
 
     @Override
     public void removeAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        try {
-            taskRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAllInProject(userId, projectId);
-            taskRepository.getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            taskRepository.getEntityManager().getTransaction().rollback();
-        }
     }
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
-        Task task = taskRepository.findOne(taskId, userId);
-        if (task != null) {
-            try {
-                taskRepository.getEntityManager().getTransaction().begin();
+        try {
+            Task task = taskRepository.findOne(taskId, userId);
+            if (task != null) {
                 Objects.requireNonNull(taskRepository).remove(task);
-                taskRepository.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                taskRepository.getEntityManager().getTransaction().rollback();
             }
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        try {
-            taskRepository.getEntityManager().getTransaction().begin();
-            Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
-            taskRepository.getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            taskRepository.getEntityManager().getTransaction().rollback();
-        }
+        Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
     }
 
     @NotNull
-
     @Override
     public List<Task> findAllSortByDateBegin(@Nullable final String userId) {
         @NotNull final List<Task> result = Objects.requireNonNull(findAll(userId));

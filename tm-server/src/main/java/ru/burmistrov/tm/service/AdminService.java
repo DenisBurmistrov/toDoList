@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.NoArgsConstructor;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
+@Transactional
 public class AdminService implements IAdminService {
 
     @Inject
@@ -51,20 +53,17 @@ public class AdminService implements IAdminService {
     public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
         @NotNull final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("projects-and-tasks-by-admin.dat"));
         @NotNull final Domain domain = new Domain();
-
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
         domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
         oos.writeObject(domain);
     }
 
-
     public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
         @NotNull final Domain domain = new Domain();
         domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
         domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
-
         @NotNull final ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.writeValue(new File("projects-and-tasks-by-admin.json"), domain);
@@ -72,7 +71,6 @@ public class AdminService implements IAdminService {
 
     public void saveDataByFasterXml(@NotNull final Session session) throws IOException, SQLException {
         @NotNull final Domain domain = new Domain();
-
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
         domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
@@ -95,7 +93,6 @@ public class AdminService implements IAdminService {
 
     public void saveDataByJaxbXml(@NotNull final Session session) throws IOException, JAXBException, SQLException {
         @NotNull final Domain domain = new Domain();
-
         domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
         domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
@@ -155,10 +152,8 @@ public class AdminService implements IAdminService {
 
     public void loadDataByJaxbJson(@NotNull final Session session) throws JAXBException {
         System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
-
         @NotNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
         @NotNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
         unmarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, "application/json");
         unmarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT, true);
         @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(new File("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\projects-and-tasks-by-admin.json"));
@@ -196,10 +191,10 @@ public class AdminService implements IAdminService {
     public User createUser
             (@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
              @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
-             @Nullable Role roleType) {
+             @Nullable Role roleType) throws NoSuchAlgorithmException {
         try {
-        @Nullable final User abstractEntity = userRepository.findOneByLogin(login);
-        if (abstractEntity == null) {
+            userRepository.findOneByLogin(login);
+        } catch (NoResultException e) {
             @NotNull final User user = new User();
             user.setLogin(login);
             user.setHashPassword(password);
@@ -208,29 +203,16 @@ public class AdminService implements IAdminService {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setRole(roleType);
-
-                userRepository.getEntityManager().getTransaction().begin();
-                Objects.requireNonNull(userRepository).persist(user);
-                userRepository.getEntityManager().getTransaction().commit();
-                return user;
-            }
-            }
-        catch (Exception e) {
-            userRepository.getEntityManager().getTransaction().rollback();
+            Objects.requireNonNull(userRepository).persist(user);
+            return user;
         }
         return null;
     }
 
     @Override
-    public void updatePassword(@NotNull final String login, @NotNull final String password) {
+    public void updatePassword(@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException {
         if (password.length() > 0) {
-            try {
-                userRepository.getEntityManager().getTransaction().begin();
-                Objects.requireNonNull(userRepository).updatePassword(login, PasswordUtil.hashPassword(password));
-                userRepository.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                userRepository.getEntityManager().getTransaction().rollback();
-            }
+            Objects.requireNonNull(userRepository).updatePassword(login, PasswordUtil.hashPassword(password));
         }
     }
 
@@ -245,39 +227,24 @@ public class AdminService implements IAdminService {
         currentUser.setEmail(email);
         currentUser.setId(userId);
         currentUser.setRole(role);
-        @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
-        if (abstractEntity != null) {
-            try {
-                userRepository.getEntityManager().getTransaction().begin();
+        try {
+            @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
+            if (abstractEntity != null) {
                 Objects.requireNonNull(userRepository).merge(currentUser);
-                userRepository.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                userRepository.getEntityManager().getTransaction().rollback();
             }
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void removeUserById(@NotNull final String userId) {
-        try {
-            userRepository.getEntityManager().getTransaction().begin();
-            Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
-            userRepository.getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            userRepository.getEntityManager().getTransaction().rollback();
-        }
+        Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
     }
 
     @Override
     public void removeAllUsers() {
-
-        try {
-            userRepository.getEntityManager().getTransaction().begin();
-            Objects.requireNonNull(userRepository).removeAll();
-            userRepository.getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            userRepository.getEntityManager().getTransaction().rollback();
-        }
+        Objects.requireNonNull(userRepository).removeAll();
     }
 
     @Nullable

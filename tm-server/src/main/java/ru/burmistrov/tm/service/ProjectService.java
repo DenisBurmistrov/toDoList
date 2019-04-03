@@ -1,6 +1,7 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.repository.IProjectRepository;
@@ -13,6 +14,7 @@ import ru.burmistrov.tm.util.DateUtil;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +22,8 @@ import java.util.Objects;
 import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @NoArgsConstructor
-public final class ProjectService implements IProjectService {
+@Transactional
+public class ProjectService implements IProjectService {
 
     @Inject
     private IProjectRepository projectRepository;
@@ -30,41 +33,31 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String projectId) {
-
-        @Nullable final Project project = projectRepository.findOne(projectId, userId);
-        if (project != null) {
-            try {
-                projectRepository.getEntityManager().getTransaction().begin();
+        try {
+            @Nullable final Project project = projectRepository.findOne(projectId, userId);
+            if (project != null) {
                 Objects.requireNonNull(projectRepository).remove(project);
-                projectRepository.getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                projectRepository.getEntityManager().getTransaction().rollback();
             }
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public Project persist
             (@NotNull final String userId, @NotNull final String name, @NotNull final String description,
-             @NotNull final String dateEndString, @NotNull final String status) {
+             @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
         try {
             projectRepository.findOneByName(userId, name);
         } catch (NoResultException e) {
-            try {
-                @NotNull final Project project = new Project();
-                project.setUserId(userId);
-                project.setDateBegin(new Date());
-                project.setDateEnd(DateUtil.parseDate(dateEndString));
-                project.setName(name);
-                project.setDescription(description);
-                project.setStatus(createStatus(status));
-                projectRepository.getEntityManager().getTransaction().begin();
-                projectRepository.persist(project);
-                projectRepository.getEntityManager().getTransaction().commit();
-                return project;
-            } catch (Exception ex) {
-                projectRepository.getEntityManager().getTransaction().rollback();
-            }
+            @NotNull final Project project = new Project();
+            project.setUserId(userId);
+            project.setDateBegin(new Date());
+            project.setDateEnd(DateUtil.parseDate(dateEndString));
+            project.setName(name);
+            project.setDescription(description);
+            project.setStatus(createStatus(status));
+            projectRepository.persist(project);
         }
         return null;
     }
@@ -72,37 +65,29 @@ public final class ProjectService implements IProjectService {
     @Override
     public void merge
             (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
-             @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) {
+             @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
+        @NotNull final Project project = new Project();
+        project.setId(projectId);
+        project.setUserId(userId);
+        project.setName(name);
+        project.setDescription(description);
+        project.setStatus(createStatus(status));
+        project.setDateEnd(DateUtil.parseDate(dateEndString));
         try {
-            @NotNull final Project project = new Project();
-            project.setId(projectId);
-            project.setUserId(userId);
-            project.setName(name);
-            project.setDescription(description);
-            project.setStatus(createStatus(status));
-            project.setDateEnd(DateUtil.parseDate(dateEndString));
             @Nullable final AbstractEntity abstractEntity =
                     Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
             if (abstractEntity != null) {
-                projectRepository.getEntityManager().getTransaction().begin();
                 Objects.requireNonNull(projectRepository).merge(project);
-                projectRepository.getEntityManager().getTransaction().commit();
             }
-        } catch (Exception e) {
-            projectRepository.getEntityManager().getTransaction().rollback();
+        } catch (NoResultException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void removeAll(@Nullable final String userId) {
-        try {
-            projectRepository.getEntityManager().getTransaction().begin();
             Objects.requireNonNull(taskRepository).removeAll(Objects.requireNonNull(userId));
             Objects.requireNonNull(projectRepository).removeAll(userId);
-            projectRepository.getEntityManager().getTransaction().commit();
-        } catch (Exception e) {
-            projectRepository.getEntityManager().getTransaction().rollback();
-        }
     }
 
     @Override
@@ -115,18 +100,7 @@ public final class ProjectService implements IProjectService {
     @Override
     public List<Project> findAllSortByDateBegin(@Nullable final String userId) {
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(Objects.requireNonNull(userId)));
-        result.sort((s1, s2) -> {
-            @NotNull final boolean firstDateMoreThanSecond = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() < 0;
-            @NotNull final boolean secondDateMareFirst = s1.getDateBegin().getTime() - s2.getDateBegin().getTime() > 0;
-
-            if (firstDateMoreThanSecond) {
-                return 1;
-            } else if (secondDateMareFirst) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
+        result.sort(Comparator.comparingLong(s -> s.getDateBegin().getTime()));
         return result;
     }
 
@@ -134,18 +108,7 @@ public final class ProjectService implements IProjectService {
     @Override
     public List<Project> findAllSortByDateEnd(@Nullable final String userId) {
         @NotNull final List<Project> result = Objects.requireNonNull(findAll(Objects.requireNonNull(userId)));
-        result.sort((s1, s2) -> {
-            boolean firstDateMoreThanSecond = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() > 0;
-            boolean secondDateMoreThanFirst = Objects.requireNonNull(s1.getDateEnd()).getTime() - Objects.requireNonNull(s2.getDateEnd()).getTime() < 0;
-
-            if (firstDateMoreThanSecond) {
-                return 1;
-            } else if (secondDateMoreThanFirst) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
+        result.sort((s1, s2) -> Long.compare(s2.getDateBegin().getTime(), s1.getDateBegin().getTime()));
         return result;
     }
 
