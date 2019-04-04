@@ -18,7 +18,7 @@ public interface IProjectService {
     Project persist(@NotNull final String userId, @NotNull final String name, @NotNull final String description,
                     @NotNull final String dateEnd, @NotNull final String status) throws ParseException, IOException, NoSuchAlgorithmException, SQLException;
 
-    void merge(@NotNull final String userId, @NotNull final String taskId, @NotNull final String name, @NotNull final String description,
+    void merge(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name, @NotNull final String description,
                @NotNull final String dateEnd, @NotNull final String status) throws ParseException, SQLException;
 
     void removeAll(@NotNull final String userId) throws SQLException;
