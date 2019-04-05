@@ -1,4 +1,5 @@
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class AdminCrudTest {
 
     @Test
     public void t2_adminServiceUpdatePasswordTest() throws SQLException, NoSuchAlgorithmException {
-        User user = new User();
+        @NotNull final User user = new User();
         user.setHashPassword("test");
         adminService.updatePassword("test", "test1");
         Assert.assertNotEquals("test", adminService.findOneByLogin("test").getPassword(), user.getPassword());

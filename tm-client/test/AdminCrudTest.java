@@ -1,4 +1,5 @@
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -29,8 +30,6 @@ public class AdminCrudTest {
 
     private Session session;
 
-    private UserDto userDto;
-
     @Before
     public void initSessionAndUser() throws Exception_Exception {
         userEndpoint.logIn("admin", "admin");
@@ -46,7 +45,7 @@ public class AdminCrudTest {
 
     @Test
     public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
-        userDto = userEndpoint.logIn("test","test");
+        @NotNull final UserDto userDto = userEndpoint.logIn("test","test");
         adminEndpoint.updatePasswordById(session, userDto.getId(), "test", "test1");
         Assert.assertNotEquals("test", adminEndpoint.findOneByLogin(session, "test").getPassword(), userDto.getPassword());
     }
@@ -59,7 +58,7 @@ public class AdminCrudTest {
 
     @Test
     public void t4_adminServiceRemoveTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
-        userDto = userEndpoint.logIn("test","test1");
+        @NotNull final UserDto userDto = userEndpoint.logIn("test","test1");
         adminEndpoint.removeUserById(session ,userDto.getId());
         Assert.assertNull(adminEndpoint.findOneByLogin(session, "test"));
     }

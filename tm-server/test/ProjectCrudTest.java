@@ -1,11 +1,13 @@
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import ru.burmistrov.tm.api.service.IProjectService;
+import ru.burmistrov.tm.entity.Project;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -29,10 +31,10 @@ public class ProjectCrudTest {
 
     @Test
     public void t2_projectServiceMergeTest() throws ParseException, SQLException {
+        @Nullable final Project project = projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test");
+        Assert.assertNotNull(project);
         projectService.merge
-                ("6c931f71-719c-44c7-a777-725957da3e7b",
-                Objects.requireNonNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test")).getId(),
-                "test1", "test1", "12.12.2021", "В процессе");
+                ("6c931f71-719c-44c7-a777-725957da3e7b",project.getId(),"test1", "test1", "12.12.2021", "В процессе");
         Assert.assertNotNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b" ,"test1"));
     }
 
@@ -70,9 +72,10 @@ public class ProjectCrudTest {
 
     @Test
     public void t9_projectServiceRemoveTest() throws SQLException {
+        @Nullable final Project project = projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test1");
+        Assert.assertNotNull(project);
         projectService.remove
-                ("6c931f71-719c-44c7-a777-725957da3e7b",
-                Objects.requireNonNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test1")).getId());
+                ("6c931f71-719c-44c7-a777-725957da3e7b", project.getId());
         Assert.assertNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b" ,"test1"));
     }
 

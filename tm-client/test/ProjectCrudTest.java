@@ -26,9 +26,6 @@ public class ProjectCrudTest {
 
     private Session session;
 
-    private ProjectDto projectDto;
-
-
     @Before
     public void initSessionAndUser() throws Exception_Exception {
         session = sessionEndpoint.getNewSession("b7801a28-00ec-4b21-92f5-940c9376488a");
