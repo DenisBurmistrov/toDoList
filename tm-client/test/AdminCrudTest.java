@@ -41,23 +41,26 @@ public class AdminCrudTest {
 
     @Test
     public void t1_adminServiceCreateUserTest() throws Exception_Exception {
-        adminEndpoint.createUser(session, "test", "test", "test", "test", "test", "@test", Role.COMMON_USER);
+        Assert.assertNotNull(adminEndpoint.createUser(session, "test", "test", "test", "test", "test", "@test", Role.COMMON_USER));
     }
 
     @Test
-    public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception {
+    public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
         userDto = userEndpoint.logIn("test","test");
-        adminEndpoint.updatePasswordById(session, userDto.getId(), "test1", "test1");
+        adminEndpoint.updatePasswordById(session, userDto.getId(), "test", "test1");
+        Assert.assertNotEquals("test", adminEndpoint.findOneByLogin(session, "test").getPassword(), userDto.getPassword());
     }
 
     @Test
-    public void t3_adminServiceMergeTest() throws Exception_Exception {
+    public void t3_adminServiceMergeTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
         adminEndpoint.updateUserByLogin(session, "test", "test1", "test1", "test1", "@test1", Role.COMMON_USER);
+        Assert.assertEquals("test", adminEndpoint.findOneByLogin(session, "test").getFirstName(), "test1");
     }
 
     @Test
-    public void t4_DadminServiceRemoveTest() throws Exception_Exception {
-        userDto = userEndpoint.logIn("test","test");
+    public void t4_adminServiceRemoveTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
+        userDto = userEndpoint.logIn("test","test1");
         adminEndpoint.removeUserById(session ,userDto.getId());
+        Assert.assertNull(adminEndpoint.findOneByLogin(session, "test"));
     }
 }

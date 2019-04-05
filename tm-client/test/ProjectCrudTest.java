@@ -1,4 +1,5 @@
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,49 +38,52 @@ public class ProjectCrudTest {
     @Test
     public void t1_projectEndpointPersist() throws Exception_Exception {
         projectEndpoint.createProject(session, session.getUserId(), "test", "test", "20.20.2020", "Готово");
+        Assert.assertNotNull(projectEndpoint.findProjectByName(session, session.getUserId(), "test"));
     }
 
     @Test
     public void t2_projectEndpointUpdate() throws Exception_Exception {
         projectEndpoint.updateProjectById(session, session.getUserId(),
-                projectEndpoint.findProjectByName(session, session.getUserId(), "test").getId(), "test", "test", "20.20.2020","Готово");
+                projectEndpoint.findProjectByName(session, session.getUserId(), "test").getId(), "test1", "test1", "20.20.2020","Готово");
+        Assert.assertNotNull(projectEndpoint.findProjectByName(session, session.getUserId(), "test1"));
     }
 
     @Test
     public void t3_projectEndPointFindAllProjects() throws Exception_Exception {
-        projectEndpoint.findAllProjects(session, session.getUserId());
+        Assert.assertNotNull(projectEndpoint.findAllProjects(session, session.getUserId()));
     }
 
     @Test
     public void t4_projectEndpointFindAllProjectsSortByDateBegin() throws Exception_Exception {
-        projectEndpoint.findAllProjectsSortByDateBegin(session, session.getUserId());
+        Assert.assertNotNull(projectEndpoint.findAllProjectsSortByDateBegin(session, session.getUserId()));
     }
 
     @Test
     public void t5_projectEndpointFindAllProjectsSortByDateEnd() throws Exception_Exception {
-        projectEndpoint.findAllProjectsSortByDateEnd(session, session.getUserId());
+        Assert.assertNotNull(projectEndpoint.findAllProjectsSortByDateEnd(session, session.getUserId()));
     }
 
     @Test
     public void t6_projectEndpointFindAllProjectsSortByStatus() throws Exception_Exception {
-        projectEndpoint.findAllProjectsSortByStatus(session, session.getUserId());
+        Assert.assertNotNull(projectEndpoint.findAllProjectsSortByStatus(session, session.getUserId()));
     }
 
     @Test
     public void t7_projectEndpointFindProjectByDescription() throws Exception_Exception {
-        projectEndpoint.findProjectByDescription(session, session.getUserId(), "test");
+        Assert.assertNotNull(projectEndpoint.findProjectByDescription(session, session.getUserId(), "test1"));
     }
 
     @Test
     public void t8_projectEndpointFindProjectByName() throws Exception_Exception {
-        projectEndpoint.findProjectByName(session, session.getUserId(), "test");
+        Assert.assertNotNull(projectEndpoint.findProjectByName(session, session.getUserId(), "test1"));
     }
 
     @Test
-    public void t9_projectEndpointFindProjectByName() throws Exception_Exception {
+    public void t9_projectEndpointRemove() throws Exception_Exception {
         projectEndpoint.removeProjectById
                 (session, session.getUserId(),
-                projectEndpoint.findProjectByName(session, session.getUserId(), "test").getId());
+                projectEndpoint.findProjectByName(session, session.getUserId(), "test1").getId());
+        Assert.assertNull(projectEndpoint.findProjectByName(session, session.getUserId(), "test1"));
     }
 
 }

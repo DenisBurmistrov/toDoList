@@ -1,4 +1,5 @@
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,6 @@ public class UserCrudTest {
 
     @Test
     public void AUserEndpointLogInTest() throws Exception_Exception {
-    userEndpoint.logIn("admin", "admin");
+    Assert.assertNotNull(userEndpoint.logIn("admin", "admin"));
     }
 }
