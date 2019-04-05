@@ -48,16 +48,4 @@ public class UserEndpoint implements IUserEndpoint {
         }
         return userDto;
     }
-
-    @WebMethod
-    @Override
-    public void updateUserByLogin
-            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
-             @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
-             @WebParam(name = "lastName") @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
-             @WebParam(name = "role") @NotNull final Role role) throws Exception {
-        if (sessionService.validate(session)) {
-            adminService.updateUserByLogin(login, firstName, middleName, lastName, email, role);
-        }
-    }
 }

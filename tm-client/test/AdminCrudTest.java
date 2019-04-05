@@ -40,23 +40,23 @@ public class AdminCrudTest {
 
 
     @Test
-    public void ATestadminServiceCreateUser() throws Exception_Exception {
+    public void t1_adminServiceCreateUserTest() throws Exception_Exception {
         adminEndpoint.createUser(session, "test", "test", "test", "test", "test", "@test", Role.COMMON_USER);
     }
 
     @Test
-    public void CadminServiceUpdatePasswordTest() throws Exception_Exception {
+    public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception {
         userDto = userEndpoint.logIn("test","test");
         adminEndpoint.updatePasswordById(session, userDto.getId(), "test1", "test1");
     }
 
     @Test
-    public void BadminServiceMergeTest() throws Exception_Exception {
+    public void t3_adminServiceMergeTest() throws Exception_Exception {
         adminEndpoint.updateUserByLogin(session, "test", "test1", "test1", "test1", "@test1", Role.COMMON_USER);
     }
 
     @Test
-    public void DadminServiceRemoveTest() throws Exception_Exception {
+    public void t4_DadminServiceRemoveTest() throws Exception_Exception {
         userDto = userEndpoint.logIn("test","test");
         adminEndpoint.removeUserById(session ,userDto.getId());
     }

@@ -43,7 +43,7 @@ public final class Project extends AbstractEntity implements Serializable {
     private Status status;
 
     @Nullable
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "projectId", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "projectId", orphanRemoval = true)
     private List<Task> tasks;
 
     @Override

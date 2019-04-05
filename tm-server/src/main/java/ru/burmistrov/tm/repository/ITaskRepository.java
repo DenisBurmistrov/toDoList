@@ -12,8 +12,10 @@ public interface ITaskRepository extends FullEntityRepository<Task, Long> {
 
     void persist(@NotNull final Task task);
 
+    @Modifying
     Task merge(@NotNull final Task task);
 
+    @Modifying
     void remove(@NotNull final Task task);
 
     @Modifying

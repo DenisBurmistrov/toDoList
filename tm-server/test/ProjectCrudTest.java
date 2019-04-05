@@ -21,12 +21,12 @@ public class ProjectCrudTest {
     private IProjectService projectService;
 
     @Test
-    public void AprojectServicePersistTest() throws SQLException, NoSuchAlgorithmException, ParseException, IOException {
+    public void t1_projectServicePersistTest() throws SQLException, NoSuchAlgorithmException, ParseException, IOException {
         projectService.persist("6c931f71-719c-44c7-a777-725957da3e7b", "test", "test", "11.11.2021", "Готово");
     }
 
     @Test
-    public void BprojectServiceMergeTest() throws ParseException, SQLException {
+    public void t2_projectServiceMergeTest() throws ParseException, SQLException {
         projectService.merge
                 ("6c931f71-719c-44c7-a777-725957da3e7b",
                 Objects.requireNonNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test")).getId(),
@@ -34,39 +34,39 @@ public class ProjectCrudTest {
     }
 
     @Test
-    public void CprojectServiceFindAllTest() throws SQLException {
+    public void t3_projectServiceFindAllTest() throws SQLException {
         projectService.findAll("6c931f71-719c-44c7-a777-725957da3e7b");
     }
 
     @Test
-    public void DprojectServiceFindOneByDescriptionTest() throws SQLException {
+    public void t4_projectServiceFindOneByDescriptionTest() throws SQLException {
         projectService.findOneByDescription("6c931f71-719c-44c7-a777-725957da3e7b", "test1");
     }
 
     @Test
-    public void EprojectServiceFindOneByNameTest() throws SQLException {
+    public void t5_projectServiceFindOneByNameTest() throws SQLException {
         projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test1");
     }
 
 
     @Test
-    public void FprojectServiceFindAllSortByDateBeginTest() throws SQLException {
+    public void t6_projectServiceFindAllSortByDateBeginTest() throws SQLException {
         projectService.findAllSortByDateBegin("6c931f71-719c-44c7-a777-725957da3e7b");
     }
 
 
     @Test
-    public void GprojectServiceFindAllSortByDateEndTest() throws SQLException {
+    public void t7_projectServiceFindAllSortByDateEndTest() throws SQLException {
         projectService.findAllSortByDateEnd("6c931f71-719c-44c7-a777-725957da3e7b");
     }
 
     @Test
-    public void HprojectServiceFindAllSortByStatusTest() throws SQLException {
+    public void t8_projectServiceFindAllSortByStatusTest() throws SQLException {
         projectService.findAllSortByStatus("6c931f71-719c-44c7-a777-725957da3e7b");
     }
 
     @Test
-    public void IprojectServiceRemoveTest() throws SQLException {
+    public void t9_projectServiceRemoveTest() throws SQLException {
         projectService.remove
                 ("6c931f71-719c-44c7-a777-725957da3e7b",
                 Objects.requireNonNull(projectService.findOneByName("6c931f71-719c-44c7-a777-725957da3e7b", "test1")).getId());

@@ -35,20 +35,4 @@ public class UserService implements IUserService {
         }
         return null;
     }
-
-    @Override
-    public void merge(@NotNull final String login, @NotNull final String firstName, @NotNull final String middleName,
-                      @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
-        try {
-            @NotNull final User currentUser = userRepository.findOneByLogin(login);
-            currentUser.setFirstName(firstName);
-            currentUser.setMiddleName(middleName);
-            currentUser.setLastName(lastName);
-            currentUser.setEmail(email);
-            currentUser.setRole(role);
-            Objects.requireNonNull(userRepository).merge(currentUser);
-        } catch (NoResultException e) {
-            e.printStackTrace();
-        }
-    }
 }

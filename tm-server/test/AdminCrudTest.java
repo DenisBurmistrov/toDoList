@@ -21,22 +21,22 @@ public class AdminCrudTest {
     private IAdminService adminService;
 
     @Test
-    public void AadminServicePersistTest() throws SQLException, NoSuchAlgorithmException, IOException {
+    public void t1_adminServicePersistTest() throws SQLException, NoSuchAlgorithmException, IOException {
         adminService.createUser("test", "test", "test", "test", "test", "@test", Role.COMMON_USER);
     }
 
     @Test
-    public void BadminServiceUpdatePasswordTest() throws SQLException, NoSuchAlgorithmException {
+    public void t2_adminServiceUpdatePasswordTest() throws SQLException, NoSuchAlgorithmException {
         adminService.updatePassword("test", "test1");
     }
 
     @Test
-    public void CadminServiceMergeTest() throws SQLException {
+    public void t3_adminServiceMergeTest() throws SQLException {
         adminService.updateUserByLogin("test", "test1", "test1", "test1", "@test1", Role.COMMON_USER);
     }
 
     @Test
-    public void DadminServiceRemoveTest() throws SQLException {
+    public void t4_adminServiceRemoveTest() throws SQLException {
         adminService.removeUserById(adminService.findOneByLogin("test").getId());
     }
 
