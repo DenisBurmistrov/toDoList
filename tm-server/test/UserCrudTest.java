@@ -1,4 +1,5 @@
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import ru.burmistrov.tm.api.service.IUserService;
@@ -15,6 +16,6 @@ public class UserCrudTest {
 
     @Test
     public void t1_userServiceLogInTest() throws SQLException, NoSuchAlgorithmException {
-        userService.logIn("admin", "admin");
+        Assert.assertNotNull(userService.logIn("admin", "admin"));
     }
 }
