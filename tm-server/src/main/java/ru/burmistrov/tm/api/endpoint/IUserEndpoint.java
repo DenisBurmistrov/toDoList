@@ -19,11 +19,4 @@ public interface IUserEndpoint {
     @Nullable
     UserDto logIn
             (@WebParam(name = "session") @NotNull final String login, @WebParam(name = "password") @NotNull final String password) throws Exception;
-
-    @WebMethod
-    void updateUserById
-            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
-             @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
-             @WebParam(name = "lastName") @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
-             @WebParam(name = "role") @NotNull final Role role) throws Exception;
 }

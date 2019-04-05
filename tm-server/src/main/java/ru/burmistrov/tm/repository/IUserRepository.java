@@ -13,8 +13,7 @@ public interface IUserRepository extends FullEntityRepository<User, Long> {
 
     User merge(@NotNull final User user);
 
-    @Query(value = "DELETE from User user WHERE user.id =: id")
-    void remove(@NotNull @QueryParam("id") final String id);
+    void remove(@NotNull final User user);
 
     @Modifying
     @Query(value = "DELETE from User user")
@@ -30,6 +29,6 @@ public interface IUserRepository extends FullEntityRepository<User, Long> {
     User findOneByLogin(@NotNull @QueryParam(value = "login") final String login);
 
     @Modifying
-    @Query(value = "UPDATE user SET user.password = :password, user.login = :login")
+    @Query(value = "UPDATE User user SET user.password = :password WHERE user.login = :login")
     void updatePassword(@NotNull @QueryParam(value = "login") final String login, @NotNull @QueryParam(value = "password") final String newPassword);
 }

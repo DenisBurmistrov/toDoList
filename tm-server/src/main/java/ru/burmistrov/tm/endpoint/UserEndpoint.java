@@ -3,7 +3,6 @@ package ru.burmistrov.tm.endpoint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.ISessionService;
 import ru.burmistrov.tm.api.service.IUserService;
@@ -12,12 +11,10 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @WebService
@@ -50,17 +47,5 @@ public class UserEndpoint implements IUserEndpoint {
             userDto.setRole(user.getRole());
         }
         return userDto;
-    }
-
-    @WebMethod
-    @Override
-    public void updateUserById
-            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
-             @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
-             @WebParam(name = "lastName") @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
-             @WebParam(name = "role") @NotNull final Role role) throws Exception {
-        if (sessionService.validate(session)) {
-            adminService.updateUserById(userId, firstName, middleName, lastName, email, role);
-        }
     }
 }

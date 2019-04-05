@@ -17,7 +17,4 @@ public interface IUserService {
     @Nullable
     User logIn(@NotNull final String login, @NotNull final String auth) throws NoSuchAlgorithmException, SQLException;
 
-    void merge
-            (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
-             @NotNull final String lastName, @NotNull final String email, @NotNull final Role role) throws SQLException;
 }

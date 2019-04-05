@@ -4,11 +4,11 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.burmistrov.tm.api.endpoint.IAdminEndpoint;
-import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.dto.UserDto;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
+import ru.burmistrov.tm.exception.ValidateAccessException;
 import ru.burmistrov.tm.service.AdminService;
 import ru.burmistrov.tm.service.SessionService;
 
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -158,15 +158,23 @@ public class AdminEndpoint implements IAdminEndpoint {
         }
     }
 
+    @Override
+    public User findOneByLogin(@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+        if (sessionService.validateAdmin(session)) {
+            return adminService.findOneByLogin(login);
+        }
+        return null;
+    }
+
     @WebMethod
     @Override
-    public void updateUserById
-            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId,
+    public void updateUserByLogin
+            (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login,
              @WebParam(name = "firstName") @NotNull final String firstName, @WebParam(name = "middleName") @NotNull final String middleName,
              @WebParam(name = "lastName")  @NotNull final String lastName, @WebParam(name = "email") @NotNull final String email,
-             @WebParam(name = "session") @NotNull final Role role) throws Exception {
+             @WebParam(name = "role") @NotNull final Role role) throws Exception {
         if (sessionService.validateAdmin(session)) {
-            adminService.updateUserById(userId, firstName, middleName, lastName, email, role);
+            adminService.updateUserByLogin(login, firstName, middleName, lastName, email, role);
         }
     }
 }

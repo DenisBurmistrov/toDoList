@@ -20,15 +20,15 @@ import java.util.Objects;
 
 import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
-@NoArgsConstructor
 @Transactional
+@NoArgsConstructor
 public class TaskService implements ITaskService {
 
     @Inject
     private ITaskRepository taskRepository;
 
-    @Override
     @Nullable
+    @Override
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                         @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
         try {
@@ -115,9 +115,6 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> findAllSortByStatus(@NotNull final String userId) {
         @NotNull final List<Task> result = Objects.requireNonNull(findAll(userId));
-        result.stream().filter(e -> Objects.requireNonNull(e.getUserId()).
-                equals(userId))
-                .forEach(result::add);
         result.sort((s1, s2) -> Integer.compare(0, Objects.requireNonNull(s1.getStatus()).ordinal() - Objects.requireNonNull(s2.getStatus()).ordinal()));
         return result;
     }
