@@ -217,21 +217,17 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void updateUserById
-            (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+    public void updateUserByLogin
+            (@NotNull final String login, @NotNull final String firstName, @NotNull final String middleName,
              @NotNull final String lastName, final @NotNull String email, final @NotNull Role role) {
-        @NotNull final User currentUser = new User();
-        currentUser.setFirstName(firstName);
-        currentUser.setMiddleName(middleName);
-        currentUser.setLastName(lastName);
-        currentUser.setEmail(email);
-        currentUser.setId(userId);
-        currentUser.setRole(role);
         try {
-            @Nullable final AbstractEntity abstractEntity = userRepository.findOne(userId);
-            if (abstractEntity != null) {
-                Objects.requireNonNull(userRepository).merge(currentUser);
-            }
+            @NotNull final User currentUser = Objects.requireNonNull(findOneByLogin(login));
+            currentUser.setFirstName(firstName);
+            currentUser.setMiddleName(middleName);
+            currentUser.setLastName(lastName);
+            currentUser.setEmail(email);
+            currentUser.setRole(role);
+            Objects.requireNonNull(userRepository).merge(currentUser);
         } catch (NoResultException e) {
             e.printStackTrace();
         }
@@ -239,7 +235,8 @@ public class AdminService implements IAdminService {
 
     @Override
     public void removeUserById(@NotNull final String userId) {
-        Objects.requireNonNull(userRepository).remove(Objects.requireNonNull(userId));
+        @Nullable final User user = findOne(userId);
+        Objects.requireNonNull(userRepository).remove(user);
     }
 
     @Override

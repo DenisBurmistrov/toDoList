@@ -40,11 +40,13 @@ public interface IAdminService {
     void updatePassword
             (@NotNull final String login, @NotNull final String password) throws NoSuchAlgorithmException, SQLException;
 
-    void updateUserById
-            (@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+    void updateUserByLogin
+            (@NotNull final String login, @NotNull final String firstName, @NotNull final String middleName,
              @NotNull final String lastName, @NotNull final String email, @NotNull final Role role) throws SQLException;
 
     void removeUserById(@NotNull final String userId) throws SQLException;
 
     void removeAllUsers() throws SQLException;
+
+    User findOneByLogin(@NotNull final String login);
 }

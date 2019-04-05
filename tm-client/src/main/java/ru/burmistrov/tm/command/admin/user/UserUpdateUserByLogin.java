@@ -12,7 +12,7 @@ import ru.burmistrov.tm.service.TerminalCommandService;
 import javax.inject.Inject;
 import java.util.Objects;
 
-public final class UserUpdateCurrentUser extends AbstractCommand {
+public final class UserUpdateUserByLogin extends AbstractCommand {
 
     @Inject
     private ServiceLocator serviceLocator;
@@ -23,7 +23,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
     @NotNull
     @Override
     public String getName() {
-        return "-updateCurrentUser";
+        return "-updateUserByLogin";
     }
 
     @NotNull
@@ -34,6 +34,8 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
 
     @Override
     public void execute() throws Exception_Exception {
+        System.out.println("Введите логин:");
+        @NotNull final String login = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите новое имя:");
         @NotNull final String firstName = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите новую фамилию:");
@@ -42,8 +44,7 @@ public final class UserUpdateCurrentUser extends AbstractCommand {
         @NotNull final String middleName = serviceLocator.getTerminalCommandService().nextLine();
         System.out.println("Введите новую почту:");
         @NotNull final String email = serviceLocator.getTerminalCommandService().nextLine();
-        adminEndpoint.updateUserById
-                (serviceLocator.getSession(), Objects.requireNonNull(serviceLocator.getSession()).getUserId(),
+        adminEndpoint.updateUserByLogin(serviceLocator.getSession(), login,
                 firstName, middleName, lastName, email, Role.COMMON_USER);
     }
 

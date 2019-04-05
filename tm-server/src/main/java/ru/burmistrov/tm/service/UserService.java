@@ -37,23 +37,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void merge(@NotNull final String userId, @NotNull final String firstName, @NotNull final String middleName,
+    public void merge(@NotNull final String login, @NotNull final String firstName, @NotNull final String middleName,
                       @NotNull final String lastName, @NotNull final String email, @NotNull Role role) {
-        @NotNull final User currentUser = new User();
-        currentUser.setFirstName(firstName);
-        currentUser.setMiddleName(middleName);
-        currentUser.setLastName(lastName);
-        currentUser.setEmail(email);
-        currentUser.setId(userId);
-        currentUser.setRole(role);
         try {
-            @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(userRepository).findOne(userId);
-            if (abstractEntity != null) {
-                Objects.requireNonNull(userRepository).merge(currentUser);
-            }
+            @NotNull final User currentUser = userRepository.findOneByLogin(login);
+            currentUser.setFirstName(firstName);
+            currentUser.setMiddleName(middleName);
+            currentUser.setLastName(lastName);
+            currentUser.setEmail(email);
+            currentUser.setRole(role);
+            Objects.requireNonNull(userRepository).merge(currentUser);
         } catch (NoResultException e) {
             e.printStackTrace();
         }
-
     }
 }

@@ -67,19 +67,13 @@ public class ProjectService implements IProjectService {
     public void merge
             (@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
              @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
-        @NotNull final Project project = new Project();
-        project.setId(projectId);
-        project.setUserId(userId);
-        project.setName(name);
-        project.setDescription(description);
-        project.setStatus(createStatus(status));
-        project.setDateEnd(DateUtil.parseDate(dateEndString));
         try {
-            @Nullable final AbstractEntity abstractEntity =
-                    Objects.requireNonNull(projectRepository).findOne(project.getId(), Objects.requireNonNull(project.getUserId()));
-            if (abstractEntity != null) {
-                Objects.requireNonNull(projectRepository).merge(project);
-            }
+            @NotNull final Project project = Objects.requireNonNull(projectRepository).findOne(projectId, userId);
+            project.setName(name);
+            project.setDescription(description);
+            project.setStatus(createStatus(status));
+            project.setDateEnd(DateUtil.parseDate(dateEndString));
+            Objects.requireNonNull(projectRepository).merge(project);
         } catch (NoResultException e) {
             e.printStackTrace();
         }

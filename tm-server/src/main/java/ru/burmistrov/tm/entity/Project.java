@@ -43,7 +43,7 @@ public final class Project extends AbstractEntity implements Serializable {
     private Status status;
 
     @Nullable
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "projectId", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "projectId", orphanRemoval = true)
     private List<Task> tasks;
 
     @Override
@@ -65,5 +65,4 @@ public final class Project extends AbstractEntity implements Serializable {
         return "ID: " + getId() + "; Название: " + name + "; Описание: " + description + "; Дата создания: " + dateBegin + "; ID назначенного пользователя: " + getUserId()
                 + "; Статус: " + status;
     }
-
 }
