@@ -1,4 +1,3 @@
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,26 +5,29 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.configuration.SpringConfiguration;
 import ru.burmistrov.tm.endpoint.*;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
 
-@RunWith(CdiTestRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdminCrudTest {
 
-    @Inject
+    @Autowired
     private SessionEndpoint sessionEndpoint;
 
-    @Inject
+    @Autowired
     private AdminEndpoint adminEndpoint;
 
-    @Inject
+    @Autowired
     private UserEndpoint userEndpoint;
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
     private Session session;
@@ -44,20 +46,20 @@ public class AdminCrudTest {
     }
 
     @Test
-    public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
+    public void t2_adminServiceUpdatePasswordTest() throws Exception_Exception{
         @NotNull final UserDto userDto = userEndpoint.logIn("test","test");
         adminEndpoint.updatePasswordById(session, userDto.getId(), "test", "test1");
         Assert.assertNotEquals("test", adminEndpoint.findOneByLogin(session, "test").getPassword(), userDto.getPassword());
     }
 
     @Test
-    public void t3_adminServiceMergeTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
+    public void t3_adminServiceMergeTest() throws Exception_Exception {
         adminEndpoint.updateUserByLogin(session, "test", "test1", "test1", "test1", "@test1", Role.COMMON_USER);
         Assert.assertEquals("test", adminEndpoint.findOneByLogin(session, "test").getFirstName(), "test1");
     }
 
     @Test
-    public void t4_adminServiceRemoveTest() throws Exception_Exception, ValidateAccessException_Exception, CloneNotSupportedException_Exception, NoSuchAlgorithmException_Exception {
+    public void t4_adminServiceRemoveTest() throws Exception_Exception {
         @NotNull final UserDto userDto = userEndpoint.logIn("test","test1");
         adminEndpoint.removeUserById(session ,userDto.getId());
         Assert.assertNull(adminEndpoint.findOneByLogin(session, "test"));

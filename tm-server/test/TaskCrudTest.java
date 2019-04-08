@@ -1,27 +1,28 @@
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.burmistrov.tm.api.service.ITaskService;
+import ru.burmistrov.tm.configuration.SpringConfiguration;
 import ru.burmistrov.tm.entity.Task;
-import ru.burmistrov.tm.repository.ITaskRepository;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Objects;
 
-@RunWith(CdiTestRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TaskCrudTest {
 
-    @Inject
+    @Autowired
     private ITaskService taskService;
 
     @Test

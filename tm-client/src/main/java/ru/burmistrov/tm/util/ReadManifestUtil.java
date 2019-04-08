@@ -1,10 +1,13 @@
 package ru.burmistrov.tm.util;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.jar.Manifest;
 
+@Component
 public class ReadManifestUtil {
 
     public Manifest getManifest() throws IOException {

@@ -1,6 +1,8 @@
 package ru.burmistrov.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
@@ -9,16 +11,16 @@ import ru.burmistrov.tm.endpoint.TaskDto;
 import ru.burmistrov.tm.endpoint.TaskEndpoint;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Objects;
 
+@Component
 public class TaskListSortedByDateBeginCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
-    @Inject
+    @Autowired
     private TaskEndpoint taskEndpoint;
     @NotNull
     @Override

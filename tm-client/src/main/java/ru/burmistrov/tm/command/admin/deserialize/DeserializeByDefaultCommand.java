@@ -1,20 +1,23 @@
 package ru.burmistrov.tm.command.admin.deserialize;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.AdminEndpoint;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
-import ru.burmistrov.tm.endpoint.Session;
+import ru.burmistrov.tm.producer.EndpointProducer;
 
-import javax.inject.Inject;
+import javax.xml.ws.Endpoint;
 
+@Component
 public class DeserializeByDefaultCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
-    @Inject
+    @Autowired
     private AdminEndpoint adminEndpoint;
 
     @NotNull

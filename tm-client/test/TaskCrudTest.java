@@ -1,26 +1,28 @@
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
+import ru.burmistrov.tm.configuration.SpringConfiguration;
 import ru.burmistrov.tm.endpoint.*;
 
-import javax.inject.Inject;
-
-@RunWith(CdiTestRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TaskCrudTest {
 
-    @Inject
+    @Autowired
     private TaskEndpoint taskEndpoint;
 
-    @Inject
+    @Autowired
     private SessionEndpoint sessionEndpoint;
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
     private Session session;

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.NoArgsConstructor;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.eclipse.persistence.jaxb.UnmarshallerProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.burmistrov.tm.repository.IProjectRepository;
 import ru.burmistrov.tm.repository.ITaskRepository;
 import ru.burmistrov.tm.repository.IUserRepository;
@@ -19,7 +21,6 @@ import ru.burmistrov.tm.entity.*;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.util.PasswordUtil;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,21 +34,22 @@ import java.util.Objects;
 
 @Transactional
 @NoArgsConstructor
+@Service
 public class AdminService implements IAdminService {
 
-    @Inject
+    @Autowired
     private IProjectService projectService;
 
-    @Inject
+    @Autowired
     private ITaskService taskService;
 
-    @Inject
+    @Autowired
     private IProjectRepository projectRepository;
 
-    @Inject
+    @Autowired
     private ITaskRepository taskRepository;
 
-    @Inject
+    @Autowired
     private IUserRepository userRepository;
 
     public void saveDataByDefault(@NotNull final Session session) throws IOException, SQLException {
@@ -61,7 +63,7 @@ public class AdminService implements IAdminService {
 
     public void saveDataByFasterXmlJson(@NotNull final Session session) throws IOException, SQLException {
         @NotNull final Domain domain = new Domain();
-        domain.setProjects(projectService.findAll(Objects.requireNonNull(session.getUserId())));
+        domain.setProjects(Objects.requireNonNull(projectService.findAll(Objects.requireNonNull(session.getUserId()))));
         domain.setTasks(Objects.requireNonNull(taskService.findAll(session.getUserId())));
         domain.setUsers(Objects.requireNonNull(userRepository.findAll()));
         @NotNull final ObjectMapper mapper = new ObjectMapper();
@@ -108,13 +110,13 @@ public class AdminService implements IAdminService {
         @NotNull final Domain domain = (Domain) objectInputStream.readObject();
 
         for (@NotNull final Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         for (@NotNull final Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+            taskRepository.save(task);
         }
         for (@NotNull final User user : domain.getUsers()) {
-            userRepository.persist(user);
+            userRepository.save(user);
         }
     }
 
@@ -124,13 +126,13 @@ public class AdminService implements IAdminService {
         @NotNull final Domain domain = objectMapper.readValue(file, Domain.class);
 
         for (@NotNull final Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         for (@NotNull final Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+            taskRepository.save(task);
         }
         for (@NotNull final User user : domain.getUsers()) {
-            userRepository.persist(user);
+            userRepository.save(user);
         }
     }
 
@@ -140,13 +142,13 @@ public class AdminService implements IAdminService {
         @NotNull final Domain domain = xmlMapper.readValue(file, Domain.class);
 
         for (@NotNull final Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         for (@NotNull final Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+            taskRepository.save(task);
         }
         for (@NotNull final User user : domain.getUsers()) {
-            userRepository.persist(user);
+            userRepository.save(user);
         }
     }
 
@@ -159,13 +161,13 @@ public class AdminService implements IAdminService {
         @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(new File("C:\\Users\\d.burmistrov\\IdeaProjects\\toDoList\\projects-and-tasks-by-admin.json"));
 
         for (@NotNull final Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         for (@NotNull final Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+            taskRepository.save(task);
         }
         for (@NotNull final User user : domain.getUsers()) {
-            userRepository.persist(user);
+            userRepository.save(user);
         }
     }
 
@@ -176,13 +178,13 @@ public class AdminService implements IAdminService {
         @NotNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
 
         for (@NotNull final Project project : domain.getProjects()) {
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         for (@NotNull final Task task : domain.getTasks()) {
-            taskRepository.persist(task);
+            taskRepository.save(task);
         }
         for (@NotNull final User user : domain.getUsers()) {
-            userRepository.persist(user);
+            userRepository.save(user);
         }
     }
 
@@ -192,9 +194,7 @@ public class AdminService implements IAdminService {
             (@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
              @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
              @Nullable Role roleType) throws NoSuchAlgorithmException {
-        try {
             userRepository.findOneByLogin(login);
-        } catch (NoResultException e) {
             @NotNull final User user = new User();
             user.setLogin(login);
             user.setHashPassword(password);
@@ -203,10 +203,8 @@ public class AdminService implements IAdminService {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setRole(roleType);
-            Objects.requireNonNull(userRepository).persist(user);
+            Objects.requireNonNull(userRepository).save(user);
             return user;
-        }
-        return null;
     }
 
     @Override
@@ -227,7 +225,7 @@ public class AdminService implements IAdminService {
             currentUser.setLastName(lastName);
             currentUser.setEmail(email);
             currentUser.setRole(role);
-            Objects.requireNonNull(userRepository).merge(currentUser);
+            Objects.requireNonNull(userRepository).save(currentUser);
         } catch (NoResultException e) {
             e.printStackTrace();
         }
@@ -236,7 +234,9 @@ public class AdminService implements IAdminService {
     @Override
     public void removeUserById(@NotNull final String userId) {
         @Nullable final User user = findOne(userId);
-        Objects.requireNonNull(userRepository).remove(user);
+        if (user != null) {
+            Objects.requireNonNull(userRepository).delete(user);
+        }
     }
 
     @Override

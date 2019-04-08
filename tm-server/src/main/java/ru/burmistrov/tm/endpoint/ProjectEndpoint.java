@@ -3,6 +3,9 @@ package ru.burmistrov.tm.endpoint;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.burmistrov.tm.api.endpoint.IProjectEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.IProjectService;
@@ -12,7 +15,6 @@ import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
-import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -24,12 +26,13 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @WebService
+@Service
 public class ProjectEndpoint implements IProjectEndpoint {
 
-    @Inject
+    @Autowired
     private IProjectService projectService;
 
-    @Inject
+    @Autowired
     private ISessionService sessionService;
 
     @WebMethod

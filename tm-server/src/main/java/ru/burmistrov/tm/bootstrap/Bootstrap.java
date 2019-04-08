@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.endpoint.*;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 
-import javax.inject.Inject;
 import javax.xml.ws.Endpoint;
 import java.io.IOException;
 import java.util.Properties;
@@ -15,21 +17,22 @@ import java.util.Properties;
 @Getter
 @Setter
 @NoArgsConstructor
+@Component
 public final class Bootstrap implements ServiceLocator {
 
-    @Inject
+    @Autowired
     private IProjectEndpoint projectEndpoint;
 
-    @Inject
+    @Autowired
     private ITaskEndpoint taskEndpoint;
 
-    @Inject
+    @Autowired
     private IAdminEndpoint adminEndpoint;
 
-    @Inject
+    @Autowired
     private ISessionEndpoint sessionEndpoint;
 
-    @Inject
+    @Autowired
     private IUserEndpoint userEndpoint;
 
     private void initEndpoints() throws IOException {

@@ -1,16 +1,17 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.burmistrov.tm.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.util.DateUtil;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.text.ParseException;
 import java.util.Comparator;
@@ -22,18 +23,17 @@ import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @Transactional
 @NoArgsConstructor
+@Component
 public class TaskService implements ITaskService {
 
-    @Inject
+    @Autowired
     private ITaskRepository taskRepository;
 
     @Nullable
     @Override
     public Task persist(@NotNull final String userId, @NotNull final String projectId, @NotNull final String name,
                         @NotNull final String description, @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
-        try {
             Objects.requireNonNull(taskRepository).findOneByName(userId, name);
-        } catch (NoResultException e) {
             @NotNull final Task task = new Task();
             task.setUserId(userId);
             task.setDateBegin(new Date());
@@ -42,10 +42,8 @@ public class TaskService implements ITaskService {
             task.setName(name);
             task.setProjectId(projectId);
             task.setStatus(createStatus(status));
-            Objects.requireNonNull(taskRepository).persist(task);
+            Objects.requireNonNull(taskRepository).save(task);
             return task;
-        }
-        return null;
     }
 
     @Override
@@ -62,7 +60,7 @@ public class TaskService implements ITaskService {
             task.setDateEnd(DateUtil.parseDate(dateEndString));
             @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
             if (newName.length() != 0 && abstractEntity != null) {
-                Objects.requireNonNull(taskRepository).merge(task);
+                Objects.requireNonNull(taskRepository).save(task);
             }
         }
 
@@ -79,15 +77,10 @@ public class TaskService implements ITaskService {
 
     @Override
     public void remove(@NotNull final String userId, @NotNull final String taskId) {
-        try {
-            Task task = taskRepository.findOne(taskId, userId);
-            if (task != null) {
-                Objects.requireNonNull(taskRepository).remove(task);
-            }
-        } catch (NoResultException e) {
-            e.printStackTrace();
+        Task task = taskRepository.findOne(taskId, userId);
+        if (task != null) {
+            Objects.requireNonNull(taskRepository).delete(task);
         }
-
     }
 
     @Override
@@ -122,31 +115,19 @@ public class TaskService implements ITaskService {
     @Nullable
     @Override
     public Task findOneByName(@NotNull final String userId, @NotNull final String name) {
-        try {
             return Objects.requireNonNull(taskRepository).findOneByName(userId, name);
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 
     @Nullable
     @Override
     public Task findOneByDescription(@Nullable final String userId, @NotNull final String description) {
-        try {
             return Objects.requireNonNull(taskRepository).findOneByDescription(Objects.requireNonNull(userId), description);
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 
     @Nullable
     @Override
     public List<Task> findAllInProject(@NotNull final String userId, @NotNull final String projectId) {
-        try {
             return Objects.requireNonNull(taskRepository).findAllByProjectId(userId, projectId);
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 
     @Nullable

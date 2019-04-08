@@ -1,34 +1,37 @@
 package ru.burmistrov.tm.repository;
 
 
-import org.apache.deltaspike.data.api.*;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 
 import java.util.List;
 
-@Repository
-public interface IProjectRepository extends FullEntityRepository<Project, Long> {
+public interface IProjectRepository extends JpaRepository<Project, Long> {
 
-    void persist(@NotNull final Project project);
+    Project save(@NotNull final Project project);
 
-    Project merge(@NotNull final Project project);
-
-    void remove(@NotNull final Project project);
+    void delete(@NotNull final Project project);
 
     @Modifying
-    @Query(value = "DELETE FROM Project project WHERE project.user_id = :userId")
-    void removeAll(@NotNull @QueryParam(value = "userId") final String userId);
+    @Query(value = "DELETE FROM Project project WHERE project.userId = :userId")
+    void removeAll(@NotNull @Param(value = "userId") final String userId);
 
     @Query(value = "SELECT project FROM Project project WHERE project.userId = :userId")
-    List<Project> findAll(@NotNull @QueryParam(value = "userId") final String userId);
+    List<Project> findAll(@NotNull @Param(value = "userId") final String userId);
 
-    @Query(value = "SELECT project FROM Project project WHERE project.id = :projectId AND project.userId = :userId", max = 1)
-    Project findOne(@NotNull @QueryParam(value = "projectId") final String id, @NotNull @QueryParam(value = "userId") final String userId);
+    @Query(value = "SELECT project FROM Project project WHERE project.id = :projectId AND project.userId = :userId")
+    Project findOne(@NotNull @Param(value = "projectId") final String id, @NotNull @Param(value = "userId") final String userId);
 
-    @Query(value = "SELECT project FROM Project project WHERE project.userId = :userId AND project.name = :name", max = 1)
-    Project findOneByName(@NotNull @QueryParam(value = "userId") final String userId, @NotNull @QueryParam(value = "name") final String name);
+    @Query(value = "SELECT project FROM Project project WHERE project.userId = :userId AND project.name = :name")
+    Project findOneByName(@NotNull @Param(value = "userId") final String userId, @NotNull @Param(value = "name") final String name);
 
-    @Query(value = "SELECT project FROM Project project WHERE project.userId = :userId AND project.description = :description", max = 1)
-    Project findOneByDescription(@NotNull @QueryParam(value = "userId") final String userId, @NotNull @QueryParam(value = "description") final String description);
+    @Query(value = "SELECT project FROM Project project WHERE project.userId = :userId AND project.description = :description")
+    Project findOneByDescription(@NotNull @Param(value = "userId") final String userId, @NotNull @Param(value = "description") final String description);
 }

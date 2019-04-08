@@ -3,7 +3,11 @@ package ru.burmistrov.tm.endpoint;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.burmistrov.tm.api.endpoint.IAdminEndpoint;
+import ru.burmistrov.tm.api.service.IAdminService;
+import ru.burmistrov.tm.api.service.ISessionService;
 import ru.burmistrov.tm.dto.UserDto;
 import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
@@ -12,7 +16,6 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 import ru.burmistrov.tm.service.AdminService;
 import ru.burmistrov.tm.service.SessionService;
 
-import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -21,13 +24,14 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @WebService
+@Service
 public class AdminEndpoint implements IAdminEndpoint {
 
-    @Inject
-    private SessionService sessionService;
+    @Autowired
+    private ISessionService sessionService;
 
-    @Inject
-    private AdminService adminService;
+    @Autowired
+    private IAdminService adminService;
 
     @WebMethod
     @Override
@@ -159,7 +163,7 @@ public class AdminEndpoint implements IAdminEndpoint {
     }
 
     @Override
-    public User findOneByLogin(@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException {
+    public User findOneByLogin(@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login) throws Exception{
         if (sessionService.validateAdmin(session)) {
             return adminService.findOneByLogin(login);
         }

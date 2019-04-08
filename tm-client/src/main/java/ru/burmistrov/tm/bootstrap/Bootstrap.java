@@ -2,6 +2,9 @@ package ru.burmistrov.tm.bootstrap;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.command.admin.deserialize.*;
@@ -17,18 +20,18 @@ import ru.burmistrov.tm.command.user.UserShowCurrentUser;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.spi.CDI;
-import javax.inject.Inject;
 import java.io.IOException;
 import java.lang.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
-@ApplicationScoped
+@Component
 public class Bootstrap implements ServiceLocator {
 
-    @Inject
+    @Autowired
+    ApplicationContext context;
+
+    @Autowired
     private TerminalCommandService terminalCommandService;
 
     @Nullable
@@ -74,7 +77,7 @@ public class Bootstrap implements ServiceLocator {
         for (Class commandClass : classes) {
             try {
                 if (commandClass.getSuperclass().equals(AbstractCommand.class)) {
-                    AbstractCommand abstractCommand = (AbstractCommand) CDI.current().select(commandClass).get();
+                    AbstractCommand abstractCommand = (AbstractCommand) context.getBean(commandClass);
                     if(abstractCommand != null) {
                         commands.put(abstractCommand.getName(), abstractCommand);
                     }

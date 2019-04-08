@@ -24,6 +24,8 @@ public interface ServiceLocator {
 
     @Nullable
     Session getSession();
+
+    void init();
 }
 
 

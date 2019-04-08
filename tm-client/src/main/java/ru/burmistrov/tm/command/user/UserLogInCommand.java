@@ -2,22 +2,23 @@ package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.*;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.inject.Inject;
-
+@Component
 public final class UserLogInCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
-    @Inject
+    @Autowired
     private UserEndpoint userEndpoint;
 
-    @Inject
+    @Autowired
     private SessionEndpoint sessionEndpoint;
 
     @NotNull

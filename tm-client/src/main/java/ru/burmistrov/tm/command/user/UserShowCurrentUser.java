@@ -1,17 +1,17 @@
 package ru.burmistrov.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
-import ru.burmistrov.tm.endpoint.Session;
-import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.inject.Inject;
 import java.util.Objects;
 
+@Component
 public final class UserShowCurrentUser extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
     @NotNull

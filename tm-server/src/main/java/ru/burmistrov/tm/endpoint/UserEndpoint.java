@@ -1,7 +1,10 @@
 package ru.burmistrov.tm.endpoint;
 
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.burmistrov.tm.api.endpoint.IUserEndpoint;
 import ru.burmistrov.tm.api.service.IAdminService;
 import ru.burmistrov.tm.api.service.ISessionService;
@@ -11,22 +14,23 @@ import ru.burmistrov.tm.entity.enumerated.Role;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.User;
 
-import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.Objects;
 
+@NoArgsConstructor
 @WebService
+@Service
 public class UserEndpoint implements IUserEndpoint {
 
-    @Inject
+    @Autowired
     private IUserService userService;
 
-    @Inject
+    @Autowired
     private ISessionService sessionService;
 
-    @Inject
+    @Autowired
     private IAdminService adminService;
 
 
