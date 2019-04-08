@@ -1,8 +1,11 @@
 package ru.burmistrov.tm.service;
 
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.burmistrov.tm.repository.ISessionRepository;
 import ru.burmistrov.tm.repository.IUserRepository;
 import ru.burmistrov.tm.api.service.ISessionService;
@@ -13,7 +16,6 @@ import ru.burmistrov.tm.exception.ValidateAccessException;
 import ru.burmistrov.tm.util.PasswordUtil;
 import ru.burmistrov.tm.util.SignatureUtil;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,14 +25,14 @@ import java.util.Objects;
 import java.util.Properties;
 
 @Transactional
+@Service
 public class SessionService implements ISessionService {
 
-    @Inject
+    @Autowired
     private ISessionRepository sessionRepository;
 
-    @Inject
+    @Autowired
     private IUserRepository userRepository;
-
 
     @Override
     public Session persist(@NotNull final String userId) throws IOException, NoSuchAlgorithmException {
@@ -44,8 +46,7 @@ public class SessionService implements ISessionService {
         session.setTimesTamp(new Date().getTime());
         session.setUserId(userId);
         session.setSignature(SignatureUtil.sign(String.valueOf(session.hashCode()), Integer.parseInt(cycle), salt));
-        Objects.requireNonNull(sessionRepository).persist(session);
-        return session;
+        return sessionRepository.save(session);
     }
 
     @Override

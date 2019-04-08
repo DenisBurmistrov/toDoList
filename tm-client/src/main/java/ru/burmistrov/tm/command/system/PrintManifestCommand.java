@@ -1,16 +1,18 @@
 package ru.burmistrov.tm.command.system;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.util.ReadManifestUtil;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
 
+@Component
 public class PrintManifestCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ReadManifestUtil readManifestUtil;
 
     @NotNull

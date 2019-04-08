@@ -1,18 +1,21 @@
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.burmistrov.tm.api.service.IUserService;
-import ru.burmistrov.tm.entity.enumerated.Role;
+import ru.burmistrov.tm.configuration.SpringConfiguration;
 
-import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@RunWith(CdiTestRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
 public class UserCrudTest {
 
-    @Inject private IUserService userService;
+    @Autowired
+    private IUserService userService;
 
     @Test
     public void t1_userServiceLogInTest() throws SQLException, NoSuchAlgorithmException {

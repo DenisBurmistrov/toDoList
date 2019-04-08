@@ -1,19 +1,21 @@
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.burmistrov.tm.configuration.SpringConfiguration;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
 import ru.burmistrov.tm.endpoint.UserEndpoint;
 
-import javax.inject.Inject;
-
-@RunWith(CdiTestRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringConfiguration.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserCrudTest {
 
-    @Inject
+    @Autowired
     private UserEndpoint userEndpoint;
 
     @Test

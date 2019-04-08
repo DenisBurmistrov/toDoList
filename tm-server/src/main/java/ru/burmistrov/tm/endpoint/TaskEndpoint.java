@@ -3,6 +3,8 @@ package ru.burmistrov.tm.endpoint;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.burmistrov.tm.api.endpoint.ITaskEndpoint;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.api.service.ISessionService;
@@ -11,7 +13,6 @@ import ru.burmistrov.tm.dto.TaskDto;
 import ru.burmistrov.tm.entity.Session;
 import ru.burmistrov.tm.entity.Task;
 
-import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -23,12 +24,13 @@ import java.util.Objects;
 
 @WebService
 @NoArgsConstructor
+@Service
 public class TaskEndpoint implements ITaskEndpoint {
 
-    @Inject
+    @Autowired
     private ISessionService sessionService;
 
-    @Inject
+    @Autowired
     private ITaskService taskService;
 
     @WebMethod

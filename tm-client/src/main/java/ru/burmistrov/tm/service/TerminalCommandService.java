@@ -1,16 +1,11 @@
 package ru.burmistrov.tm.service;
 
 import org.jetbrains.annotations.NotNull;
-import ru.burmistrov.tm.api.loader.ServiceLocator;
-import ru.burmistrov.tm.endpoint.*;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-import java.lang.ClassNotFoundException;
-import java.text.ParseException;
 import java.util.Scanner;
 
+@Component
 public class TerminalCommandService {
 
     @NotNull

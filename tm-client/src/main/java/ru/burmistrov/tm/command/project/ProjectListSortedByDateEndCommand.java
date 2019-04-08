@@ -2,6 +2,8 @@ package ru.burmistrov.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 import ru.burmistrov.tm.endpoint.Exception_Exception;
@@ -10,16 +12,16 @@ import ru.burmistrov.tm.endpoint.ProjectEndpoint;
 import ru.burmistrov.tm.endpoint.Session;
 import ru.burmistrov.tm.service.TerminalCommandService;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Objects;
 
+@Component
 public class ProjectListSortedByDateEndCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
-    @Inject
+    @Autowired
     private ProjectEndpoint projectEndpoint;
 
 

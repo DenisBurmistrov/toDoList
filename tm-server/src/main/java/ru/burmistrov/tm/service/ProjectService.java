@@ -1,17 +1,18 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.burmistrov.tm.repository.IProjectRepository;
 import ru.burmistrov.tm.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.IProjectService;
-import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.util.DateUtil;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.text.ParseException;
 import java.util.Comparator;
@@ -24,12 +25,13 @@ import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @Transactional
 @NoArgsConstructor
+@Component
 public class ProjectService implements IProjectService {
 
-    @Inject
+    @Autowired
     private IProjectRepository projectRepository;
 
-    @Inject
+    @Autowired
     private ITaskRepository taskRepository;
 
     @Override
@@ -37,7 +39,7 @@ public class ProjectService implements IProjectService {
         try {
             @Nullable final Project project = projectRepository.findOne(projectId, userId);
             if (project != null) {
-                Objects.requireNonNull(projectRepository).remove(project);
+                Objects.requireNonNull(projectRepository).delete(project);
             }
         } catch (NoResultException e) {
             e.printStackTrace();
@@ -58,7 +60,7 @@ public class ProjectService implements IProjectService {
             project.setName(name);
             project.setDescription(description);
             project.setStatus(createStatus(status));
-            projectRepository.persist(project);
+            projectRepository.save(project);
         }
         return null;
     }
@@ -73,7 +75,7 @@ public class ProjectService implements IProjectService {
             project.setDescription(description);
             project.setStatus(createStatus(status));
             project.setDateEnd(DateUtil.parseDate(dateEndString));
-            Objects.requireNonNull(projectRepository).merge(project);
+            projectRepository.save(project);
         } catch (NoResultException e) {
             e.printStackTrace();
         }

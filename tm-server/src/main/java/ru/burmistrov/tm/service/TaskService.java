@@ -1,16 +1,17 @@
 package ru.burmistrov.tm.service;
 
 import lombok.NoArgsConstructor;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.burmistrov.tm.repository.ITaskRepository;
 import ru.burmistrov.tm.api.service.ITaskService;
 import ru.burmistrov.tm.entity.AbstractEntity;
 import ru.burmistrov.tm.entity.Task;
 import ru.burmistrov.tm.util.DateUtil;
 
-import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import java.text.ParseException;
 import java.util.Comparator;
@@ -22,9 +23,10 @@ import static ru.burmistrov.tm.entity.enumerated.Status.createStatus;
 
 @Transactional
 @NoArgsConstructor
+@Component
 public class TaskService implements ITaskService {
 
-    @Inject
+    @Autowired
     private ITaskRepository taskRepository;
 
     @Nullable
@@ -42,7 +44,7 @@ public class TaskService implements ITaskService {
             task.setName(name);
             task.setProjectId(projectId);
             task.setStatus(createStatus(status));
-            Objects.requireNonNull(taskRepository).persist(task);
+            Objects.requireNonNull(taskRepository).save(task);
             return task;
         }
         return null;
@@ -62,7 +64,7 @@ public class TaskService implements ITaskService {
             task.setDateEnd(DateUtil.parseDate(dateEndString));
             @Nullable final AbstractEntity abstractEntity = Objects.requireNonNull(taskRepository).findOne(task.getId(), Objects.requireNonNull(task.getUserId()));
             if (newName.length() != 0 && abstractEntity != null) {
-                Objects.requireNonNull(taskRepository).merge(task);
+                Objects.requireNonNull(taskRepository).save(task);
             }
         }
 
@@ -82,7 +84,7 @@ public class TaskService implements ITaskService {
         try {
             Task task = taskRepository.findOne(taskId, userId);
             if (task != null) {
-                Objects.requireNonNull(taskRepository).remove(task);
+                Objects.requireNonNull(taskRepository).delete(task);
             }
         } catch (NoResultException e) {
             e.printStackTrace();

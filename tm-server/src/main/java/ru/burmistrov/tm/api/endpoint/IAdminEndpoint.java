@@ -13,6 +13,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 @WebService
 public interface IAdminEndpoint {
@@ -76,6 +77,6 @@ public interface IAdminEndpoint {
             (@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "userId") @NotNull final String userId) throws Exception;
 
     @WebMethod
-    User findOneByLogin(@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login) throws CloneNotSupportedException, ValidateAccessException, NoSuchAlgorithmException;
+    User findOneByLogin(@WebParam(name = "session") @NotNull final Session session, @WebParam(name = "login") @NotNull final String login) throws Exception;
 
 }

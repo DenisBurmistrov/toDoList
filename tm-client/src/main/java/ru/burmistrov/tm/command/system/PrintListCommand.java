@@ -1,14 +1,15 @@
 package ru.burmistrov.tm.command.system;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.burmistrov.tm.api.loader.ServiceLocator;
 import ru.burmistrov.tm.command.AbstractCommand;
 
-import javax.inject.Inject;
-
+@Component
 public final class PrintListCommand extends AbstractCommand {
 
-    @Inject
+    @Autowired
     private ServiceLocator serviceLocator;
 
     @NotNull
