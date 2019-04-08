@@ -50,9 +50,7 @@ public class ProjectService implements IProjectService {
     public Project persist
             (@NotNull final String userId, @NotNull final String name, @NotNull final String description,
              @NotNull final String dateEndString, @NotNull final String status) throws ParseException {
-        try {
             projectRepository.findOneByName(userId, name);
-        } catch (NoResultException e) {
             @NotNull final Project project = new Project();
             project.setUserId(userId);
             project.setDateBegin(new Date());
@@ -60,9 +58,7 @@ public class ProjectService implements IProjectService {
             project.setName(name);
             project.setDescription(description);
             project.setStatus(createStatus(status));
-            projectRepository.save(project);
-        }
-        return null;
+            return projectRepository.save(project);
     }
 
     @Override

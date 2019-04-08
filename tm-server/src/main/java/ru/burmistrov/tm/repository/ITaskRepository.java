@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.burmistrov.tm.entity.AbstractEntity;
+import ru.burmistrov.tm.entity.Project;
 import ru.burmistrov.tm.entity.Task;
 
 import java.util.List;

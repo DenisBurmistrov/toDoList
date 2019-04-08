@@ -194,9 +194,7 @@ public class AdminService implements IAdminService {
             (@NotNull final String login, @NotNull final String password, @NotNull final String firstName,
              @NotNull final String middleName, final @NotNull String lastName, final @NotNull String email,
              @Nullable Role roleType) throws NoSuchAlgorithmException {
-        try {
             userRepository.findOneByLogin(login);
-        } catch (NoResultException e) {
             @NotNull final User user = new User();
             user.setLogin(login);
             user.setHashPassword(password);
@@ -207,8 +205,6 @@ public class AdminService implements IAdminService {
             user.setRole(roleType);
             Objects.requireNonNull(userRepository).save(user);
             return user;
-        }
-        return null;
     }
 
     @Override

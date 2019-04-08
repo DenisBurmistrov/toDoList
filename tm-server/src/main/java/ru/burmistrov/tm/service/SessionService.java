@@ -79,10 +79,6 @@ public class SessionService implements ISessionService {
 
     @Nullable
     private Session findOne(@NotNull final String id, @NotNull final String userId) {
-        try {
             return Objects.requireNonNull(sessionRepository).findOne(id, userId);
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 }
