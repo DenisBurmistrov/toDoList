@@ -32,6 +32,7 @@ public class UserService implements IUserService {
             if (Objects.requireNonNull(user.getLogin()).equals(login) &&
                     Objects.requireNonNull(Objects.requireNonNull(user.getPassword()))
                             .equals(PasswordUtil.hashPassword(password))) {
+                System.out.println(user);
                 return user;
             }
         }

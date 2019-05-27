@@ -48,9 +48,10 @@ public class SpringConfiguration {
         factoryBean.setPackagesToScan("ru.burmistrov.tm");
         final Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.import_files", "import_data.sql");
         properties.put("hibernate.dialect",
-                "org.hibernate.dialect.MySQL5Dialect");
+                "org.hibernate.dialect.H2Dialect");
         factoryBean.setJpaProperties(properties);
         return factoryBean;
     }
